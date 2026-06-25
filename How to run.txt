@@ -1,0 +1,97 @@
+========================================================================
+ VISTAS — Passive NSE Index Terminal — HOW TO RUN
+========================================================================
+(Your own Bloomberg-style workbench for NSE total-return indices.
+ This folder is fully self-contained — it needs nothing from any other
+ project. Full detail is in README.md; this is the short version.)
+
+
+------------------------------------------------------------------------
+ 0. ONE-TIME SETUP (only the first time, per machine)
+------------------------------------------------------------------------
+ - Install Python 3 (3.10+).            python.org
+ - Install the libraries (one command, run inside THIS folder):
+        pip install -r requirements.txt
+ - OPTIONAL, only if you want to publish the online link or run the
+   self-checks:
+        * Node.js  (nodejs.org)  — used to validate the offline deck and
+          run the JS<->Python parity check.
+        * Git + a GitHub SSH key — only needed to PUBLISH (step 4).
+
+
+------------------------------------------------------------------------
+ 1. RUN IT LOCALLY (the normal way to use Vistas)
+------------------------------------------------------------------------
+ In this folder, run:
+        python app.py
+ Then open this in your browser:
+        http://127.0.0.1:8753
+ Pick indices + benchmarks, choose a date window, read every panel.
+ Press Ctrl+C in the terminal to stop the server.
+
+
+------------------------------------------------------------------------
+ 2. KEEP THE DATA FRESH
+------------------------------------------------------------------------
+ Inside the running app:
+   - "Refresh to today"  pulls new days for every local index.
+   - "Fetch ALL NSE indices"  pulls full history for any not-yet-local.
+   - "Add index"  fetches one index by its exact NSE name.
+ (These need internet. If NSE can't be reached, Vistas just keeps
+  showing the data already on disk — nothing breaks.)
+
+
+------------------------------------------------------------------------
+ 3. SAVE AN OFFLINE DECK (view Vistas with NO server, NO internet)
+------------------------------------------------------------------------
+ In the running app, click "Save offline deck (HTML)".
+ It writes a self-contained .html into the  output\  folder that you can
+ open in any browser and still re-pick indices / change the window — it
+ recomputes everything in the browser. (Decks are also auto-saved on
+ every data refresh and on startup.)
+
+
+------------------------------------------------------------------------
+ 4. PUBLISH THE ONLINE LINK (optional)
+------------------------------------------------------------------------
+ Double-click:
+        Refresh Vistas Passive.bat
+ It pulls data -> rebuilds the deck -> validates it -> and (only if the
+ deck is good) pushes it live to:
+        https://kartiksngh.github.io/vistas/passive/
+ A faulty deck is NEVER published — the last good one stays live.
+
+ Flags (type after the command if running by hand):
+        python publish_passive.py --no-fetch   (rebuild, skip the NSE pull)
+        python publish_passive.py --no-push     (build + validate only)
+
+ Where it publishes: a SEPARATE little GitHub repo, now INSIDE this folder
+   at  Vistas\_pages  (git-ignored; its own .git + remote).  To keep it
+   somewhere else, set the env var  VISTAS_PUBLISH_DIR  (and VISTAS_REMOTE
+   for a different GitHub URL) — no code editing needed. See README.
+
+
+------------------------------------------------------------------------
+ 5. SELF-CHECKS (only if you change a formula — for maintainers)
+------------------------------------------------------------------------
+ The browser/offline numbers come from a JavaScript copy of the Python
+ math. If you EVER edit a formula in  vistas\analytics.py , mirror the
+ same change in  static\vistas_analytics.js , then run:
+        python _parity_dump.py
+        node _parity_check.js          (must print 0 mismatches)
+        node _deck_runtime_test.js     (must print PASS)
+ If you don't, the offline deck will quietly disagree with the live app.
+
+
+------------------------------------------------------------------------
+ 6. DAILY AUTO-REFRESH (keep EVERYTHING fresh, hands-off)
+------------------------------------------------------------------------
+ The whole terminal (every data source -> rebuild -> validate -> publish)
+ is kept fresh by ONE nightly job. The double-click wrappers live in the
+ separate  pipeline\  folder:
+        pipeline\Daily Refresh Vistas.bat      <- the nightly job (auto-publishes if valid)
+        pipeline\Nightly Build (no publish).bat <- failsafe: build only, no push
+        pipeline\Publish Last Build.bat         <- one-click push of the on-disk build
+ Schedule "Daily Refresh Vistas.bat" in Windows Task Scheduler (~8pm IST).
+ Full pipeline + architecture (buildable bottoms-up) is in  pipeline\README.md .
+========================================================================

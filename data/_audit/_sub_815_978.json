@@ -1,0 +1,1306 @@
+[
+ {
+  "idx": 815,
+  "key": "motilal-oswal-an-open-ended-scheme-investing-in-equity-international-equity-inde-f5823629",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "(An open ended scheme investing in Equity, International Equity Index Funds/Equity ETFs, Debt and Money Market Instruments and Gold Exchange Traded Funds) (A Relatively High Interest Rate Risk and Relatively Low Credit Risk)",
+  "n_holdings": 2,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 816,
+  "key": "motilal-oswal-motilal-oswal-5-year-g-sec-fund-of-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal 5 Year G-Sec Fund of Fund",
+  "n_holdings": 2,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 817,
+  "key": "motilal-oswal-motilal-oswal-active-momentum-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Active Momentum Fund",
+  "n_holdings": 29,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 818,
+  "key": "motilal-oswal-motilal-oswal-arbitrage-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Arbitrage Fund",
+  "n_holdings": 111,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 819,
+  "key": "motilal-oswal-motilal-oswal-asset-allocation-passive-fund-of-fund-aggressive",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Asset Allocation Passive Fund of Fund - Aggressive",
+  "n_holdings": 5,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 820,
+  "key": "motilal-oswal-motilal-oswal-asset-allocation-passive-fund-of-fund-conservative",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Asset Allocation Passive Fund of Fund - Conservative",
+  "n_holdings": 5,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 821,
+  "key": "motilal-oswal-motilal-oswal-balanced-advantage-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Balanced Advantage Fund",
+  "n_holdings": 24,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 822,
+  "key": "motilal-oswal-motilal-oswal-bse-1000-index-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal BSE 1000 Index Fund",
+  "n_holdings": 1002,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 823,
+  "key": "motilal-oswal-motilal-oswal-bse-enhanced-value-etf",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal BSE Enhanced Value ETF",
+  "n_holdings": 31,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 824,
+  "key": "motilal-oswal-motilal-oswal-bse-enhanced-value-index-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal BSE Enhanced Value Index Fund",
+  "n_holdings": 31,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 825,
+  "key": "motilal-oswal-motilal-oswal-bse-financials-ex-bank-30-index-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal BSE Financials ex Bank 30 Index Fund",
+  "n_holdings": 31,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 826,
+  "key": "motilal-oswal-motilal-oswal-bse-healthcare-etf",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal BSE Healthcare ETF",
+  "n_holdings": 127,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 827,
+  "key": "motilal-oswal-motilal-oswal-bse-india-infrastructure-etf",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal BSE India Infrastructure ETF",
+  "n_holdings": 30,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 828,
+  "key": "motilal-oswal-motilal-oswal-bse-low-volatility-etf",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal BSE Low Volatility ETF",
+  "n_holdings": 31,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 829,
+  "key": "motilal-oswal-motilal-oswal-bse-low-volatility-index-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal BSE low Volatility Index Fund",
+  "n_holdings": 31,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 830,
+  "key": "motilal-oswal-motilal-oswal-bse-quality-etf",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal BSE Quality ETF",
+  "n_holdings": 31,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 831,
+  "key": "motilal-oswal-motilal-oswal-bse-quality-index-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal BSE Quality Index Fund",
+  "n_holdings": 31,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 832,
+  "key": "motilal-oswal-motilal-oswal-bse-select-ipo-etf",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal BSE Select IPO ETF",
+  "n_holdings": 74,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 833,
+  "key": "motilal-oswal-motilal-oswal-bse-top-10-banks-etf",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal BSE Top 10 Banks ETF",
+  "n_holdings": 11,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 834,
+  "key": "motilal-oswal-motilal-oswal-business-cycle-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Business Cycle Fund",
+  "n_holdings": 27,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 835,
+  "key": "motilal-oswal-motilal-oswal-consumption-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Consumption Fund",
+  "n_holdings": 28,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 836,
+  "key": "motilal-oswal-motilal-oswal-contra-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "MOTILAL OSWAL CONTRA FUND",
+  "n_holdings": 29,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 837,
+  "key": "motilal-oswal-motilal-oswal-developed-market-ex-us-etfs-overseas-equity-passive-fof",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Developed Market Ex US ETFs Overseas Equity Passive FOF",
+  "n_holdings": 3,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 838,
+  "key": "motilal-oswal-motilal-oswal-digital-india-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Digital India Fund",
+  "n_holdings": 27,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 839,
+  "key": "motilal-oswal-motilal-oswal-diversified-eq-flexicap-passive-fof",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Diversified Eq Flexicap Passive FOF",
+  "n_holdings": 4,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 840,
+  "key": "motilal-oswal-motilal-oswal-elss-tax-saver-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal ELSS Tax Saver Fund",
+  "n_holdings": 31,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 841,
+  "key": "motilal-oswal-motilal-oswal-financial-services-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Financial Services Fund",
+  "n_holdings": 27,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 842,
+  "key": "motilal-oswal-motilal-oswal-flexicap-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Flexicap Fund",
+  "n_holdings": 34,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 843,
+  "key": "motilal-oswal-motilal-oswal-focused-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Focused Fund",
+  "n_holdings": 30,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 844,
+  "key": "motilal-oswal-motilal-oswal-gold-and-silver-passive-fund-of-funds",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Gold and Silver Passive Fund of Funds",
+  "n_holdings": 2,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 845,
+  "key": "motilal-oswal-motilal-oswal-gold-etf",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Gold ETF",
+  "n_holdings": 2,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 846,
+  "key": "motilal-oswal-motilal-oswal-infrastructure-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Infrastructure Fund",
+  "n_holdings": 24,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 847,
+  "key": "motilal-oswal-motilal-oswal-innovation-opportunities-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Innovation Opportunities Fund",
+  "n_holdings": 30,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 848,
+  "key": "motilal-oswal-motilal-oswal-large-and-midcap-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Large and Midcap Fund",
+  "n_holdings": 30,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 849,
+  "key": "motilal-oswal-motilal-oswal-large-cap-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "MOTILAL OSWAL LARGE CAP FUND",
+  "n_holdings": 51,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 850,
+  "key": "motilal-oswal-motilal-oswal-liquid-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Liquid Fund",
+  "n_holdings": 16,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 851,
+  "key": "motilal-oswal-motilal-oswal-manufacturing-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Manufacturing Fund",
+  "n_holdings": 33,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 852,
+  "key": "motilal-oswal-motilal-oswal-midcap-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Midcap Fund",
+  "n_holdings": 27,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 853,
+  "key": "motilal-oswal-motilal-oswal-multi-cap-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Multi Cap Fund",
+  "n_holdings": 37,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 854,
+  "key": "motilal-oswal-motilal-oswal-multi-factor-passive-fund-of-funds",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Multi Factor Passive Fund of Funds",
+  "n_holdings": 5,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 855,
+  "key": "motilal-oswal-motilal-oswal-nasdaq-100-etf",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nasdaq 100 ETF",
+  "n_holdings": 102,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 856,
+  "key": "motilal-oswal-motilal-oswal-nasdaq-100-fund-of-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nasdaq 100 Fund of Fund",
+  "n_holdings": 2,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 857,
+  "key": "motilal-oswal-motilal-oswal-nasdaq-q50-etf",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nasdaq Q50 ETF",
+  "n_holdings": 51,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 858,
+  "key": "motilal-oswal-motilal-oswal-nifty-100-etf",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty 100 ETF",
+  "n_holdings": 105,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 859,
+  "key": "motilal-oswal-motilal-oswal-nifty-200-momentum-30-etf",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty 200 Momentum 30 ETF",
+  "n_holdings": 31,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 860,
+  "key": "motilal-oswal-motilal-oswal-nifty-200-momentum-30-index-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty 200 Momentum 30 Index Fund",
+  "n_holdings": 31,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 861,
+  "key": "motilal-oswal-motilal-oswal-nifty-50-equal-weight-etf",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty 50 Equal Weight ETF",
+  "n_holdings": 51,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 862,
+  "key": "motilal-oswal-motilal-oswal-nifty-50-etf",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty 50 ETF",
+  "n_holdings": 51,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 863,
+  "key": "motilal-oswal-motilal-oswal-nifty-50-index-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty 50 Index Fund",
+  "n_holdings": 51,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 864,
+  "key": "motilal-oswal-motilal-oswal-nifty-500-etf",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty 500 ETF",
+  "n_holdings": 505,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 865,
+  "key": "motilal-oswal-motilal-oswal-nifty-500-index-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty 500 Index Fund",
+  "n_holdings": 505,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 866,
+  "key": "motilal-oswal-motilal-oswal-nifty-500-momentum-50-etf",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty 500 Momentum 50 ETF",
+  "n_holdings": 51,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 867,
+  "key": "motilal-oswal-motilal-oswal-nifty-500-momentum-50-index-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty 500 Momentum 50 Index Fund",
+  "n_holdings": 51,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 868,
+  "key": "motilal-oswal-motilal-oswal-nifty-alpha-50-etf",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty Alpha 50 ETF",
+  "n_holdings": 55,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 869,
+  "key": "motilal-oswal-motilal-oswal-nifty-bank-index-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty Bank Index Fund",
+  "n_holdings": 15,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 870,
+  "key": "motilal-oswal-motilal-oswal-nifty-capital-market-etf",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty Capital Market ETF",
+  "n_holdings": 18,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 871,
+  "key": "motilal-oswal-motilal-oswal-nifty-capital-market-index-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty Capital Market Index Fund",
+  "n_holdings": 18,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 872,
+  "key": "motilal-oswal-motilal-oswal-nifty-energy-etf",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty Energy ETF",
+  "n_holdings": 41,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 873,
+  "key": "motilal-oswal-motilal-oswal-nifty-india-defence-etf",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty India Defence ETF",
+  "n_holdings": 20,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 874,
+  "key": "motilal-oswal-motilal-oswal-nifty-india-defence-index-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty India Defence Index Fund",
+  "n_holdings": 20,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 875,
+  "key": "motilal-oswal-motilal-oswal-nifty-india-manufacturing-etf",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty India Manufacturing ETF",
+  "n_holdings": 81,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 876,
+  "key": "motilal-oswal-motilal-oswal-nifty-india-tourism-etf",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty India Tourism ETF",
+  "n_holdings": 16,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 877,
+  "key": "motilal-oswal-motilal-oswal-nifty-microcap-250-index-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty Microcap 250 Index Fund",
+  "n_holdings": 252,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 878,
+  "key": "motilal-oswal-motilal-oswal-nifty-midcap-100-etf",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty Midcap 100 ETF",
+  "n_holdings": 101,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 879,
+  "key": "motilal-oswal-motilal-oswal-nifty-midcap-150-index-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty Midcap 150 Index Fund",
+  "n_holdings": 151,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 880,
+  "key": "motilal-oswal-motilal-oswal-nifty-midcap-150-momentum-50-etf",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty Midcap 150 Momentum 50 ETF",
+  "n_holdings": 51,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 881,
+  "key": "motilal-oswal-motilal-oswal-nifty-midsmall-fin-servs-index-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty MidSmall Fin Servs Index Fund",
+  "n_holdings": 31,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 882,
+  "key": "motilal-oswal-motilal-oswal-nifty-midsmall-healthcare-index-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty MidSmall Healthcare Index Fund",
+  "n_holdings": 31,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 883,
+  "key": "motilal-oswal-motilal-oswal-nifty-midsmall-india-consumption-index-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty MidSmall India Consumption Index Fund",
+  "n_holdings": 31,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 884,
+  "key": "motilal-oswal-motilal-oswal-nifty-midsmall-it-and-telecom-index-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty MidSmall IT and Telecom Index Fund",
+  "n_holdings": 21,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 885,
+  "key": "motilal-oswal-motilal-oswal-nifty-mnc-etf",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty MNC ETF",
+  "n_holdings": 35,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 886,
+  "key": "motilal-oswal-motilal-oswal-nifty-next-50-etf",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty Next 50 ETF",
+  "n_holdings": 55,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 887,
+  "key": "motilal-oswal-motilal-oswal-nifty-next-50-index-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty Next 50 Index Fund",
+  "n_holdings": 55,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 888,
+  "key": "motilal-oswal-motilal-oswal-nifty-pse-etf",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty PSE ETF",
+  "n_holdings": 21,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 889,
+  "key": "motilal-oswal-motilal-oswal-nifty-realty-etf",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty Realty ETF",
+  "n_holdings": 11,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 890,
+  "key": "motilal-oswal-motilal-oswal-nifty-services-sector-etf",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty Services Sector ETF",
+  "n_holdings": 31,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 891,
+  "key": "motilal-oswal-motilal-oswal-nifty-smallcap-250-etf",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty Smallcap 250 ETF",
+  "n_holdings": 251,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 892,
+  "key": "motilal-oswal-motilal-oswal-nifty-smallcap-250-index-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Nifty Smallcap 250 Index Fund",
+  "n_holdings": 251,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 893,
+  "key": "motilal-oswal-motilal-oswal-quant-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Quant Fund",
+  "n_holdings": 35,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 894,
+  "key": "motilal-oswal-motilal-oswal-s-p-500-index-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal S&P 500 Index Fund",
+  "n_holdings": 508,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 895,
+  "key": "motilal-oswal-motilal-oswal-services-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Services Fund",
+  "n_holdings": 35,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 896,
+  "key": "motilal-oswal-motilal-oswal-silver-etf",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Silver ETF",
+  "n_holdings": 1,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 897,
+  "key": "motilal-oswal-motilal-oswal-small-cap-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "MOTILAL OSWAL SMALL CAP FUND",
+  "n_holdings": 58,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 898,
+  "key": "motilal-oswal-motilal-oswal-special-opportunities-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Special Opportunities Fund",
+  "n_holdings": 25,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 899,
+  "key": "motilal-oswal-motilal-oswal-ultra-short-term-fund",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "name": "Motilal Oswal Ultra Short Term Fund",
+  "n_holdings": 15,
+  "asof": "MAY 31, 2026"
+ },
+ {
+  "idx": 900,
+  "key": "nippon-cpse-etf",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "CPSE ETF",
+  "n_holdings": 12,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 901,
+  "key": "nippon-index",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Index",
+  "n_holdings": 9,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 902,
+  "key": "nippon-nippon-india-active-momentum-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Active Momentum Fund",
+  "n_holdings": 47,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 903,
+  "key": "nippon-nippon-india-aggressive-hybrid-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Aggressive Hybrid Fund",
+  "n_holdings": 129,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 904,
+  "key": "nippon-nippon-india-arbitrage-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "NIPPON INDIA ARBITRAGE FUND",
+  "n_holdings": 169,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 905,
+  "key": "nippon-nippon-india-balanced-advantage-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "NIPPON INDIA BALANCED ADVANTAGE FUND",
+  "n_holdings": 155,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 906,
+  "key": "nippon-nippon-india-banking-and-psu-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Banking and PSU Fund",
+  "n_holdings": 112,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 907,
+  "key": "nippon-nippon-india-banking-financial-services-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "NIPPON INDIA BANKING & FINANCIAL SERVICES FUND",
+  "n_holdings": 38,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 908,
+  "key": "nippon-nippon-india-bse-sensex-next-30-etf",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India BSE Sensex Next 30 ETF",
+  "n_holdings": 31,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 909,
+  "key": "nippon-nippon-india-bse-sensex-next-30-index-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India BSE Sensex Next 30 Index Fund",
+  "n_holdings": 31,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 910,
+  "key": "nippon-nippon-india-conservative-hybrid-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Conservative Hybrid Fund",
+  "n_holdings": 93,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 911,
+  "key": "nippon-nippon-india-consumption-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "NIPPON INDIA CONSUMPTION FUND",
+  "n_holdings": 43,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 912,
+  "key": "nippon-nippon-india-corporate-bond-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Corporate Bond Fund",
+  "n_holdings": 126,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 913,
+  "key": "nippon-nippon-india-credit-risk-fund-an-open-ended-debt-scheme-predominantly-inv-e7ce8cb6",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Credit Risk Fund (An open ended debt scheme predominantly investing in AA and below rated corporate bonds (excluding AA+ rated corporate bonds). Relatively High interest rate risk and Relatively High Credit Risk. )",
+  "n_holdings": 55,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 914,
+  "key": "nippon-nippon-india-crisil-ibx-aaa-financial-services-dec-2026-index-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India CRISIL - IBX AAA Financial Services - Dec 2026 Index Fund",
+  "n_holdings": 19,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 915,
+  "key": "nippon-nippon-india-crisil-ibx-aaa-financial-services-jan-2028-index-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India CRISIL - IBX AAA Financial Services - Jan 2028 Index Fund",
+  "n_holdings": 17,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 916,
+  "key": "nippon-nippon-india-crisil-ibx-financial-services-3-6-months-debt-index-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India CRISIL-IBX Financial Services 3-6 Months Debt Index Fund",
+  "n_holdings": 24,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 917,
+  "key": "nippon-nippon-india-crisil-ibx-financial-services-9-12-months-debt-index-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India CRISIL-IBX Financial Services 9-12 Months Debt Index Fund",
+  "n_holdings": 23,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 918,
+  "key": "nippon-nippon-india-diversified-equity-flexicap-passive-fof-an-open-ended-fund-o-9194827f",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Diversified Equity Flexicap Passive FoF (An Open ended fund of funds scheme investing in units of Domestic Exchange Traded Funds (ETFs)/ Index Funds)",
+  "n_holdings": 4,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 919,
+  "key": "nippon-nippon-india-dynamic-bond-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Dynamic Bond Fund",
+  "n_holdings": 99,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 920,
+  "key": "nippon-nippon-india-elss-tax-saver-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India ELSS Tax Saver Fund",
+  "n_holdings": 66,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 921,
+  "key": "nippon-nippon-india-equity-savings-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "NIPPON INDIA EQUITY SAVINGS FUND",
+  "n_holdings": 79,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 922,
+  "key": "nippon-nippon-india-etf-bse-sensex-next-50",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India ETF BSE Sensex Next 50",
+  "n_holdings": 51,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 923,
+  "key": "nippon-nippon-india-etf-bse-sensex",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India ETF BSE Sensex",
+  "n_holdings": 31,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 924,
+  "key": "nippon-nippon-india-etf-gold-bees",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India ETF Gold BeES",
+  "n_holdings": 1,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 925,
+  "key": "nippon-nippon-india-etf-hang-seng-bees",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India ETF Hang Seng BeES",
+  "n_holdings": 91,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 926,
+  "key": "nippon-nippon-india-etf-nifty-100",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India ETF Nifty 100",
+  "n_holdings": 105,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 927,
+  "key": "nippon-nippon-india-etf-nifty-1d-rate-liquid-bees",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "NIPPON INDIA ETF NIFTY 1D RATE LIQUID BEES",
+  "n_holdings": 2,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 928,
+  "key": "nippon-nippon-india-etf-nifty-5-yr-benchmark-g-sec",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "NIPPON INDIA ETF NIFTY 5 YR BENCHMARK G-SEC",
+  "n_holdings": 5,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 929,
+  "key": "nippon-nippon-india-etf-nifty-50-bees",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "NIPPON INDIA ETF NIFTY 50 BEES",
+  "n_holdings": 51,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 930,
+  "key": "nippon-nippon-india-etf-nifty-50-shariah-bees",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India ETF Nifty 50 Shariah BeES",
+  "n_holdings": 18,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 931,
+  "key": "nippon-nippon-india-etf-nifty-50-value-20",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "NIPPON INDIA ETF NIFTY 50 VALUE 20",
+  "n_holdings": 21,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 932,
+  "key": "nippon-nippon-india-etf-nifty-8-13-yr-g-sec-long-term-gilt",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "NIPPON INDIA ETF NIFTY 8-13 YR G-SEC LONG TERM GILT",
+  "n_holdings": 6,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 933,
+  "key": "nippon-nippon-india-etf-nifty-bank-bees",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "NIPPON INDIA ETF NIFTY BANK BEES",
+  "n_holdings": 15,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 934,
+  "key": "nippon-nippon-india-etf-nifty-dividend-opportunities-50",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "NIPPON INDIA ETF NIFTY DIVIDEND OPPORTUNITIES 50",
+  "n_holdings": 55,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 935,
+  "key": "nippon-nippon-india-etf-nifty-india-consumption",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "NIPPON INDIA ETF NIFTY INDIA CONSUMPTION",
+  "n_holdings": 31,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 936,
+  "key": "nippon-nippon-india-etf-nifty-infrastructure-bees",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "NIPPON INDIA ETF NIFTY INFRASTRUCTURE BEES",
+  "n_holdings": 31,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 937,
+  "key": "nippon-nippon-india-etf-nifty-it",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India ETF Nifty IT",
+  "n_holdings": 11,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 938,
+  "key": "nippon-nippon-india-etf-nifty-midcap-150",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India ETF Nifty Midcap 150",
+  "n_holdings": 150,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 939,
+  "key": "nippon-nippon-india-etf-nifty-next-50-junior-bees",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "NIPPON INDIA ETF NIFTY NEXT 50 JUNIOR BEES",
+  "n_holdings": 55,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 940,
+  "key": "nippon-nippon-india-etf-nifty-psu-bank-bees",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "NIPPON INDIA ETF NIFTY PSU BANK BEES",
+  "n_holdings": 13,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 941,
+  "key": "nippon-nippon-india-fixed-maturity-plan-xli-series-8-a-close-ended-income-scheme-fed65bbf",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Fixed Maturity Plan - XLI - Series 8 (A Close Ended Income Scheme. Relatively high interest rate risk and Moderate Credit Risk)",
+  "n_holdings": 33,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 942,
+  "key": "nippon-nippon-india-fixed-maturity-plan-xliii-series-1-a-close-ended-income-sche-71cfe8e9",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Fixed Maturity Plan - XLIII -Series 1 (A Close Ended Income Scheme. Moderate Interest rate risk and Moderate credit Risk)",
+  "n_holdings": 14,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 943,
+  "key": "nippon-nippon-india-fixed-maturity-plan-xliii-series-5-a-close-ended-income-sche-cda12957",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Fixed Maturity Plan - XLIII -Series 5 (A Close Ended Income Scheme.Relatively high interest rate risk and Moderate Credit Risk)",
+  "n_holdings": 39,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 944,
+  "key": "nippon-nippon-india-fixed-maturity-plan-xliv-series-1-a-close-ended-scheme-relat-2541166d",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Fixed Maturity Plan - XLIV - Series 1 (A Close Ended Scheme. Relatively High interest rate risk and moderate Credit Risk)",
+  "n_holdings": 15,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 945,
+  "key": "nippon-nippon-india-fixed-maturity-plan-xlv-series-5-a-close-ended-scheme-relati-8e13252c",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Fixed Maturity Plan - XLV - Series 5 (A Close Ended Scheme. Relatively High interest rate risk and Relatively High Credit Risk )",
+  "n_holdings": 3,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 946,
+  "key": "nippon-nippon-india-flexi-cap-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Flexi Cap Fund",
+  "n_holdings": 93,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 947,
+  "key": "nippon-nippon-india-floater-fund-an-open-ended-debt-scheme-predominantly-investi-182c8e4e",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Floater Fund (An open ended debt scheme predominantly investing in floating rate instruments (including fixed rate instruments converted to floating rate exposures using swaps/ derivatives). Relatively High interest rate risk and moderate Credit Risk. )",
+  "n_holdings": 109,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 948,
+  "key": "nippon-nippon-india-focused-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Focused Fund",
+  "n_holdings": 31,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 949,
+  "key": "nippon-nippon-india-gilt-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Gilt Fund",
+  "n_holdings": 42,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 950,
+  "key": "nippon-nippon-india-gold-savings-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "NIPPON INDIA GOLD SAVINGS FUND",
+  "n_holdings": 2,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 951,
+  "key": "nippon-nippon-india-growth-mid-cap-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Growth Mid Cap Fund",
+  "n_holdings": 99,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 952,
+  "key": "nippon-nippon-india-income-plus-arbitrage-active-fund-of-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Income Plus Arbitrage Active Fund of Fund",
+  "n_holdings": 4,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 953,
+  "key": "nippon-nippon-india-index-fund-bse-sensex-plan",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Index Fund - BSE Sensex Plan",
+  "n_holdings": 31,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 954,
+  "key": "nippon-nippon-india-index-fund-nifty-50-plan",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "NIPPON INDIA INDEX FUND - NIFTY 50 PLAN",
+  "n_holdings": 51,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 955,
+  "key": "nippon-nippon-india-innovation-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Innovation Fund",
+  "n_holdings": 56,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 956,
+  "key": "nippon-nippon-india-japan-equity-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "NIPPON INDIA JAPAN EQUITY FUND",
+  "n_holdings": 32,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 957,
+  "key": "nippon-nippon-india-large-cap-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "NIPPON INDIA LARGE CAP FUND",
+  "n_holdings": 68,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 958,
+  "key": "nippon-nippon-india-liquid-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Liquid Fund",
+  "n_holdings": 141,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 959,
+  "key": "nippon-nippon-india-low-duration-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Low Duration Fund",
+  "n_holdings": 119,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 960,
+  "key": "nippon-nippon-india-medium-duration-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Medium Duration Fund",
+  "n_holdings": 29,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 961,
+  "key": "nippon-nippon-india-medium-to-long-duration-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Medium to Long Duration Fund",
+  "n_holdings": 19,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 962,
+  "key": "nippon-nippon-india-mnc-fund-an-open-ended-equity-scheme-following-multinational-b5a62592",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India MNC Fund (An open-ended equity scheme following multinational company (MNC) theme)",
+  "n_holdings": 40,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 963,
+  "key": "nippon-nippon-india-money-market-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Money Market Fund",
+  "n_holdings": 123,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 964,
+  "key": "nippon-nippon-india-multi-asset-allocation-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Multi Asset Allocation Fund",
+  "n_holdings": 170,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 965,
+  "key": "nippon-nippon-india-multi-cap-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "NIPPON INDIA MULTI CAP FUND",
+  "n_holdings": 124,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 966,
+  "key": "nippon-nippon-india-nifty-1d-rate-liquid-etf-growth",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Nifty 1D Rate Liquid ETF - Growth",
+  "n_holdings": 2,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 967,
+  "key": "nippon-nippon-india-nifty-50-value-20-index-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Nifty 50 Value 20 Index Fund",
+  "n_holdings": 21,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 968,
+  "key": "nippon-nippon-india-nifty-500-equal-weight-index-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Nifty 500 Equal Weight Index Fund",
+  "n_holdings": 504,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 969,
+  "key": "nippon-nippon-india-nifty-500-low-volatility-50-index-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Nifty 500 Low Volatility 50 Index Fund",
+  "n_holdings": 51,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 970,
+  "key": "nippon-nippon-india-nifty-500-momentum-50-index-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Nifty 500 Momentum 50 Index Fund",
+  "n_holdings": 51,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 971,
+  "key": "nippon-nippon-india-nifty-500-quality-50-index-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Nifty 500 Quality 50 Index Fund",
+  "n_holdings": 50,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 972,
+  "key": "nippon-nippon-india-nifty-aaa-cpse-bond-plus-sdl-apr-2027-maturity-60-40-index-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Nifty AAA CPSE Bond Plus SDL - Apr 2027 Maturity 60:40 Index Fund(",
+  "n_holdings": 90,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 973,
+  "key": "nippon-nippon-india-nifty-aaa-psu-bond-plus-sdl-sep-2026-maturity-50-50-index-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Nifty AAA PSU Bond Plus SDL - Sep 2026 Maturity 50:50 Index Fund",
+  "n_holdings": 29,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 974,
+  "key": "nippon-nippon-india-nifty-alpha-low-volatility-30-index-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Nifty Alpha Low Volatility 30 Index Fund",
+  "n_holdings": 31,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 975,
+  "key": "nippon-nippon-india-nifty-auto-etf",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Nifty Auto ETF",
+  "n_holdings": 16,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 976,
+  "key": "nippon-nippon-india-nifty-auto-index-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Nifty Auto Index Fund",
+  "n_holdings": 16,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 977,
+  "key": "nippon-nippon-india-nifty-bank-index-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Nifty Bank Index Fund",
+  "n_holdings": 15,
+  "asof": "May 31,2026"
+ }
+]

@@ -1,0 +1,268 @@
+[
+ {
+  "key": "angel-one",
+  "n": 31,
+  "cov_med": 100.0,
+  "asof": [
+   "28-FEB-2026",
+   "30-APR-2026",
+   "30-NOV-2025"
+  ],
+  "secs": 26.6,
+  "log": "[funds_portfolio] angel-one: 31 schemes parsed from 120 file(s) ('Angel One Asset Management Company Limited resolved#0')",
+  "registry_n_claim": 31
+ },
+ {
+  "key": "canara-robeco",
+  "n": 0,
+  "cov_med": null,
+  "asof": [],
+  "secs": 1.4,
+  "log": "[funds_portfolio] canara-robeco: 0 schemes parsed from 1 file(s) ('Canara Robeco Asset Management Company Limited verified')",
+  "registry_n_claim": 0
+ },
+ {
+  "key": "capitalmind",
+  "n": 21,
+  "cov_med": 100.0,
+  "asof": [
+   "April 30, 2026",
+   "August 31, 2025",
+   "December 31, 2025"
+  ],
+  "secs": 6.8,
+  "log": "[funds_portfolio] capitalmind: 21 schemes parsed from 27 file(s) ('Capitalmind Asset Management Private Limited resolved#0')",
+  "registry_n_claim": 21
+ },
+ {
+  "key": "choice",
+  "n": 1,
+  "cov_med": 100.0,
+  "asof": [
+   "2026-05-31"
+  ],
+  "secs": 0.4,
+  "log": "[funds_portfolio] choice: 1 schemes parsed from 1 file(s) ('Choice AMC Private Limited verified')",
+  "registry_n_claim": 1
+ },
+ {
+  "key": "hdfc",
+  "n": 6,
+  "cov_med": 100.0,
+  "asof": [
+   "28-Feb-2026",
+   "30-Apr-2026",
+   "31-Jan-2026"
+  ],
+  "secs": 1.6,
+  "log": "[funds_portfolio] hdfc: 6 schemes parsed from 6 file(s) ('HDFC Asset Management Company Limited May-2026')",
+  "registry_n_claim": 6
+ },
+ {
+  "key": "helios-capital",
+  "n": 8,
+  "cov_med": 100.0,
+  "asof": [
+   "2026-05-31"
+  ],
+  "secs": 4.5,
+  "log": "[funds_portfolio] helios-capital: 8 schemes parsed from 8 file(s) ('Helios Capital Asset Management (India) Pvt. Ltd. resolved#0')",
+  "registry_n_claim": 8
+ },
+ {
+  "key": "hsbc",
+  "n": 1,
+  "cov_med": 100.0,
+  "asof": [
+   "May 31, 2026"
+  ],
+  "secs": 0.2,
+  "log": "[funds_portfolio] hsbc: 1 schemes parsed from 1 file(s) ('HSBC Asset Management (India) Private Ltd. verified')",
+  "registry_n_claim": 45
+ },
+ {
+  "key": "invesco",
+  "n": 42,
+  "cov_med": 98.3,
+  "asof": [
+   "May 31, 2026"
+  ],
+  "secs": 20.4,
+  "log": "[funds_portfolio] invesco: 42 schemes parsed from 87 file(s) ('Invesco Asset Management (India) Private Limited resolved#0')",
+  "registry_n_claim": 42
+ },
+ {
+  "key": "jio-blackrock",
+  "n": 1,
+  "cov_med": 100.0,
+  "asof": [
+   "April 30, 2026"
+  ],
+  "secs": 0.4,
+  "log": "[funds_portfolio] jio-blackrock: 1 schemes parsed from 1 file(s) ('Jio BlackRock Asset Management Private Limited verified')",
+  "registry_n_claim": 0
+ },
+ {
+  "key": "kotak-mahindra",
+  "n": 0,
+  "cov_med": null,
+  "asof": [],
+  "secs": 1.8,
+  "log": "[funds_portfolio] kotak-mahindra: no workbook reachable",
+  "registry_n_claim": 0
+ },
+ {
+  "key": "mirae",
+  "n": 1,
+  "cov_med": 100.0,
+  "asof": [
+   "May 31, 2026"
+  ],
+  "secs": 0.3,
+  "log": "[funds_portfolio] mirae: 1 schemes parsed from 1 file(s) ('Mirae Asset Investment Managers (India) Pvt. Ltd verified')",
+  "registry_n_claim": 0
+ },
+ {
+  "key": "navi",
+  "n": 1,
+  "cov_med": 100.0,
+  "asof": [
+   "31 May 2026"
+  ],
+  "secs": 0.5,
+  "log": "[funds_portfolio] navi: 1 schemes parsed from 1 file(s) ('Navi AMC Limited verified')",
+  "registry_n_claim": 0
+ },
+ {
+  "key": "nj",
+  "n": 76,
+  "cov_med": 100.0,
+  "asof": [
+   "APRIL 30, 2022",
+   "April 30, 2023",
+   "April 30, 2024"
+  ],
+  "secs": 23.3,
+  "log": "[funds_portfolio] nj: 76 schemes parsed from 92 file(s) ('NJ Asset Management Private Limited resolved#0')",
+  "registry_n_claim": 76
+ },
+ {
+  "key": "old-bridge",
+  "n": 19,
+  "cov_med": 90.8,
+  "asof": [
+   "April 30, 2026",
+   "December 31, 2024",
+   "February 28, 2026"
+  ],
+  "secs": 12.9,
+  "log": "[funds_portfolio] old-bridge: 19 schemes parsed from 53 file(s) ('Old Bridge Asset Management Private Limited resolved#0')",
+  "registry_n_claim": 19
+ },
+ {
+  "key": "pgim",
+  "n": 1,
+  "cov_med": 100.0,
+  "asof": [
+   "May 31,2026"
+  ],
+  "secs": 3.0,
+  "log": "[funds_portfolio] pgim: 1 schemes parsed from 1 file(s) ('PGIM India Asset Management Private Limited verified')",
+  "registry_n_claim": 8
+ },
+ {
+  "key": "samco",
+  "n": 57,
+  "cov_med": 100.0,
+  "asof": [
+   "April 30, 2026",
+   "February 28, 2026",
+   "January 31, 2026"
+  ],
+  "secs": 43.3,
+  "log": "[funds_portfolio] samco: 57 schemes parsed from 120 file(s) ('Samco Asset Management Private Limited resolved#2')",
+  "registry_n_claim": 56
+ },
+ {
+  "key": "taurus",
+  "n": 1,
+  "cov_med": 100.0,
+  "asof": [
+   "2026-05-31"
+  ],
+  "secs": 0.6,
+  "log": "[funds_portfolio] taurus: 1 schemes parsed from 1 file(s) ('Taurus Asset Management Company Limited verified')",
+  "registry_n_claim": 8
+ },
+ {
+  "key": "unifi",
+  "n": 3,
+  "cov_med": 100.0,
+  "asof": [
+   "31-MAY-2026",
+   "May 31, 2026"
+  ],
+  "secs": 0.7,
+  "log": "[funds_portfolio] unifi: 3 schemes parsed from 3 file(s) ('Unifi Asset Management Private Limited May-2026')",
+  "registry_n_claim": 3
+ },
+ {
+  "key": "union",
+  "n": 1,
+  "cov_med": 100.0,
+  "asof": [
+   "MAY 31, 2026"
+  ],
+  "secs": 25.5,
+  "log": "[funds_portfolio] union: 1 schemes parsed from 1 file(s) ('Union Asset Management Company Private Limited verified')",
+  "registry_n_claim": 27
+ },
+ {
+  "key": "uti",
+  "n": 1,
+  "cov_med": 7692.7,
+  "asof": [
+   "31/05/2026"
+  ],
+  "secs": 0.9,
+  "log": "[funds_portfolio] uti: 1 schemes parsed from 1 file(s) ('Consolidated Portfolio May 2026')",
+  "registry_n_claim": 82
+ },
+ {
+  "key": "wealth-holdings",
+  "n": 22,
+  "cov_med": 100.0,
+  "asof": [
+   "30-APR-2026",
+   "31-MAR-2026",
+   "31-MAY-2026"
+  ],
+  "secs": 6.1,
+  "log": "[funds_portfolio] wealth-holdings: 22 schemes parsed from 26 file(s) ('Wealth Company Asset Management Holdings Private Limited resolved#0')",
+  "registry_n_claim": 22
+ },
+ {
+  "key": "whiteoak-capital",
+  "n": 20,
+  "cov_med": 100.0,
+  "asof": [
+   "May 31, 2026"
+  ],
+  "secs": 11.7,
+  "log": "[funds_portfolio] whiteoak-capital: 20 schemes parsed from 21 file(s) ('WhiteOak Capital Asset Management Limited resolved#0')",
+  "registry_n_claim": 20
+ },
+ {
+  "key": "zerodha",
+  "n": 120,
+  "cov_med": 100.0,
+  "asof": [
+   "APRIL 2026",
+   "DECEMBER 2025",
+   "FEBRUARY 2026"
+  ],
+  "secs": 36.1,
+  "log": "[funds_portfolio] zerodha: 120 schemes parsed from 120 file(s) ('Zerodha Asset Management Private Limited resolved#0')",
+  "registry_n_claim": 120
+ }
+]

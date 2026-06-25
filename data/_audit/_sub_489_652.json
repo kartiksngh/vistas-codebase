@@ -1,0 +1,1306 @@
+[
+ {
+  "idx": 489,
+  "key": "franklin-templeton-franklin-india-flexi-cap-fund-formerly-known-as-franklin-indi-1ccc0eed",
+  "amc": "Franklin Templeton Asset Management (India) Private Limited",
+  "name": "Franklin India Flexi Cap Fund ( Formerly known as Franklin India Equity Fund) ^",
+  "n_holdings": 57,
+  "asof": "May 29, 2026"
+ },
+ {
+  "idx": 490,
+  "key": "franklin-templeton-franklin-india-floating-rate-fund",
+  "amc": "Franklin Templeton Asset Management (India) Private Limited",
+  "name": "Franklin India Floating Rate Fund",
+  "n_holdings": 15,
+  "asof": "May 29, 2026"
+ },
+ {
+  "idx": 491,
+  "key": "franklin-templeton-franklin-india-focused-equity-fund",
+  "amc": "Franklin Templeton Asset Management (India) Private Limited",
+  "name": "Franklin India Focused Equity Fund",
+  "n_holdings": 30,
+  "asof": "May 29, 2026"
+ },
+ {
+  "idx": 492,
+  "key": "franklin-templeton-franklin-india-government-securities-fund",
+  "amc": "Franklin Templeton Asset Management (India) Private Limited",
+  "name": "Franklin India Government Securities Fund",
+  "n_holdings": 12,
+  "asof": "May 29, 2026"
+ },
+ {
+  "idx": 493,
+  "key": "franklin-templeton-franklin-india-income-plus-arbitrage-active-fund-of-funds-for-47bf7e7a",
+  "amc": "Franklin Templeton Asset Management (India) Private Limited",
+  "name": "Franklin India Income Plus Arbitrage Active Fund of Funds (Formerly known as Franklin India Multi - Asset Solution Fund of Funds)^",
+  "n_holdings": 11,
+  "asof": "May 29, 2026"
+ },
+ {
+  "idx": 494,
+  "key": "franklin-templeton-franklin-india-large-cap-fund-formerly-known-as-franklin-indi-92e94925",
+  "amc": "Franklin Templeton Asset Management (India) Private Limited",
+  "name": "Franklin India Large Cap Fund (Formerly known as Franklin India Bluechip Fund)^",
+  "n_holdings": 48,
+  "asof": "May 29, 2026"
+ },
+ {
+  "idx": 495,
+  "key": "franklin-templeton-franklin-india-large-mid-cap-fund-formerly-known-as-franklin-08feffe3",
+  "amc": "Franklin Templeton Asset Management (India) Private Limited",
+  "name": "Franklin India Large & Mid Cap Fund (Formerly known as Franklin India Equity Advantage Fund)^",
+  "n_holdings": 59,
+  "asof": "May 29, 2026"
+ },
+ {
+  "idx": 496,
+  "key": "franklin-templeton-franklin-india-liquid-fund",
+  "amc": "Franklin Templeton Asset Management (India) Private Limited",
+  "name": "Franklin India Liquid Fund",
+  "n_holdings": 38,
+  "asof": "May 29, 2026"
+ },
+ {
+  "idx": 497,
+  "key": "franklin-templeton-franklin-india-long-duration-fund",
+  "amc": "Franklin Templeton Asset Management (India) Private Limited",
+  "name": "Franklin India Long Duration Fund",
+  "n_holdings": 5,
+  "asof": "May 29, 2026"
+ },
+ {
+  "idx": 498,
+  "key": "franklin-templeton-franklin-india-low-duration-fund",
+  "amc": "Franklin Templeton Asset Management (India) Private Limited",
+  "name": "Franklin India Low Duration Fund",
+  "n_holdings": 22,
+  "asof": "May 29, 2026"
+ },
+ {
+  "idx": 499,
+  "key": "franklin-templeton-franklin-india-medium-to-long-duration-fund",
+  "amc": "Franklin Templeton Asset Management (India) Private Limited",
+  "name": "Franklin India Medium to Long Duration Fund",
+  "n_holdings": 13,
+  "asof": "May 29, 2026"
+ },
+ {
+  "idx": 500,
+  "key": "franklin-templeton-franklin-india-mid-cap-fund-formerly-known-as-franklin-india-prima-fund",
+  "amc": "Franklin Templeton Asset Management (India) Private Limited",
+  "name": "Franklin India Mid Cap Fund (Formerly known as Franklin India Prima Fund) ^",
+  "n_holdings": 75,
+  "asof": "May 29, 2026"
+ },
+ {
+  "idx": 501,
+  "key": "franklin-templeton-franklin-india-money-market-fund-formerly-known-as-franklin-i-59f8437a",
+  "amc": "Franklin Templeton Asset Management (India) Private Limited",
+  "name": "Franklin India Money Market Fund (formerly known as Franklin India Savings Fund) ^",
+  "n_holdings": 41,
+  "asof": "May 29, 2026"
+ },
+ {
+  "idx": 502,
+  "key": "franklin-templeton-franklin-india-multi-asset-allocation-fund",
+  "amc": "Franklin Templeton Asset Management (India) Private Limited",
+  "name": "Franklin India Multi Asset Allocation Fund",
+  "n_holdings": 63,
+  "asof": "May 29, 2026"
+ },
+ {
+  "idx": 503,
+  "key": "franklin-templeton-franklin-india-multi-cap-fund",
+  "amc": "Franklin Templeton Asset Management (India) Private Limited",
+  "name": "Franklin India Multi Cap Fund",
+  "n_holdings": 57,
+  "asof": "May 29, 2026"
+ },
+ {
+  "idx": 504,
+  "key": "franklin-templeton-franklin-india-multi-factor-fund",
+  "amc": "Franklin Templeton Asset Management (India) Private Limited",
+  "name": "Franklin India Multi-Factor Fund",
+  "n_holdings": 93,
+  "asof": "May 29, 2026"
+ },
+ {
+  "idx": 505,
+  "key": "franklin-templeton-franklin-india-nse-nifty-50-index-fund-formerly-known-as-fran-fa56a951",
+  "amc": "Franklin Templeton Asset Management (India) Private Limited",
+  "name": "Franklin India NSE Nifty 50 Index Fund (Formerly known as Franklin India Index Fund – NSE Nifty Plan) ^",
+  "n_holdings": 50,
+  "asof": "May 29, 2026"
+ },
+ {
+  "idx": 506,
+  "key": "franklin-templeton-franklin-india-opportunities-fund",
+  "amc": "Franklin Templeton Asset Management (India) Private Limited",
+  "name": "Franklin India Opportunities Fund",
+  "n_holdings": 46,
+  "asof": "May 29, 2026"
+ },
+ {
+  "idx": 507,
+  "key": "franklin-templeton-franklin-india-overnight-fund",
+  "amc": "Franklin Templeton Asset Management (India) Private Limited",
+  "name": "Franklin India Overnight Fund",
+  "n_holdings": 3,
+  "asof": "May 29, 2026"
+ },
+ {
+  "idx": 508,
+  "key": "franklin-templeton-franklin-india-retirement-fund-formerly-known-as-franklin-ind-d6113af2",
+  "amc": "Franklin Templeton Asset Management (India) Private Limited",
+  "name": "Franklin India Retirement Fund (formerly known as Franklin India Pension Plan)^",
+  "n_holdings": 55,
+  "asof": "May 29, 2026"
+ },
+ {
+  "idx": 509,
+  "key": "franklin-templeton-franklin-india-short-term-income-plan-segregated-portfolio-3-633f885c",
+  "amc": "Franklin Templeton Asset Management (India) Private Limited",
+  "name": "Franklin India Short Term Income Plan - Segregated Portfolio 3 - 9.50% Yes Bank Ltd CO 23 Dec 2021",
+  "n_holdings": 1,
+  "asof": "May 29, 2026"
+ },
+ {
+  "idx": 510,
+  "key": "franklin-templeton-franklin-india-small-cap-fund-formerly-known-as-franklin-indi-aee876aa",
+  "amc": "Franklin Templeton Asset Management (India) Private Limited",
+  "name": "Franklin India Small Cap Fund (Formerly known as Franklin India Smaller Companies Fund) ^",
+  "n_holdings": 88,
+  "asof": "May 29, 2026"
+ },
+ {
+  "idx": 511,
+  "key": "franklin-templeton-franklin-india-technology-fund",
+  "amc": "Franklin Templeton Asset Management (India) Private Limited",
+  "name": "Franklin India Technology Fund",
+  "n_holdings": 22,
+  "asof": "May 29, 2026"
+ },
+ {
+  "idx": 512,
+  "key": "franklin-templeton-franklin-india-ultra-short-duration-fund",
+  "amc": "Franklin Templeton Asset Management (India) Private Limited",
+  "name": "Franklin India Ultra Short Duration Fund",
+  "n_holdings": 18,
+  "asof": "May 29, 2026"
+ },
+ {
+  "idx": 513,
+  "key": "franklin-templeton-franklin-u-s-opportunities-equity-active-fund-of-funds-former-76ea7844",
+  "amc": "Franklin Templeton Asset Management (India) Private Limited",
+  "name": "Franklin U.S. Opportunities Equity Active Fund of Funds ( Formerly known as Franklin India Feeder - Franklin U.S. Opportunities Fund)^",
+  "n_holdings": 1,
+  "asof": "May 29, 2026"
+ },
+ {
+  "idx": 514,
+  "key": "franklin-templeton-templeton-india-value-fund",
+  "amc": "Franklin Templeton Asset Management (India) Private Limited",
+  "name": "Templeton India Value Fund",
+  "n_holdings": 48,
+  "asof": "May 29, 2026"
+ },
+ {
+  "idx": 515,
+  "key": "groww-groww-aggressive-hybrid-fund",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Aggressive Hybrid Fund",
+  "n_holdings": 93,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 516,
+  "key": "groww-groww-arbitrage-fund",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Arbitrage Fund",
+  "n_holdings": 47,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 517,
+  "key": "groww-groww-banking-financial-services-fund",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Banking & Financial Services Fund",
+  "n_holdings": 33,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 518,
+  "key": "groww-groww-bse-hospitals-etf-fof",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww BSE Hospitals ETF FOF",
+  "n_holdings": 2,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 519,
+  "key": "groww-groww-bse-hospitals-etf",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww BSE Hospitals ETF",
+  "n_holdings": 17,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 520,
+  "key": "groww-groww-bse-power-etf-fof",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww BSE Power ETF FOF",
+  "n_holdings": 2,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 521,
+  "key": "groww-groww-bse-power-etf",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww BSE Power ETF",
+  "n_holdings": 19,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 522,
+  "key": "groww-groww-dynamic-term-fund",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Dynamic Term Fund",
+  "n_holdings": 13,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 523,
+  "key": "groww-groww-elss-tax-saver-fund",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww ELSS Tax Saver Fund",
+  "n_holdings": 66,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 524,
+  "key": "groww-groww-gilt-fund",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Gilt Fund",
+  "n_holdings": 8,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 525,
+  "key": "groww-groww-gold-etf-fof",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Gold ETF FOF",
+  "n_holdings": 3,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 526,
+  "key": "groww-groww-gold-etf",
+  "amc": "Groww Asset Management Limited",
+  "name": "GROWW Gold ETF",
+  "n_holdings": 2,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 527,
+  "key": "groww-groww-large-cap-fund",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Large Cap Fund",
+  "n_holdings": 43,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 528,
+  "key": "groww-groww-liquid-fund",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Liquid Fund",
+  "n_holdings": 18,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 529,
+  "key": "groww-groww-money-market-fund",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Money Market Fund",
+  "n_holdings": 16,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 530,
+  "key": "groww-groww-multi-asset-allocation-fund",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Multi Asset Allocation Fund",
+  "n_holdings": 86,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 531,
+  "key": "groww-groww-multi-asset-omni-fof",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Multi Asset Omni FOF",
+  "n_holdings": 16,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 532,
+  "key": "groww-groww-multicap-fund",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Multicap Fund",
+  "n_holdings": 68,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 533,
+  "key": "groww-groww-nifty-1d-rate-liquid-etf",
+  "amc": "Groww Asset Management Limited",
+  "name": "GROWW NIFTY 1D Rate Liquid ETF",
+  "n_holdings": 2,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 534,
+  "key": "groww-groww-nifty-200-etf-fof",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Nifty 200 ETF FOF",
+  "n_holdings": 2,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 535,
+  "key": "groww-groww-nifty-200-etf",
+  "amc": "Groww Asset Management Limited",
+  "name": "GROWW NIFTY 200 ETF",
+  "n_holdings": 205,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 536,
+  "key": "groww-groww-nifty-50-etf",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Nifty 50 ETF",
+  "n_holdings": 51,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 537,
+  "key": "groww-groww-nifty-50-index-fund",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Nifty 50 Index Fund",
+  "n_holdings": 51,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 538,
+  "key": "groww-groww-nifty-500-low-volatility-50-etf",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Nifty 500 Low Volatility 50 ETF",
+  "n_holdings": 51,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 539,
+  "key": "groww-groww-nifty-500-momentum-50-etf-fof",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Nifty 500 Momentum 50 ETF FOF",
+  "n_holdings": 2,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 540,
+  "key": "groww-groww-nifty-500-momentum-50-etf",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Nifty 500 Momentum 50 ETF",
+  "n_holdings": 51,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 541,
+  "key": "groww-groww-nifty-capital-markets-etf-fof",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Nifty Capital Markets ETF FOF",
+  "n_holdings": 2,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 542,
+  "key": "groww-groww-nifty-capital-markets-etf",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Nifty Capital Markets ETF",
+  "n_holdings": 18,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 543,
+  "key": "groww-groww-nifty-chemicals-etf",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Nifty Chemicals ETF",
+  "n_holdings": 21,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 544,
+  "key": "groww-groww-nifty-ev-new-age-auto-etf-fof",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Nifty EV & New Age Auto ETF FOF",
+  "n_holdings": 2,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 545,
+  "key": "groww-groww-nifty-ev-new-age-automotive-etf",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Nifty EV & New Age Automotive ETF",
+  "n_holdings": 39,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 546,
+  "key": "groww-groww-nifty-india-defence-etf-fof",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Nifty India Defence ETF FOF",
+  "n_holdings": 2,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 547,
+  "key": "groww-groww-nifty-india-defence-etf",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Nifty India Defence ETF",
+  "n_holdings": 20,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 548,
+  "key": "groww-groww-nifty-india-internet-etf-fof",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Nifty India Internet ETF FOF",
+  "n_holdings": 2,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 549,
+  "key": "groww-groww-nifty-india-internet-etf",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Nifty India Internet ETF",
+  "n_holdings": 28,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 550,
+  "key": "groww-groww-nifty-india-railways-psu-etf",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Nifty India Railways PSU ETF",
+  "n_holdings": 18,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 551,
+  "key": "groww-groww-nifty-india-railways-psu-index",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Nifty India Railways PSU Index",
+  "n_holdings": 18,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 552,
+  "key": "groww-groww-nifty-metal-etf",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Nifty Metal ETF",
+  "n_holdings": 20,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 553,
+  "key": "groww-groww-nifty-midcap-150-etf",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Nifty Midcap 150 ETF",
+  "n_holdings": 151,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 554,
+  "key": "groww-groww-nifty-midcap-150-index-fund",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Nifty Midcap 150 Index Fund",
+  "n_holdings": 151,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 555,
+  "key": "groww-groww-nifty-next-50-etf",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Nifty Next 50 ETF",
+  "n_holdings": 55,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 556,
+  "key": "groww-groww-nifty-next-50-index-fund",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Nifty Next 50 Index Fund",
+  "n_holdings": 55,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 557,
+  "key": "groww-groww-nifty-non-cycl-consumer-index-fund",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Nifty Non-Cycl Consumer Index Fund",
+  "n_holdings": 31,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 558,
+  "key": "groww-groww-nifty-private-bank-etf",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Nifty Private Bank ETF",
+  "n_holdings": 11,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 559,
+  "key": "groww-groww-nifty-private-bank-index-fund",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Nifty Private Bank Index Fund",
+  "n_holdings": 11,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 560,
+  "key": "groww-groww-nifty-pse-etf-fof",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Nifty PSE ETF FOF",
+  "n_holdings": 2,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 561,
+  "key": "groww-groww-nifty-pse-etf",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Nifty PSE ETF",
+  "n_holdings": 21,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 562,
+  "key": "groww-groww-nifty-psu-bank-etf",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Nifty PSU Bank ETF",
+  "n_holdings": 13,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 563,
+  "key": "groww-groww-nifty-psu-bank-index-fund",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Nifty PSU Bank Index Fund",
+  "n_holdings": 13,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 564,
+  "key": "groww-groww-nifty-realty-etf",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Nifty Realty ETF",
+  "n_holdings": 11,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 565,
+  "key": "groww-groww-nifty-smallcap-250-etf",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Nifty Smallcap 250 ETF",
+  "n_holdings": 251,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 566,
+  "key": "groww-groww-nifty-smallcap-250-index-fund",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Nifty Smallcap 250 Index Fund",
+  "n_holdings": 251,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 567,
+  "key": "groww-groww-nifty-total-market-index-fund",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Nifty Total Market Index Fund",
+  "n_holdings": 756,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 568,
+  "key": "groww-groww-overnight-fund",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Overnight Fund",
+  "n_holdings": 3,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 569,
+  "key": "groww-groww-short-term-fund",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Short Term Fund",
+  "n_holdings": 17,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 570,
+  "key": "groww-groww-silver-etf-fof",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Silver ETF FOF",
+  "n_holdings": 3,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 571,
+  "key": "groww-groww-silver-etf",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Silver ETF",
+  "n_holdings": 2,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 572,
+  "key": "groww-groww-small-cap-fund",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Small Cap Fund",
+  "n_holdings": 49,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 573,
+  "key": "groww-groww-value-fund",
+  "amc": "Groww Asset Management Limited",
+  "name": "Groww Value Fund",
+  "n_holdings": 64,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "idx": 574,
+  "key": "icici-prudential-bharat-22-etf",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "BHARAT 22 ETF",
+  "n_holdings": 24,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 575,
+  "key": "icici-prudential-icici-prudential-active-momentum-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Active Momentum Fund",
+  "n_holdings": 55,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 576,
+  "key": "icici-prudential-icici-prudential-aggressive-hybrid-active-fof",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Aggressive Hybrid Active FOF",
+  "n_holdings": 12,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 577,
+  "key": "icici-prudential-icici-prudential-all-seasons-bond-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential All Seasons Bond Fund",
+  "n_holdings": 101,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 578,
+  "key": "icici-prudential-icici-prudential-arbitrage-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Arbitrage Fund",
+  "n_holdings": 183,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 579,
+  "key": "icici-prudential-icici-prudential-balanced-advantage-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Balanced Advantage Fund",
+  "n_holdings": 210,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 580,
+  "key": "icici-prudential-icici-prudential-banking-financial-services-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Banking & Financial Services Fund",
+  "n_holdings": 51,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 581,
+  "key": "icici-prudential-icici-prudential-banking-psu-debt-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Banking & PSU Debt Fund",
+  "n_holdings": 112,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 582,
+  "key": "icici-prudential-icici-prudential-bharat-22-fof",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential BHARAT 22 FOF",
+  "n_holdings": 3,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 583,
+  "key": "icici-prudential-icici-prudential-bharat-consumption-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Bharat Consumption Fund",
+  "n_holdings": 64,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 584,
+  "key": "icici-prudential-icici-prudential-bond-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Bond Fund",
+  "n_holdings": 60,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 585,
+  "key": "icici-prudential-icici-prudential-bse-500-etf-fof",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential BSE 500 ETF FOF",
+  "n_holdings": 3,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 586,
+  "key": "icici-prudential-icici-prudential-bse-500-etf",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential BSE 500 ETF",
+  "n_holdings": 501,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 587,
+  "key": "icici-prudential-icici-prudential-bse-liquid-rate-etf-growth",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential BSE Liquid Rate ETF - Growth",
+  "n_holdings": 2,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 588,
+  "key": "icici-prudential-icici-prudential-bse-liquid-rate-etf-idcw",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential BSE Liquid Rate ETF - IDCW",
+  "n_holdings": 2,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 589,
+  "key": "icici-prudential-icici-prudential-bse-midcap-select-etf",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential BSE Midcap Select ETF",
+  "n_holdings": 32,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 590,
+  "key": "icici-prudential-icici-prudential-bse-sensex-etf",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential BSE Sensex ETF",
+  "n_holdings": 32,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 591,
+  "key": "icici-prudential-icici-prudential-bse-sensex-index-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential BSE Sensex Index Fund",
+  "n_holdings": 32,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 592,
+  "key": "icici-prudential-icici-prudential-business-cycle-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Business Cycle Fund",
+  "n_holdings": 85,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 593,
+  "key": "icici-prudential-icici-prudential-children-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Children Fund",
+  "n_holdings": 83,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 594,
+  "key": "icici-prudential-icici-prudential-commodities-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Commodities Fund",
+  "n_holdings": 54,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 595,
+  "key": "icici-prudential-icici-prudential-conglomerate-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Conglomerate Fund",
+  "n_holdings": 48,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 596,
+  "key": "icici-prudential-icici-prudential-constant-maturity-gilt-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Constant Maturity Gilt Fund",
+  "n_holdings": 10,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 597,
+  "key": "icici-prudential-icici-prudential-corporate-bond-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Corporate Bond Fund",
+  "n_holdings": 203,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 598,
+  "key": "icici-prudential-icici-prudential-credit-risk-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Credit Risk Fund",
+  "n_holdings": 104,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 599,
+  "key": "icici-prudential-icici-prudential-crisil-ibx-financial-services-3-6-months-debt-index-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential CRISIL-IBX Financial Services 3-6 Months Debt Index Fund",
+  "n_holdings": 24,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 600,
+  "key": "icici-prudential-icici-prudential-diversified-debt-strategy-active-fof",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Diversified Debt Strategy Active FOF",
+  "n_holdings": 6,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 601,
+  "key": "icici-prudential-icici-prudential-diversified-equity-all-cap-active-fof",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Diversified Equity All Cap Active FOF",
+  "n_holdings": 7,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 602,
+  "key": "icici-prudential-icici-prudential-diversified-equity-all-cap-omni-fof",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Diversified Equity All Cap Omni FOF",
+  "n_holdings": 12,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 603,
+  "key": "icici-prudential-icici-prudential-dividend-yield-equity-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Dividend Yield Equity Fund",
+  "n_holdings": 77,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 604,
+  "key": "icici-prudential-icici-prudential-dynamic-asset-allocation-active-fof",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Dynamic Asset Allocation Active FOF",
+  "n_holdings": 31,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 605,
+  "key": "icici-prudential-icici-prudential-elss-tax-saver-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential ELSS Tax Saver Fund",
+  "n_holdings": 93,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 606,
+  "key": "icici-prudential-icici-prudential-energy-opportunities-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Energy Opportunities Fund",
+  "n_holdings": 80,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 607,
+  "key": "icici-prudential-icici-prudential-equity-debt-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Equity & Debt Fund",
+  "n_holdings": 238,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 608,
+  "key": "icici-prudential-icici-prudential-equity-minimum-variance-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Equity Minimum Variance Fund",
+  "n_holdings": 39,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 609,
+  "key": "icici-prudential-icici-prudential-equity-savings-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Equity Savings Fund",
+  "n_holdings": 120,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 610,
+  "key": "icici-prudential-icici-prudential-esg-exclusionary-strategy-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential ESG Exclusionary Strategy Fund",
+  "n_holdings": 57,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 611,
+  "key": "icici-prudential-icici-prudential-exports-and-services-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Exports and Services Fund",
+  "n_holdings": 72,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 612,
+  "key": "icici-prudential-icici-prudential-fixed-maturity-plan-series-85-10-years-plan-i",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Fixed Maturity Plan - Series 85 - 10 Years Plan I",
+  "n_holdings": 31,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 613,
+  "key": "icici-prudential-icici-prudential-fixed-maturity-plan-series-88-1303-days-plan-s",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Fixed Maturity Plan - Series 88 - 1303 Days Plan S",
+  "n_holdings": 12,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 614,
+  "key": "icici-prudential-icici-prudential-flexicap-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Flexicap Fund",
+  "n_holdings": 87,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 615,
+  "key": "icici-prudential-icici-prudential-floating-interest-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Floating Interest Fund_",
+  "n_holdings": 84,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 616,
+  "key": "icici-prudential-icici-prudential-fmcg-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential FMCG Fund",
+  "n_holdings": 33,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 617,
+  "key": "icici-prudential-icici-prudential-focused-equity-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Focused Equity Fund",
+  "n_holdings": 36,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 618,
+  "key": "icici-prudential-icici-prudential-gilt-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Gilt Fund",
+  "n_holdings": 50,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 619,
+  "key": "icici-prudential-icici-prudential-global-advantage-fund-fof",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Global Advantage Fund (FOF)",
+  "n_holdings": 8,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 620,
+  "key": "icici-prudential-icici-prudential-global-stable-equity-fund-fof",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Global Stable Equity Fund (FOF)",
+  "n_holdings": 3,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 621,
+  "key": "icici-prudential-icici-prudential-gold-etf-fof",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Gold ETF FOF",
+  "n_holdings": 3,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 622,
+  "key": "icici-prudential-icici-prudential-gold-etf",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Gold ETF",
+  "n_holdings": 2,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 623,
+  "key": "icici-prudential-icici-prudential-housing-opportunities-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI PRUDENTIAL HOUSING OPPORTUNITIES FUND",
+  "n_holdings": 57,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 624,
+  "key": "icici-prudential-icici-prudential-income-plus-arbitrage-omni-fof",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Income plus Arbitrage Omni FOF",
+  "n_holdings": 7,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 625,
+  "key": "icici-prudential-icici-prudential-india-opportunities-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential India Opportunities Fund",
+  "n_holdings": 87,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 626,
+  "key": "icici-prudential-icici-prudential-infrastructure-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Infrastructure Fund",
+  "n_holdings": 69,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 627,
+  "key": "icici-prudential-icici-prudential-innovation-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Innovation Fund",
+  "n_holdings": 74,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 628,
+  "key": "icici-prudential-icici-prudential-large-cap-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Large Cap Fund",
+  "n_holdings": 92,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 629,
+  "key": "icici-prudential-icici-prudential-large-mid-cap-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Large & Mid Cap Fund",
+  "n_holdings": 91,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 630,
+  "key": "icici-prudential-icici-prudential-liquid-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Liquid Fund",
+  "n_holdings": 131,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 631,
+  "key": "icici-prudential-icici-prudential-long-term-bond-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Long Term Bond Fund",
+  "n_holdings": 22,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 632,
+  "key": "icici-prudential-icici-prudential-long-term-wealth-enhancement-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Long Term Wealth Enhancement Fund",
+  "n_holdings": 27,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 633,
+  "key": "icici-prudential-icici-prudential-manufacturing-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Manufacturing Fund",
+  "n_holdings": 86,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 634,
+  "key": "icici-prudential-icici-prudential-medium-term-bond-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Medium Term Bond Fund",
+  "n_holdings": 106,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 635,
+  "key": "icici-prudential-icici-prudential-midcap-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Midcap Fund",
+  "n_holdings": 84,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 636,
+  "key": "icici-prudential-icici-prudential-mnc-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential MNC Fund",
+  "n_holdings": 58,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 637,
+  "key": "icici-prudential-icici-prudential-money-market-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Money Market Fund",
+  "n_holdings": 109,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 638,
+  "key": "icici-prudential-icici-prudential-multi-asset-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Multi-Asset Fund",
+  "n_holdings": 239,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 639,
+  "key": "icici-prudential-icici-prudential-multi-sector-passive-fof",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Multi Sector Passive FOF",
+  "n_holdings": 12,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 640,
+  "key": "icici-prudential-icici-prudential-multicap-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Multicap Fund",
+  "n_holdings": 165,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 641,
+  "key": "icici-prudential-icici-prudential-nasdaq-100-index-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential NASDAQ 100 Index Fund",
+  "n_holdings": 103,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 642,
+  "key": "icici-prudential-icici-prudential-nifty-10-yr-benchmark-g-sec-etf",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Nifty 10 yr Benchmark G-Sec ETF",
+  "n_holdings": 3,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 643,
+  "key": "icici-prudential-icici-prudential-nifty-100-etf",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Nifty 100 ETF",
+  "n_holdings": 105,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 644,
+  "key": "icici-prudential-icici-prudential-nifty-100-low-volatility-30-etf-fof",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Nifty 100 Low Volatility 30 ETF FOF",
+  "n_holdings": 3,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 645,
+  "key": "icici-prudential-icici-prudential-nifty-100-low-volatility-30-etf",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Nifty 100 Low Volatility 30 ETF",
+  "n_holdings": 31,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 646,
+  "key": "icici-prudential-icici-prudential-nifty-200-momentum-30-etf",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Nifty 200 Momentum 30 ETF",
+  "n_holdings": 31,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 647,
+  "key": "icici-prudential-icici-prudential-nifty-200-momentum-30-index-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Nifty 200 Momentum 30 Index Fund",
+  "n_holdings": 32,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 648,
+  "key": "icici-prudential-icici-prudential-nifty-200-quality-30-etf",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Nifty 200 Quality 30 ETF",
+  "n_holdings": 31,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 649,
+  "key": "icici-prudential-icici-prudential-nifty-5-yr-benchmark-g-sec-etf",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Nifty 5 yr Benchmark G-SEC ETF",
+  "n_holdings": 3,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 650,
+  "key": "icici-prudential-icici-prudential-nifty-50-etf",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Nifty 50 ETF",
+  "n_holdings": 52,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 651,
+  "key": "icici-prudential-icici-prudential-nifty-50-index-fund",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "name": "ICICI Prudential Nifty 50 Index Fund",
+  "n_holdings": 52,
+  "asof": "May 31,2026"
+ }
+]

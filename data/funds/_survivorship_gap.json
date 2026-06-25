@@ -1,0 +1,5658 @@
+{
+ "missing_dead": [
+  {
+   "first": "2013-05",
+   "last": "2015-02",
+   "name": "IIFL Dividend Opportunities Index Fund - Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2015-11",
+   "name": "Aditya Birla Sun Life Buy India Fund - Dividend - Direct Plan",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2013-05",
+   "name": "Birla Sun Life Commodities Equities Fund Global Multi Commodity Plan - Dividend - Direct Plan",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2013-05",
+   "name": "Bsl Comm Eq Fund-Global Multi Comm Plan - Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2013-05",
+   "name": "Birla Sun Life Commodities Equities Fund Global Precious Metals Plan - Dividend - Direct Plan",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2013-05",
+   "name": "Bsl Comm Eq Fund-Global Prec Metals Plan - Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2018-05",
+   "name": "Aditya Birla Sun Life India Opportunities Fund - Dividend - Direct Plan",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2018-05",
+   "name": "Aditya Birla Sun Life India Reforms Fund - Dividend - Direct Plan",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2015-11",
+   "name": "Aditya Birla Sun Life Long Term Advantage - Dividend - Direct Plan",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2015-11",
+   "name": "Aditya Birla Sun Life Long Term Fund- Growth Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2018-05",
+   "name": "Aditya Birla Sun Life Special Situations Fund - Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2017-02",
+   "name": "IDFC Equity Fund -Plan B- Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2017-02",
+   "name": "IDFC Imperial Equity Fund-Plan B - Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2013-08",
+   "name": "IDFC  India GDP Growth Fund-Direct Plan-Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2017-02",
+   "name": "IDFC Premier Equity Fund-Plan B - Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2017-02",
+   "name": "IDFC Premier Equity Fund_Plan B - Growth",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2013-08",
+   "name": "IDFC  50-50 Strategic Sector Fund-Direct Plan-Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2013-08",
+   "name": "IDFC Strategic Sector (50-50) Equity Fund-Plan B - Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-02",
+   "name": "Canara Robeco Nifty Index - Regular Plan - Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2013-11",
+   "name": "Daiwa Industry Leaders Fund - Direct - Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2016-02",
+   "name": "DWS ALPHA EQUITY FUND - BONUS OPTION",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2016-02",
+   "name": "DWS Alpha Equity Fund Wealth Plan - Growth Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2016-02",
+   "name": "DWS Equity Income Fund - Annual Dividend option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2016-02",
+   "name": "DWS Equity Income Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2016-02",
+   "name": "DWS Equity Income Fund - Monthly Dividend option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2016-02",
+   "name": "DWS Equity Income Fund - Quarterly  Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2016-02",
+   "name": "DWS INVESTMENT OPPORTUNITY FUND - BONUS OPTION",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2016-02",
+   "name": "DWS Investment Opportunity Fund Wealth Plan- Dividend Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2016-05",
+   "name": "DSP BlackRock Equity Fund - Institutional Plan - Growth",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-05",
+   "name": "DSP India T.I.G.E.R. Fund - Institutional Plan - Growth",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2017-05",
+   "name": "DSP BlackRock Technology.com   Fund - Regular Plan - Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2017-02",
+   "name": "DSP Top 100 Equity Fund - Institutional  Plan - Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2016-11",
+   "name": "Edelweiss Emerging Leaders Fund - Direct Plan- Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2016-11",
+   "name": "Edelweiss Equity Savings Advantage Fund - Dividend Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-08",
+   "name": "Franklin India Index Fund - BSE Plan - Dividend Plan",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2016-08",
+   "name": "Goldman Sachs CNX 500 Fund - Direct Plan - Dividend Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2016-08",
+   "name": "Goldman Sachs India Equity Fund - Direct Plan -Dividend Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-05",
+   "name": "HDFC Focused Large-Cap Fund -Direct Plan - Dividend Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2018-05",
+   "name": "HDFC Index Fund Sensex Plus Plan-Direct Plan",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2018-05",
+   "name": "HDFC Index Fund-Sensex Plus( FV-Rs32.161)",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2017-05",
+   "name": "HSBC Dividend Yield Equity Fund - Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2016-02",
+   "name": "ICICI Prudential Blended Plan A -  Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-08",
+   "name": "ING Core Equity Fund - Direct Plan - Dividend Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-08",
+   "name": "ING Dividend Yield Fund - Direct Plan - Dividend Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-08",
+   "name": "ING Large Cap Equity Fund - Direct Plan - Dividend Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-08",
+   "name": "ING Midcap Fund - Direct Plan - Dividend Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-08",
+   "name": "ING Multi Manager Equity Fund - Direct Plan - Option A -  Growth  Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-08",
+   "name": "ING Multi Manager Equity Fund - Option A- Dividend(Payout and Reinvestment)",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2015-08",
+   "name": "Religare Invesco AGILE Fund - Direct Plan - Dividend Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2016-11",
+   "name": "JPMorgan India Equity Fund - Direct Plan - Dividend Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2016-11",
+   "name": "JPMorgan India Mid and Small Cap Fund - Direct Plan - Dividend Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2015-08",
+   "name": "L&T Indo Asia Fund - Regular Plan - Dividend Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2016-02",
+   "name": "Mirae Asset Global Commodity Stocks - Direct Plan - Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-05",
+   "name": "Morgan Stanley A.C.E. Fund- Regular Dividend Plan",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-05",
+   "name": "Morgan Stanley Growth Fund -  Direct Dividend Plan",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2018-02",
+   "name": "Reliance Focused Large Cap Fund - Direct Plan Dividend Plan",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2013-08",
+   "name": "Reliance Infrastructure Fund - Direct Plan Dividend Plan - Dividend Payout Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2013-08",
+   "name": "Reliance Infrastructure Fund- Institutional Plan-Growth Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2013-08",
+   "name": "Reliance Natural Resources Fund - Direct Plan Bonus Plan - Bonus",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2016-02",
+   "name": "DHFL Pramerica Dynamic Asset Allocation Fund - Direct Plan-Growth Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2016-02",
+   "name": "DHFL Pramerica Large Cap Equity Fund - Direct Plan-Dividend Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-11",
+   "name": "PineBridge India Equity Fund- Direct Plan- Dividend Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-11",
+   "name": "PineBridge India Equity Fund- Standard Plan- Dividend Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-02",
+   "name": "PineBridge Infrastructure & Economic Reform Fund - Institutional Plan-Growth",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-11",
+   "name": "PineBridge Infrastructure & Economic Reform Fund - Standard Plan-Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-11",
+   "name": "PineBridge Infrastructure & Economic Reform Fund- Direct Plan- Dividend Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-02",
+   "name": "Principal Retail Equity Savings Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2020-02",
+   "name": "SAHARA BANKING & FINANCIAL SERVICES FUND- GROWTH - Direct",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2020-02",
+   "name": "Sahara Growth Fund-Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2020-02",
+   "name": "Sahara Infrastructure Fund ---FIXED PRICING -Direct-Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2020-02",
+   "name": "Sahara Infrastructure Fund ---VARIABLE PRICING OPTION-Direct-Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2020-02",
+   "name": "Sahara Midcap Fund-Auto Payout",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2020-02",
+   "name": "Sahara Midcap Fund-Bonus",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2020-02",
+   "name": "Sahara Power & Natural Resources Fund - Dividend Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2020-02",
+   "name": "Sahara R.E.A.L Fund - Dividend Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2020-02",
+   "name": "Sahara R.E.A.L Fund - Growth  Fund",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2020-02",
+   "name": "Sahara Star Value Fund-Dividend - Direct",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2020-02",
+   "name": "Sahara Super 20 Fund - Dividend - Direct",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2020-02",
+   "name": "Sahara Wealth Plus Fund-Fixed Pricing Option-Direct-Dividend Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2020-02",
+   "name": "Sahara Wealth Plus Fund-Variable Pricing Option-Direct -Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-02",
+   "name": "Sundaram CAPEX Opportunities Fund-Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2013-05",
+   "name": "Sundaram CAPEX Opportunities Fund-Inst DIVD",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2013-05",
+   "name": "Sundaram CAPEX Opportunities Fund-Inst Growth",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-02",
+   "name": "Sundaram Select Thematic Funds Capex Opportunities - Direct Plan - Dividend Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-02",
+   "name": "Sundaram Energy Opportunities Fund Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-02",
+   "name": "Sundaram Select Thematic Funds Energy Opportunities - Direct Plan - Dividend Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2016-05",
+   "name": "Sundaram Entertainment Opportunities Fund - Direct Plan - Dividend Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2016-05",
+   "name": "Sundaram Entertainment Opportunities Fund - Inst  Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2016-08",
+   "name": "Sundaram Growth Fund - Direct Plan - Dividend Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2016-08",
+   "name": "Sundaram Growth Fund- Inst Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2013-05",
+   "name": "Sundaram India Leadership Fund-Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2013-05",
+   "name": "Sundaram India Leadership Fund-Inst Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2015-02",
+   "name": "Tata Growing Economies Infrastructure Fund Scheme A Plan A - Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2015-02",
+   "name": "Tata Growing Economies Infrastructure Fund Scheme A-Direct Plan Growth",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2015-02",
+   "name": "Tata Growing Economies Infrastructure Fund Scheme B Plan A - Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2015-02",
+   "name": "Tata Growing Economies Infrastructure Fund Scheme B-Direct Plan Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2015-02",
+   "name": "Tata Index Fund - Sensex B",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-11",
+   "name": "Tata Indo-Global Infrastructure Fund Plan A- Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-11",
+   "name": "Tata Indo-Global Infrastructure Fund-Direct Plan Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-05",
+   "name": "TI - Master Plus Unit Scheme-Income Option - Direct",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-05",
+   "name": "UTI - Master Plus Unit Scheme-Growth Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-05",
+   "name": "UTI - Master Plus Unit Scheme-Income Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-02",
+   "name": "UTI - Master Value Fund-Growth Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-02",
+   "name": "UTI - Master Value Fund-Income Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2018-02",
+   "name": "UTI Bluechip Flexicap Fund - Direct Plan - Dividend Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-08",
+   "name": "UTI Contra Fund-Growth-Growth Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-08",
+   "name": "UTI Contra Fund-Income-Dividend Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2016-02",
+   "name": "DWS Tax Saving Fund - Direct Plan - Dividend",
+   "section": "Open Ended Schemes ( ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-08",
+   "name": "ING Tax Savings Fund - Direct Plan - Bonus Option",
+   "section": "Open Ended Schemes ( ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2016-11",
+   "name": "JPMorgan India Tax Advantage Fund - Direct Plan - Dividend Option",
+   "section": "Open Ended Schemes ( ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2018-05",
+   "name": "L&T Tax Saver Fund- Regular Plan - Dividend",
+   "section": "Open Ended Schemes ( ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2020-02",
+   "name": "SaharaTax Gain-Dividend",
+   "section": "Open Ended Schemes ( ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2022-02",
+   "name": "BNP Paribas MULTI CAP Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2022-02",
+   "name": "BNP Paribas MULTI CAP Fund - Direct Plan - Income Distribution cum Capital Withdrawal Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-02",
+   "name": "ICICI Prudential Multicap Fund - Institutional Option - I",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2022-11",
+   "name": "L&T Flexicap Fund-Direct Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2017-02",
+   "name": "Nippon India Multi Cap Fund Institutional Dividend Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2021-11",
+   "name": "Principal Multi Cap Growth Fund - Direct Plan -Half Yearly Income Distribution CUM Capital Withdrawal Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2021-11",
+   "name": "Principal Multi Cap Growth Fund-Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2022-02",
+   "name": "Baroda Large cap Fund - Plan A - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2022-02",
+   "name": "Baroda Large cap Fund - Plan B (Direct) - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2022-02",
+   "name": "BNP Paribas LARGE CAP Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2022-02",
+   "name": "BNP Paribas LARGE CAP Fund - Direct Plan - Income Distribution cum Capital Withdrawal Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2020-02",
+   "name": "ICICI Prudential Bluechip Fund - Institutional Option - I - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2023-05",
+   "name": "IDBI India Top 100 Equity Fund Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2022-11",
+   "name": "L&T India Large Cap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2022-05",
+   "name": "Navi Large Cap Equity Fund - Direct Plan Normal IDCW Payout",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2022-05",
+   "name": "Navi Large Cap Equity Fund - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2020-02",
+   "name": "Nippon India Large Cap Fund-Institutional Plan Growth Plan Bonus Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2017-02",
+   "name": "IDFC Core Equity Fund-Plan B- Dividend",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-05",
+   "name": "ICICI Prudential Large & Mid Cap Fund - Institutional Option - I - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2022-11",
+   "name": "L&T Large and Midcap Fund- Direct Plan -IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2018-05",
+   "name": "Nippon India Vision Large & Mid Cap Fund Institutional Dividend Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-05",
+   "name": "Reliance Vision Fund Institutional Plan Growth Plan Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2021-11",
+   "name": "Principal Emerging Bluechip Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2021-11",
+   "name": "Principal Emerging Bluechip Fund - Direct Plan - Half Yearly Income Distribution CUM Capital Withdrawal Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2022-02",
+   "name": "Baroda Mid-cap Fund- Plan A - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2022-02",
+   "name": "Baroda Mid-cap Fund- Plan B (Direct) - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2022-02",
+   "name": "BNP Paribas Mid Cap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2022-02",
+   "name": "BNP Paribas Mid Cap Fund - Direct Plan - Income Distribution cum Capital Withdrawal Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-02",
+   "name": "ICICI Prudential MidCap Fund - Institutional Option - I",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2022-11",
+   "name": "L&T Mid Cap Fund-Direct Plan -IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-05",
+   "name": "Reliance Growth Fund Institutional Plan Growth Plan Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2021-11",
+   "name": "Sundaram Mid Cap Fund Institutional Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2021-11",
+   "name": "Sundaram Mid Cap Fund Institutional Plan - Income Distribution cum Capital Withdrawal (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2020-02",
+   "name": "ICICI Prudential Smallcap Fund - Institutional Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2021-11",
+   "name": "Sundaram Small Cap Fund Institutional Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2021-11",
+   "name": "Sundaram Small Cap Fund Institutional Plan - Income Distribution cum Capital Withdrawal (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2021-11",
+   "name": "Principal Dividend Yield Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Dividend Yield Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2021-11",
+   "name": "Principal Dividend Yield Fund- Direct Plan - Half Yearly Income Distribution CUM Capital Withdrawal Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Dividend Yield Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2018-05",
+   "name": "Tata Dividend Yield Fund  Regular Plan -( Div)",
+   "section": "Open Ended Schemes ( Equity Scheme - Dividend Yield Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-02",
+   "name": "ICICI Prudential Value Discovery Fund - Institutional Option - I - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Value Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2022-11",
+   "name": "L&T India Value Fund-Direct Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Value Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2021-11",
+   "name": "Principal Focused Multicap Fund- Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2021-11",
+   "name": "Principal Focused Multicap Fund- Direct Plan - Half Yearly Income Distribution CUM Capital Withdrawal Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2021-11",
+   "name": "Sundaram Select Focus Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2021-11",
+   "name": "Sundaram Select Focus Direct Plan - Income Distribution cum Capital Withdrawal (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2021-11",
+   "name": "Sundaram Select Focus Institutional Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2019-11",
+   "name": "Sundaram Select Focus Institutional Plan - Income Distribution cum Capital Withdrawal (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2023-05",
+   "name": "Aditya Birla Sun Life Commodity Equities Fund - Global Agri Plan - Growth - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2023-05",
+   "name": "Aditya Birla Sun Life International Equity Fund - Plan B - Direct - IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2016-05",
+   "name": "Canara Robeco Consumer Trends Fund - Institutional Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-02",
+   "name": "ICICI Prudential Infrastructure Fund - Institutional Option - I - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2022-11",
+   "name": "L&T Infrastructure Fund - Regular Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2016-05",
+   "name": "Sundaram PSU Opportunities Dividend Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2016-05",
+   "name": "Sundaram Select Thematic Funds PSU Opportunities - Direct Plan - Dividend Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2018-11",
+   "name": "Sundaram Consumption Fund (Formerly Known as Sundaram Rural and Consumption Fund Institutional Plan - Income Distribution cum Capital Withdrawal (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2024-11",
+   "name": "Sundaram Financial Services Opportunities Fund Institutional Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2024-11",
+   "name": "Sundaram Financial Services Opportunities Fund Institutional Plan - Income Distribution cum Capital Withdrawal (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2016-02",
+   "name": "UTI Energy Fund-Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2016-02",
+   "name": "UTI Energy Fund-Income Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-08",
+   "name": "UTI Services Industries Fund-Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2014-08",
+   "name": "UTI Services Industries Fund-Income Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2023-02",
+   "name": "Aditya Birla Sun Life Tax Plan - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2022-02",
+   "name": "BARODA ELSS 96 - Plan A - IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2022-02",
+   "name": "BARODA ELSS 96 - Plan B (Direct) - IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2022-02",
+   "name": "BNP Paribas Long Term Equity Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2022-02",
+   "name": "BNP Paribas Long Term Equity Fund - Direct Plan - Income Distribution cum Capital Withdrawal Option",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2021-11",
+   "name": "HDFC Long Term Advantage Plan - Growth Option - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2025-11",
+   "name": "HSBC Tax Saver Equity Fund - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2022-11",
+   "name": "L&T  Tax Advantage Fund-Direct Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2021-11",
+   "name": "Principal Personal Tax Saver Fund",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2021-11",
+   "name": "Principal Tax Savings Fund",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-11",
+   "last": "2023-05",
+   "name": "IDBI Equity Advantage Fund - Growth Direct",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2014-02",
+   "last": "2022-02",
+   "name": "Baroda ELSS 96 Fund - Plan A- Bonus Option",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2014-05",
+   "last": "2017-05",
+   "name": "Principal Index Fund- Midcap- Direct Plan - Dividend Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2014-05",
+   "last": "2022-11",
+   "name": "L&T Emerging Businesses Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2014-05",
+   "last": "2023-05",
+   "name": "IDBI FLEXI CAP FUND Growth Direct",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2014-08",
+   "last": "2016-11",
+   "name": "JPMorgan India Top 100 Fund - Direct Plan - Dividend Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2014-11",
+   "last": "2016-02",
+   "name": "DWS Arbitrage Fund - Direct Plan - Annual Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2014-11",
+   "last": "2016-02",
+   "name": "DWS Arbitrage Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2014-11",
+   "last": "2016-02",
+   "name": "DWS Arbitrage Fund - Direct Plan - Monthly Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2014-11",
+   "last": "2016-02",
+   "name": "DWS Arbitrage Fund - Direct Plan - Quarterly Dividend",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2014-11",
+   "last": "2016-11",
+   "name": "JPMorgan India Equity Income Fund - Direct Plan - Bonus Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2014-11",
+   "last": "2018-05",
+   "name": "Aditya Birla Sun Life Tax Savings Fund - Direct Plan - Bonus Option",
+   "section": "Open Ended Schemes ( ELSS )"
+  },
+  {
+   "first": "2014-11",
+   "last": "2019-02",
+   "name": "Baroda BNP Paribas Banking And Financial Services Fund - Plan A - Bonus Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2014-11",
+   "last": "2022-11",
+   "name": "L&T Business Cycles Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2015-02",
+   "last": "2016-11",
+   "name": "JPMorgan India Economic Resurgence Fund - Direct Plan - Dividend Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2015-05",
+   "last": "2015-08",
+   "name": "Baroda Pioneer Banking And Financial Services Fund - Plan B (Direct) - Bonus Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2015-11",
+   "last": "2022-05",
+   "name": "Navi Large Cap Equity Fund - Annual IDCW Payout",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2015-11",
+   "last": "2022-05",
+   "name": "Navi Large Cap Equity Fund - Direct Plan Quarterly IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2015-11",
+   "last": "2022-05",
+   "name": "Navi Large Cap Equity Fund - Half Yearly IDCW Payout",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2016-02",
+   "last": "2026-02",
+   "name": "Navi ELSS Tax Saver Fund - Direct Plan IDCW Payout",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2016-05",
+   "last": "2019-05",
+   "name": "PGIM India Large Cap Fund Wealth Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2016-05",
+   "last": "2019-05",
+   "name": "PGIM India Tax Plan - Bonus",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2017-02",
+   "last": "2023-05",
+   "name": "IDBI Midcap Fund Growth Direct",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2017-02",
+   "last": "2020-02",
+   "name": "Edelweiss Tax Advantage Fund - Direct Plan - Dividend Option",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2017-08",
+   "last": "2023-05",
+   "name": "IDBI Small Cap Fund - Growth Direct",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2017-11",
+   "last": "2022-02",
+   "name": "BNP Paribas Focused 25 Equity Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2017-11",
+   "last": "2022-02",
+   "name": "BNP Paribas Focused 25 Equity Fund - Direct Plan - Income Distribution cum Capital Withdrawal Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2017-11",
+   "last": "2021-11",
+   "name": "Principal Tax Savings Fund Direct Plan - Half Yearly Income Distribution CUM Capital Withdrawal Option",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2018-02",
+   "last": "2023-05",
+   "name": "IDBI FOCUSED 30 EQUITY FUND - Growth Direct",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2018-08",
+   "last": "2023-05",
+   "name": "IDBI Banking & Financial Services Fund - Direct Plan (Growth)",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2018-11",
+   "last": "2023-05",
+   "name": "IDBI Long Term Value Fund-Direct Plan- Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Value Fund )"
+  },
+  {
+   "first": "2018-11",
+   "last": "2022-11",
+   "name": "L&T Focused Equity Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2018-11",
+   "last": "2022-02",
+   "name": "BNP Paribas India Consumption Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2018-11",
+   "last": "2022-02",
+   "name": "BNP Paribas India Consumption Fund - Direct Plan - Income Distribution cum Capital Withdrawal Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2019-02",
+   "last": "2023-05",
+   "name": "IDBI Dividend Yield Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Dividend Yield Fund )"
+  },
+  {
+   "first": "2019-05",
+   "last": "2021-11",
+   "name": "Principal Small Cap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2019-05",
+   "last": "2021-11",
+   "name": "Principal Small Cap Fund - Direct Plan- Income Distribution CUM Capital Withdrawal Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2019-05",
+   "last": "2023-05",
+   "name": "IDBI Healthcare Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2019-11",
+   "last": "2021-11",
+   "name": "Sundaram Equity Fund Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2019-11",
+   "last": "2021-11",
+   "name": "Sundaram Equity Fund Direct Plan - Payout of Income Distribution cum Capital Withdrawal (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2020-02",
+   "last": "2021-11",
+   "name": "Principal Midcap Fund - Direct Plan - Income Distribution CUM Capital Withdrawal Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2020-02",
+   "last": "2021-11",
+   "name": "Principal Midcap Fund - Direct Plan- Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2020-02",
+   "last": "2025-02",
+   "name": "TATA Quant Equity Fund Direct Plan - Payout of Income Distribution cum capital withdrawal option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2020-02",
+   "last": "2025-02",
+   "name": "TATA Quant Fund Direct Plan - Reinvestment of Income Distribution cum capital withdrawal option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2020-02",
+   "last": "2025-02",
+   "name": "Tata Quant Fund-Direct Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2020-11",
+   "last": "2021-11",
+   "name": "Principal Large Cap Fund - Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2020-11",
+   "last": "2021-11",
+   "name": "Principal Large Cap Fund - Direct Income Distribution CUM Capital Withdrawal Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  }
+ ],
+ "missing_alive": [
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Baroda BNP Paribas MULTI CAP FUND - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "ICICI Prudential Multicap Fund - Direct Plan -  Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Invesco India Multicap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "NIPPON INDIA MULTI CAP FUND - DIRECT Plan - IDCW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "quant Multi Cap Fund-GROWTH OPTION - Regular Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Aditya Birla Sun Life Large Cap Fund - Growth - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Axis Large Cap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "BANDHAN Large Cap Fund - Regular Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "CANARA ROBECO LARGE CAP FUND - DIRECT PLAN - GROWTH OPTION",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "DSP Large Cap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Edelweiss Large Cap Fund - Direct Plan - IDCW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Edelweiss Large Cap Fund - Plan B - IDCW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Edelweiss Large Cap Fund - Plan C - IDCW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Franklin India Large Cap Fund - Direct - IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Groww Largecap Fund (formerly known as Indiabulls Blue Chip Fund) - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Groww Largecap Fund (formerly known as Indiabulls Bluechip Fund)- Direct Plan- - Income Distribution cum capital withdrawal Option (Payout & Reinvestment)",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "HDFC Large Cap Fund - Growth Option - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "HSBC Large Cap Fund - Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "ICICI Prudential Large Cap Fund (erstwhile Bluechip Fund)  - Direct Plan - IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Invesco India Largecap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "JM Large Cap Fund (Direct) - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Kotak Large Cap Fund - Payout of Income Distribution cum capital withdrawal option - Direct",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Kotak Large Cap Fund - Payout of Income Distribution cumcapital withdrawal option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "LIC MF Large Cap Fund-Direct Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Mirae Asset Large Cap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Nippon India Large Cap  Fund- Growth Plan -Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "SBI Large Cap Fund - Direct Plan - Income Distribution cum Capital Withdrawal Option (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "SBI Large Cap FUND-DIRECT PLAN -GROWTH",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Tata Large Cap Fund -Direct Plan Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Tata Large Cap Fund- Direct Plan - Payout of IDCW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Taurus Large Cap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Taurus Large Cap Fund - Direct Plan - Payout of Income Distribution cum Capital Withdrawal option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "UTI Large Cap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Aditya Birla Sun Life Large & Mid Cap Fund - Growth - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Bandhan Large & Mid Cap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "BANK OF INDIA Large & Mid Cap Fund Direct  Plan- Quarterly IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "BANK OF INDIA Large & Mid Cap Fund Direct Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "BANK OF INDIA Large & Mid Cap Fund Eco Plan- Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "BANK OF INDIA Large & Mid Cap Fund Eco Plan-Quarterly IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "CANARA ROBECO LARGE AND MID CAP FUND - DIRECT PLAN - GROWTH OPTION",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "DSP Large & Mid Cap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Franklin India Large & Mid Cap Fund - Direct - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "ICICI Prudential Large & Mid Cap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Invesco India Large & Mid Cap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Kotak Large & Midcap Fund - Direct- Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Mirae Asset Large & Midcap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "NIPPON INDIA VISION LARGE & MID CAP  FUND - DIRECT Plan - IDCW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Nippon India Vision Large & Midcap Fund - IDCW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "quant Large & Mid Cap Fund - Bonus Option - Regular Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "SBI Large & Midcap Fund - Direct Plan - Income Distribution cum Capital Withdrawal Option (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "SBI LARGE & MIDCAP FUND -DIRECT PLAN -Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Sundaram Large and Midcap Direct Plan - Income Distribution cum Capital Withdrawal (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Sundaram Large and Midcap Fund Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Tata Large & MId Cap Fund -Direct Plan- Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Tata Large & Mid Cap Fund Direct Plan - Payout of IDCW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "UTI Large & Mid Cap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Aditya Birla Sun Life Midcap Fund - Growth - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Axis Midcap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "DSP Midcap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Franklin India Mid Cap Fund - Direct - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "HDFC Mid Cap Fund - Growth Option - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "ICICI Prudential MidCap Fund - Direct Plan -  Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Invesco India Midcap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Kotak Midcap Fund  - Direct Plan - IDCW - Payout & Re-investment of Income Distribution cum capital withdrawal option",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Kotak Midcap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "NIPPON INDIA GROWTH MID CAP FUND - DIRECT Plan - IDCW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "NIPPON INDIA GROWTH MID CAP FUND - INSTITUTIONAL Plan - IDCW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "quant Mid Cap Fund - Growth Option - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "SBI MIDCAP FUND - DIRECT PLAN - GROWTH",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "SBI Midcap Fund - Direct Plan - Income Distribution cum Capital Withdrawal Option (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Sundaram Mid Cap Fund Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Sundaram Mid Cap Fund Direct Plan - Income Distribution cum Capital Withdrawal (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Tata Mid Cap Fund - Direct Plan- Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Taurus Mid Cap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Taurus Mid Cap Fund - Direct Plan - Payout of Income Distribution cum Capital Withdrawal option",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "UTI Mid Cap Fund - Direct Plan - IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Aditya Birla Sun Life Small Cap Fund - GROWTH",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "DSP Small Cap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Franklin India Small Cap Fund - Direct - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "ICICI Prudential Smallcap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Kotak-Small Cap Fund - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Kotak-Small Cap Fund - Payout of Income Distribution cum capital withdrawal option",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "NIPPON INDIA SMALL CAP FUND - Direct Plan - IDCW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "quant Small Cap Fund - Growth - Regular Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Sundaram Small Cap Fund Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Sundaram Small Cap Fund Direct Plan - Income Distribution cum Capital Withdrawal (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Aditya Birla Sun Life Dividend Yield Fund - Growth - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Dividend Yield Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Franklin India Dividend Yield Fund - Direct - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Dividend Yield Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Tata Dividend Yield Fund Regular Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Dividend Yield Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "UTI Dividend Yield Fund - Direct Plan - IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Dividend Yield Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Aditya Birla Sun Life Value Fund - Direct - IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Value Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Bandhan Value Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Value Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Templeton India Value Fund - Direct - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Value Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "HDFC Value Fund - Growth Option - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Value Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "ICICI Prudential Value Fund (erstwhile Value Discovery Fund) - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Value Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "JM Value Fund (Direct) - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Value Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "NIPPON INDIA VALUE FUND - DIRECT Plan - IDCW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Value Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Quantum Value Fund - Direct Plan Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Value Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Sundaram Value Fund Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Value Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Sundaram Value Fund Direct Plan - Income Distribution cum Capital Withdrawal (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Value Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Tata Value Fund - Regular Plan - Payout of IDCW-Option A(5%)",
+   "section": "Open Ended Schemes ( Equity Scheme - Value Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Tata Value Fund - Regular Plan -Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Value Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Tata Value Fund Regular Plan - Payout of IDCW-Option B(10%)",
+   "section": "Open Ended Schemes ( Equity Scheme - Value Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "UTI Value Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Value Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Invesco India Contra Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Contra Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Kotak Contra Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Contra Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Kotak Contra Fund - Direct Plan - IDCW -Payout & Re-investment of Income Distribution cum capital withdrawal option- Direct",
+   "section": "Open Ended Schemes ( Equity Scheme - Contra Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "SBI CONTRA FUND - DIRECT PLAN - GROWTH",
+   "section": "Open Ended Schemes ( Equity Scheme - Contra Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "SBI Contra Fund - Direct Plan - Income Distribution cum Capital Withdrawal Option (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Contra Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Aditya Birla Sun Life Focused Fund - Growth - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Axis Focused Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Bandhan Focused Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "DSP Focused Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Franklin India Focused Equity Fund - Direct - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "HDFC Focused Fund - Growth Option - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "ICICI Prudential Focused Equity Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "JM Focused Fund (Direct)  - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Motilal Oswal Focused Fund - Direct Plan Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "NIPPON INDIA FOCUSED  FUND - DIRECT Plan - IDCW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "quant Focused Fund - Growth Option - Regular Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "SBI Focused Fund - Direct Plan - Income Distribution cum Capital Withdrawal Option (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "SBI FOCUSED FUND - DIRECT PLAN -GROWTH",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Aditya Birla Sun Life Consumption Fund - Growth - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Aditya Birla Sun Life Digital India Fund - Growth - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Aditya Birla Sun Life Infrastructure Fund -  Direct - IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Aditya Birla Sun Life International Equity Fund - Direct - IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Aditya Birla Sun Life MNC Fund - DIRECT - IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "BANDHAN Infrastructure Fund - Regular Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "BANK OF INDIA Manufacturing & Infrastructure Fund-Direct Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "BANK OF INDIA Manufacturing & Infrastructure Fund-Quarterly IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Baroda BNP Paribas Banking and Financial Services Fund - Direct - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "CANARA ROBECO CONSUMPTION FUND - DIRECT PLAN - GROWTH OPTION",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "CANARA ROBECO INFRASTRUCTURE FUND - DIRECT PLAN - GROWTH OPTION",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "DSP India T.I.G.E.R. Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "DSP Natural Resources and New Energy Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Franklin Asian Equity Fund - Direct - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Franklin Build India Fund - Direct - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Franklin India Opportunities Fund - Direct - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Franklin India Technology Fund - Direct - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "HDFC Infrastructure Fund - Growth Option - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "ICICI Prudential Banking and Financial Services Fund -  Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "ICICI Prudential Exports & Services Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "ICICI Prudential FMCG Fund - Direct Plan -  Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "ICICI Prudential Infrastructure Fund - Direct Plan -  Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "ICICI Prudential Technology Fund - Direct Plan -  Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "ICICI Prudential US Bluechip Equity Fund - Direct Plan -  Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Invesco India Financial Services Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Invesco India Infrastructure Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Invesco India PSU Equity Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "LIC MF Infrastructure Fund-Direct Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Mirae Asset Great Consumer Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Nippon India Banking & Financial Services Fund - Direct Plan Growth Plan - Bonus Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "NIPPON INDIA CONSUMPTION FUND - DIRECT Plan - IDCW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "NIPPON INDIA PHARMA FUND - DIRECT Plan - IDCW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "NIPPON INDIA POWER & INFRA FUND - DIRECT Plan - IDCW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "NIPPON INDIA QUANT FUND - DIRECT Plan - IDCW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "quant Infrastructure Fund - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "SBI COMMA Fund - DIRECT PLAN - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "SBI Comma Fund - Direct Plan - Income Distribution cum Capital Withdrawal Option (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "SBI CONSUMPTION OPPORTUNITIES FUND - DIRECT PLAN - GROWTH",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "SBI Consumption Opportunities Fund - Direct Plan - Income Distribution cum Capital Withdrawal Option (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "SBI ESG Exclusionary Strategy Fund - Direct Plan - Income Distribution cum Capital Withdrawal Option (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "SBI ESG Exclusionary Strategy Fund - Direct Plan -Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "SBI Healthcare Opportunities Fund - Direct Plan - Income Distribution cum Capital Withdrawal Option (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "SBI HEALTHCARE OPPORTUNITIES FUND - DIRECT PLAN -GROWTH",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "SBI INFRASTRUCTURE FUND -  DIRECT PLAN - GROWTH",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "SBI Infrastructure Fund - Direct Plan - Income Distribution cum Capital Withdrawal Option (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "SBI MNC Fund - Direct Plan - Income Distribution cum Capital Withdrawal Option (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "SBI MNC FUND - DIRECT PLAN -GROWTH",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "SBI PSU Fund - DIRECT PLAN - GROWTH",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "SBI PSU Fund - Direct Plan - Income Distribution cum Capital Withdrawal Option (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "SBI TECHNOLOGY OPPORTUNITIES FUND - DIRECT PLAN - GROWTH",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "SBI Technology Opportunities Fund - Direct Plan - Income Distribution cum Capital Withdrawal Option (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Sundaram Consumption Fund (Formerly Known as Sundaram Rural and Consumption Fund Direct Plan - Growth)",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Sundaram Consumption Fund (Formerly Known as Sundaram Rural and Consumption Fund Regular Plan - Income Distribution cum Capital Withdrawal (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Sundaram Consumption Fund (Formerly Known asSundaram Rural and Consumption Fund Direct Plan - Income Distribution cum Capital Withdrawal (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Sundaram Financial Services Opportunities Fund Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Sundaram Financial Services Opportunities Fund Direct Plan - Income Distribution cum Capital Withdrawal (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Tata Ethical Fund -Direct Plan- Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Tata Ethical Fund- Direct Plan - Payout of IDCW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Tata Infrastructure Fund -Direct Plan -Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "TATA Infrastructure Fund Regular Plan - Payout of IDCW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Taurus Banking & Financial Services Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Taurus Banking & Financial Services Fund - Direct Plan - Payout of Income Distribution cum Capital Withdrawal option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Taurus Ethical Fund -  Regular Plan - Bonus Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Taurus Ethical Fund - Direct Plan - Payout of Income Distribution cum Capital Withdrawal option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Taurus Ethical Fund-Direct Plan-Bonus Option #",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Taurus Infrastructure Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Taurus Infrastructure Fund - Direct Plan - Payout of Income Distribution cum Capital Withdrawal option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "UTI Banking and Financial Services Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "UTI Healthcare Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "UTI India Consumer Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "UTI Infrastructure Fund - Direct Plan - IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "UTI - MNC Fund - Growth Option - Direct",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "UTI Transportation and Logistics Fund - Direct Plan - IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Aditya Birla Sun Life ELSS Tax Saver Fund - Growth - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Axis ELSS Tax Saver Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "BANDHAN ELSS Tax Saver Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "BANK OF INDIA ELSS Tax Saver -Direct Plan- Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "BANK OF INDIA ELSS Tax Saver -ECO Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "DSP ELSS Tax Saver Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Edelweiss ELSS Tax Saver Fund - Direct Plan - IDCW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Franklin India ELSS Tax Saver Fund - Direct - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "HDFC ELSS Tax saver - Growth Option - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "ICICI Prudential ELSS Tax Saver Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Invesco India ELSS Tax Saver Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "JM ELSS Tax Saver Fund (Direct) - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Kotak ELSS Tax Saver Fund-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Kotak ELSS Tax Saver Fund-Payout of Income Distribution cum capital withdrawal option",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "LIC MF ELSS Tax Saver-Direct Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "LIC MF ULIS (5 Yrs. Single Premium)-Direct Plan-IDCW Reinvestment",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "NIPPON INDIA ELSS TAX SAVER FUND - DIRECT Plan - IDCW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "quant ELSS Tax Saver Fund - Growth Option - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Quantum ELSS Tax Saver Fund - Direct Plan Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "SBI ELSS Tax Saver Fund - Direct Plan - Income Distribution cum Capital Withdrawal Option (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "SBI ELSS Tax Saver FUND - DIRECT PLAN -GROWTH",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Tata ELSS Fund- Direct Plan - Payout of IDCW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Taurus ELSS Tax Saver Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Taurus ELSS Tax Saver Fund - Direct Plan - Payout of Income Distribution cum Capital Withdrawal option",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Union ELSS Tax Saver Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "UTI ELSS Tax Saver Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Aditya Birla Sun Life Flexi Cap Fund - Growth - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "BANDHAN Flexi Cap Fund - Regular Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "CANARA ROBECO FLEXICAP FUND - DIRECT PLAN - GROWTH OPTION",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "DSP Flexi Cap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Franklin India Flexi Cap Fund - Direct - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "HDFC Flexi Cap Fund - Growth Option - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "HSBC Flexi Cap Fund - Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "JM Flexicap Fund (Direct) - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Kotak Flexicap Fund - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Kotak Flexicap Fund - Payout of Income Distribution cum capital withdrawal option",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "LIC MF Flexi Cap Fund-Direct Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "quant Flexi Cap Fund - Growth Option - Regular Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "SBI Flexicap Fund - DIRECT PLAN - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "SBI Flexicap Fund - Direct Plan - Income Distribution cum Capital Withdrawal Option (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Taurus Flexi Cap Fund - Direct Plan -  Payout of Income Distribution cum Capital Withdrawal option",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Taurus Flexi Cap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "Union Flexi Cap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2013-05",
+   "last": "2026-05",
+   "name": "UTI - Flexi Cap Fund-Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2013-08",
+   "last": "2026-05",
+   "name": "Parag Parikh Flexi Cap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2014-02",
+   "last": "2026-05",
+   "name": "PGIM India Midcap Fund - Direct Plan - Dividend Option - Payout",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2014-02",
+   "last": "2026-05",
+   "name": "Axis Small Cap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2014-02",
+   "last": "2026-05",
+   "name": "SBI Small Cap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2014-02",
+   "last": "2026-05",
+   "name": "SBI Small Cap Fund - Direct Plan - Income Distribution cum Capital Withdrawal Option (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2014-02",
+   "last": "2026-05",
+   "name": "Aditya Birla Sun Life Banking and Financial Services Fund - DIRECT - IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2014-05",
+   "last": "2026-05",
+   "name": "Motilal Oswal Midcap Fund-Direct - IDCW Payout/Reinvestment",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2014-05",
+   "last": "2026-05",
+   "name": "Sundaram Infrastructure Advantage Fund Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2014-05",
+   "last": "2026-05",
+   "name": "Sundaram Infrastructure Advantage Fund Direct Plan - Income Distribution cum Capital Withdrawal (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2014-05",
+   "last": "2026-05",
+   "name": "Motilal Oswal Flexi Cap Fund Direct - IDCW Payout/Reinvestment",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2014-08",
+   "last": "2026-05",
+   "name": "HDFC Large and Mid Cap Fund - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2014-08",
+   "last": "2026-05",
+   "name": "HDFC Small Cap Fund - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2014-08",
+   "last": "2026-05",
+   "name": "Union Small Cap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2014-08",
+   "last": "2026-05",
+   "name": "ICICI Prudential Dividend Yield Equity Fund Direct Plan Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Dividend Yield Fund )"
+  },
+  {
+   "first": "2014-11",
+   "last": "2026-05",
+   "name": "UTI Multi Cap Fund - Dividend Option",
+   "section": "Open Ended Schemes ( Growth )"
+  },
+  {
+   "first": "2014-11",
+   "last": "2026-05",
+   "name": "360 ONE Focused Fund - Direct Plan - Dividend",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2014-11",
+   "last": "2026-05",
+   "name": "NIPPON INDIA - JAPAN EQUITY FUND - DIRECT Plan - IDCW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2014-11",
+   "last": "2026-05",
+   "name": "Tata ELSS Fund-Growth-Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2015-02",
+   "last": "2026-05",
+   "name": "Aditya Birla Sun Life Manufacturing Equity Fund - Direct - IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2015-02",
+   "last": "2026-05",
+   "name": "Kotak Infrastructure & Economic Reform Fund - Standard Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2015-02",
+   "last": "2026-05",
+   "name": "Kotak Infrastructure & Economic Reform Fund - Standard Plan-Payout of Income Distribution cum capital withdrawal option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2015-02",
+   "last": "2026-05",
+   "name": "Kotak Infrastructure & Economic Reform Fund- Direct Plan- Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2015-02",
+   "last": "2026-05",
+   "name": "Kotak Infrastructure & Economic Reform Fund- Direct Plan- Payout of Income Distribution cum capital withdrawal option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2015-02",
+   "last": "2026-05",
+   "name": "Motilal Oswal ELSS Tax Saver Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2015-02",
+   "last": "2026-05",
+   "name": "NIPPON INDIA ELSS TAX SAVER FUND - ANNUAL IDCW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2015-05",
+   "last": "2026-05",
+   "name": "LIC MF Large & Mid Cap Fund-Direct Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2015-05",
+   "last": "2026-05",
+   "name": "LIC MF Banking and Financial Services Fund-Direct Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2015-05",
+   "last": "2026-05",
+   "name": "SBI BANKING & FINANCIAL SERVICES FUND - DIRECT PLAN - GROWTH",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2015-05",
+   "last": "2026-05",
+   "name": "SBI Banking & Financial Services Fund - Direct Plan - Income Distribution cum Capital Withdrawal Option (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2015-05",
+   "last": "2026-05",
+   "name": "PGIM India Flexi Cap Fund - Direct Plan - Dividend Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2015-08",
+   "last": "2026-05",
+   "name": "JM Large Cap Fund (Direct) - Annual IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2015-08",
+   "last": "2026-05",
+   "name": "JM Large Cap Fund (Direct) - Half Yearly IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2015-08",
+   "last": "2026-05",
+   "name": "JM Large Cap Fund (Direct) - Monthly IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2015-08",
+   "last": "2026-05",
+   "name": "JM Large Cap Fund (Direct) - Quarterly IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2015-08",
+   "last": "2026-05",
+   "name": "NIPPON INDIA - US EQUITY OPPORTUNITIES FUND - Direct Plan - IDCW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2015-08",
+   "last": "2026-05",
+   "name": "LIC MF ULIS (10 Yrs. Regular Premium Reducing Cover Half-Yearly)-Direct Plan-IDCW Reinvestment",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2015-08",
+   "last": "2026-05",
+   "name": "LIC MF ULIS (10 Yrs. Regular Premium Reducing Cover Monthly)-Direct Plan-IDCW Reinvestment",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2015-08",
+   "last": "2026-05",
+   "name": "LIC MF ULIS (10 Yrs. Regular Premium Reducing Cover Yearly)-Direct Plan-IDCW Reinvestment",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2015-08",
+   "last": "2026-05",
+   "name": "LIC MF ULIS (10 Yrs. Regular Premium Uniform Cover Half-Yearly)-Direct Plan-IDCW Reinvestment",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2015-08",
+   "last": "2026-05",
+   "name": "LIC MF ULIS (10 Yrs. Regular Premium Uniform Cover Monthly)-Direct Plan-IDCW Reinvestment",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2015-08",
+   "last": "2026-05",
+   "name": "LIC MF ULIS (10 Yrs. Regular Premium Uniform Cover Yearly)-Direct Plan-IDCW Reinvestment",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2015-08",
+   "last": "2026-05",
+   "name": "LIC MF ULIS (10 Yrs. Single Premium)-Direct Plan-IDCW Reinvestment",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2015-08",
+   "last": "2026-05",
+   "name": "LIC MF ULIS (15 Yrs. Regular Premium Reducing Cover Half-Yearly)-Direct Plan-IDCW Reinvestment",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2015-08",
+   "last": "2026-05",
+   "name": "LIC MF ULIS (15 Yrs. Regular Premium Reducing Cover Monthly)-Direct Plan-IDCW Reinvestment",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2015-08",
+   "last": "2026-05",
+   "name": "LIC MF ULIS (15 Yrs. Regular Premium Reducing Cover Yearly)-Direct Plan-IDCW Reinvestment",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2015-08",
+   "last": "2026-05",
+   "name": "LIC MF ULIS (15 Yrs. Regular Premium Uniform Cover Half-Yearly)-Direct Plan-IDCW Reinvestment",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2015-08",
+   "last": "2026-05",
+   "name": "LIC MF ULIS (15 Yrs. Regular Premium Uniform Cover Monthly)-Direct Plan-IDCW Reinvestment",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2015-08",
+   "last": "2026-05",
+   "name": "LIC MF ULIS (15 Yrs. Regular Premium Uniform Cover Yearly)-Direct Plan-IDCW Reinvestment",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2015-08",
+   "last": "2026-05",
+   "name": "LIC MF ULIS (15Yrs. Regular Premium Uniform Cover Yearly)-Regular Plan-IDCW Reinvestment",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2015-11",
+   "last": "2026-05",
+   "name": "Groww Value Fund (formerly known as Indiabulls Value Fund) - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Value Fund )"
+  },
+  {
+   "first": "2015-11",
+   "last": "2026-05",
+   "name": "Groww Value Fund (formerly known as Indiabulls Value Fund)- Direct Plan- - Income Distribution cum capital withdrawal Option (Payout & Reinvestment)",
+   "section": "Open Ended Schemes ( Equity Scheme - Value Fund )"
+  },
+  {
+   "first": "2016-02",
+   "last": "2026-05",
+   "name": "Navi Large & Midcap Fund - Direct Normal IDCW Payout",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2016-02",
+   "last": "2026-05",
+   "name": "Navi Large & Midcap Fund- Direct Plan- Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2016-02",
+   "last": "2026-05",
+   "name": "TATA Banking & Financial Services Fund Direct Plan - Payout of Income Distribution cum capital withdrawal option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2016-02",
+   "last": "2026-05",
+   "name": "Tata Banking And Financial Services Fund-Direct Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2016-02",
+   "last": "2026-05",
+   "name": "TATA Digital India Fund Direct Plan - Payout of Income Distribution cum capital withdrawal option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2016-02",
+   "last": "2026-05",
+   "name": "Tata Digital India Fund-Direct Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2016-02",
+   "last": "2026-05",
+   "name": "TATA India Consumer Fund Direct Plan - Payout of Income Distribution cum capital withdrawal option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2016-02",
+   "last": "2026-05",
+   "name": "Tata India Consumer Fund-Direct Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2016-02",
+   "last": "2026-05",
+   "name": "TATA India Pharma & Health Care Fund Direct Plan - Payout of Income Distribution cum capital withdrawal option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2016-02",
+   "last": "2026-05",
+   "name": "TATA India Pharma & Healthcare Fund Direct Plan - Reinvestment of Income Distribution cum capital withdrawal option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2016-02",
+   "last": "2026-05",
+   "name": "Tata India Pharma & Healthcare Fund-Direct Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2016-02",
+   "last": "2026-05",
+   "name": "TATA Resources & Energy Fund Direct Plan - Payout of Income Distribution cum capital withdrawal option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2016-02",
+   "last": "2026-05",
+   "name": "Tata Resources & Energy Fund-Direct Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2016-02",
+   "last": "2026-05",
+   "name": "LIC MF ULIS (10 Yrs. Regular Premium Reducing Cover Quarterly)-Direct Plan-IDCW Reinvestment",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2016-02",
+   "last": "2026-05",
+   "name": "LIC MF ULIS (10 Yrs. Regular Premium Uniform Cover Quarterly)-Direct Plan-IDCW Reinvestment",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2016-02",
+   "last": "2026-05",
+   "name": "LIC MF ULIS (15 Yrs. Regular Premium Reducing Cover Quarterly)-Direct Plan-IDCW Reinvestment",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2016-02",
+   "last": "2026-05",
+   "name": "LIC MF ULIS (15 Yrs. Regular Premium Uniform Cover Quarterly)-Direct Plan-IDCW Reinvestment",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2016-02",
+   "last": "2026-05",
+   "name": "Mirae Asset ELSS Tax Saver Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2016-02",
+   "last": "2026-05",
+   "name": "PGIM India ELSS Tax Saver Fund - Direct Plan - Dividend Option",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2016-05",
+   "last": "2026-05",
+   "name": "PGIM India Large Cap Fund - BONUS OPTION",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2016-11",
+   "last": "2026-05",
+   "name": "Mahindra Manulife ELSS Tax Saver Fund - Direct Plan -Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2017-02",
+   "last": "2026-05",
+   "name": "Edelweiss Large & Mid Cap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2017-02",
+   "last": "2026-05",
+   "name": "Edelweiss Large and Mid Cap Fund - Direct Plan - IDCW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2017-02",
+   "last": "2026-05",
+   "name": "Edelweiss Mid Cap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2017-02",
+   "last": "2026-05",
+   "name": "Edelweiss Flexi Cap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2017-05",
+   "last": "2026-05",
+   "name": "Groww Largecap Fund (formerly known as Indiabulls Bluechip Fund)- Direct Plan- Half Yearly -Income Distribution cum capital withdrawal Option (Payout & Reinvestment)",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2017-05",
+   "last": "2026-05",
+   "name": "Groww Largecap Fund (formerly known as Indiabulls Bluechip Fund)- Direct Plan- Monthly - Income Distribution cum capital withdrawal Option (Payout & Reinvestment)",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2017-05",
+   "last": "2026-05",
+   "name": "Groww Largecap Fund (formerly known as Indiabulls Bluechip Fund)- Direct Plan- Quarterly - Income Distribution cum capital withdrawal Option (Payout & Reinvestment)",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2017-05",
+   "last": "2026-05",
+   "name": "Groww Value Fund (formerly known as Indiabulls Value Fund)- Direct Plan- Half Yearly - Income Distribution cum capital withdrawal Option (Payout & Reinvestment)",
+   "section": "Open Ended Schemes ( Equity Scheme - Value Fund )"
+  },
+  {
+   "first": "2017-05",
+   "last": "2026-05",
+   "name": "Groww Value Fund (formerly known as Indiabulls Value Fund)- Direct Plan- Monthly - Income Distribution cum capital withdrawal Option (Payout & Reinvestment)",
+   "section": "Open Ended Schemes ( Equity Scheme - Value Fund )"
+  },
+  {
+   "first": "2017-05",
+   "last": "2026-05",
+   "name": "Groww Value Fund (formerly known as Indiabulls Value Fund)- Direct Plan- Quarterly - Income Distribution cum capital withdrawal Option (Payout & Reinvestment)",
+   "section": "Open Ended Schemes ( Equity Scheme - Value Fund )"
+  },
+  {
+   "first": "2017-08",
+   "last": "2026-05",
+   "name": "Mahindra Manulife Multi Cap Fund - Direct Plan - IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2017-08",
+   "last": "2026-05",
+   "name": "Union Largecap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2018-02",
+   "last": "2026-05",
+   "name": "Mahindra Manulife Mid Cap Fund - Direct Plan - IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2018-02",
+   "last": "2026-05",
+   "name": "HDFC Housing Opportunities Fund  - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2018-02",
+   "last": "2026-05",
+   "name": "Groww ELSS Tax Saver Fund (formerly known as Indiabulls Tax Savings Fund)- Direct Plan- Dividend Option",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2018-02",
+   "last": "2026-05",
+   "name": "Groww ELSS Tax Saver Fund (formerly known as Indiabulls Tax Savings Fund)- Regular Plan- - Income Distribution cum capital withdrawal Option (Payout)",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2018-02",
+   "last": "2026-05",
+   "name": "Axis Flexi Cap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2018-05",
+   "last": "2026-05",
+   "name": "Navi Large & Midcap Fund - Direct Annual IDCW Payout",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2018-05",
+   "last": "2026-05",
+   "name": "Navi Large & Midcap Fund - Direct Half Yearly IDCW Payout",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2018-05",
+   "last": "2026-05",
+   "name": "Edelweiss Recently Listed IPO Fund - DIRECT PLAN - IDCW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2018-08",
+   "last": "2026-05",
+   "name": "ICICI Prudential Pharma Healthcare and Diagnostics (P.H.D) Fund - Cumulative Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2018-08",
+   "last": "2026-05",
+   "name": "ICICI Prudential Pharma Healthcare and Diagnostics (P.H.D) Fund - Direct Plan - IDCW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2018-08",
+   "last": "2026-05",
+   "name": "Mirae Asset Healthcare Fund -Regular Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2018-08",
+   "last": "2026-05",
+   "name": "Navi Flexi Cap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2018-08",
+   "last": "2026-05",
+   "name": "NAVI FLEXI CAP FUND - DIRECT PLAN ANNUAL IDCW PAYOUT",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2018-08",
+   "last": "2026-05",
+   "name": "NAVI FLEXI CAP FUND - DIRECT PLAN HALF YEARLY IDCW PAYOUT",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2018-08",
+   "last": "2026-05",
+   "name": "NAVI FLEXI CAP FUND - DIRECT PLAN MONTHLY IDCW PAYOUT",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2018-08",
+   "last": "2026-05",
+   "name": "NAVI FLEXI CAP FUND - DIRECT PLAN NORMAL IDCW PAYOUT",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2018-08",
+   "last": "2026-05",
+   "name": "NAVI FLEXI CAP FUND - DIRECT PLAN QUARTERLY IDCW PAYOUT",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2018-11",
+   "last": "2026-05",
+   "name": "Axis Large & Mid Cap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2018-11",
+   "last": "2026-05",
+   "name": "Invesco India Smallcap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2018-11",
+   "last": "2026-05",
+   "name": "TATA Small Cap Fund Direct Plan - Reinvestment of Income Distribution cum capital withdrawal option",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2018-11",
+   "last": "2026-05",
+   "name": "Tata Small Cap Fund-Direct Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2018-11",
+   "last": "2026-05",
+   "name": "ICICI Prudential Manufacturing Fund - Cumulative Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2018-11",
+   "last": "2026-05",
+   "name": "ICICI Prudential Manufacturing Fund - Direct Plan - IDCW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2018-11",
+   "last": "2026-05",
+   "name": "Sundaram Services Fund Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2018-11",
+   "last": "2026-05",
+   "name": "Sundaram Services Fund Direct Plan - Payout of Income Distribution cum Capital Withdrawal (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2018-11",
+   "last": "2026-05",
+   "name": "Shriram Flexi Cap Fund - Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2018-11",
+   "last": "2026-05",
+   "name": "Tata Flexi Cap Fund -Regular Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2018-11",
+   "last": "2026-05",
+   "name": "TATA Flexi Cap Fund Direct Plan - Reinvestment of Income Distribution cum capital withdrawal option",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2019-02",
+   "last": "2026-05",
+   "name": "BANK OF INDIA Small Cap Fund Direct Plan Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2019-02",
+   "last": "2026-05",
+   "name": "Edelweiss Small Cap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2019-02",
+   "last": "2026-05",
+   "name": "Union Value Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Value Fund )"
+  },
+  {
+   "first": "2019-02",
+   "last": "2026-05",
+   "name": "DSP Healthcare Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2019-02",
+   "last": "2026-05",
+   "name": "ICICI Prudential India Opportunities Fund - Cumulative Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2019-02",
+   "last": "2026-05",
+   "name": "ICICI Prudential India Opportunities Fund - Direct Plan - IDCW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2019-02",
+   "last": "2026-05",
+   "name": "Mahindra Manulife Consumption Fund - Direct Plan - IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2019-02",
+   "last": "2026-05",
+   "name": "Shriram ELSS Tax Saver Fund - Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2019-05",
+   "last": "2026-05",
+   "name": "Mahindra Manulife Large Cap Fund - Direct Plan - IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2019-05",
+   "last": "2026-05",
+   "name": "HSBC Large & Mid Cap Fund - Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2019-05",
+   "last": "2026-05",
+   "name": "CANARA ROBECO SMALL CAP FUND - DIRECT PLAN - GROWTH OPTION",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2019-05",
+   "last": "2026-05",
+   "name": "Mirae Asset Focused Fund Direct IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2019-05",
+   "last": "2026-05",
+   "name": "ICICI Prudential Bharat Consumption Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2019-05",
+   "last": "2026-05",
+   "name": "SBI Equity Minimum Variance Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2019-05",
+   "last": "2026-05",
+   "name": "SBI Equity Minimum Variance Fund - Direct Plan - Income Distribution cum Capital Withdrawal Option (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2019-08",
+   "last": "2026-05",
+   "name": "ITI Multi Cap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2019-08",
+   "last": "2026-05",
+   "name": "Mirae Asset Midcap Fund - Regular Plan-Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2019-08",
+   "last": "2026-05",
+   "name": "TATA SmallCap Fund - Direct Plan - Payout of Income Distribution cum capital withdrawal option",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2019-08",
+   "last": "2026-05",
+   "name": "Kotak Focused Fund- Direct Plan- Growth option",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2019-08",
+   "last": "2026-05",
+   "name": "Kotak Focused Fund- Regular Plan-Income Distribution cum capital withdrawal option",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2019-08",
+   "last": "2026-05",
+   "name": "Union Focused Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2019-08",
+   "last": "2026-05",
+   "name": "Aditya Birla Sun Life Pharma and Healthcare Fund-Direct - Payout of IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2019-08",
+   "last": "2026-05",
+   "name": "Aditya Birla Sun Life Pharma and Healthcare Fund-Direct-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2019-08",
+   "last": "2026-05",
+   "name": "DSP Quant Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2019-08",
+   "last": "2026-05",
+   "name": "ICICI Prudential MNC Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2019-08",
+   "last": "2026-05",
+   "name": "QUANTUM ESG BEST IN CLASS STRATEGY FUND - DIRECT PLAN - GROWTH OPTION",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2019-08",
+   "last": "2026-05",
+   "name": "Parag Parikh ELSS Tax Saver Fund- Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2019-11",
+   "last": "2026-05",
+   "name": "Motilal Oswal Large and Midcap Fund - Direct Plan Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2019-11",
+   "last": "2026-05",
+   "name": "ICICI Prudential Commodities Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2019-11",
+   "last": "2026-05",
+   "name": "Kotak Pioneer Fund- Direct Plan- Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2019-11",
+   "last": "2026-05",
+   "name": "Kotak Pioneer Fund- Regular Plan- Reinvestment of Income Distribution cum capital withdrawal option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2019-11",
+   "last": "2026-05",
+   "name": "ITI ELSS Tax Saver Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2020-02",
+   "last": "2026-05",
+   "name": "Mahindra Manulife Large & Mid Cap Fund - Direct Plan - IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2020-02",
+   "last": "2026-05",
+   "name": "Union Large & Midcap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2020-02",
+   "last": "2026-05",
+   "name": "TATA Focused Fund Direct Plan - Payout of Income Distribution cum capital withdrawal option",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2020-02",
+   "last": "2026-05",
+   "name": "Tata Focused Fund-Direct Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2020-02",
+   "last": "2026-05",
+   "name": "Aditya Birla Sun Life PSU Equity Fund-Direct - Payout of IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2020-02",
+   "last": "2026-05",
+   "name": "Aditya Birla Sun Life PSU Equity Fund-Direct Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2020-05",
+   "last": "2026-05",
+   "name": "Union Midcap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2020-05",
+   "last": "2026-05",
+   "name": "BANDHAN SMALL CAP FUND - DIRECT PLAN GROWTH",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2020-05",
+   "last": "2026-05",
+   "name": "ITI Small Cap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2020-05",
+   "last": "2026-05",
+   "name": "Axis ESG Integration Strategy Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2020-08",
+   "last": "2026-05",
+   "name": "HSBC Focused Fund - Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2020-08",
+   "last": "2026-05",
+   "name": "BANK OF INDIA Flexi Cap Fund Direct Plan -Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2020-11",
+   "last": "2026-05",
+   "name": "Sundaram Large Cap Fund (Formerly Known as Sundaram Blue Chip  Fund)  Direct Plan - Reinvestment of Income Distribution cum Capital Withdrawal (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2020-11",
+   "last": "2026-05",
+   "name": "Sundaram Large Cap Fund (Formerly Known as Sundaram Blue Chip Fund)Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2020-11",
+   "last": "2026-05",
+   "name": "Baroda BNP Paribas Large and Mid Cap Fund- Direct Plan -Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2020-11",
+   "last": "2026-05",
+   "name": "Invesco India Focused Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2020-11",
+   "last": "2026-05",
+   "name": "Aditya Birla Sun Life Special Opportunities Fund-Direct - IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2020-11",
+   "last": "2026-05",
+   "name": "ICICI Prudential ESG Exclusionary Strategy Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2020-11",
+   "last": "2026-05",
+   "name": "quant ESG Integration Strategy Fund - Growth Option - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2021-02",
+   "last": "2026-05",
+   "name": "ITI Large Cap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2021-02",
+   "last": "2026-05",
+   "name": "UTI Small Cap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2021-02",
+   "last": "2026-05",
+   "name": "HDFC Dividend Yield Fund - Growth Option Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Dividend Yield Fund )"
+  },
+  {
+   "first": "2021-02",
+   "last": "2026-05",
+   "name": "DSP Value Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Value Fund )"
+  },
+  {
+   "first": "2021-02",
+   "last": "2026-05",
+   "name": "Mahindra Manulife Focused Fund - Direct Plan - IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2021-02",
+   "last": "2026-05",
+   "name": "Aditya Birla Sun Life ESG Integration Strategy Fund-Direct - Payout of IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2021-02",
+   "last": "2026-05",
+   "name": "Aditya Birla Sun Life ESG Integration Strategy Fund-Direct Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2021-02",
+   "last": "2026-05",
+   "name": "Axis Innovation Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2021-02",
+   "last": "2026-05",
+   "name": "ICICI Prudential Business Cycle Fund Direct Plan Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2021-02",
+   "last": "2026-05",
+   "name": "ICICI Prudential Quant Fund Direct Plan Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2021-02",
+   "last": "2026-05",
+   "name": "Kotak ESG Exclusionary Strategy Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2021-02",
+   "last": "2026-05",
+   "name": "Kotak ESG Exclusionary Strategy Fund - Direct Plan - Payout of Income Distribution cum capital withdrawal option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2021-02",
+   "last": "2026-05",
+   "name": "Mirae Asset Banking and Financial Services Fund Direct  IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2021-05",
+   "last": "2026-05",
+   "name": "Aditya Birla Sun Life Multi-Cap Fund-Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2021-05",
+   "last": "2026-05",
+   "name": "ITI Mid Cap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2021-05",
+   "last": "2026-05",
+   "name": "Invesco India ESG Integration Strategy Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2021-05",
+   "last": "2026-05",
+   "name": "quant Quantamental Fund - Growth Option - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2021-08",
+   "last": "2026-05",
+   "name": "BANK OF INDIA Large Cap Fund Direct Plan Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2021-08",
+   "last": "2026-05",
+   "name": "PGIM India Small Cap Fund - Direct Plan - IDCW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2021-08",
+   "last": "2026-05",
+   "name": "ITI Value Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Value Fund )"
+  },
+  {
+   "first": "2021-08",
+   "last": "2026-05",
+   "name": "Canara Robeco Focused Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2021-08",
+   "last": "2026-05",
+   "name": "Axis Quant Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2021-08",
+   "last": "2026-05",
+   "name": "HDFC Banking & Financial Services Fund - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2021-08",
+   "last": "2026-05",
+   "name": "Tata Business Cycle Fund-Direct Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2021-08",
+   "last": "2026-05",
+   "name": "ICICI Prudential Flexicap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2021-11",
+   "last": "2026-05",
+   "name": "Kotak Multicap Fund- Regular Plan -IDCW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2021-11",
+   "last": "2026-05",
+   "name": "HSBC Midcap Fund - Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2021-11",
+   "last": "2026-05",
+   "name": "Axis Value Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Value Fund )"
+  },
+  {
+   "first": "2021-11",
+   "last": "2026-05",
+   "name": "Canara Robeco Value Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Value Fund )"
+  },
+  {
+   "first": "2021-11",
+   "last": "2026-05",
+   "name": "UTI Focused Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2021-11",
+   "last": "2026-05",
+   "name": "Baroda BNP Paribas Business Cycle Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2021-11",
+   "last": "2026-05",
+   "name": "ITI Pharma and Healthcare Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2021-11",
+   "last": "2026-05",
+   "name": "Mahindra Manulife Flexi Cap Fund - Direct Plan -Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2021-11",
+   "last": "2026-05",
+   "name": "Nippon India Flexi Cap Fund - Direct Plan - Growth Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2022-02",
+   "last": "2026-05",
+   "name": "Axis Multicap Fund - Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2022-02",
+   "last": "2026-05",
+   "name": "BANDHAN MULTI CAP FUND - GROWTH - DIRECT PLAN",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2022-02",
+   "last": "2026-05",
+   "name": "HDFC Multi Cap Fund - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2022-02",
+   "last": "2026-05",
+   "name": "Sundaram Multi Cap Fund (Formerly Known as Principal Multi Cap Growth Fund) - Direct Plan - Income Distribution CUM Capital Withdrawal Option (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2022-02",
+   "last": "2026-05",
+   "name": "Sundaram Multi Cap Fund (Formerly Known as Principal Multi Cap Growth Fund)-Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2022-02",
+   "last": "2026-05",
+   "name": "Sundaram Dividend Yield Fund (Formerly Known as Principal Dividend Yield Fund) - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Dividend Yield Fund )"
+  },
+  {
+   "first": "2022-02",
+   "last": "2026-05",
+   "name": "Sundaram Dividend Yield Fund (Formerly Known as Principal Dividend Yield Fund)- Direct Plan - Income Distribution CUM Capital Withdrawal Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Dividend Yield Fund )"
+  },
+  {
+   "first": "2022-02",
+   "last": "2026-05",
+   "name": "Quant Value Fund - Growth Option  - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Value Fund )"
+  },
+  {
+   "first": "2022-02",
+   "last": "2026-05",
+   "name": "Sundaram Focused Fund (Formerly Known as Principal Focused Multicap Fund)- Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2022-02",
+   "last": "2026-05",
+   "name": "Sundaram Focused Fund (Formerly Known as Principal Focused Multicap Fund)- Direct Plan - Income Distribution CUM Capital Withdrawal Option (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2022-02",
+   "last": "2026-05",
+   "name": "360 ONE QUANT FUND DIRECT GROWTH",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2022-02",
+   "last": "2026-05",
+   "name": "360 ONE QUANT FUND DIRECT INCOME DISTRIBUTION CUM CAPITAL WITHDRAWAL",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2022-02",
+   "last": "2026-05",
+   "name": "Aditya Birla Sun Life Business Cycle Fund-Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2022-02",
+   "last": "2026-05",
+   "name": "ITI Banking and Financial Services Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2022-02",
+   "last": "2026-05",
+   "name": "Nippon India Taiwan Equity Fund- Direct Plan- Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2022-02",
+   "last": "2026-05",
+   "name": "Sundaram ELSS Tax Saver Fund Direct Plan - Income Distribution CUM Capital Withdrawal Option (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2022-02",
+   "last": "2026-05",
+   "name": "Sundaram ELSS Tax Saver Fund Direct Plan Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2022-02",
+   "last": "2026-05",
+   "name": "Samco Flexi Cap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2022-05",
+   "last": "2026-05",
+   "name": "SBI Multicap Fund- Direct Plan - Income Distribution cum Capital Withdrawal Option (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2022-05",
+   "last": "2026-05",
+   "name": "SBI Multicap Fund- Direct Plan- Growth option",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2022-05",
+   "last": "2026-05",
+   "name": "BARODA BNP PARIBAS LARGE CAP Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2022-05",
+   "last": "2026-05",
+   "name": "BARODA BNP PARIBAS Mid Cap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2022-05",
+   "last": "2026-05",
+   "name": "BARODA BNP PARIBAS Focused Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2022-05",
+   "last": "2026-05",
+   "name": "BARODA BNP PARIBAS India Consumption Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2022-05",
+   "last": "2026-05",
+   "name": "ICICI PRUDENTIAL HOUSING OPPORTUNITIES FUND - Direct Plan Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2022-05",
+   "last": "2026-05",
+   "name": "Kotak Manufacture in India Fund - Direct Plan Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2022-05",
+   "last": "2026-05",
+   "name": "BARODA BNP PARIBAS ELSS Tax Saver Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2022-05",
+   "last": "2026-05",
+   "name": "Invesco India Flexi Cap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2022-08",
+   "last": "2026-05",
+   "name": "quant Large Cap Fund - Growth Option - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2022-08",
+   "last": "2026-05",
+   "name": "Edelweiss Focused Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2022-08",
+   "last": "2026-05",
+   "name": "WhiteOak Capital Flexi Cap Fund Direct Plan IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2022-11",
+   "last": "2026-05",
+   "name": "LIC MF Multi Cap Fund-Direct Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2022-11",
+   "last": "2026-05",
+   "name": "BANDHAN MIDCAP FUND - GROWTH - DIRECT PLAN",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2022-11",
+   "last": "2026-05",
+   "name": "WhiteOak Capital Mid Cap Fund Direct Plan Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2022-11",
+   "last": "2026-05",
+   "name": "BANDHAN TRANSPORTATION AND LOGISTICS FUND - GROWTH - DIRECT PLAN",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2022-11",
+   "last": "2026-05",
+   "name": "ICICI Prudential PSU Equity Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2022-11",
+   "last": "2026-05",
+   "name": "ICICI PRUDENTIAL TRANSPORTATION AND LOGISTICS FUND - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2022-11",
+   "last": "2026-05",
+   "name": "Kotak Business Cycle - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2022-11",
+   "last": "2026-05",
+   "name": "Kotak Business Cycle Fund-Direct Plan-IDCW option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2022-11",
+   "last": "2026-05",
+   "name": "Tata Housing Opportunities Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2022-11",
+   "last": "2026-05",
+   "name": "WhiteOak Capital ELSS Tax Saver Fund Direct Plan Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2022-11",
+   "last": "2026-05",
+   "name": "Baroda BNP Paribas Flexi Cap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2022-11",
+   "last": "2026-05",
+   "name": "Sundaram Flexicap Fund Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2023-02",
+   "last": "2026-05",
+   "name": "HSBC Multi Cap Fund - Direct - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2023-02",
+   "last": "2026-05",
+   "name": "Tata Multicap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2023-02",
+   "last": "2026-05",
+   "name": "Union Multicap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2023-02",
+   "last": "2026-05",
+   "name": "WhiteOak Capital Large Cap Fund Direct Plan Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2023-02",
+   "last": "2026-05",
+   "name": "Canara Robeco Mid Cap Fund- Direct Plan- Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2023-02",
+   "last": "2026-05",
+   "name": "JM Midcap Fund (Direct) - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2023-02",
+   "last": "2026-05",
+   "name": "HSBC Small Cap Fund - Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2023-02",
+   "last": "2026-05",
+   "name": "Mahindra Manulife Small Cap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2023-02",
+   "last": "2026-05",
+   "name": "HSBC Value Fund - Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Value Fund )"
+  },
+  {
+   "first": "2023-02",
+   "last": "2026-05",
+   "name": "HDFC Business Cycle Fund - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2023-02",
+   "last": "2026-05",
+   "name": "HSBC Business Cycles Fund - Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2023-02",
+   "last": "2026-05",
+   "name": "HSBC Infrastructure Fund - Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2023-02",
+   "last": "2026-05",
+   "name": "360 ONE ELSS Tax Saver Nifty 50 Index Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2023-02",
+   "last": "2026-05",
+   "name": "HSBC ELSS Tax saver Fund - Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2023-02",
+   "last": "2026-05",
+   "name": "Samco ELSS Tax Saver Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2023-05",
+   "last": "2026-05",
+   "name": "Bank of India Multi Cap Fund Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2023-05",
+   "last": "2026-05",
+   "name": "SBI Dividend Yield Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Dividend Yield Fund )"
+  },
+  {
+   "first": "2023-05",
+   "last": "2026-05",
+   "name": "SBI Dividend Yield Fund - Direct Plan - Income Distribution cum Capital Withdrawal (IDCW) Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Dividend Yield Fund )"
+  },
+  {
+   "first": "2023-05",
+   "last": "2026-05",
+   "name": "Axis Business Cycles Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2023-05",
+   "last": "2026-05",
+   "name": "HDFC MNC Fund - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2023-05",
+   "last": "2026-05",
+   "name": "ICICI Prudential Innovation Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2023-05",
+   "last": "2026-05",
+   "name": "Kotak Banking & Financial Services Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2023-05",
+   "last": "2026-05",
+   "name": "NAVI ELSS TAX SAVER NIFTY 50 INDEX FUND - DIRECT PLAN GROWTH",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2023-05",
+   "last": "2026-05",
+   "name": "ITI Flexi Cap Fund- Direct Plan- Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2023-05",
+   "last": "2026-05",
+   "name": "Mirae Asset Flexi Cap Fund - Direct Plan -  IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2023-08",
+   "last": "2026-05",
+   "name": "Canara Robeco Multi Cap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2023-08",
+   "last": "2026-05",
+   "name": "LIC MF Mid Cap Fund-Direct Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2023-08",
+   "last": "2026-05",
+   "name": "LIC MF Small Cap Fund-Direct Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2023-08",
+   "last": "2026-05",
+   "name": "LIC MF Dividend Yield Fund-Direct Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Dividend Yield Fund )"
+  },
+  {
+   "first": "2023-08",
+   "last": "2026-05",
+   "name": "Baroda BNP Paribas Value Fund - Direct Plan - Growth option",
+   "section": "Open Ended Schemes ( Equity Scheme - Value Fund )"
+  },
+  {
+   "first": "2023-08",
+   "last": "2026-05",
+   "name": "LIC MF Value Fund-Direct Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Value Fund )"
+  },
+  {
+   "first": "2023-08",
+   "last": "2026-05",
+   "name": "ITI Focused Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2023-08",
+   "last": "2026-05",
+   "name": "LIC MF Focused Fund-Direct Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2023-08",
+   "last": "2026-05",
+   "name": "BANDHAN FINANCIAL SERVICES FUND - DIRECT PLAN - GROWTH",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2023-08",
+   "last": "2026-05",
+   "name": "HDFC Consumption Fund - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2023-08",
+   "last": "2026-05",
+   "name": "HDFC Defence Fund - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2023-08",
+   "last": "2026-05",
+   "name": "Kotak Quant Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2023-08",
+   "last": "2026-05",
+   "name": "LIC MF Healthcare Fund-Direct Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2023-08",
+   "last": "2026-05",
+   "name": "quant BFSI Fund - Growth Option - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2023-08",
+   "last": "2026-05",
+   "name": "quant Business Cycle Fund - Growth Option - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2023-08",
+   "last": "2026-05",
+   "name": "quant Healthcare Fund - Growth Option - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2023-08",
+   "last": "2026-05",
+   "name": "Samco Active Momentum Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2023-08",
+   "last": "2026-05",
+   "name": "NJ ELSS Tax Saver Scheme Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2023-08",
+   "last": "2026-05",
+   "name": "360 ONE FLEXICAP FUND-DIRECT PLAN- GROWTH",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2023-11",
+   "last": "2026-05",
+   "name": "Edelweiss Multi Cap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2023-11",
+   "last": "2026-05",
+   "name": "Mirae Asset Multicap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2023-11",
+   "last": "2026-05",
+   "name": "WhiteOak Capital Multi Cap Fund Direct Plan Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2023-11",
+   "last": "2026-05",
+   "name": "Baroda BNP Paribas Small Cap Fund - Direct Plan - Growth option",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2023-11",
+   "last": "2026-05",
+   "name": "QUANTUM SMALL CAP FUND - DIRECT PLAN GROWTH OPTION",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2023-11",
+   "last": "2026-05",
+   "name": "HDFC Pharma and Healthcare Fund - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2023-11",
+   "last": "2026-05",
+   "name": "HDFC Technology Fund - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2023-11",
+   "last": "2026-05",
+   "name": "HDFC Transportation and Logistics Fund - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2023-11",
+   "last": "2026-05",
+   "name": "HSBC Consumption Fund - Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2023-11",
+   "last": "2026-05",
+   "name": "Mahindra Manulife Business Cycle Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2023-11",
+   "last": "2026-05",
+   "name": "Nippon India Innovation Fund-Direct Plan-Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2023-11",
+   "last": "2026-05",
+   "name": "quant Manufacturing Fund - Growth Option - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2023-11",
+   "last": "2026-05",
+   "name": "quant Teck Fund - Growth Option - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2023-11",
+   "last": "2026-05",
+   "name": "Union Innovation & Opportunities Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2023-11",
+   "last": "2026-05",
+   "name": "UTI Innovation Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2023-11",
+   "last": "2026-05",
+   "name": "UTI Innovation Fund - Direct Plan - Payout of IDCW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2023-11",
+   "last": "2026-05",
+   "name": "Bajaj Finserv Flexi Cap Fund -Regular Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2023-11",
+   "last": "2026-05",
+   "name": "Helios Flexi Cap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2023-11",
+   "last": "2026-05",
+   "name": "NJ Flexi Cap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2024-02",
+   "last": "2026-05",
+   "name": "DSP Multicap Fund - Direct - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2024-02",
+   "last": "2026-05",
+   "name": "Motilal Oswal Large Cap Direct Plan Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2024-02",
+   "last": "2026-05",
+   "name": "Whiteoak Capital Large & Mid Cap Fund Direct Plan Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2024-02",
+   "last": "2026-05",
+   "name": "Motilal Oswal Small Cap Fund - Direct - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2024-02",
+   "last": "2026-05",
+   "name": "Old Bridge Focused Fund - Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Focused Fund )"
+  },
+  {
+   "first": "2024-02",
+   "last": "2026-05",
+   "name": "Aditya Birla Sun Life Transportation and Logistics Fund-Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-02",
+   "last": "2026-05",
+   "name": "Axis India Manufacturing Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-02",
+   "last": "2026-05",
+   "name": "DSP Banking & Financial Services Fund - Direct - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-02",
+   "last": "2026-05",
+   "name": "Groww Banking & Financial Services Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-02",
+   "last": "2026-05",
+   "name": "Kotak Consumption Fund - Direct plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-02",
+   "last": "2026-05",
+   "name": "Kotak Healthcare Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-02",
+   "last": "2026-05",
+   "name": "quant Commodities Fund - Growth Option - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-02",
+   "last": "2026-05",
+   "name": "quant Consumption Fund - Growth Option - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-02",
+   "last": "2026-05",
+   "name": "quant Momentum Fund - Growth Option - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-02",
+   "last": "2026-05",
+   "name": "WhiteOak Capital Banking & Financial Services Fund - Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-02",
+   "last": "2026-05",
+   "name": "WhiteOak Capital Pharma and Heathcare Fund Direct Plan Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-05",
+   "last": "2026-05",
+   "name": "Bajaj Finserv Large and Mid Cap Fund- Direct Plan- Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2024-05",
+   "last": "2026-05",
+   "name": "PGIM India Large and Midcap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2024-05",
+   "last": "2026-05",
+   "name": "Bandhan Innovation Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-05",
+   "last": "2026-05",
+   "name": "Baroda BNP Paribas Innovation Fund Direct plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-05",
+   "last": "2026-05",
+   "name": "Canara Robeco Manufacturing Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-05",
+   "last": "2026-05",
+   "name": "Canara Robeco Manufacturing Fund - Direct Plan - IDWC Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-05",
+   "last": "2026-05",
+   "name": "Edelweiss Technology Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-05",
+   "last": "2026-05",
+   "name": "Kotak Technology Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-05",
+   "last": "2026-05",
+   "name": "quant PSU Fund - Growth Option - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-05",
+   "last": "2026-05",
+   "name": "SBI Energy Opportunities Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-05",
+   "last": "2026-05",
+   "name": "SBI Energy Opportunities Fund - Direct Plan - Income Distribution Cum Capital Withdrawal Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-05",
+   "last": "2026-05",
+   "name": "Union Business Cycle Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-05",
+   "last": "2026-05",
+   "name": "TRUSTMF Flexi Cap Fund-Direct Plan- Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2024-08",
+   "last": "2026-05",
+   "name": "Franklin India Multi Cap Fund - Direct - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2024-08",
+   "last": "2026-05",
+   "name": "Motilal Oswal Multi Cap Fund Regular Plan Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2024-08",
+   "last": "2026-05",
+   "name": "JM Small Cap Fund (Direct) - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2024-08",
+   "last": "2026-05",
+   "name": "Aditya Birla Sun Life Quant Fund - Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-08",
+   "last": "2026-05",
+   "name": "Baroda BNP Paribas Manufacturing Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-08",
+   "last": "2026-05",
+   "name": "Edelweiss Business Cycle Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-08",
+   "last": "2026-05",
+   "name": "HDFC Manufacturing fund - Growth Option - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-08",
+   "last": "2026-05",
+   "name": "Helios Financial Services Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-08",
+   "last": "2026-05",
+   "name": "ICICI PRUDENTIAL ENERGY OPPORTUNITIES FUND - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-08",
+   "last": "2026-05",
+   "name": "Kotak Special Opportunities Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-08",
+   "last": "2026-05",
+   "name": "Mahindra Manulife Manufacturing Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-08",
+   "last": "2026-05",
+   "name": "Motilal Oswal Manufacturing Fund - Direct Plan - IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-08",
+   "last": "2026-05",
+   "name": "Motilal Owsal Manufacturing Fund - Regular Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-08",
+   "last": "2026-05",
+   "name": "Motilal Oswal Quant Fund - Direct - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-08",
+   "last": "2026-05",
+   "name": "Samco Special Opportunities Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-08",
+   "last": "2026-05",
+   "name": "SBI Automotive Opportunities Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-08",
+   "last": "2026-05",
+   "name": "SBI Automotive Opportunities Fund - Direct Plan - Income Distribution Cum Capital Withdrawal Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-08",
+   "last": "2026-05",
+   "name": "Sundaram Business Cycle Fund Direct Plan Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-08",
+   "last": "2026-05",
+   "name": "WhiteOak Capital Special Opportunities Fund - Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-11",
+   "last": "2026-05",
+   "name": "PGIM India Multi Cap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2024-11",
+   "last": "2026-05",
+   "name": "Samco Multi Cap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2024-11",
+   "last": "2026-05",
+   "name": "BAJAJ FINSERV LARGE CAP FUND - DIRECT PLAN - GROWTH",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2024-11",
+   "last": "2026-05",
+   "name": "Helios Large & Mid Cap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2024-11",
+   "last": "2026-05",
+   "name": "ITI Large & Midcap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2024-11",
+   "last": "2026-05",
+   "name": "TRUSTMF SMALL CAP FUND -DIRECT PLAN-GROWTH",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2024-11",
+   "last": "2026-05",
+   "name": "Baroda BNP Paribas Dividend Yield Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Dividend Yield Fund )"
+  },
+  {
+   "first": "2024-11",
+   "last": "2026-05",
+   "name": "Axis Consumption Fund Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-11",
+   "last": "2026-05",
+   "name": "Bandhan Business Cycle Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-11",
+   "last": "2026-05",
+   "name": "Bank of India Business Cycle Fund - Direct Plan - Dividend",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-11",
+   "last": "2026-05",
+   "name": "HSBC India Export Opportunities Fund - Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-11",
+   "last": "2026-05",
+   "name": "Invesco India Manufacturing Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-11",
+   "last": "2026-05",
+   "name": "Invesco India Technology Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-11",
+   "last": "2026-05",
+   "name": "Kotak MNC Fund-Direct Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-11",
+   "last": "2026-05",
+   "name": "LIC MF Manufacturing Fund-Direct Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-11",
+   "last": "2026-05",
+   "name": "Motilal Oswal Business Cycle Fund - Direct Plan- Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-11",
+   "last": "2026-05",
+   "name": "Motilal Oswal Digital India Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-11",
+   "last": "2026-05",
+   "name": "SBI Innovative Opportunities Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-11",
+   "last": "2026-05",
+   "name": "SBI Innovative Opportunities Fund - Direct Plan - Income Distribution Cum Capital Withdrawal Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-11",
+   "last": "2026-05",
+   "name": "WhiteOak Capital Digital Bharat Fund Direct Plan Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2024-11",
+   "last": "2026-05",
+   "name": "WhiteOak Capital ESG Best-In-Class Strategy Fund Direct Plan Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-02",
+   "last": "2026-05",
+   "name": "Groww Multicap Fund - Direct - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2025-02",
+   "last": "2026-05",
+   "name": "Mirae Asset Small Cap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2025-02",
+   "last": "2026-05",
+   "name": "Aditya Birla Sun Life Conglomerate Fund-Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-02",
+   "last": "2026-05",
+   "name": "Axis Momentum Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-02",
+   "last": "2026-05",
+   "name": "BAJAJ FINSERV CONSUMPTION FUND - DIRECT - GROWTH",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-02",
+   "last": "2026-05",
+   "name": "BAJAJ FINSERV HEALTHCARE FUND - DIRECT - GROWTH",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-02",
+   "last": "2026-05",
+   "name": "Bank of India Consumption Fund - Direct - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-02",
+   "last": "2026-05",
+   "name": "Baroda BNP Paribas Energy Opportunities Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-02",
+   "last": "2026-05",
+   "name": "Baroda BNP Paribas Energy Opportunities Fund - Regular Plan - ICDW Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-02",
+   "last": "2026-05",
+   "name": "DSP Business Cycle Fund - Direct - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-02",
+   "last": "2026-05",
+   "name": "ICICI Prudential Equity Minimum Variance Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-02",
+   "last": "2026-05",
+   "name": "ICICI Prudential Rural Opportunities Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-02",
+   "last": "2026-05",
+   "name": "Kotak Transportation & Logistics Fund-Direct -IDCW-PAYOUT & REINVESTMENT",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-02",
+   "last": "2026-05",
+   "name": "Kotak Transportation & Logistics Fund-Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-02",
+   "last": "2026-05",
+   "name": "PGIM India Healthcare Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-02",
+   "last": "2026-05",
+   "name": "Quantum Ethical Fund - Direct Plan Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-02",
+   "last": "2026-05",
+   "name": "SBI Quant Fund- Direct Plan- Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-02",
+   "last": "2026-05",
+   "name": "SBI Quant Fund- Direct Plan- Income Distribution cum Capital Withdrawal Option (IDCW)",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-02",
+   "last": "2026-05",
+   "name": "Shriram Multi Sector Rotation Fund - Direct Plan Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-02",
+   "last": "2026-05",
+   "name": "Tata India Innovation Fund- Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-02",
+   "last": "2026-05",
+   "name": "Union Active Momentum Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-02",
+   "last": "2026-05",
+   "name": "UTI Quant Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-02",
+   "last": "2026-05",
+   "name": "WhiteOak Capital Quality Equity Fund Direct Plan Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-02",
+   "last": "2026-05",
+   "name": "BAJAJ FINSERV ELSS TAX SAVER FUND - DIRECT - GROWTH",
+   "section": "Open Ended Schemes ( Equity Scheme - ELSS )"
+  },
+  {
+   "first": "2025-05",
+   "last": "2026-05",
+   "name": "BAJAJ FINSERV MULTI CAP FUND - DIRECT - GROWTH",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2025-05",
+   "last": "2026-05",
+   "name": "Samco Large Cap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2025-05",
+   "last": "2026-05",
+   "name": "Helios Mid Cap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2025-05",
+   "last": "2026-05",
+   "name": "Mahindra Manulife Value Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Value Fund )"
+  },
+  {
+   "first": "2025-05",
+   "last": "2026-05",
+   "name": "Edelweiss Consumption Fund - Direct - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-05",
+   "last": "2026-05",
+   "name": "HSBC Financial Services Fund - Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-05",
+   "last": "2026-05",
+   "name": "Invesco India Business Cycle Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-05",
+   "last": "2026-05",
+   "name": "ITI Bharat Consumption Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-05",
+   "last": "2026-05",
+   "name": "Kotak Energy Opportunities Fund-Direct-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-05",
+   "last": "2026-05",
+   "name": "Kotak Energy Opportunities Fund-Direct-IDCW-Payout & Reinvestment",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-05",
+   "last": "2026-05",
+   "name": "Motilal Oswal Active Momentum Fund - Regular- IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-05",
+   "last": "2026-05",
+   "name": "Motilal Oswal Innovation Opportunities Fund - Direct Plan- Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-05",
+   "last": "2026-05",
+   "name": "Nippon India Active Momentum Fund - Regular Plan- Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-08",
+   "last": "2026-05",
+   "name": "TRUSTMF MULTI CAP FUND -DIRECT PLAN-GROWTH",
+   "section": "Open Ended Schemes ( Equity Scheme - Multi Cap Fund )"
+  },
+  {
+   "first": "2025-08",
+   "last": "2026-05",
+   "name": "JM Large & Mid Cap Fund (Direct) - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2025-08",
+   "last": "2026-05",
+   "name": "Samco Large & Mid Cap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large & Mid Cap Fund )"
+  },
+  {
+   "first": "2025-08",
+   "last": "2026-05",
+   "name": "BAJAJ FINSERV SMALL CAP FUND - DIRECT - GROWTH",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2025-08",
+   "last": "2026-05",
+   "name": "Axis Services Opportunities Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-08",
+   "last": "2026-05",
+   "name": "Bandhan Multi-Factor Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-08",
+   "last": "2026-05",
+   "name": "Baroda BNP Paribas Health and Wellness Fund Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-08",
+   "last": "2026-05",
+   "name": "Baroda BNP Paribas Health and Wellness Fund Direct IDCWPayout",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-08",
+   "last": "2026-05",
+   "name": "HDFC INNOVATION FUND - DIRECT PLAN - GROWTH OPTION",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-08",
+   "last": "2026-05",
+   "name": "ICICI Prudential Active Momentum Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-08",
+   "last": "2026-05",
+   "name": "ICICI Prudential Quality Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-08",
+   "last": "2026-05",
+   "name": "Mahindra Manulife Banking & Financial Services Fund - Direct - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-08",
+   "last": "2026-05",
+   "name": "Motilal Oswal Infrastructure Fund-Direct-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-08",
+   "last": "2026-05",
+   "name": "Motilal Oswal Services Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-08",
+   "last": "2026-05",
+   "name": "Nippon India MNC Fund- Direct Plan- Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-08",
+   "last": "2026-05",
+   "name": "Sundaram Multi-Factor Fund - Direct - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-08",
+   "last": "2026-05",
+   "name": "CAPITALMIND FLEXI CAP FUND DIRECT GROWTH",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2025-08",
+   "last": "2026-05",
+   "name": "Unifi Flexi Cap Fund - Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2025-11",
+   "last": "2026-05",
+   "name": "Bank of India Mid Cap Fund - Direct Plan Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2025-11",
+   "last": "2026-05",
+   "name": "Baroda BNP Paribas Business Conglomerates Fund Direct Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-11",
+   "last": "2026-05",
+   "name": "ICICI Prudential Conglomerate Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-11",
+   "last": "2026-05",
+   "name": "Invesco India Consumption Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-11",
+   "last": "2026-05",
+   "name": "Kotak Active Momentum Fund - Direct Plan - Growth option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-11",
+   "last": "2026-05",
+   "name": "Kotak Active Momentum Fund - Direct Plan - IDCW - Payout and Reinvestment",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-11",
+   "last": "2026-05",
+   "name": "Kotak Active Momentum Fund - Regular Plan - IDCW - Payout & Reinvestment",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-11",
+   "last": "2026-05",
+   "name": "Motilal Oswal Consumption Fund-Direct-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-11",
+   "last": "2026-05",
+   "name": "Motilal Oswal Special Opportunities Fund - Direct - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-11",
+   "last": "2026-05",
+   "name": "THE WEALTH COMPANY ETHICAL FUND DIRECT GROWTH",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2025-11",
+   "last": "2026-05",
+   "name": "JioBlackRock Flexi Cap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2025-11",
+   "last": "2026-05",
+   "name": "THE WEALTH COMPANY FLEXI CAP FUND - DIRECT GROWTH",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2026-02",
+   "last": "2026-05",
+   "name": "Parag Parikh Large Cap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2026-02",
+   "last": "2026-05",
+   "name": "Samco Mid Cap Fund - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2026-02",
+   "last": "2026-05",
+   "name": "Groww Small Cap Fund - Direct-IDCW",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2026-02",
+   "last": "2026-05",
+   "name": "Helios Small Cap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2026-02",
+   "last": "2026-05",
+   "name": "Samco Small Cap Fund - Direct Plan",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2026-02",
+   "last": "2026-05",
+   "name": "Kotak Dividend Yield Fund - Direct - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Dividend Yield Fund )"
+  },
+  {
+   "first": "2026-02",
+   "last": "2026-05",
+   "name": "Bajaj Finserv Banking and Financial Services Fund - Direct - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2026-02",
+   "last": "2026-05",
+   "name": "Bandhan Healthcare Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2026-02",
+   "last": "2026-05",
+   "name": "Bank of India Banking & Financial Services Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2026-02",
+   "last": "2026-05",
+   "name": "Franklin India Multi-Factor Fund- Direct- Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2026-02",
+   "last": "2026-05",
+   "name": "Kotak Rural Opportunities Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2026-02",
+   "last": "2026-05",
+   "name": "Kotak Rural Opportunities Fund - Direct Plan - IDCW Divdend - Payouout & Reinvestment",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2026-02",
+   "last": "2026-05",
+   "name": "Kotak Rural Opportunities Fund - Regular Plan - IDCW Dividend - Payout & Reinvestment",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2026-02",
+   "last": "2026-05",
+   "name": "LIC MF Consumption Fund-Direct Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2026-02",
+   "last": "2026-05",
+   "name": "Mahindra Manulife Innovation Opportunities Fund - Direct - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2026-02",
+   "last": "2026-05",
+   "name": "Mirae Asset Infrastructure Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2026-02",
+   "last": "2026-05",
+   "name": "Union Consumption Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2026-02",
+   "last": "2026-05",
+   "name": "WhiteOak Capital Consumption Opportunities Fund Direct Plan Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2026-02",
+   "last": "2026-05",
+   "name": "Abakkus Flexi Cap Fund - Direct - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  },
+  {
+   "first": "2026-05",
+   "last": "2026-05",
+   "name": "JioBlackRock Large Cap Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Large Cap Fund )"
+  },
+  {
+   "first": "2026-05",
+   "last": "2026-05",
+   "name": "TRUSTMF MID CAP FUND -DIRECT -GROWTH",
+   "section": "Open Ended Schemes ( Equity Scheme - Mid Cap Fund )"
+  },
+  {
+   "first": "2026-05",
+   "last": "2026-05",
+   "name": "Abakkus Small Cap Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2026-05",
+   "last": "2026-05",
+   "name": "The Wealth Company Small Cap Fund- Direct-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Small Cap Fund )"
+  },
+  {
+   "first": "2026-05",
+   "last": "2026-05",
+   "name": "Baroda BNP Paribas Best-in-Class Strategy Fund - Direct - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2026-05",
+   "last": "2026-05",
+   "name": "Canara Robeco Banking and Financials Services Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2026-05",
+   "last": "2026-05",
+   "name": "Edelweiss Financial Services Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2026-05",
+   "last": "2026-05",
+   "name": "ITI Business Cycle Fund- Direct Plan- Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2026-05",
+   "last": "2026-05",
+   "name": "JioBlackRock Sector Rotation Fund - Direct Plan - Growth Option",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2026-05",
+   "last": "2026-05",
+   "name": "Kotak Services Fund - Direct - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2026-05",
+   "last": "2026-05",
+   "name": "LIC MF Technology Fund-Direct Plan-Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2026-05",
+   "last": "2026-05",
+   "name": "Motilal Oswal Financial Services Fund- Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2026-05",
+   "last": "2026-05",
+   "name": "SBI Quality Fund - Direct Plan - Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2026-05",
+   "last": "2026-05",
+   "name": "SBI Quality Fund - Direct Plan - Income Distribution Cum Capital Withdrawal",
+   "section": "Open Ended Schemes ( Equity Scheme - Sectoral/ Thematic )"
+  },
+  {
+   "first": "2026-05",
+   "last": "2026-05",
+   "name": "Old Bridge Flexi Cap Fund Direct Growth",
+   "section": "Open Ended Schemes ( Equity Scheme - Flexi Cap Fund )"
+  }
+ ]
+}

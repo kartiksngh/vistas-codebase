@@ -1,0 +1,1306 @@
+[
+ {
+  "idx": 978,
+  "key": "nippon-nippon-india-nifty-g-sec-jun-2036-maturity-index-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Nifty G-Sec Jun 2036 Maturity Index Fund",
+  "n_holdings": 5,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 979,
+  "key": "nippon-nippon-india-nifty-g-sec-oct-2028-maturity-index-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Nifty G-Sec Oct 2028 Maturity Index Fund",
+  "n_holdings": 5,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 980,
+  "key": "nippon-nippon-india-nifty-g-sec-sep-2027-maturity-index-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Nifty G-Sec Sep 2027 Maturity Index Fund",
+  "n_holdings": 4,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 981,
+  "key": "nippon-nippon-india-nifty-india-manufacturing-etf",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Nifty India Manufacturing ETF",
+  "n_holdings": 81,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 982,
+  "key": "nippon-nippon-india-nifty-india-manufacturing-index-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Nifty India Manufacturing Index Fund",
+  "n_holdings": 81,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 983,
+  "key": "nippon-nippon-india-nifty-it-index-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Nifty IT Index Fund",
+  "n_holdings": 11,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 984,
+  "key": "nippon-nippon-india-nifty-midcap-150-index-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Nifty Midcap 150 Index Fund",
+  "n_holdings": 150,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 985,
+  "key": "nippon-nippon-india-nifty-next-50-junior-bees-fof",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "NIPPON INDIA NIFTY NEXT 50 JUNIOR BEES FOF",
+  "n_holdings": 2,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 986,
+  "key": "nippon-nippon-india-nifty-pharma-etf",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Nifty Pharma ETF",
+  "n_holdings": 21,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 987,
+  "key": "nippon-nippon-india-nifty-realty-index-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Nifty Realty Index Fund",
+  "n_holdings": 11,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 988,
+  "key": "nippon-nippon-india-nifty-sdl-plus-g-sec-jun-2028-maturity-70-30-index-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Nifty SDL Plus G-Sec - Jun 2028 Maturity 70:30 Index Fund",
+  "n_holdings": 30,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 989,
+  "key": "nippon-nippon-india-nifty-sdl-plus-g-sec-jun-2029-maturity-70-30-index-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Nifty SDL Plus G-Sec - Jun 2029 Maturity 70:30 Index Fund",
+  "n_holdings": 30,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 990,
+  "key": "nippon-nippon-india-nifty-smallcap-250-index-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Nifty Smallcap 250 Index Fund",
+  "n_holdings": 251,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 991,
+  "key": "nippon-nippon-india-nivesh-lakshya-long-duration-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Nivesh Lakshya Long Duration Fund",
+  "n_holdings": 16,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 992,
+  "key": "nippon-nippon-india-overnight-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Overnight Fund",
+  "n_holdings": 7,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 993,
+  "key": "nippon-nippon-india-pharma-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "NIPPON INDIA PHARMA FUND",
+  "n_holdings": 35,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 994,
+  "key": "nippon-nippon-india-power-infra-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "NIPPON INDIA POWER & INFRA FUND",
+  "n_holdings": 80,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 995,
+  "key": "nippon-nippon-india-quant-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "NIPPON INDIA QUANT FUND",
+  "n_holdings": 41,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 996,
+  "key": "nippon-nippon-india-quarterly-interval-fund-series-2-a-debt-oriented-interval-sc-103fed67",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Quarterly Interval Fund-Series 2 (A Debt Oriented Interval Scheme. Relatively Low Interest rate Risk and relatively high Credit Risk)",
+  "n_holdings": 3,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 997,
+  "key": "nippon-nippon-india-retirement-fund-income-generation-scheme-an-open-ended-retir-0f61446c",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "NIPPON INDIA RETIREMENT FUND - INCOME GENERATION SCHEME (An open ended retirement solution oriented scheme having a lock-in of 5 years or till retirement age (whichever is earlier))",
+  "n_holdings": 30,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 998,
+  "key": "nippon-nippon-india-retirement-fund-wealth-creation-scheme-an-open-ended-retirem-725aa477",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "NIPPON INDIA RETIREMENT FUND - WEALTH CREATION SCHEME (An open ended retirement solution oriented scheme having a lock-in of 5 years or till retirement age (whichever is earlier))",
+  "n_holdings": 74,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 999,
+  "key": "nippon-nippon-india-short-duration-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Short Duration Fund",
+  "n_holdings": 120,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 1000,
+  "key": "nippon-nippon-india-silver-etf-an-open-ended-scheme-listed-on-the-exchange-in-th-eec7a5d4",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Silver ETF (An open ended scheme, listed on the Exchange in the form of an Exchange Traded Fund (ETF) investing in physical silver and / or Exchange Traded Commodity Derivatives (ETCD) in Silver )",
+  "n_holdings": 1,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 1001,
+  "key": "nippon-nippon-india-silver-etf-fund-of-fund-fof",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Silver ETF Fund of Fund (FOF)",
+  "n_holdings": 2,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 1002,
+  "key": "nippon-nippon-india-small-cap-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "NIPPON INDIA SMALL CAP FUND",
+  "n_holdings": 251,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 1003,
+  "key": "nippon-nippon-india-taiwan-equity-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Taiwan Equity Fund",
+  "n_holdings": 33,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 1004,
+  "key": "nippon-nippon-india-ultra-short-duration-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Ultra Short Duration Fund",
+  "n_holdings": 117,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 1005,
+  "key": "nippon-nippon-india-us-equity-opportunities-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "NIPPON INDIA US EQUITY OPPORTUNITIES FUND",
+  "n_holdings": 30,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 1006,
+  "key": "nippon-nippon-india-value-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "NIPPON INDIA VALUE FUND",
+  "n_holdings": 86,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 1007,
+  "key": "nippon-nippon-india-vision-large-mid-cap-fund",
+  "amc": "Nippon Life India Asset Management Limited",
+  "name": "Nippon India Vision Large & Mid Cap Fund",
+  "n_holdings": 98,
+  "asof": "May 31,2026"
+ },
+ {
+  "idx": 1008,
+  "key": "ppfas-parag-parikh-arbitrage-fund",
+  "amc": "PPFAS Asset Management Pvt. Ltd.",
+  "name": "Parag Parikh Arbitrage Fund",
+  "n_holdings": 81,
+  "asof": "May 31, 2026"
+ },
+ {
+  "idx": 1009,
+  "key": "ppfas-parag-parikh-conservative-hybrid-fund",
+  "amc": "PPFAS Asset Management Pvt. Ltd.",
+  "name": "Parag Parikh Conservative Hybrid Fund",
+  "n_holdings": 104,
+  "asof": "May 31, 2026"
+ },
+ {
+  "idx": 1010,
+  "key": "ppfas-parag-parikh-dynamic-asset-allocation-fund",
+  "amc": "PPFAS Asset Management Pvt. Ltd.",
+  "name": "Parag Parikh Dynamic Asset Allocation Fund",
+  "n_holdings": 110,
+  "asof": "May 31, 2026"
+ },
+ {
+  "idx": 1011,
+  "key": "ppfas-parag-parikh-elss-tax-saver-fund",
+  "amc": "PPFAS Asset Management Pvt. Ltd.",
+  "name": "Parag Parikh ELSS Tax Saver Fund",
+  "n_holdings": 45,
+  "asof": "May 31, 2026"
+ },
+ {
+  "idx": 1012,
+  "key": "ppfas-parag-parikh-flexi-cap-fund",
+  "amc": "PPFAS Asset Management Pvt. Ltd.",
+  "name": "Parag Parikh Flexi Cap Fund",
+  "n_holdings": 113,
+  "asof": "May 31, 2026"
+ },
+ {
+  "idx": 1013,
+  "key": "ppfas-parag-parikh-large-cap-fund",
+  "amc": "PPFAS Asset Management Pvt. Ltd.",
+  "name": "Parag Parikh Large Cap Fund",
+  "n_holdings": 107,
+  "asof": "May 31, 2026"
+ },
+ {
+  "idx": 1014,
+  "key": "ppfas-parag-parikh-liquid-fund",
+  "amc": "PPFAS Asset Management Pvt. Ltd.",
+  "name": "Parag Parikh Liquid Fund",
+  "n_holdings": 48,
+  "asof": "May 31, 2026"
+ },
+ {
+  "idx": 1015,
+  "key": "quant-money-aggressive-hybrid-fund-an-open-ended-hybrid-scheme-investing-predomi-d21521ea",
+  "amc": "quant Money Managers Limited",
+  "name": "Aggressive Hybrid Fund - An open ended hybrid scheme investing predominantly in equity and equity related instruments.",
+  "n_holdings": 27,
+  "asof": "29 May 2026"
+ },
+ {
+  "idx": 1016,
+  "key": "quant-money-focused-fund-large-cap-an-open-ended-equity-scheme-investing-in-maxi-9914a96a",
+  "amc": "quant Money Managers Limited",
+  "name": "Focused Fund – Large cap - An open ended equity scheme investing in maximum 30 large cap stocks.",
+  "n_holdings": 22,
+  "asof": "29 May 2026"
+ },
+ {
+  "idx": 1017,
+  "key": "quant-money-large-mid-cap-fund-an-open-ended-equity-scheme-investing-in-both-lar-07e317fd",
+  "amc": "quant Money Managers Limited",
+  "name": "Large & Mid Cap Fund - An open-ended equity scheme investing in both large cap and mid cap stocks.",
+  "n_holdings": 29,
+  "asof": "29 May 2026"
+ },
+ {
+  "idx": 1018,
+  "key": "quant-money-liquid-fund-an-open-ended-liquid-scheme",
+  "amc": "quant Money Managers Limited",
+  "name": "Liquid Fund - An open-ended Liquid Scheme.",
+  "n_holdings": 17,
+  "asof": "31 May 2026"
+ },
+ {
+  "idx": 1019,
+  "key": "quant-money-mid-cap-fund-an-open-ended-equity-scheme-predominantly-investing-in-eb361cd3",
+  "amc": "quant Money Managers Limited",
+  "name": "Mid Cap Fund - An open ended equity scheme predominantly investing in mid cap stocks.",
+  "n_holdings": 33,
+  "asof": "29 May 2026"
+ },
+ {
+  "idx": 1020,
+  "key": "quant-money-multi-cap-fund-an-open-ended-equity-scheme-investing-across-large-ca-19c5f5e9",
+  "amc": "quant Money Managers Limited",
+  "name": "Multi Cap Fund - An open ended equity scheme investing across large cap, mid cap, small cap stocks",
+  "n_holdings": 61,
+  "asof": "29 May 2026"
+ },
+ {
+  "idx": 1021,
+  "key": "quant-money-quant-arbitrage-fund",
+  "amc": "quant Money Managers Limited",
+  "name": "quant Arbitrage Fund",
+  "n_holdings": 57,
+  "asof": "29 May 2026"
+ },
+ {
+  "idx": 1022,
+  "key": "quant-money-quant-bfsi-fund",
+  "amc": "quant Money Managers Limited",
+  "name": "quant BFSI Fund",
+  "n_holdings": 23,
+  "asof": "29 May 2026"
+ },
+ {
+  "idx": 1023,
+  "key": "quant-money-quant-business-cycle-fund",
+  "amc": "quant Money Managers Limited",
+  "name": "quant Business Cycle Fund",
+  "n_holdings": 24,
+  "asof": "29 May 2026"
+ },
+ {
+  "idx": 1024,
+  "key": "quant-money-quant-commodities-fund",
+  "amc": "quant Money Managers Limited",
+  "name": "quant Commodities Fund",
+  "n_holdings": 23,
+  "asof": "29 May 2026"
+ },
+ {
+  "idx": 1025,
+  "key": "quant-money-quant-consumption-fund",
+  "amc": "quant Money Managers Limited",
+  "name": "quant Consumption Fund",
+  "n_holdings": 21,
+  "asof": "29 May 2026"
+ },
+ {
+  "idx": 1026,
+  "key": "quant-money-quant-dynamic-asset-allocation-fund",
+  "amc": "quant Money Managers Limited",
+  "name": "quant Dynamic Asset Allocation Fund",
+  "n_holdings": 25,
+  "asof": "29 May 2026"
+ },
+ {
+  "idx": 1027,
+  "key": "quant-money-quant-elss-tax-saver-fund",
+  "amc": "quant Money Managers Limited",
+  "name": "quant ELSS Tax Saver Fund",
+  "n_holdings": 31,
+  "asof": "29 May 2026"
+ },
+ {
+  "idx": 1028,
+  "key": "quant-money-quant-equity-savings-fund",
+  "amc": "quant Money Managers Limited",
+  "name": "quant Equity Savings Fund",
+  "n_holdings": 20,
+  "asof": "29 May 2026"
+ },
+ {
+  "idx": 1029,
+  "key": "quant-money-quant-esg-integration-strategy-fund",
+  "amc": "quant Money Managers Limited",
+  "name": "quant ESG Integration Strategy Fund",
+  "n_holdings": 23,
+  "asof": "29 May 2026"
+ },
+ {
+  "idx": 1030,
+  "key": "quant-money-quant-flexi-cap-fund",
+  "amc": "quant Money Managers Limited",
+  "name": "quant Flexi Cap Fund",
+  "n_holdings": 38,
+  "asof": "29 May 2026"
+ },
+ {
+  "idx": 1031,
+  "key": "quant-money-quant-gilt-fund",
+  "amc": "quant Money Managers Limited",
+  "name": "quant Gilt Fund",
+  "n_holdings": 15,
+  "asof": "29 May 2026"
+ },
+ {
+  "idx": 1032,
+  "key": "quant-money-quant-healthcare-fund",
+  "amc": "quant Money Managers Limited",
+  "name": "quant Healthcare Fund",
+  "n_holdings": 20,
+  "asof": "29 May 2026"
+ },
+ {
+  "idx": 1033,
+  "key": "quant-money-quant-infrastructure-fund",
+  "amc": "quant Money Managers Limited",
+  "name": "quant Infrastructure Fund",
+  "n_holdings": 37,
+  "asof": "29 May 2026"
+ },
+ {
+  "idx": 1034,
+  "key": "quant-money-quant-large-cap-fund",
+  "amc": "quant Money Managers Limited",
+  "name": "quant Large Cap Fund",
+  "n_holdings": 25,
+  "asof": "29 May 2026"
+ },
+ {
+  "idx": 1035,
+  "key": "quant-money-quant-manufacturing-fund",
+  "amc": "quant Money Managers Limited",
+  "name": "quant Manufacturing Fund",
+  "n_holdings": 26,
+  "asof": "29 May 2026"
+ },
+ {
+  "idx": 1036,
+  "key": "quant-money-quant-momentum-fund",
+  "amc": "quant Money Managers Limited",
+  "name": "quant Momentum Fund",
+  "n_holdings": 26,
+  "asof": "29 May 2026"
+ },
+ {
+  "idx": 1037,
+  "key": "quant-money-quant-multi-asset-allocation-fund",
+  "amc": "quant Money Managers Limited",
+  "name": "quant Multi Asset Allocation Fund",
+  "n_holdings": 50,
+  "asof": "29 May 2026"
+ },
+ {
+  "idx": 1038,
+  "key": "quant-money-quant-overnight-fund",
+  "amc": "quant Money Managers Limited",
+  "name": "quant Overnight Fund",
+  "n_holdings": 2,
+  "asof": "31 May 2026"
+ },
+ {
+  "idx": 1039,
+  "key": "quant-money-quant-psu-fund",
+  "amc": "quant Money Managers Limited",
+  "name": "quant PSU Fund",
+  "n_holdings": 23,
+  "asof": "29 May 2026"
+ },
+ {
+  "idx": 1040,
+  "key": "quant-money-quant-quantamental-fund",
+  "amc": "quant Money Managers Limited",
+  "name": "quant Quantamental Fund",
+  "n_holdings": 25,
+  "asof": "29 May 2026"
+ },
+ {
+  "idx": 1041,
+  "key": "quant-money-quant-small-cap-fund",
+  "amc": "quant Money Managers Limited",
+  "name": "quant Small Cap Fund",
+  "n_holdings": 115,
+  "asof": "29 May 2026"
+ },
+ {
+  "idx": 1042,
+  "key": "quant-money-quant-teck-fund",
+  "amc": "quant Money Managers Limited",
+  "name": "quant Teck Fund",
+  "n_holdings": 23,
+  "asof": "29 May 2026"
+ },
+ {
+  "idx": 1043,
+  "key": "quant-money-quant-value-fund",
+  "amc": "quant Money Managers Limited",
+  "name": "quant Value Fund",
+  "n_holdings": 34,
+  "asof": "29 May 2026"
+ },
+ {
+  "idx": 1044,
+  "key": "quantum-monthly-portfolio-statement-of-the-quantum-dynamic-bond-fund-for-the-per-d1d86f8a",
+  "amc": "Quantum Asset Management Company Private Limited",
+  "name": "Monthly Portfolio Statement of the Quantum Dynamic Bond Fund for the period ended May 31, 2026",
+  "n_holdings": 17,
+  "asof": null
+ },
+ {
+  "idx": 1045,
+  "key": "quantum-monthly-portfolio-statement-of-the-quantum-elss-tax-saver-fund-for-the-p-52588d1a",
+  "amc": "Quantum Asset Management Company Private Limited",
+  "name": "Monthly Portfolio Statement of the Quantum ELSS Tax Saver Fund for the period ended May 31, 2026",
+  "n_holdings": 33,
+  "asof": null
+ },
+ {
+  "idx": 1046,
+  "key": "quantum-monthly-portfolio-statement-of-the-quantum-ethical-fund-for-the-period-e-628c9c6a",
+  "amc": "Quantum Asset Management Company Private Limited",
+  "name": "Monthly Portfolio Statement of the Quantum Ethical Fund for the period ended May 31, 2026",
+  "n_holdings": 46,
+  "asof": null
+ },
+ {
+  "idx": 1047,
+  "key": "quantum-monthly-portfolio-statement-of-the-quantum-gold-savings-fund-for-the-per-0ae0c181",
+  "amc": "Quantum Asset Management Company Private Limited",
+  "name": "Monthly Portfolio Statement of the Quantum Gold Savings Fund for the period ended May 31, 2026",
+  "n_holdings": 3,
+  "asof": null
+ },
+ {
+  "idx": 1048,
+  "key": "quantum-monthly-portfolio-statement-of-the-quantum-liquid-fund-for-the-period-en-931d4b0a",
+  "amc": "Quantum Asset Management Company Private Limited",
+  "name": "Monthly Portfolio Statement of the Quantum Liquid Fund for the period ended May 31, 2026",
+  "n_holdings": 20,
+  "asof": null
+ },
+ {
+  "idx": 1049,
+  "key": "quantum-monthly-portfolio-statement-of-the-quantum-multi-asset-active-fof-for-th-80aff2c3",
+  "amc": "Quantum Asset Management Company Private Limited",
+  "name": "Monthly Portfolio Statement of the Quantum Multi Asset Active FOF for the period ended May 31, 2026",
+  "n_holdings": 7,
+  "asof": null
+ },
+ {
+  "idx": 1050,
+  "key": "quantum-monthly-portfolio-statement-of-the-quantum-multi-asset-allocation-fund-f-19bc6fec",
+  "amc": "Quantum Asset Management Company Private Limited",
+  "name": "Monthly Portfolio Statement of the Quantum Multi Asset Allocation Fund for the period ended May 31, 2026",
+  "n_holdings": 47,
+  "asof": null
+ },
+ {
+  "idx": 1051,
+  "key": "quantum-monthly-portfolio-statement-of-the-quantum-nifty-50-etf-for-the-period-e-34c5ecad",
+  "amc": "Quantum Asset Management Company Private Limited",
+  "name": "Monthly Portfolio Statement of the Quantum Nifty 50 ETF for the period ended May 31, 2026",
+  "n_holdings": 52,
+  "asof": null
+ },
+ {
+  "idx": 1052,
+  "key": "quantum-monthly-portfolio-statement-of-the-quantum-small-cap-fund-for-the-period-ac2125fa",
+  "amc": "Quantum Asset Management Company Private Limited",
+  "name": "Monthly Portfolio Statement of the Quantum Small Cap Fund for the period ended May 31, 2026",
+  "n_holdings": 58,
+  "asof": null
+ },
+ {
+  "idx": 1053,
+  "key": "quantum-monthly-portfolio-statement-of-the-quantum-value-fund-for-the-period-end-56f8e755",
+  "amc": "Quantum Asset Management Company Private Limited",
+  "name": "Monthly Portfolio Statement of the Quantum Value Fund for the period ended May 31, 2026",
+  "n_holdings": 33,
+  "asof": null
+ },
+ {
+  "idx": 1054,
+  "key": "quantum-quantum-diversified-equity-all-cap-active-fof",
+  "amc": "Quantum Asset Management Company Private Limited",
+  "name": "Quantum Diversified Equity All Cap Active FOF",
+  "n_holdings": 9,
+  "asof": null
+ },
+ {
+  "idx": 1055,
+  "key": "quantum-quantum-esg-best-in-class-strategy-fund-an-open-ended-equity-scheme-inve-121784c5",
+  "amc": "Quantum Asset Management Company Private Limited",
+  "name": "Quantum ESG Best In Class Strategy Fund (An Open-ended equity scheme investing in companies following Environment, Social and Governance (ESG) theme assessed through a Best In Class Strategy)",
+  "n_holdings": 53,
+  "asof": null
+ },
+ {
+  "idx": 1056,
+  "key": "quantum-quantum-nifty-50-etf-fund-of-fund",
+  "amc": "Quantum Asset Management Company Private Limited",
+  "name": "Quantum Nifty 50 ETF Fund of Fund",
+  "n_holdings": 3,
+  "asof": null
+ },
+ {
+  "idx": 1057,
+  "key": "sbi-funds-sbi-arbitrage-opportunities-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Arbitrage Opportunities Fund",
+  "n_holdings": 196,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1058,
+  "key": "sbi-funds-sbi-automotive-opportunities-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Automotive Opportunities Fund",
+  "n_holdings": 34,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1059,
+  "key": "sbi-funds-sbi-balanced-advantage-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Balanced Advantage Fund",
+  "n_holdings": 144,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1060,
+  "key": "sbi-funds-sbi-banking-and-financial-services-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Banking And Financial Services Fund",
+  "n_holdings": 39,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1061,
+  "key": "sbi-funds-sbi-banking-psu-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Banking & PSU Fund",
+  "n_holdings": 45,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1062,
+  "key": "sbi-funds-sbi-bse-100-etf",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI BSE 100 ETF",
+  "n_holdings": 101,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1063,
+  "key": "sbi-funds-sbi-bse-psu-bank-etf",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI BSE PSU Bank ETF",
+  "n_holdings": 13,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1064,
+  "key": "sbi-funds-sbi-bse-psu-bank-index-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI BSE PSU Bank Index Fund",
+  "n_holdings": 13,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1065,
+  "key": "sbi-funds-sbi-bse-sensex-etf",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI BSE Sensex ETF",
+  "n_holdings": 32,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1066,
+  "key": "sbi-funds-sbi-bse-sensex-index-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI BSE Sensex Index Fund",
+  "n_holdings": 32,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1067,
+  "key": "sbi-funds-sbi-bse-sensex-next-50-etf",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI BSE Sensex Next 50 ETF",
+  "n_holdings": 50,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1068,
+  "key": "sbi-funds-sbi-children-s-fund-investment-plan-erstwhile-known-as-sbi-magnum-chil-43dceba6",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Children's Fund - Investment Plan (Erstwhile known as SBI Magnum Children's Benefit Fund- IP)",
+  "n_holdings": 38,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1069,
+  "key": "sbi-funds-sbi-children-s-fund-savings-plan-erstwhile-known-as-sbi-magnum-childre-48c3a459",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Children's Fund - Savings Plan (Erstwhile known as SBI Magnum Children's Benefit Fund-Svg P)",
+  "n_holdings": 38,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1070,
+  "key": "sbi-funds-sbi-comma-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Comma Fund",
+  "n_holdings": 42,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1071,
+  "key": "sbi-funds-sbi-conservative-hybrid-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Conservative Hybrid Fund",
+  "n_holdings": 95,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1072,
+  "key": "sbi-funds-sbi-constant-maturity-10-year-gilt-fund-erstwhile-known-as-sbi-magnum-6fa1adcb",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Constant Maturity 10-Year Gilt Fund (Erstwhile known as SBI Magnum Constant Maturity Fund)",
+  "n_holdings": 6,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1073,
+  "key": "sbi-funds-sbi-consumption-opportunities-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Consumption Opportunities Fund",
+  "n_holdings": 47,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1074,
+  "key": "sbi-funds-sbi-contra-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Contra Fund",
+  "n_holdings": 93,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1075,
+  "key": "sbi-funds-sbi-corporate-bond-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Corporate Bond Fund",
+  "n_holdings": 98,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1076,
+  "key": "sbi-funds-sbi-cpse-bond-plus-sdl-sep-2026-50-50-index-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI CPSE Bond Plus SDL Sep 2026 50 50 Index Fund",
+  "n_holdings": 71,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1077,
+  "key": "sbi-funds-sbi-credit-risk-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Credit Risk Fund",
+  "n_holdings": 40,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1078,
+  "key": "sbi-funds-sbi-crisil-ibx-10-90-gilt-sdl-index-dec-2029-index-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI CRISIL-IBX 10:90 Gilt +SDL Index - Dec 2029 Index Fund",
+  "n_holdings": 5,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1079,
+  "key": "sbi-funds-sbi-crisil-ibx-financial-services-3-6-months-debt-index-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI CRISIL-IBX Financial Services 3-6 Months Debt Index Fund",
+  "n_holdings": 15,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1080,
+  "key": "sbi-funds-sbi-crisil-ibx-financial-services-9-12-months-debt-index-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI CRISIL-IBX Financial Services 9-12 Months Debt Index Fund",
+  "n_holdings": 17,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1081,
+  "key": "sbi-funds-sbi-crisil-ibx-gilt-index-apr-2029-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI CRISIL IBX Gilt Index-APR-2029 Fund",
+  "n_holdings": 3,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1082,
+  "key": "sbi-funds-sbi-crisil-ibx-gilt-index-june-2036-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI CRISIL IBX Gilt Index- June 2036 Fund",
+  "n_holdings": 3,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1083,
+  "key": "sbi-funds-sbi-crisil-ibx-sdl-index-sept-2027-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI CRISIL IBX SDL Index-Sept 2027 Fund",
+  "n_holdings": 21,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1084,
+  "key": "sbi-funds-sbi-dividend-yield-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Dividend Yield Fund",
+  "n_holdings": 58,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1085,
+  "key": "sbi-funds-sbi-dynamic-asset-allocation-active-fof",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Dynamic Asset Allocation Active FoF",
+  "n_holdings": 16,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1086,
+  "key": "sbi-funds-sbi-dynamic-bond-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Dynamic Bond Fund",
+  "n_holdings": 26,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1087,
+  "key": "sbi-funds-sbi-elss-tax-saver-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI ELSS Tax Saver Fund",
+  "n_holdings": 80,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1088,
+  "key": "sbi-funds-sbi-energy-opportunities-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Energy Opportunities Fund",
+  "n_holdings": 37,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1089,
+  "key": "sbi-funds-sbi-equity-hybrid-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Equity Hybrid Fund",
+  "n_holdings": 115,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1090,
+  "key": "sbi-funds-sbi-equity-minimum-variance-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Equity Minimum Variance Fund",
+  "n_holdings": 52,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1091,
+  "key": "sbi-funds-sbi-equity-savings-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Equity Savings Fund",
+  "n_holdings": 117,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1092,
+  "key": "sbi-funds-sbi-esg-exclusionary-strategy-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI ESG Exclusionary Strategy Fund",
+  "n_holdings": 45,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1093,
+  "key": "sbi-funds-sbi-fixed-maturity-plan-fmp-series-1",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Fixed Maturity Plan (FMP)- Series 1",
+  "n_holdings": 16,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1094,
+  "key": "sbi-funds-sbi-fixed-maturity-plan-fmp-series-34",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Fixed Maturity Plan (FMP)- Series 34",
+  "n_holdings": 10,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1095,
+  "key": "sbi-funds-sbi-fixed-maturity-plan-fmp-series-44",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Fixed Maturity Plan (FMP)- Series 44",
+  "n_holdings": 15,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1096,
+  "key": "sbi-funds-sbi-fixed-maturity-plan-fmp-series-45",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Fixed Maturity Plan (FMP)- Series 45",
+  "n_holdings": 12,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1097,
+  "key": "sbi-funds-sbi-fixed-maturity-plan-fmp-series-46",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Fixed Maturity Plan (FMP)- Series 46",
+  "n_holdings": 12,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1098,
+  "key": "sbi-funds-sbi-fixed-maturity-plan-fmp-series-49",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Fixed Maturity Plan (FMP)- Series 49",
+  "n_holdings": 17,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1099,
+  "key": "sbi-funds-sbi-fixed-maturity-plan-fmp-series-50",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Fixed Maturity Plan (FMP)- Series 50",
+  "n_holdings": 15,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1100,
+  "key": "sbi-funds-sbi-fixed-maturity-plan-fmp-series-51",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Fixed Maturity Plan (FMP)- Series 51",
+  "n_holdings": 26,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1101,
+  "key": "sbi-funds-sbi-fixed-maturity-plan-fmp-series-52",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Fixed Maturity Plan (FMP)- Series 52",
+  "n_holdings": 16,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1102,
+  "key": "sbi-funds-sbi-fixed-maturity-plan-fmp-series-53",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Fixed Maturity Plan (FMP)- Series 53",
+  "n_holdings": 23,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1103,
+  "key": "sbi-funds-sbi-fixed-maturity-plan-fmp-series-54",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Fixed Maturity Plan (FMP)- Series 54",
+  "n_holdings": 11,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1104,
+  "key": "sbi-funds-sbi-fixed-maturity-plan-fmp-series-55",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Fixed Maturity Plan (FMP)- Series 55",
+  "n_holdings": 22,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1105,
+  "key": "sbi-funds-sbi-fixed-maturity-plan-fmp-series-57",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Fixed Maturity Plan (FMP)- Series 57",
+  "n_holdings": 19,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1106,
+  "key": "sbi-funds-sbi-fixed-maturity-plan-fmp-series-58",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Fixed Maturity Plan (FMP)- Series 58",
+  "n_holdings": 18,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1107,
+  "key": "sbi-funds-sbi-fixed-maturity-plan-fmp-series-59",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Fixed Maturity Plan (FMP)- Series 59",
+  "n_holdings": 5,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1108,
+  "key": "sbi-funds-sbi-fixed-maturity-plan-fmp-series-6",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Fixed Maturity Plan (FMP)- Series 6",
+  "n_holdings": 15,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1109,
+  "key": "sbi-funds-sbi-fixed-maturity-plan-fmp-series-60",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Fixed Maturity Plan (FMP)- Series 60",
+  "n_holdings": 17,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1110,
+  "key": "sbi-funds-sbi-fixed-maturity-plan-fmp-series-61",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Fixed Maturity Plan (FMP)- Series 61",
+  "n_holdings": 25,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1111,
+  "key": "sbi-funds-sbi-fixed-maturity-plan-fmp-series-67",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Fixed Maturity Plan (FMP)- Series 67",
+  "n_holdings": 19,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1112,
+  "key": "sbi-funds-sbi-fixed-maturity-plan-fmp-series-81",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Fixed Maturity Plan (FMP)- Series 81",
+  "n_holdings": 2,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1113,
+  "key": "sbi-funds-sbi-flexicap-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Flexicap Fund",
+  "n_holdings": 78,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1114,
+  "key": "sbi-funds-sbi-floating-rate-debt-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Floating Rate Debt Fund",
+  "n_holdings": 16,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1115,
+  "key": "sbi-funds-sbi-focused-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Focused Fund",
+  "n_holdings": 28,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1116,
+  "key": "sbi-funds-sbi-gilt-fund-erstwhile-known-as-sbi-magnum-gilt-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Gilt Fund (Erstwhile known as SBI Magnum Gilt Fund)",
+  "n_holdings": 20,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1117,
+  "key": "sbi-funds-sbi-gold-etf",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Gold ETF",
+  "n_holdings": 3,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1118,
+  "key": "sbi-funds-sbi-gold-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Gold Fund",
+  "n_holdings": 3,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1119,
+  "key": "sbi-funds-sbi-healthcare-opportunities-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Healthcare Opportunities Fund",
+  "n_holdings": 36,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1120,
+  "key": "sbi-funds-sbi-income-plus-arbitrage-active-fof",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Income Plus Arbitrage Active FOF",
+  "n_holdings": 6,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1121,
+  "key": "sbi-funds-sbi-infrastructure-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Infrastructure Fund",
+  "n_holdings": 41,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1122,
+  "key": "sbi-funds-sbi-innovative-opportunities-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Innovative Opportunities Fund",
+  "n_holdings": 43,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1123,
+  "key": "sbi-funds-sbi-large-and-midcap-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Large and Midcap Fund",
+  "n_holdings": 83,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1124,
+  "key": "sbi-funds-sbi-large-cap-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Large Cap Fund",
+  "n_holdings": 55,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1125,
+  "key": "sbi-funds-sbi-liquid-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Liquid Fund",
+  "n_holdings": 130,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1126,
+  "key": "sbi-funds-sbi-long-duration-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Long Duration Fund",
+  "n_holdings": 6,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1127,
+  "key": "sbi-funds-sbi-long-term-advantage-fund-series-iv",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Long Term Advantage Fund - Series IV",
+  "n_holdings": 30,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1128,
+  "key": "sbi-funds-sbi-long-term-advantage-fund-series-v",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Long Term Advantage Fund - Series V",
+  "n_holdings": 28,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1129,
+  "key": "sbi-funds-sbi-long-term-advantage-fund-series-vi",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Long Term Advantage Fund - Series VI",
+  "n_holdings": 33,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1130,
+  "key": "sbi-funds-sbi-low-duration-fund-erstwhile-known-as-sbi-magnum-low-duration-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Low Duration Fund (Erstwhile known as SBI Magnum Low Duration Fund)",
+  "n_holdings": 59,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1131,
+  "key": "sbi-funds-sbi-medium-duration-fund-erstwhile-known-as-sbi-magnum-medium-duration-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Medium Duration Fund (Erstwhile known as SBI Magnum Medium Duration Fund)",
+  "n_holdings": 59,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1132,
+  "key": "sbi-funds-sbi-medium-to-long-duration-fund-erstwhile-known-as-sbi-magnum-income-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Medium to Long Duration Fund (Erstwhile known as SBI Magnum Income Fund)",
+  "n_holdings": 31,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1133,
+  "key": "sbi-funds-sbi-midcap-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Midcap Fund",
+  "n_holdings": 60,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1134,
+  "key": "sbi-funds-sbi-mnc-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI MNC Fund",
+  "n_holdings": 48,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1135,
+  "key": "sbi-funds-sbi-multi-asset-allocation-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Multi Asset Allocation Fund",
+  "n_holdings": 126,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1136,
+  "key": "sbi-funds-sbi-multicap-fund",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI MultiCap Fund",
+  "n_holdings": 66,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1137,
+  "key": "sbi-funds-sbi-nifty-10-yr-benchmark-g-sec-etf",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Nifty 10 yr Benchmark G-Sec ETF",
+  "n_holdings": 2,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1138,
+  "key": "sbi-funds-sbi-nifty-1d-rate-liquid-etf-growth",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI Nifty 1D Rate Liquid ETF - Growth",
+  "n_holdings": 2,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1139,
+  "key": "sbi-funds-sbi-nifty-1d-rate-liquid-etf-idcw",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI NIFTY 1D Rate Liquid ETF - IDCW",
+  "n_holdings": 2,
+  "asof": "2026-05-31"
+ },
+ {
+  "idx": 1140,
+  "key": "sbi-funds-sbi-nifty-200-quality-30-etf",
+  "amc": "SBI Funds Management Limited",
+  "name": "SBI NIFTY 200 Quality 30 ETF",
+  "n_holdings": 32,
+  "asof": "2026-05-31"
+ }
+]

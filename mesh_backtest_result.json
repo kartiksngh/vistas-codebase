@@ -1,0 +1,265 @@
+{
+ "signal": "S1 CONVICTION_ADD = z(flow_3m_intensity) + z(dbreadth) + z(dARM_3m)",
+ "method": "monthly cross-sectional Spearman IC + decile spread vs forward TR; dead names retained; corp-action-quarantined flow excluded; MIN_XS=30; z-scored cross-sectionally each month; composite requires all 3 forces present.",
+ "window": "2013-05-31..2026-05-31",
+ "n_symbols_universe": 1557,
+ "avg_stocks_per_month_composite": 705,
+ "CONVICTION_ADD": {
+  "ic_by_horizon": {
+   "1m": 0.0435,
+   "3m": 0.0498,
+   "6m": 0.0541,
+   "12m": 0.0528
+  },
+  "t_stat_by_horizon": {
+   "1m": 10.62,
+   "3m": 11.67,
+   "6m": 14.04,
+   "12m": 14.02
+  },
+  "decile_spread_ann_pct_by_horizon": {
+   "1m": 18.2,
+   "3m": 12.91,
+   "6m": 9.34,
+   "12m": 7.45
+  },
+  "pct_months_ic_pos": {
+   "1m": 0.817,
+   "3m": 0.821,
+   "6m": 0.865,
+   "12m": 0.873
+  },
+  "era_stability_6m": {
+   "eras_positive": "4/4",
+   "by_era": {
+    "2013-2016": 0.0561,
+    "2017-2020": 0.0665,
+    "2021-2023": 0.0479,
+    "2024-2026": 0.0348
+   }
+  },
+  "n_months_6m": 148,
+  "avg_stocks_per_xs_6m": 679
+ },
+ "baseline_ARM_LEVEL": {
+  "ic_by_horizon": {
+   "1m": 0.0466,
+   "3m": 0.0639,
+   "6m": 0.0712,
+   "12m": 0.0638
+  },
+  "t_stat_by_horizon": {
+   "1m": 8.11,
+   "3m": 9.99,
+   "6m": 11.22,
+   "12m": 12.66
+  },
+  "decile_spread_ann_pct_by_horizon": {
+   "1m": 20.89,
+   "3m": 17.75,
+   "6m": 13.39,
+   "12m": 9.62
+  },
+  "pct_months_ic_pos": {
+   "1m": 0.797,
+   "3m": 0.781,
+   "6m": 0.824,
+   "12m": 0.838
+  },
+  "era_stability_6m": {
+   "eras_positive": "4/4",
+   "by_era": {
+    "2013-2016": 0.0765,
+    "2017-2020": 0.0592,
+    "2021-2023": 0.1012,
+    "2024-2026": 0.0394
+   }
+  },
+  "n_months_6m": 148,
+  "avg_stocks_per_xs_6m": 679
+ },
+ "baseline_ARM_LEVEL_full_universe": {
+  "ic_by_horizon": {
+   "1m": 0.0346,
+   "3m": 0.0471,
+   "6m": 0.056,
+   "12m": 0.0531
+  },
+  "t_stat_by_horizon": {
+   "1m": 7.47,
+   "3m": 9.38,
+   "6m": 11.33,
+   "12m": 13.15
+  },
+  "decile_spread_ann_pct_by_horizon": {
+   "1m": 21.44,
+   "3m": 17.9,
+   "6m": 14.9,
+   "12m": 11.72
+  },
+  "pct_months_ic_pos": {
+   "1m": 0.712,
+   "3m": 0.773,
+   "6m": 0.808,
+   "12m": 0.876
+  },
+  "era_stability_6m": {
+   "eras_positive": "4/4",
+   "by_era": {
+    "2013-2016": 0.0743,
+    "2017-2020": 0.0426,
+    "2021-2023": 0.0683,
+    "2024-2026": 0.0295
+   }
+  },
+  "n_months_6m": 151,
+  "avg_stocks_per_xs_6m": 963
+ },
+ "baseline_dARM_3m": {
+  "ic_by_horizon": {
+   "1m": 0.0241,
+   "3m": 0.0268,
+   "6m": 0.026,
+   "12m": 0.0296
+  },
+  "t_stat_by_horizon": {
+   "1m": 5.77,
+   "3m": 6.49,
+   "6m": 6.94,
+   "12m": 7.99
+  },
+  "decile_spread_ann_pct_by_horizon": {
+   "1m": 11.06,
+   "3m": 8.04,
+   "6m": 6.17,
+   "12m": 5.87
+  },
+  "pct_months_ic_pos": {
+   "1m": 0.667,
+   "3m": 0.722,
+   "6m": 0.696,
+   "12m": 0.718
+  },
+  "era_stability_6m": {
+   "eras_positive": "4/4",
+   "by_era": {
+    "2013-2016": 0.0266,
+    "2017-2020": 0.0388,
+    "2021-2023": 0.0227,
+    "2024-2026": 0.0037
+   }
+  },
+  "n_months_6m": 148,
+  "avg_stocks_per_xs_6m": 679
+ },
+ "single_force_FLOW_3M": {
+  "ic_by_horizon": {
+   "1m": 0.0407,
+   "3m": 0.046,
+   "6m": 0.0447,
+   "12m": 0.0351
+  },
+  "t_stat_by_horizon": {
+   "1m": 9.59,
+   "3m": 12.09,
+   "6m": 12.3,
+   "12m": 8.24
+  },
+  "decile_spread_ann_pct_by_horizon": {
+   "1m": 12.34,
+   "3m": 8.39,
+   "6m": 5.53,
+   "12m": 3.77
+  },
+  "pct_months_ic_pos": {
+   "1m": 0.791,
+   "3m": 0.848,
+   "6m": 0.845,
+   "12m": 0.739
+  },
+  "era_stability_6m": {
+   "eras_positive": "4/4",
+   "by_era": {
+    "2013-2016": 0.0595,
+    "2017-2020": 0.0441,
+    "2021-2023": 0.0286,
+    "2024-2026": 0.0451
+   }
+  },
+  "n_months_6m": 148,
+  "avg_stocks_per_xs_6m": 679
+ },
+ "single_force_DBREADTH": {
+  "ic_by_horizon": {
+   "1m": 0.0388,
+   "3m": 0.0461,
+   "6m": 0.0531,
+   "12m": 0.0477
+  },
+  "t_stat_by_horizon": {
+   "1m": 9.42,
+   "3m": 10.86,
+   "6m": 13.04,
+   "12m": 11.21
+  },
+  "decile_spread_ann_pct_by_horizon": {
+   "1m": 17.16,
+   "3m": 12.13,
+   "6m": 10.48,
+   "12m": 7.79
+  },
+  "pct_months_ic_pos": {
+   "1m": 0.771,
+   "3m": 0.848,
+   "6m": 0.899,
+   "12m": 0.838
+  },
+  "era_stability_6m": {
+   "eras_positive": "4/4",
+   "by_era": {
+    "2013-2016": 0.055,
+    "2017-2020": 0.0504,
+    "2021-2023": 0.0635,
+    "2024-2026": 0.0386
+   }
+  },
+  "n_months_6m": 148,
+  "avg_stocks_per_xs_6m": 679
+ },
+ "GATE_A_beats_arm_baseline": {
+  "verdict": false,
+  "judged_at": "6m",
+  "detail_by_horizon": {
+   "3m": {
+    "ic_uplift_vs_arm_level": -0.0141,
+    "spread_uplift_vs_arm_level_pct": -4.84,
+    "ic_uplift_vs_dARM_3m": 0.023,
+    "spread_uplift_vs_dARM_3m_pct": 4.87
+   },
+   "6m": {
+    "ic_uplift_vs_arm_level": -0.0171,
+    "spread_uplift_vs_arm_level_pct": -4.05,
+    "ic_uplift_vs_dARM_3m": 0.0281,
+    "spread_uplift_vs_dARM_3m_pct": 3.17
+   },
+   "12m": {
+    "ic_uplift_vs_arm_level": -0.011,
+    "spread_uplift_vs_arm_level_pct": -2.17,
+    "ic_uplift_vs_dARM_3m": 0.0232,
+    "spread_uplift_vs_dARM_3m_pct": 1.58
+   }
+  },
+  "plain": "composite does NOT out-IC both ARM baselines at 6M -> likely ARM repackaged"
+ },
+ "GATE_B_flow_leads_return": {
+  "verdict": true,
+  "ic_flow_vs_forward_6m": 0.0422,
+  "ic_flow_vs_forward_6m_t": 12.2,
+  "ic_flow_vs_contemporaneous_ret": 0.0613,
+  "ic_flow_vs_contemporaneous_ret_t": 12.89,
+  "flow_beta_on_forward6m_controlling_contemp": 0.00374,
+  "flow_beta_t": 3.85,
+  "n_obs_regression": 106316,
+  "plain": "flow PRECEDES forward return (positive forward IC AND a positive, significant flow coefficient after controlling for the same-month return)"
+ }
+}

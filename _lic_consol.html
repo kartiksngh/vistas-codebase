@@ -1,0 +1,139 @@
+	                          <div class="container container shadow-lg p-4 mb-4 bg-white">
+                                <div class="row">
+                                   <div class="fund-type-select col col-lg-3 ">
+                                      <label>Select Portfolio</label>
+                                      <div class="fund-type-select-inner">                          
+                                           <select class="consolidated_type" name="consolidated_type">
+                                              <option value="">Portfolio Type</option>
+                                              <option value="639">Monthly Portfolio</option>
+                                              <option value="638">Fortnightly Portfolio</option>
+                                           </select>
+                                       </div>
+                                   </div>
+                                   <div class="fund-type-select col col-lg-3 ">
+                                      <label>Select Year</label>
+                                      <div class="fund-type-select-inner">                                     
+                                          <select class="consolidated_year" name="year">
+                                             <option value="">Year</option>
+                                           </select> 
+                                       </div>
+                                   </div>
+                                    <div class="fund-type-select col col-lg-3 ">
+                                      <label>Select Month</label>
+                                      <div class="fund-type-select-inner">
+                                           <select class="consolidated_month" name="month">
+                                              <option value="">Month</option>
+                                           </select>
+                                       </div>
+                                   </div>
+                                   
+                                   <div class="text-center fund-type-select" >
+                                      <button type="submit"  class="btn btn-warning consolidated-submit-btn">Submit</button>
+                                  </div>
+
+                                  <!-- PDF FILE CONTAINER -->
+                                    <div class="container">
+                                        <div class="cportfolio-files">
+                                          
+                                        </div>  
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+        <!-- SCRIPT STARTS FROM HERE -->
+      <script>
+      $('.consolidated_type').change(function(){
+          
+          var id = $(this).val();
+
+          get_consolidated_year(id);
+          get_consolidated_month(year='', id='');
+          $('.cportfolio-files').html('');
+
+      });
+
+     $('.consolidated_year').change(function(){
+
+              var year = $(this).val();
+              var id = $('.consolidated_type').val();
+
+              get_consolidated_month(year, id);             
+      });
+
+       // GET YEAR
+      function get_consolidated_year(id){
+
+          $.ajax({
+              url: "/downloads/consolidated-portfolio-filters",
+              type: "POST",
+              data: {id:id, filter:'year'},
+              success: function(result){
+                $('.consolidated_year').html(result);
+              }
+          });  
+      }
+
+      //GET MONTH
+        function get_consolidated_month(year, id){
+
+          $.ajax({
+              url: "/downloads/consolidated-portfolio-filters",
+              type: "POST",
+              data: {year:year, id:id, filter:'month'},
+              success: function(result){
+                $('.consolidated_month').html(result);
+              }
+          });
+        }
+
+     
+
+  
+
+    //GET FILE ON SUBMIT BUTTON
+    $('.consolidated-submit-btn').click(function(){
+        
+        var id = $('.consolidated_type').val();
+        var month = $('.consolidated_month').val();
+        var year = $('.consolidated_year').val();
+
+         if(month == ''){
+            alert('Please select Month !');
+
+         }else if(year == ''){
+            alert('Please select Year !');
+
+         }else{
+                
+            $.ajax({
+                  url: "/downloads/consolidated-portfolio-files",
+                  type: "POST",
+                  data: {id:id, month:month, year:year},
+                  success: function(result){
+                    $('.cportfolio-files').html(result);
+                  }
+              }); 
+        }
+
+
+    });  
+
+  </script>  
+
+
+
+<!-- ON CHANGE FUNCTION -->
+<script>
+
+    $('.monthly-tab, .fortnightly-tab').click(function(){
+      $('.consolidated_type').prop('selectedIndex',0);
+      $('.consolidated_year').html("<option value=''>Year</option>");
+      $('.consolidated_month').html("<option value=''>Month</option>");
+      
+      $('.cportfolio-files').html('');
+  }); 
+
+
+</script>  

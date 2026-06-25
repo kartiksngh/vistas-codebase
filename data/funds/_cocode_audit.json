@@ -1,0 +1,208 @@
+{
+ "rows_total": 463467,
+ "unique_cocode": 1260,
+ "recurring": 1238,
+ "stable": 1193,
+ "co_multiname": {
+  "560": {
+   "TATA MOTORS": 453,
+   "TATA MOTORS PASSENGER VEHICLES": 793
+  },
+  "18105": {
+   "LTIMINDTREE": 1059,
+   "LTM": 191
+  },
+  "20287": {
+   "JINDAL STEEL & POWER": 245,
+   "JINDAL STEEL": 1162
+  },
+  "266": {
+   "AKZO NOBEL INDIA": 307,
+   "JSW DULUX": 80
+  },
+  "2100": {
+   "JOHNSON CONTROLS-HITACHI AIR CONDITION INDIA": 37,
+   "BOSCH HOME COMFORT INDIA": 12
+  },
+  "27273": {
+   "K E C INTERNATIONAL": 156,
+   "KEC INTERNATIONAL": 429
+  },
+  "75273": {
+   "ZINKA LOGISTICS SOLUTIONS": 31,
+   "BLACKBUCK": 229
+  },
+  "93271": {
+   "SAGILITY INDIA": 110,
+   "SAGILITY": 652
+  },
+  "84": {
+   "BOMBAY BURMAH TRADING CORPORATION": 4,
+   "THE BOMBAY BURMAH TRADING CORPORATION": 10
+  },
+  "2117": {
+   "SWAN ENERGY": 9,
+   "SWAN CORP": 90
+  },
+  "105": {
+   "ITD CEMENTATION INDIA": 12,
+   "CEMINDIA PROJECTS": 89
+  },
+  "78092": {
+   "SCHLOSS BANGALORE": 96,
+   "LEELA PALACES HOTELS & RESORTS": 270
+  },
+  "79071": {
+   "INTERNATIONAL GEMMOLOGICAL INSTITUTE (INDIA)": 237,
+   "INTERNATIONAL GEMOLOGICAL INSTITUTE": 48
+  },
+  "755": {
+   "ORIENTAL CARBON & CHEMICALS": 8,
+   "AG VENTURES": 3
+  },
+  "33202": {
+   "BARBEQUE-NATION HOSPITALITY": 27,
+   "UNITED FOODBRANDS": 62
+  },
+  "93473": {
+   "STANDARD GLASS LINING TECHNOLOGY": 24,
+   "STANDARD ENGINNERING TECHNOLOGY": 3,
+   "STANDARD ENGINEERING TECHNOLOGY": 7
+  },
+  "17732": {
+   "SUNDARAM FINANCE HOLDINGS": 3,
+   "TSF INVESTMENTS": 11
+  },
+  "2086": {
+   "SEQUENT SCIENTIFIC": 18,
+   "VIYASH SCIENTIFIC": 21
+  },
+  "93275": {
+   "SHIVA REALTORS SUBURBAN PVT": 3,
+   "ADVENT HOTELS INTERNATIONAL": 4
+  },
+  "544": {
+   "SML ISUZU": 1,
+   "SML MAHINDRA": 1
+  },
+  "94311": {
+   "SKF INDIA INDUSTRIAL": 53,
+   "SKF INDIA (INDUSTRIAL)": 343
+  },
+  "40519": {
+   "TALWANDI SABO POWER": 189,
+   "VEDANTA POWER": 189
+  }
+ },
+ "co_multiisin": {
+  "25746": [
+   "INE745G01035",
+   "INE745G01043"
+  ],
+  "33311": [
+   "INE418L01021",
+   "INE418L01047"
+  ],
+  "2330": [
+   "INE237A01028",
+   "INE237A01036"
+  ],
+  "47716": [
+   "INE596I01012",
+   "INE596I01020"
+  ],
+  "38941": [
+   "INE732I01013",
+   "INE732I01021"
+  ],
+  "42462": [
+   "INE495P01012",
+   "INE495P01020"
+  ],
+  "30245": [
+   "INE645S01016",
+   "INE645S01024"
+  ],
+  "2294": [
+   "INE258A01016",
+   "INE258A01024"
+  ],
+  "6367": [
+   "INE768C01010",
+   "INE768C01028"
+  ],
+  "26648": [
+   "INE531F01015",
+   "INE531F01023"
+  ],
+  "75229": [
+   "INE0CJD01011",
+   "INE0CJD01029"
+  ],
+  "27679": [
+   "INE945H01013",
+   "INE945H01021"
+  ],
+  "3496": [
+   "INE124E01020",
+   "INE124E01038"
+  ],
+  "17808": [
+   "INE814H01011",
+   "INE814H01029"
+  ],
+  "29472": [
+   "INE045J01026",
+   "INE045J01034"
+  ],
+  "2777": [
+   "INE838B01013",
+   "INE838B01021"
+  ],
+  "7862": [
+   "INE052T01013",
+   "INE052T01021"
+  ],
+  "1105": [
+   "INE560A01015",
+   "INE560A01023"
+  ],
+  "2651": [
+   "INE335Q01018",
+   "INE335Q01026"
+  ],
+  "1814": [
+   "INDUMMY23096",
+   "INE202B01038",
+   "PFL012345678"
+  ],
+  "92664": [
+   "INE1YPB01014",
+   "INE418H01029"
+  ],
+  "78481": [
+   "IN9423A01030",
+   "IN9423A01048",
+   "INDUMMY27015",
+   "INE000A00005",
+   "INPYEQADNI05"
+  ],
+  "22655": [
+   "INDUMMY30046",
+   "INE704J01028",
+   "INE704J01044"
+  ]
+ },
+ "isin_multico": {
+  "INE418H01029": [
+   "27333",
+   "92664"
+  ]
+ },
+ "name_multico": {
+  "TATA MOTORS": [
+   "560",
+   "93137"
+  ]
+ }
+}

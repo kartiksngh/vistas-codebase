@@ -1,0 +1,994 @@
+{
+ "version": 2,
+ "updated": "2026-06-23",
+ "note": "AMC monthly-portfolio fetch registry; merged + re-verified (deterministic + agent) by merge_amc_specs.py",
+ "amcs": {
+  "360-one": {
+   "amc": "360 ONE Asset Management Limited",
+   "file_type": "xlsx",
+   "method": "cdn",
+   "resolve": {
+    "landing": "https://www.360.one/asset/mutual-funds/downloads/",
+    "exclude": [
+     "overlap",
+     "02062019",
+     "may_2023_08_june23"
+    ],
+    "pick": "newest"
+   },
+   "verified_url": "https://s3.ap-south-1.amazonaws.com/x-web-s3.360.one/IN_MF_MONTHLY_PORTFOLIO_May2026_Final_e1cbdb4542.xlsx",
+   "n_schemes": 12,
+   "median_coverage": 100,
+   "asof": "May 31,2026",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": false,
+   "multi": false
+  },
+  "abakkus": {
+   "amc": "Abakkus Investment Managers Private Limited",
+   "file_type": "xlsx",
+   "method": "cdn",
+   "verified_url": "https://www.abakkusmf.com/uploads/Abakkus_Mutual_Fund_31_05_2026_f7ac956d1d.xls",
+   "n_schemes": 3,
+   "median_coverage": 100,
+   "asof": "May 31, 2026",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": false,
+   "multi": false
+  },
+  "aditya-birla-sun-life": {
+   "amc": "Aditya Birla Sun Life AMC Limited",
+   "file_type": "zip",
+   "method": "cdn",
+   "url_pattern": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/monthly-portfolio/{YYYY}/{DD}{MM}{YYYY}_abslmf_monthly-portfolio.zip",
+   "resolve": {
+    "landing": "https://mutualfund.adityabirlacapital.com/forms-and-downloads/portfolio",
+    "include": [
+     "abslmf",
+     "monthly-portfolio"
+    ],
+    "pick": "newest"
+   },
+   "verified_url": "https://mutualfund.adityabirlacapital.com/-/media/bsl/files/resources/monthly-portfolio/2026/31052026_abslmf_monthly-portfolio.zip",
+   "n_schemes": 106,
+   "median_coverage": 100,
+   "asof": "May 31,2026",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": false,
+   "multi": false
+  },
+  "alphagrep": {
+   "amc": "AlphaGrep Investment Management Private Limited",
+   "no_feed": true,
+   "n_schemes": 0,
+   "confidence": "low"
+  },
+  "angel-one": {
+   "amc": "Angel One Asset Management Company Limited",
+   "file_type": "xlsx",
+   "method": "cdn",
+   "resolve": {
+    "landing": "https://www.angelonemf.com/downloads",
+    "pick": "all"
+   },
+   "verified_url": "https://cms.angelonemf.com/amc-cms/wp-content/uploads/formidable/20/Monthly-Portfolio-May-2026-Angel-One-Nifty-50-ETF.xlsx",
+   "multi": true,
+   "landing": "https://www.angelonemf.com/downloads",
+   "n_schemes": 31,
+   "median_coverage": 100,
+   "asof": "31-MAY-2026",
+   "source": "det",
+   "confidence": "high",
+   "needs_harness": true
+  },
+  "ask": {
+   "amc": "ASK ASSET MANAGEMENT PRIVATE LIMITED",
+   "no_feed": true,
+   "n_schemes": 0,
+   "confidence": "low"
+  },
+  "axis": {
+   "amc": "Axis Asset Management Co. Ltd.",
+   "file_type": "xlsx",
+   "method": "cdn",
+   "url_pattern": "https://www.axismf.com/cms/sites/default/files/Statutory/Monthly%20Portfolio-{DD}%20{MM}%20{YY}.xlsx",
+   "verified_url": "https://www.axismf.com/cms/sites/default/files/Statutory/Monthly%20Portfolio-31%2005%2026.xlsx",
+   "n_schemes": 88,
+   "median_coverage": 100,
+   "asof": "May 31, 2026",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": false,
+   "multi": false
+  },
+  "bajaj-finserv": {
+   "amc": "Bajaj Finserv Asset Management Limited",
+   "file_type": "xlsx",
+   "method": "cdn",
+   "url_pattern": "https://media.bajajamc.com/wp-content/uploads/{PYYYY}/{PMM}/Bajaj-Finserv-Mutual-Fund_Monthly-Portfolio-as-on-{DD}-{Mon}-{YYYY}.xlsx",
+   "resolve": {
+    "landing": "https://www.bajajamc.com/wp-json/wp/v2/media?search=Mutual-Fund_Monthly-Portfolio&per_page=20&_fields=source_url,date&orderby=date&order=desc",
+    "include": [
+     "mutual-fund_monthly-portfolio"
+    ],
+    "pick": "newest"
+   },
+   "verified_url": "https://media.bajajamc.com/wp-content/uploads/2026/06/Bajaj-Finserv-Mutual-Fund_Monthly-Portfolio-as-on-31-May-2026.xlsx",
+   "n_schemes": 24,
+   "median_coverage": 100,
+   "asof": "May 31, 2026",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": false,
+   "multi": false
+  },
+  "bandhan": {
+   "amc": "Bandhan AMC Limited",
+   "file_type": "xlsx",
+   "method": "api",
+   "resolve": {
+    "landing": "https://cmsnew.bandhanmutual.com/wp-json/finance-api/v1/posts/monthly-portfolio",
+    "pick": "newest"
+   },
+   "verified_url": "https://storage.googleapis.com/nonprod-static-assets-121to59kaawfgfi7bol/2026/06/d2ebed68-bandhan-debt-fund-portfolio-as-on-29-05-2026.xlsx",
+   "n_schemes": 24,
+   "median_coverage": 97.3,
+   "asof": "May 29,2026",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": false,
+   "multi": false
+  },
+  "bank": {
+   "amc": "Bank of India Investment Managers Private Limited",
+   "file_type": "xlsx",
+   "method": "cdn",
+   "url_pattern": "https://www.boimf.in/docs/default-source/investorcorner/monthly-portfolio/monthly-portfolio---{DD}-{month}-{YYYY}.xlsx",
+   "resolve": {
+    "landing": "https://www.boimf.in/investor-corner#t2",
+    "include": [
+     "monthly-portfolio"
+    ],
+    "pick": "newest"
+   },
+   "verified_url": "https://www.boimf.in/docs/default-source/investorcorner/monthly-portfolio/monthly-portfolio---31-may-2026.xlsx",
+   "n_schemes": 24,
+   "median_coverage": 100,
+   "asof": "May 31, 2026",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": false,
+   "multi": false
+  },
+  "baroda-bnp-paribas": {
+   "amc": "Baroda BNP Paribas Asset Management India Private Limited",
+   "file_type": "xls",
+   "method": "cdn",
+   "resolve": {
+    "landing": "https://www.barodabnpparibasmf.in/downloads/monthly-portfolio-scheme",
+    "pick": "newest"
+   },
+   "verified_url": "https://www.barodabnpparibasmf.in/assets/download_documents/BOBBNPMF_Monthly_Portfolio_31-05-2026_18534.xls",
+   "n_schemes": 48,
+   "median_coverage": 100,
+   "asof": "May 31, 2026",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": false,
+   "multi": false
+  },
+  "canara-robeco": {
+   "amc": "Canara Robeco Asset Management Company Limited",
+   "file_type": "xlsx",
+   "method": "render-needed",
+   "needs_harness": true,
+   "landing": "https://www.canararobeco.com/documents/statutory-disclosures/scheme-dashboard/scheme-monthly-portfolio/",
+   "resolve": {
+    "landing": "https://www.canararobeco.com/documents/statutory-disclosures/scheme-dashboard/scheme-monthly-portfolio/"
+   },
+   "verified_url": "https://www.canararobeco.com/wp-content/uploads/scheme_documents/1774856370-CRUSTF.xlsx",
+   "n_schemes": 0,
+   "confidence": "low"
+  },
+  "capitalmind": {
+   "amc": "Capitalmind Asset Management Private Limited",
+   "file_type": "xlsx",
+   "method": "cdn",
+   "resolve": {
+    "landing": "https://capitalmindmf.com/statutory-disclosures.html#",
+    "pick": "all"
+   },
+   "verified_url": "https://capitalmindmf.com/uploads/CMFLEXI_Monthly_Portfolio_Disclosure_May_2026_48a85f3c71.xlsx",
+   "multi": true,
+   "landing": "https://capitalmindmf.com/statutory-disclosures.html#",
+   "n_schemes": 21,
+   "median_coverage": 100,
+   "asof": "June 15, 2026",
+   "source": "det",
+   "confidence": "high",
+   "needs_harness": true
+  },
+  "choice": {
+   "amc": "Choice AMC Private Limited",
+   "file_type": "xlsx",
+   "method": "api",
+   "resolve": {
+    "landing": "https://choicemf.com/disclosures/monthly-portfolio",
+    "pick": "all"
+   },
+   "verified_url": "https://doc.choicemf.com/portfolio-reports/1780920800-Nifty_50_Monthly_Portfolio_May_2026.xlsx",
+   "multi": true,
+   "max_files": 8,
+   "n_schemes": 1,
+   "median_coverage": 100,
+   "asof": "2026-05-31",
+   "source": "agent",
+   "confidence": "medium",
+   "needs_harness": true
+  },
+  "dsp": {
+   "amc": "DSP Asset Managers Private Limited",
+   "file_type": "zip",
+   "method": "cdn",
+   "resolve": {
+    "landing": "https://www.dspim.com/about-us/mandatory-disclosure/portfolio-disclosures",
+    "exclude": [
+     "month_end_portfolio_disclosure",
+     "dsp-isin-debt",
+     "dsp-monthend-portfolio-as-on",
+     "_disclosure_"
+    ],
+    "pick": "newest"
+   },
+   "verified_url": "https://www.dspim.com/media/pages/mandatory-disclosures/portfolio-disclosures/c0d4bf1f27-1781104499/monthend-portfolios_31_may_2026.zip",
+   "n_schemes": 86,
+   "median_coverage": 100,
+   "asof": "May 31, 2026",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": false,
+   "multi": false
+  },
+  "edelweiss": {
+   "amc": "Edelweiss Asset Management Limited",
+   "file_type": "xlsx",
+   "method": "render-needed",
+   "needs_harness": false,
+   "landing": "https://www.edelweissmf.com/statutory#Portfolio-of-Schemes",
+   "resolve": {
+    "landing": "https://www.edelweissmf.com/statutory#Portfolio-of-Schemes"
+   },
+   "verified_url": "https://www.edelweissmf.com/Files/MONTHLY%20PORTFOLIO%20OF%20SCHEME/Monthly%20Portfolio%20and%20Risk-o-Meter/2026/Apr/published/EDEL_Portfolio%20Monthly%20Notes%2030-Apr-2026_09052026_041124_PM.xlsx",
+   "n_schemes": 0,
+   "confidence": "low",
+   "multi": false
+  },
+  "franklin-templeton": {
+   "amc": "Franklin Templeton Asset Management (India) Private Limited",
+   "file_type": "xlsx",
+   "method": "api",
+   "resolve": {
+    "landing": "https://www.franklintempletonindia.com/api/literature/v1/documents?channel=en-in&contentGrouping=MONTHLY-PORTFOLIO-DSCLR&limitIndex=3000",
+    "include": [
+     "monthly-portfolio-isin"
+    ],
+    "pick": "newest"
+   },
+   "verified_url": "https://franklintempletonprod.widen.net/content/1lhzg1mtko/original/Monthly-Portfolio-ISIN-29-May-2026.xlsx?u=pl55mb&download=true",
+   "n_schemes": 40,
+   "median_coverage": 96.2,
+   "asof": "May 29, 2026",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": false,
+   "multi": false
+  },
+  "groww": {
+   "amc": "Groww Asset Management Limited",
+   "file_type": "xlsx",
+   "method": "cdn",
+   "url_pattern": "https://assets-netstorage.growwmf.in/compliance_docs/Statutory%20Disclosure/Portfolio/{FYS}%20-{FYE}/Monthly%20Portfolio-%20{Mon}%20{DD},%20{YYYY}.xlsx",
+   "verified_url": "https://assets-netstorage.growwmf.in/compliance_docs/Statutory%20Disclosure/Portfolio/2026%20-2027/Monthly%20Portfolio-%20May%2031,%202026.xlsx",
+   "n_schemes": 59,
+   "median_coverage": 100,
+   "asof": "31-MAY-2026",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": false,
+   "multi": false
+  },
+  "hdfc": {
+   "amc": "HDFC Asset Management Company Limited",
+   "file_type": "xlsx",
+   "method": "cdn",
+   "url_pattern": "https://files.hdfcfund.com/s3fs-public/{PYYYY}-{PMM}/Monthly%20HDFC%20Balanced%20Advantage%20Fund%20-%20{DD}%20{Month}%20{YYYY}.xlsx",
+   "resolve": {
+    "landing": "https://www.hdfcfund.com/statutory-disclosure/portfolio/monthly-portfolio",
+    "include": [
+     "files.hdfcfund.com",
+     "s3fs-public"
+    ],
+    "pick": "all"
+   },
+   "verified_url": "https://files.hdfcfund.com/s3fs-public/2026-06/Monthly%20HDFC%20Silver%20ETF%20Fund%20of%20Fund%20-%2031%20May%202026.xlsx",
+   "multi": true,
+   "max_files": 120,
+   "n_schemes": 6,
+   "median_coverage": 100,
+   "asof": "31-May-2026",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": true
+  },
+  "helios-capital": {
+   "amc": "Helios Capital Asset Management (India) Pvt. Ltd.",
+   "file_type": "xlsx",
+   "method": "cdn",
+   "resolve": {
+    "landing": "https://www.heliosmf.in/portfolio-disclosure/",
+    "include": [
+     "monthly-portfolio"
+    ],
+    "pick": "all"
+   },
+   "verified_url": "https://www.heliosmf.in/wp-content/uploads/2026/06/Helios-Flexi-Cap-Fund-Monthly-Portfolio-as-on-31st-May-2026.xlsx",
+   "multi": true,
+   "max_files": 8,
+   "n_schemes": 8,
+   "median_coverage": 100,
+   "asof": "2026-05-31",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": true
+  },
+  "hsbc": {
+   "amc": "HSBC Asset Management (India) Private Ltd.",
+   "file_type": "xlsx",
+   "method": "cdn",
+   "url_pattern": "https://www.assetmanagement.hsbc.co.in/-/media/files/attachments/india/mutual-funds/portfolios/document-{DD}{MM}{YYYY}/{slug}-{DD}-{mon}-{YYYY}.xlsx",
+   "verified_url": "https://www.assetmanagement.hsbc.co.in/-/media/files/attachments/india/mutual-funds/portfolios/document-31052026/hsbc-nifty-50-index-fund-31-may-2026.xlsx",
+   "multi": true,
+   "max_files": 45,
+   "landing": "https://www.assetmanagement.hsbc.co.in/en/mutual-funds/investor-resources/information-library",
+   "n_schemes": 45,
+   "median_coverage": 100,
+   "asof": "May 31, 2026",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": true
+  },
+  "icici-prudential": {
+   "amc": "ICICI Prudential Asset Management Company Limited",
+   "file_type": "zip",
+   "method": "cdn",
+   "url_pattern": "https://www.icicipruamc.com/blob/downloads/Files/Monthly%20Portfolio%20Disclosures/{YYYY}/{Mon}/Monthly-Portfolio-Disclosure-{Month}-{YYYY}.zip",
+   "resolve": {
+    "landing": "https://www.icicipruamc.com/news-and-media/downloads?currentTabFilter=Disclosures&&subCatTabFilter=MonthlyPortfolioDisclosures",
+    "pick": "newest"
+   },
+   "verified_url": "https://www.icicipruamc.com/blob/downloads/Files/Monthly%20Portfolio%20Disclosures/2026/May/Monthly-Portfolio-Disclosure-May-2026.zip",
+   "n_schemes": 143,
+   "median_coverage": 100,
+   "asof": "May 31,2026",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": false,
+   "multi": false
+  },
+  "il-fs-infra": {
+   "amc": "IL&FS Infra Asset Management Limited",
+   "file_type": "xlsx",
+   "method": "cdn",
+   "url_pattern": "https://www.ilfsinfrafund.com/otherfile/ILFS_Portfolio_TransactionReports_{Month}_{YYYY}.xlsx",
+   "resolve": {
+    "landing": "http://www.ilfsinfrafund.com/other.php",
+    "include": [
+     "ilfs_portfolio_transactionreports"
+    ],
+    "exclude": [
+     "half",
+     "_idf_",
+     "portfolio%20-%20",
+     "portfolio -"
+    ],
+    "pick": "newest"
+   },
+   "verified_url": "https://www.ilfsinfrafund.com/otherfile/ILFS_Portfolio_TransactionReports_May_2026.xlsx",
+   "n_schemes": 3,
+   "median_coverage": 100,
+   "asof": "15-May-2026",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": false,
+   "multi": false
+  },
+  "invesco": {
+   "amc": "Invesco Asset Management (India) Private Limited",
+   "file_type": "xlsx",
+   "method": "api",
+   "resolve": {
+    "landing": [
+     "https://invescomutualfund.com/api/CompleteMonthlyHoldings?year=2026&classification=equity",
+     "https://invescomutualfund.com/api/CompleteMonthlyHoldings?year=2026&classification=fixed-income",
+     "https://invescomutualfund.com/api/CompleteMonthlyHoldings?year=2026&classification=fund-of-funds",
+     "https://invescomutualfund.com/api/CompleteMonthlyHoldings?year=2026&classification=exchange-traded-fund",
+     "https://invescomutualfund.com/api/CompleteMonthlyHoldings?year=2026&classification=hybrid"
+    ],
+    "pick": "all",
+    "only_latest": true
+   },
+   "verified_url": "https://invescomutualfund.com/docs/default-source/completes-monthly-holding/invesco-india-elss-tax-saver-fund_may_2026_equity.xlsx?sfvrsn=fdf89cc2_0",
+   "multi": true,
+   "max_files": 90,
+   "landing": "https://invescomutualfund.com/literature-and-form?tab=Complete",
+   "n_schemes": 42,
+   "median_coverage": 98.3,
+   "asof": "May 31, 2026",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": true
+  },
+  "iti": {
+   "amc": "ITI Asset Management Limited",
+   "file_type": "xlsx",
+   "method": "api",
+   "resolve": {
+    "landing": "https://www.itiamc.com/statuory-disclosure",
+    "pick": "newest"
+   },
+   "verified_url": "https://itiamc.com/admin/pdf/1781098157-IN_MF_MONTHLY_PORTFOLIO_FA_HOLDING_May_2026.xlsx",
+   "landing": "https://www.itiamc.com/statuory-disclosure",
+   "n_schemes": 20,
+   "median_coverage": 100,
+   "asof": "May 31,2026",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": false,
+   "multi": false
+  },
+  "jio-blackrock": {
+   "amc": "Jio BlackRock Asset Management Private Limited",
+   "file_type": "xlsx",
+   "method": "render-needed",
+   "needs_harness": true,
+   "landing": "https://www.jioblackrockamc.com/statutory-disclosure/disclosures/monthly-portfolio-disclosure",
+   "resolve": {
+    "landing": "https://www.jioblackrockamc.com/statutory-disclosure/disclosures/monthly-portfolio-disclosure"
+   },
+   "verified_url": "https://cdnstorage-ddh3hqhvg3gyedd9.a02.azurefd.net/brcms/jioblackro-mowtj02f-919049.xlsx",
+   "n_schemes": 0,
+   "confidence": "low"
+  },
+  "jm-financial": {
+   "amc": "JM Financial Asset Management Limited",
+   "file_type": "xlsx",
+   "method": "api",
+   "landing": "https://www.jmfinancialmf.com/downloads/Portfolio-Disclosure",
+   "resolve": {
+    "landing": "https://www.jmfinancialmf.com/downloads/Portfolio-Disclosure",
+    "pick": "all"
+   },
+   "multi": true,
+   "max_files": 40,
+   "verified_url": "https://www.jmfinancialmf.com/CMS/downloads/Portfolio%20Disclosure/Monthly%20Portfolio%20of%20Schemes/Monthly%20Portfolio-%20JM%20Aggressive%20Hybrid%20Fund%20-%20May%2031%202026.xlsx",
+   "verified_urls": [
+    "https://www.jmfinancialmf.com/CMS/downloads/Portfolio%20Disclosure/Monthly%20Portfolio%20of%20Schemes/Monthly%20Portfolio-%20JM%20Aggressive%20Hybrid%20Fund%20-%20May%2031%202026.xlsx",
+    "https://www.jmfinancialmf.com/CMS/downloads/Portfolio%20Disclosure/Monthly%20Portfolio%20of%20Schemes/Monthly%20Portfolio%20-%20JM%20Small%20Cap%20Fund%20-%20May%2031%202026.xlsx",
+    "https://www.jmfinancialmf.com/CMS/downloads/Portfolio%20Disclosure/Monthly%20Portfolio%20of%20Schemes/Monthly%20Portfolio%20-%20JM%20Short%20Duration%20Fund%20-%20%20May%2031%2C%202026.xlsx",
+    "https://www.jmfinancialmf.com/CMS/downloads/Portfolio%20Disclosure/Monthly%20Portfolio%20of%20Schemes/Monthly%20Portfolio%20-%20JM%20Midcap%20Fund%20-%20May%2031%202026.xlsx",
+    "https://www.jmfinancialmf.com/CMS/downloads/Portfolio%20Disclosure/Monthly%20Portfolio%20of%20Schemes/Monthly%20Portfolio%20-%20JM%20Large%20Cap%20Fund%20-%20May%2031%202026.xlsx",
+    "https://www.jmfinancialmf.com/CMS/downloads/Portfolio%20Disclosure/Monthly%20Portfolio%20of%20Schemes/Monthly%20Portfolio%20-%20JM%20Large%20and%20Midcap%20Fund%20-%20May%2031%2C%202026.xlsx",
+    "https://www.jmfinancialmf.com/CMS/downloads/Portfolio%20Disclosure/Monthly%20Portfolio%20of%20Schemes/Monthly%20Portfolio%20-%20JM%20Focused%20Fund%20-%20May31%2C%202026.xlsx",
+    "https://www.jmfinancialmf.com/CMS/downloads/Portfolio%20Disclosure/Monthly%20Portfolio%20of%20Schemes/Monthly%20Portfolio%20-%20JM%20Flexicap%20Fund%20-%20May%2031%2C%202026.xlsx",
+    "https://www.jmfinancialmf.com/CMS/downloads/Portfolio%20Disclosure/Monthly%20Portfolio%20of%20Schemes/Monthly%20Portfolio%20-%20JM%20ELSS%20Tax%20Saver%20Fund%20-%20May%2031%2C%202026.xlsx",
+    "https://www.jmfinancialmf.com/CMS/downloads/Portfolio%20Disclosure/Monthly%20Portfolio%20of%20Schemes/Monthly%20Portfolio%20-%20JM%20Arbitrage%20Fund%20%20May%2031%2C%202026.xlsx",
+    "https://www.jmfinancialmf.com/CMS/downloads/Portfolio%20Disclosure/Monthly%20Portfolio%20of%20Schemes/Monthly%20%20Portfolio%20-%20JM%20Value%20Fund%20-%20May%2031%2C%202026.xlsx",
+    "https://www.jmfinancialmf.com/CMS/downloads/Portfolio%20Disclosure/Monthly%20Portfolio%20of%20Schemes/Monthly%20%20%20Portfolio%20-%20JM%20Overnight%20Fund%20-%20%20%20May%2031%2C%202026.xlsx",
+    "https://www.jmfinancialmf.com/CMS/downloads/Portfolio%20Disclosure/Monthly%20Portfolio%20of%20Schemes/Monthly%20%20%20Portfolio%20-%20JM%20Medium%20to%20Long%20Duration%20Fund%20-%20May%2031%2C%202026.xlsx",
+    "https://www.jmfinancialmf.com/CMS/downloads/Portfolio%20Disclosure/Monthly%20Portfolio%20of%20Schemes/Monthly%20%20%20Portfolio%20-%20JM%20Low%20Duration%20Fund%20-%20%20May31%2C%202026.xlsx",
+    "https://www.jmfinancialmf.com/CMS/downloads/Portfolio%20Disclosure/Monthly%20Portfolio%20of%20Schemes/Monthly%20%20%20Portfolio%20-%20JM%20Liquid%20Fund%20-%20%20%20May%2031%20%2C%202026.xlsx",
+    "https://www.jmfinancialmf.com/CMS/downloads/Portfolio%20Disclosure/Monthly%20Portfolio%20of%20Schemes/Monthly%20%20%20Portfolio%20-%20JM%20Dynamic%20Bond%20Fund%20-%20%20May%2031%2C%202026.xlsx"
+   ],
+   "n_schemes": 16,
+   "asof": "31-May-2026",
+   "source": "agent-list",
+   "confidence": "high",
+   "needs_harness": false
+  },
+  "kotak-mahindra": {
+   "amc": "Kotak Mahindra Asset Management Company Limited.",
+   "file_type": "xlsx",
+   "method": "render-needed",
+   "needs_harness": true,
+   "landing": "https://www.kotakmf.com/Information/portfolios",
+   "resolve": {
+    "landing": "https://www.kotakmf.com/Information/portfolios"
+   },
+   "verified_url": null,
+   "n_schemes": 0,
+   "confidence": "low"
+  },
+  "lakshya": {
+   "amc": "Lakshya Asset Management Private Limited",
+   "no_feed": true,
+   "n_schemes": 0,
+   "confidence": "low"
+  },
+  "lic-mutual-fund": {
+   "amc": "LIC Mutual Fund Asset Management Limited",
+   "file_type": "xlsx",
+   "method": "api",
+   "url_pattern": [
+    "https://www.licmf.com/assets/pdf/statuary_disclosure_new/21/LIC MF Monthly Equity Portfolio_{Mon}-{YY}.xlsx",
+    "https://www.licmf.com/assets/pdf/statuary_disclosure_new/21/LIC MF Monthly Debt Portfolio_{Mon}-{YY}.xlsx"
+   ],
+   "verified_url": "https://www.licmf.com/assets/pdf/statuary_disclosure_new/21/LIC MF Monthly Equity Portfolio_May-26.xlsx",
+   "max_files": 2,
+   "n_schemes": 43,
+   "median_coverage": 100,
+   "asof": "May 31,2026",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": false,
+   "multi": false
+  },
+  "mahindra-manulife": {
+   "amc": "Mahindra Manulife Investment Management Pvt Ltd",
+   "file_type": "xlsx",
+   "method": "cdn",
+   "resolve": {
+    "landing": "https://www.mahindramanulife.com/downloads",
+    "pick": "newest"
+   },
+   "verified_url": "https://www.mahindramanulife.com/uploads/download/285eea2f-e9b1-43fc-9ebe-c63a813666cc.xlsx",
+   "n_schemes": 27,
+   "median_coverage": 98,
+   "asof": "May 31, 2026",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": false,
+   "multi": false
+  },
+  "mirae": {
+   "amc": "Mirae Asset Investment Managers (India) Pvt. Ltd",
+   "file_type": "xlsx",
+   "method": "render-needed",
+   "needs_harness": true,
+   "landing": "https://www.miraeassetmf.co.in/downloads/portfolio",
+   "resolve": {
+    "landing": "https://www.miraeassetmf.co.in/downloads/portfolio"
+   },
+   "verified_url": "https://www.miraeassetmf.co.in/docs/default-source/portfolios/mafcf-may2026.xlsx",
+   "n_schemes": 0,
+   "confidence": "low"
+  },
+  "monarch-networth": {
+   "amc": "Monarch Networth Asset Management Private Limited",
+   "no_feed": true,
+   "n_schemes": 0,
+   "confidence": "low"
+  },
+  "motilal-oswal": {
+   "amc": "Motilal Oswal Asset Management Company Limited",
+   "file_type": "xlsx",
+   "method": "api",
+   "url_pattern": "https://www.motilaloswalmf.com/content/dam/motilal-mf/downloads/mf/month-end-portfolio/{YYYY}/{Pmonth}/Scheme Portfolio Details {DD}-{MM}-{YYYY}.xlsx",
+   "verified_url": "https://www.motilaloswalmf.com/content/dam/motilal-mf/downloads/mf/month-end-portfolio/2026/june/Scheme%20Portfolio%20Details%2031-05-2026.xlsx",
+   "n_schemes": 85,
+   "median_coverage": 100,
+   "asof": "MAY 31, 2026",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": false,
+   "multi": false
+  },
+  "navi": {
+   "amc": "Navi AMC Limited",
+   "file_type": "xlsx",
+   "method": "render-needed",
+   "needs_harness": true,
+   "landing": "https://navi.com/mutual-fund/downloads/portfolio",
+   "resolve": {
+    "landing": "https://navi.com/mutual-fund/downloads/portfolio"
+   },
+   "verified_url": "https://public-assets.prod.navi-tech.in/navi-website-assests/documents/Navi_Nifty_50_Index_Fund_1st_31st_May_2026_20260610192059.xlsx",
+   "n_schemes": 0,
+   "confidence": "low"
+  },
+  "nippon": {
+   "amc": "Nippon Life India Asset Management Limited",
+   "file_type": "xls",
+   "method": "cdn",
+   "url_pattern": "https://mf.nipponindiaim.com/InvestorServices/FactsheetsDocuments/NIMF-MONTHLY-PORTFOLIO-{DD}-{Mon}-{YY}.xls",
+   "resolve": {
+    "landing": "https://mf.nipponindiaim.com/investor-service/downloads/factsheet-portfolio-and-other-disclosures",
+    "pick": "newest",
+    "include": [
+     "nimf-monthly-portfolio"
+    ],
+    "exclude": [
+     "fortnight",
+     "debt",
+     "risk-parameter"
+    ]
+   },
+   "verified_url": "https://mf.nipponindiaim.com/InvestorServices/FactsheetsDocuments/NIMF-MONTHLY-PORTFOLIO-31-May-26.xls",
+   "n_schemes": 108,
+   "median_coverage": 98.8,
+   "asof": "May 31,2026",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": false,
+   "multi": false
+  },
+  "nj": {
+   "amc": "NJ Asset Management Private Limited",
+   "file_type": "xlsx",
+   "method": "cdn",
+   "resolve": {
+    "landing": "https://downloads.njmutualfund.com/njmf_download.php?nme=127",
+    "pick": "all"
+   },
+   "multi": true,
+   "verified_url": "https://downloads.njmutualfund.com/viewfile.php?file=NJ-MF-Monthly-Portfolio-NJABF-May-2026-20260609110333.xlsx",
+   "n_schemes": 76,
+   "asof": "May 31, 2026",
+   "source": "det-multi",
+   "confidence": "high",
+   "needs_harness": true
+  },
+  "old-bridge": {
+   "amc": "Old Bridge Asset Management Private Limited",
+   "file_type": "xlsx",
+   "method": "cdn",
+   "resolve": {
+    "landing": "https://oldbridgemf.com/statutory-disclosures.html",
+    "pick": "all"
+   },
+   "verified_url": "https://oldbridgemf.com/uploads/Old_Bridge_Flexi_Cap_Fund_Portfolio_May_26_20e8c1644b.xlsx",
+   "multi": true,
+   "landing": "https://oldbridgemf.com/statutory-disclosures.html",
+   "n_schemes": 19,
+   "median_coverage": 90.8,
+   "asof": "May 31, 2026",
+   "source": "det",
+   "confidence": "high",
+   "needs_harness": true
+  },
+  "pgim": {
+   "amc": "PGIM India Asset Management Private Limited",
+   "file_type": "xlsx",
+   "method": "api",
+   "resolve": {
+    "landing": "https://www.pgimindia.com/mutual-funds/disclosures/Portfolios/Monthly-Portfolio",
+    "pick": "all"
+   },
+   "verified_url": "https://www.pgimindia.com/api/v1/brochure/about-us/image/PGIM%20INDIA%20FLEXI%20CAP%20FUND%20May%202026.xlsx",
+   "multi": true,
+   "max_files": 40,
+   "n_schemes": 8,
+   "median_coverage": 100,
+   "asof": "May 31,2026",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": true
+  },
+  "ppfas": {
+   "amc": "PPFAS Asset Management Pvt. Ltd.",
+   "file_type": "xls",
+   "method": "cdn",
+   "url_pattern": "https://amc.ppfas.com/downloads/portfolio-disclosure/{YYYY}/PPFAS_Monthly_Portfolio_Report_{Month}_{DD}_{YYYY}.xls",
+   "verified_url": "https://amc.ppfas.com/downloads/portfolio-disclosure/2026/PPFAS_Monthly_Portfolio_Report_May_31_2026.xls",
+   "n_schemes": 7,
+   "median_coverage": 98.2,
+   "asof": "May 31, 2026",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": false,
+   "multi": false
+  },
+  "quant-money": {
+   "amc": "quant Money Managers Limited",
+   "file_type": "xlsx",
+   "method": "api",
+   "resolve": {
+    "landing": "https://quantmutual.com/statutory-disclosures",
+    "include": [
+     "monthly_portfolio",
+     "monthly portfolio"
+    ],
+    "pick": "newest"
+   },
+   "verified_url": "https://quantmutual.com/Admin/disclouser/Monthly_Portfolio_May26.xlsx",
+   "n_schemes": 29,
+   "median_coverage": 82,
+   "asof": "29 May 2026",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": false,
+   "multi": false
+  },
+  "quantum": {
+   "amc": "Quantum Asset Management Company Private Limited",
+   "file_type": "xlsx",
+   "method": "cdn",
+   "resolve": {
+    "landing": "https://www.quantumamc.com/portfolio/combined/-1/1/0/0",
+    "pick": "newest"
+   },
+   "verified_url": "https://www.quantumamc.com/FileCDN/FactSheet/cb50090a-93af-4863-a4cb-18ef81c6b14c.xlsx",
+   "n_schemes": 13,
+   "median_coverage": 100,
+   "asof": null,
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": false,
+   "multi": false
+  },
+  "samco": {
+   "amc": "Samco Asset Management Private Limited",
+   "file_type": "xlsx",
+   "method": "cdn",
+   "resolve": {
+    "landing": "https://www.samcomf.com/StatutoryDisclosure",
+    "pick": "all"
+   },
+   "verified_url": "https://media1.samco.in/scomamc/amc_documents/IN_MF_MONTHLY_PORTFOLIO_May_2026_Samco_Flexicap_Fund_1781074145.xlsx",
+   "multi": true,
+   "landing": "https://www.samcomf.com/StatutoryDisclosure",
+   "n_schemes": 56,
+   "median_coverage": 100,
+   "asof": "May 31, 2026",
+   "source": "det",
+   "confidence": "high",
+   "needs_harness": true
+  },
+  "sbi-funds": {
+   "amc": "SBI Funds Management Limited",
+   "file_type": "xlsx",
+   "method": "cdn",
+   "url_pattern": "https://www.sbimf.com/docs/default-source/scheme-portfolios/all-schemes-monthly-portfolio---as-on-{DDord}-{month}-{YYYY}.xlsx",
+   "resolve": {
+    "landing": "https://www.sbimf.com/portfolios"
+   },
+   "verified_url": "https://www.sbimf.com/docs/default-source/scheme-portfolios/all-schemes-monthly-portfolio---as-on-31st-may-2026.xlsx",
+   "n_schemes": 125,
+   "median_coverage": 100,
+   "asof": "2026-05-31",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": false,
+   "multi": false
+  },
+  "shriram": {
+   "amc": "Shriram Asset Management Co. Ltd.",
+   "file_type": "xls",
+   "method": "cdn",
+   "url_pattern": "https://cdn.shriramamc.in/uploads/Statutory-disclosure/Monthly--Fortnightly--Weekly-Portfolio-of-Scheme(s)/Monthly-Portfolio-for-the-Financial-Year/{FYS}-{FYE}/Monthly-Portfolio-Shriram-Mutual-Fund-{Month}-{YYYY}.xls",
+   "verified_url": "https://cdn.shriramamc.in/uploads/Statutory-disclosure/Monthly--Fortnightly--Weekly-Portfolio-of-Scheme(s)/Monthly-Portfolio-for-the-Financial-Year/2026-2027/Monthly-Portfolio-Shriram-Mutual-Fund-May-2026.xls",
+   "landing": "https://www.shriramamc.in/investor-statutory-disclosures",
+   "n_schemes": 10,
+   "median_coverage": 100.2,
+   "asof": "May 31, 2026",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": false,
+   "multi": false
+  },
+  "sundaram": {
+   "amc": "Sundaram Asset Management Company Ltd",
+   "file_type": "xlsx",
+   "method": "api",
+   "resolve": {
+    "landing": "https://www.sundarammutual.com/Monthly-Fortnightly-Adhoc-Portfolios",
+    "pick": "all"
+   },
+   "verified_url": "https://www.sundarammutual.com/uploaddir/MonthlyPortfolio/monthlyportfolio_100626144215.xlsx",
+   "max_files": 2,
+   "n_schemes": 40,
+   "median_coverage": 100,
+   "asof": "31 May 2026",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": false,
+   "multi": false
+  },
+  "tata": {
+   "amc": "Tata Asset Management Limited",
+   "file_type": "xlsx",
+   "method": "cdn",
+   "url_pattern": "https://betacms.tatamutualfund.com/system/files/{PYYYY}-{PMM}/Monthly%20Portfolio%20as%20on%20{DDord}%20{Month}%20{YYYY}.xlsx",
+   "resolve": {
+    "landing": "https://www.tatamutualfund.com/schemes-related/portfolio",
+    "include": [
+     "monthly%20portfolio",
+     "monthly portfolio"
+    ],
+    "pick": "newest"
+   },
+   "verified_url": "https://betacms.tatamutualfund.com/system/files/2026-06/Monthly%20Portfolio%20as%20on%2031st%20May%202026.xlsx",
+   "n_schemes": 66,
+   "median_coverage": 99.5,
+   "asof": "31/05/26",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": false,
+   "multi": false
+  },
+  "taurus": {
+   "amc": "Taurus Asset Management Company Limited",
+   "file_type": "xlsx",
+   "method": "cdn",
+   "url_pattern": "https://taurusmutualfund.com/sites/default/files/downloads/Taurus_{slug}_Fund_Monthly_Portfolio_Report_Performance_{Month}_{YYYY}.xlsx",
+   "resolve": {
+    "landing": "https://taurusmutualfund.com/monthly-portfolio",
+    "pick": "all"
+   },
+   "verified_url": "https://taurusmutualfund.com/sites/default/files/downloads/Taurus_Flexi_Cap_Fund_Monthly_Portfolio_Report_Performance_May_2026.xlsx",
+   "multi": true,
+   "max_files": 8,
+   "n_schemes": 8,
+   "median_coverage": 100,
+   "asof": "2026-05-31",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": true
+  },
+  "trust": {
+   "amc": "Trust Asset Management Private Limited",
+   "file_type": "xlsx",
+   "method": "api",
+   "resolve": {
+    "landing": "https://www.trustmf.com/disclosures?activeTab=portfolio-disclosures",
+    "pick": "newest"
+   },
+   "verified_url": "https://trustmf.com/Content/2026/6/Monthly Port_20260609172736.xlsx",
+   "n_schemes": 11,
+   "median_coverage": 100,
+   "asof": "May 31, 2026",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": false,
+   "multi": false
+  },
+  "unifi": {
+   "amc": "Unifi Asset Management Private Limited",
+   "file_type": "xlsx",
+   "method": "cdn",
+   "url_pattern": [
+    "https://unifimf.com/wp-content/uploads/fund-sheets/MP-Unifi-Flexi-Cap-Fund-{DD}{MM}{YYYY}.xlsx",
+    "https://unifimf.com/wp-content/uploads/fund-sheets/MP-Unifi-Dynamic-Asset-Allocation-Fund-{DD}{MM}{YYYY}.xlsx",
+    "https://unifimf.com/wp-content/uploads/fund-sheets/MP-Unifi-Liquid-Fund-{DD}{MM}{YYYY}.xls",
+    "https://unifimf.com/wp-content/uploads/fund-sheets/MP-Unifi-Liquid-Fund-{DD}{MM}{YYYY}.xlsx"
+   ],
+   "resolve": {
+    "landing": "https://unifimf.com/statutorydocuments/",
+    "pick": "all",
+    "include": [
+     "mp-unifi"
+    ],
+    "exclude": [
+     "aaum"
+    ],
+    "only_latest": true
+   },
+   "verified_url": "https://unifimf.com/wp-content/uploads/fund-sheets/MP-Unifi-Flexi-Cap-Fund-31052026.xlsx",
+   "multi": true,
+   "max_files": 3,
+   "n_schemes": 3,
+   "median_coverage": 100,
+   "asof": "April 30, 2026",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": true
+  },
+  "union": {
+   "amc": "Union Asset Management Company Private Limited",
+   "file_type": "xlsx",
+   "method": "cdn",
+   "resolve": {
+    "landing": "https://www.unionmf.com/about-us/downloads/monthly-portfolio",
+    "pick": "all",
+    "only_latest": true
+   },
+   "verified_url": "https://www.unionmf.com/docs/default-source/funddetail-downloads/fund-portfolio/may-2026/monthly-portfolio-report-union-flexi-cap-fund-31-05-2026.xlsx",
+   "multi": true,
+   "max_files": 40,
+   "n_schemes": 27,
+   "median_coverage": 100,
+   "asof": "MAY 31, 2026",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": true
+  },
+  "uti": {
+   "amc": "UTI Asset Mgmt. Co. Ltd.",
+   "file_type": "zip",
+   "method": "api",
+   "resolve": {
+    "landing": "https://www.utimf.com/downloads/consolidate-all-portfolio-disclosure",
+    "api": {
+     "url": "https://www.utimf.com/api/get-consolidate-portfolio-disclosure",
+     "method": "GET",
+     "body": {
+      "year": "{YYYY}",
+      "month": "{Month}"
+     },
+     "data_path": "rows",
+     "url_key": "url",
+     "title_key": "name",
+     "months": 6
+    }
+   },
+   "verified_url": "https://d3ce1o48hc5oli.cloudfront.net/s3fs-public/2026-06/fw_uti_mf_scheme_portfolios_31.05.2026_2.zip?VersionId=mZfkRrSFEYlSdA7C73vwJFjTW_P67mRN",
+   "landing": "https://www.utimf.com/downloads/consolidate-all-portfolio-disclosure",
+   "n_schemes": 82,
+   "median_coverage": 100,
+   "asof": "31/05/2026",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": true
+  },
+  "wealth-holdings": {
+   "amc": "Wealth Company Asset Management Holdings Private Limited",
+   "file_type": "xlsx",
+   "method": "cdn",
+   "resolve": {
+    "landing": "https://www.wealthcompanyamc.in/literature-forms/portfolio-documents/monthly/",
+    "pick": "all"
+   },
+   "verified_url": "https://www.wealthcompanyamc.in/uploads/Monthly_Portfolio_Flexi_Cap_05fb3f1328.xlsx",
+   "multi": true,
+   "landing": "https://www.wealthcompanyamc.in/literature-forms/portfolio-documents/monthly/",
+   "n_schemes": 22,
+   "median_coverage": 100,
+   "asof": "31-MAY-2026",
+   "source": "det",
+   "confidence": "high",
+   "needs_harness": true
+  },
+  "whiteoak-capital": {
+   "amc": "WhiteOak Capital Asset Management Limited",
+   "file_type": "xlsx",
+   "method": "api",
+   "resolve": {
+    "landing": "https://cms.whiteoakamc.com/api/scheme-portfolios?filters[period][$eq]=Monthly&sort[0]=published_date:desc&pagination[pageSize]=60&populate=*",
+    "include": [
+     "content.whiteoakamc.com/woc"
+    ],
+    "pick": "all",
+    "only_latest": true
+   },
+   "verified_url": "https://content.whiteoakamc.com/WOC_Flexicap_Fund_May_2026_4d7724b363.xlsx",
+   "multi": true,
+   "max_files": 60,
+   "n_schemes": 20,
+   "median_coverage": 100,
+   "asof": "May 31, 2026",
+   "source": "agent",
+   "confidence": "high",
+   "needs_harness": true
+  },
+  "zerodha": {
+   "amc": "Zerodha Asset Management Private Limited",
+   "file_type": "xlsx",
+   "method": "cdn",
+   "resolve": {
+    "landing": "https://www.zerodhafundhouse.com/resources/disclosures?source=footer",
+    "pick": "all"
+   },
+   "verified_url": "https://assets.zerodhafundhouse.com/statutory-reports/portfolio-disclosures/ZNFTY - Monthly Portfolio May 2026.xlsx",
+   "multi": true,
+   "landing": "https://www.zerodhafundhouse.com/resources/disclosures?source=footer",
+   "n_schemes": 120,
+   "median_coverage": 100,
+   "asof": "MAY 2026",
+   "source": "det",
+   "confidence": "high",
+   "needs_harness": true
+  }
+ }
+}

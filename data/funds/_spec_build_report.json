@@ -1,0 +1,483 @@
+[
+ {
+  "key": "360-one",
+  "amc": "360 ONE Asset Management Limited",
+  "ok": true,
+  "strategy": "resolve",
+  "n": 4,
+  "cov": 100.0,
+  "asof": "January 31"
+ },
+ {
+  "key": "abakkus",
+  "amc": "Abakkus Investment Managers Private Limited",
+  "ok": true,
+  "strategy": "resolve",
+  "n": 3,
+  "cov": 100.0,
+  "asof": "March 31"
+ },
+ {
+  "key": "aditya-birla-sun-life",
+  "amc": "Aditya Birla Sun Life AMC Limited",
+  "ok": true,
+  "strategy": "resolve",
+  "n": 106,
+  "cov": 100.0,
+  "asof": "May 31"
+ },
+ {
+  "key": "alphagrep",
+  "amc": "AlphaGrep Investment Management Private Limited",
+  "ok": false,
+  "strategy": "none",
+  "needs_harness": false,
+  "n": 0
+ },
+ {
+  "key": "angel-one",
+  "amc": "Angel One Asset Management Company Limited",
+  "ok": true,
+  "strategy": "resolve_multi",
+  "n": 30,
+  "cov": 100.0,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "key": "ask",
+  "amc": "ASK ASSET MANAGEMENT PRIVATE LIMITED",
+  "ok": false,
+  "strategy": "none",
+  "needs_harness": false,
+  "n": 0
+ },
+ {
+  "key": "axis",
+  "amc": "Axis Asset Management Co. Ltd.",
+  "ok": true,
+  "strategy": "resolve",
+  "n": 88,
+  "cov": 100.0,
+  "asof": "May 31"
+ },
+ {
+  "key": "bajaj-finserv",
+  "amc": "Bajaj Finserv Asset Management Limited",
+  "ok": true,
+  "strategy": "resolve",
+  "n": 24,
+  "cov": 100.0,
+  "asof": "May 31"
+ },
+ {
+  "key": "bandhan",
+  "amc": "Bandhan AMC Limited",
+  "ok": true,
+  "strategy": "resolve",
+  "n": 24,
+  "cov": 97.3,
+  "asof": "May 29"
+ },
+ {
+  "key": "bank",
+  "amc": "Bank of India Investment Managers Private Limited",
+  "ok": true,
+  "strategy": "resolve",
+  "n": 24,
+  "cov": 100.0,
+  "asof": "May 31"
+ },
+ {
+  "key": "baroda-bnp-paribas",
+  "amc": "Baroda BNP Paribas Asset Management India Private Limited",
+  "ok": true,
+  "strategy": "resolve",
+  "n": 48,
+  "cov": 100.0,
+  "asof": "May 31"
+ },
+ {
+  "key": "canara-robeco",
+  "amc": "Canara Robeco Asset Management Company Limited",
+  "ok": false,
+  "strategy": "none",
+  "needs_harness": true,
+  "n": 0
+ },
+ {
+  "key": "capitalmind",
+  "amc": "Capitalmind Asset Management Private Limited",
+  "ok": true,
+  "strategy": "resolve_multi",
+  "n": 25,
+  "cov": 100.0,
+  "asof": null
+ },
+ {
+  "key": "choice",
+  "amc": "Choice AMC Private Limited",
+  "ok": false,
+  "strategy": "none",
+  "needs_harness": true,
+  "n": 0
+ },
+ {
+  "key": "dsp",
+  "amc": "DSP Asset Managers Private Limited",
+  "ok": true,
+  "strategy": "resolve",
+  "n": 82,
+  "cov": 100.0,
+  "asof": "February 29"
+ },
+ {
+  "key": "edelweiss",
+  "amc": "Edelweiss Asset Management Limited",
+  "ok": false,
+  "strategy": "none",
+  "needs_harness": true,
+  "n": 0
+ },
+ {
+  "key": "franklin-templeton",
+  "amc": "Franklin Templeton Asset Management (India) Private Limited",
+  "ok": false,
+  "strategy": "harness",
+  "needs_harness": true,
+  "n": 0
+ },
+ {
+  "key": "groww",
+  "amc": "Groww Asset Management Limited",
+  "ok": true,
+  "strategy": "pattern",
+  "n": 59,
+  "cov": 100.0,
+  "asof": "31-MAY-2026"
+ },
+ {
+  "key": "hdfc",
+  "amc": "HDFC Asset Management Company Limited",
+  "ok": true,
+  "strategy": "resolve",
+  "n": 1,
+  "cov": 100.0,
+  "asof": "31-May-2026"
+ },
+ {
+  "key": "helios-capital",
+  "amc": "Helios Capital Asset Management (India) Pvt. Ltd.",
+  "ok": false,
+  "strategy": "none",
+  "needs_harness": true,
+  "n": 0
+ },
+ {
+  "key": "hsbc",
+  "amc": "HSBC Asset Management (India) Private Ltd.",
+  "ok": true,
+  "strategy": "resolve",
+  "n": 1,
+  "cov": 100.0,
+  "asof": null
+ },
+ {
+  "key": "icici-prudential",
+  "amc": "ICICI Prudential Asset Management Company Limited",
+  "ok": true,
+  "strategy": "pattern",
+  "n": 143,
+  "cov": 100.0,
+  "asof": "May 31"
+ },
+ {
+  "key": "il-fs-infra",
+  "amc": "IL&FS Infra Asset Management Limited",
+  "ok": true,
+  "strategy": "resolve",
+  "n": 6,
+  "cov": 99.9,
+  "asof": "December 31"
+ },
+ {
+  "key": "invesco",
+  "amc": "Invesco Asset Management (India) Private Limited",
+  "ok": true,
+  "strategy": "resolve",
+  "n": 1,
+  "cov": 99.1,
+  "asof": "May 31"
+ },
+ {
+  "key": "iti",
+  "amc": "ITI Asset Management Limited",
+  "ok": true,
+  "strategy": "resolve",
+  "n": 20,
+  "cov": 100.0,
+  "asof": "May 31"
+ },
+ {
+  "key": "jio-blackrock",
+  "amc": "Jio BlackRock Asset Management Private Limited",
+  "ok": true,
+  "strategy": "resolve",
+  "n": 1,
+  "cov": 100.0,
+  "asof": "April 30"
+ },
+ {
+  "key": "jm-financial",
+  "amc": "JM Financial Asset Management Limited",
+  "ok": true,
+  "strategy": "resolve",
+  "n": 1,
+  "cov": 99.7,
+  "asof": null
+ },
+ {
+  "key": "kotak-mahindra",
+  "amc": "Kotak Mahindra Asset Management Company Limited.",
+  "ok": false,
+  "strategy": "harness",
+  "needs_harness": true,
+  "n": 0
+ },
+ {
+  "key": "lakshya",
+  "amc": "Lakshya Asset Management Private Limited",
+  "ok": false,
+  "strategy": "none",
+  "needs_harness": false,
+  "n": 0
+ },
+ {
+  "key": "lic-mutual-fund",
+  "amc": "LIC Mutual Fund Asset Management Limited",
+  "ok": false,
+  "strategy": "none",
+  "needs_harness": true,
+  "n": 0
+ },
+ {
+  "key": "mahindra-manulife",
+  "amc": "Mahindra Manulife Investment Management Pvt Ltd",
+  "ok": true,
+  "strategy": "resolve",
+  "n": 27,
+  "cov": 98.0,
+  "asof": "May 31"
+ },
+ {
+  "key": "mirae",
+  "amc": "Mirae Asset Investment Managers (India) Pvt. Ltd",
+  "ok": true,
+  "strategy": "resolve",
+  "n": 1,
+  "cov": 100.0,
+  "asof": "May 31"
+ },
+ {
+  "key": "monarch-networth",
+  "amc": "Monarch Networth Asset Management Private Limited",
+  "ok": false,
+  "strategy": "none",
+  "needs_harness": false,
+  "n": 0
+ },
+ {
+  "key": "motilal-oswal",
+  "amc": "Motilal Oswal Asset Management Company Limited",
+  "ok": true,
+  "strategy": "resolve",
+  "n": 39,
+  "cov": 100.0,
+  "asof": "MAY 31"
+ },
+ {
+  "key": "navi",
+  "amc": "Navi AMC Limited",
+  "ok": true,
+  "strategy": "resolve",
+  "n": 1,
+  "cov": 100.0,
+  "asof": null
+ },
+ {
+  "key": "nippon",
+  "amc": "Nippon Life India Asset Management Limited",
+  "ok": true,
+  "strategy": "pattern",
+  "n": 108,
+  "cov": 98.8,
+  "asof": "May 31"
+ },
+ {
+  "key": "nj",
+  "amc": "NJ Asset Management Private Limited",
+  "ok": true,
+  "strategy": "resolve",
+  "n": 5,
+  "cov": 100.0,
+  "asof": "November 30"
+ },
+ {
+  "key": "old-bridge",
+  "amc": "Old Bridge Asset Management Private Limited",
+  "ok": true,
+  "strategy": "resolve_multi",
+  "n": 15,
+  "cov": 92.3,
+  "asof": "December 31"
+ },
+ {
+  "key": "pgim",
+  "amc": "PGIM India Asset Management Private Limited",
+  "ok": true,
+  "strategy": "resolve",
+  "n": 1,
+  "cov": 100.0,
+  "asof": "May 31"
+ },
+ {
+  "key": "ppfas",
+  "amc": "PPFAS Asset Management Pvt. Ltd.",
+  "ok": true,
+  "strategy": "pattern",
+  "n": 7,
+  "cov": 98.2,
+  "asof": "May 31"
+ },
+ {
+  "key": "quant-money",
+  "amc": "quant Money Managers Limited",
+  "ok": true,
+  "strategy": "resolve",
+  "n": 29,
+  "cov": 82.0,
+  "asof": "29 May 2026"
+ },
+ {
+  "key": "quantum",
+  "amc": "Quantum Asset Management Company Private Limited",
+  "ok": true,
+  "strategy": "resolve",
+  "n": 13,
+  "cov": 100.0,
+  "asof": null
+ },
+ {
+  "key": "samco",
+  "amc": "Samco Asset Management Private Limited",
+  "ok": true,
+  "strategy": "resolve_multi",
+  "n": 53,
+  "cov": 100.0,
+  "asof": "April 30"
+ },
+ {
+  "key": "sbi-funds",
+  "amc": "SBI Funds Management Limited",
+  "ok": false,
+  "strategy": "none",
+  "needs_harness": true,
+  "n": 0
+ },
+ {
+  "key": "shriram",
+  "amc": "Shriram Asset Management Co. Ltd.",
+  "ok": true,
+  "strategy": "verified",
+  "n": 10,
+  "cov": 100.2,
+  "asof": "May 31"
+ },
+ {
+  "key": "sundaram",
+  "amc": "Sundaram Asset Management Company Ltd",
+  "ok": true,
+  "strategy": "resolve",
+  "n": 30,
+  "cov": 100.0,
+  "asof": null
+ },
+ {
+  "key": "tata",
+  "amc": "Tata Asset Management Limited",
+  "ok": true,
+  "strategy": "resolve",
+  "n": 40,
+  "cov": 98.4,
+  "asof": "31/05/26"
+ },
+ {
+  "key": "taurus",
+  "amc": "Taurus Asset Management Company Limited",
+  "ok": false,
+  "strategy": "none",
+  "needs_harness": true,
+  "n": 0
+ },
+ {
+  "key": "trust",
+  "amc": "Trust Asset Management Private Limited",
+  "ok": true,
+  "strategy": "resolve",
+  "n": 10,
+  "cov": 100.0,
+  "asof": "May 31"
+ },
+ {
+  "key": "unifi",
+  "amc": "Unifi Asset Management Private Limited",
+  "ok": false,
+  "strategy": "none",
+  "needs_harness": true,
+  "n": 0
+ },
+ {
+  "key": "union",
+  "amc": "Union Asset Management Company Private Limited",
+  "ok": true,
+  "strategy": "resolve",
+  "n": 1,
+  "cov": 100.0,
+  "asof": "MAY 31"
+ },
+ {
+  "key": "uti",
+  "amc": "UTI Asset Mgmt. Co. Ltd.",
+  "ok": true,
+  "strategy": "resolve",
+  "n": 1,
+  "cov": 7692.7,
+  "asof": null
+ },
+ {
+  "key": "wealth-holdings",
+  "amc": "Wealth Company Asset Management Holdings Private Limited",
+  "ok": true,
+  "strategy": "resolve_multi",
+  "n": 22,
+  "cov": 100.0,
+  "asof": "31-MAR-2026"
+ },
+ {
+  "key": "whiteoak-capital",
+  "amc": "WhiteOak Capital Asset Management Limited",
+  "ok": true,
+  "strategy": "resolve",
+  "n": 1,
+  "cov": 100.0,
+  "asof": "May 31"
+ },
+ {
+  "key": "zerodha",
+  "amc": "Zerodha Asset Management Private Limited",
+  "ok": true,
+  "strategy": "resolve_multi",
+  "n": 38,
+  "cov": 100.0,
+  "asof": "May 31st 2026"
+ }
+]

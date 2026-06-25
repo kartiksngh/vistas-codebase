@@ -1,0 +1,58 @@
+{
+ "method": "Spearman IC + decile spread, monthly cross-sections, ARM_100_REG vs forward TR",
+ "n_stocks_overlap": 1923,
+ "horizons": {
+  "1m": {
+   "n_months": 257,
+   "ic_mean": 0.0301,
+   "ic_t_stat": 7.87,
+   "pct_months_ic_pos": 0.704,
+   "decile_spread_ann_pct": 20.62,
+   "avg_stocks_per_xs": 1034,
+   "ic_by_era": {
+    "2005-2012": 0.0466,
+    "2013-2019": 0.02,
+    "2020-2026": 0.0205
+   }
+  },
+  "3m": {
+   "n_months": 255,
+   "ic_mean": 0.0421,
+   "ic_t_stat": 10.74,
+   "pct_months_ic_pos": 0.741,
+   "decile_spread_ann_pct": 16.38,
+   "avg_stocks_per_xs": 1026,
+   "ic_by_era": {
+    "2005-2012": 0.0648,
+    "2013-2019": 0.0255,
+    "2020-2026": 0.0317
+   }
+  },
+  "6m": {
+   "n_months": 252,
+   "ic_mean": 0.0448,
+   "ic_t_stat": 11.33,
+   "pct_months_ic_pos": 0.75,
+   "decile_spread_ann_pct": 13.08,
+   "avg_stocks_per_xs": 1016,
+   "ic_by_era": {
+    "2005-2012": 0.0634,
+    "2013-2019": 0.0303,
+    "2020-2026": 0.037
+   }
+  },
+  "12m": {
+   "n_months": 246,
+   "ic_mean": 0.0396,
+   "ic_t_stat": 10.7,
+   "pct_months_ic_pos": 0.776,
+   "decile_spread_ann_pct": 10.1,
+   "avg_stocks_per_xs": 997,
+   "ic_by_era": {
+    "2005-2012": 0.0569,
+    "2013-2019": 0.0194,
+    "2020-2026": 0.0401
+   }
+  }
+ }
+}

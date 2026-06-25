@@ -1,0 +1,1007 @@
+{
+ "as_of": "2026-05",
+ "source": "AMFI hist-NAV census (survivorship-free) vs holdings_history.parquet",
+ "census_equity_funds_ever": 889,
+ "census_alive": 694,
+ "census_dead": 195,
+ "missing_dead_count": 166,
+ "missing_dead_lived_ge24mo": 111,
+ "missing_dead": [
+  {
+   "name": "IDBI India Top 100 Equity Fund Growth",
+   "first": "2013-05",
+   "last": "2023-05",
+   "months": 120
+  },
+  {
+   "name": "Aditya Birla Sun Life Commodity Equities Fund - Global Agri Plan - Growth - Direct Plan",
+   "first": "2013-05",
+   "last": "2023-05",
+   "months": 120
+  },
+  {
+   "name": "Aditya Birla Sun Life Tax Plan - Direct Plan - Growth Option",
+   "first": "2013-05",
+   "last": "2023-02",
+   "months": 117
+  },
+  {
+   "name": "L&T Flexicap Fund-Direct Plan-Growth",
+   "first": "2013-05",
+   "last": "2022-11",
+   "months": 114
+  },
+  {
+   "name": "L&T Infrastructure Fund - Regular Plan - Growth",
+   "first": "2013-05",
+   "last": "2022-11",
+   "months": 114
+  },
+  {
+   "name": "L&T  Tax Advantage Fund-Direct Plan-Growth",
+   "first": "2013-05",
+   "last": "2022-11",
+   "months": 114
+  },
+  {
+   "name": "IDBI Equity Advantage Fund - Growth Direct",
+   "first": "2013-11",
+   "last": "2023-05",
+   "months": 114
+  },
+  {
+   "name": "Navi Large Cap Equity Fund - Direct Plan Normal IDCW Payout",
+   "first": "2013-05",
+   "last": "2022-05",
+   "months": 108
+  },
+  {
+   "name": "Navi Large Cap Equity Fund - Growth Option",
+   "first": "2013-05",
+   "last": "2022-05",
+   "months": 108
+  },
+  {
+   "name": "IDBI FLEXI CAP FUND Growth Direct",
+   "first": "2014-05",
+   "last": "2023-05",
+   "months": 108
+  },
+  {
+   "name": "BNP Paribas MULTI CAP Fund - Direct Plan - Income Distribution cum Capital Withdrawal Option",
+   "first": "2013-05",
+   "last": "2022-02",
+   "months": 105
+  },
+  {
+   "name": "BNP Paribas LARGE CAP Fund - Direct Plan - Income Distribution cum Capital Withdrawal Option",
+   "first": "2013-05",
+   "last": "2022-02",
+   "months": 105
+  },
+  {
+   "name": "BNP Paribas Mid Cap Fund - Direct Plan - Income Distribution cum Capital Withdrawal Option",
+   "first": "2013-05",
+   "last": "2022-02",
+   "months": 105
+  },
+  {
+   "name": "BARODA ELSS 96 - Plan A - IDCW",
+   "first": "2013-05",
+   "last": "2022-02",
+   "months": 105
+  },
+  {
+   "name": "BNP Paribas Long Term Equity Fund - Direct Plan - Growth Option",
+   "first": "2013-05",
+   "last": "2022-02",
+   "months": 105
+  },
+  {
+   "name": "BNP Paribas Long Term Equity Fund - Direct Plan - Income Distribution cum Capital Withdrawal Option",
+   "first": "2013-05",
+   "last": "2022-02",
+   "months": 105
+  },
+  {
+   "name": "Principal Multi Cap Growth Fund - Direct Plan -Half Yearly Income Distribution CUM Capital Withdrawal Option",
+   "first": "2013-05",
+   "last": "2021-11",
+   "months": 102
+  },
+  {
+   "name": "Principal Multi Cap Growth Fund-Direct Plan - Growth Option",
+   "first": "2013-05",
+   "last": "2021-11",
+   "months": 102
+  },
+  {
+   "name": "Principal Emerging Bluechip Fund - Direct Plan - Growth Option",
+   "first": "2013-05",
+   "last": "2021-11",
+   "months": 102
+  },
+  {
+   "name": "Principal Emerging Bluechip Fund - Direct Plan - Half Yearly Income Distribution CUM Capital Withdrawal Option",
+   "first": "2013-05",
+   "last": "2021-11",
+   "months": 102
+  },
+  {
+   "name": "Principal Dividend Yield Fund - Direct Plan - Growth Option",
+   "first": "2013-05",
+   "last": "2021-11",
+   "months": 102
+  },
+  {
+   "name": "Principal Dividend Yield Fund- Direct Plan - Half Yearly Income Distribution CUM Capital Withdrawal Option",
+   "first": "2013-05",
+   "last": "2021-11",
+   "months": 102
+  },
+  {
+   "name": "Principal Focused Multicap Fund- Direct Plan - Growth Option",
+   "first": "2013-05",
+   "last": "2021-11",
+   "months": 102
+  },
+  {
+   "name": "Principal Focused Multicap Fund- Direct Plan - Half Yearly Income Distribution CUM Capital Withdrawal Option",
+   "first": "2013-05",
+   "last": "2021-11",
+   "months": 102
+  },
+  {
+   "name": "Sundaram Select Focus Direct Plan - Growth",
+   "first": "2013-05",
+   "last": "2021-11",
+   "months": 102
+  },
+  {
+   "name": "Sundaram Select Focus Direct Plan - Income Distribution cum Capital Withdrawal (IDCW)",
+   "first": "2013-05",
+   "last": "2021-11",
+   "months": 102
+  },
+  {
+   "name": "HDFC Long Term Advantage Plan - Growth Option - Direct Plan",
+   "first": "2013-05",
+   "last": "2021-11",
+   "months": 102
+  },
+  {
+   "name": "Principal Personal Tax Saver Fund",
+   "first": "2013-05",
+   "last": "2021-11",
+   "months": 102
+  },
+  {
+   "name": "Principal Tax Savings Fund",
+   "first": "2013-05",
+   "last": "2021-11",
+   "months": 102
+  },
+  {
+   "name": "L&T Emerging Businesses Fund - Direct Plan - Growth",
+   "first": "2014-05",
+   "last": "2022-11",
+   "months": 102
+  },
+  {
+   "name": "Sahara Growth Fund-Dividend",
+   "first": "2013-05",
+   "last": "2020-02",
+   "months": 81
+  },
+  {
+   "name": "Sahara Infrastructure Fund ---FIXED PRICING -Direct-Dividend",
+   "first": "2013-05",
+   "last": "2020-02",
+   "months": 81
+  },
+  {
+   "name": "Sahara Infrastructure Fund ---VARIABLE PRICING OPTION-Direct-Dividend",
+   "first": "2013-05",
+   "last": "2020-02",
+   "months": 81
+  },
+  {
+   "name": "Sahara Midcap Fund-Auto Payout",
+   "first": "2013-05",
+   "last": "2020-02",
+   "months": 81
+  },
+  {
+   "name": "Sahara Midcap Fund-Bonus",
+   "first": "2013-05",
+   "last": "2020-02",
+   "months": 81
+  },
+  {
+   "name": "Sahara Power & Natural Resources Fund - Dividend Option",
+   "first": "2013-05",
+   "last": "2020-02",
+   "months": 81
+  },
+  {
+   "name": "Sahara Star Value Fund-Dividend - Direct",
+   "first": "2013-05",
+   "last": "2020-02",
+   "months": 81
+  },
+  {
+   "name": "Sahara Super 20 Fund - Dividend - Direct",
+   "first": "2013-05",
+   "last": "2020-02",
+   "months": 81
+  },
+  {
+   "name": "Sahara Wealth Plus Fund-Fixed Pricing Option-Direct-Dividend Option",
+   "first": "2013-05",
+   "last": "2020-02",
+   "months": 81
+  },
+  {
+   "name": "Sahara Wealth Plus Fund-Variable Pricing Option-Direct -Dividend",
+   "first": "2013-05",
+   "last": "2020-02",
+   "months": 81
+  },
+  {
+   "name": "SaharaTax Gain-Dividend",
+   "first": "2013-05",
+   "last": "2020-02",
+   "months": 81
+  },
+  {
+   "name": "ICICI Prudential Bluechip Fund - Institutional Option - I - Growth",
+   "first": "2013-05",
+   "last": "2020-02",
+   "months": 81
+  },
+  {
+   "name": "Navi Large Cap Equity Fund - Annual IDCW Payout",
+   "first": "2015-11",
+   "last": "2022-05",
+   "months": 78
+  },
+  {
+   "name": "Navi Large Cap Equity Fund - Direct Plan Quarterly IDCW",
+   "first": "2015-11",
+   "last": "2022-05",
+   "months": 78
+  },
+  {
+   "name": "Navi Large Cap Equity Fund - Half Yearly IDCW Payout",
+   "first": "2015-11",
+   "last": "2022-05",
+   "months": 78
+  },
+  {
+   "name": "IDBI Midcap Fund Growth Direct",
+   "first": "2017-02",
+   "last": "2023-05",
+   "months": 75
+  },
+  {
+   "name": "IDBI Small Cap Fund - Growth Direct",
+   "first": "2017-08",
+   "last": "2023-05",
+   "months": 69
+  },
+  {
+   "name": "IDBI FOCUSED 30 EQUITY FUND - Growth Direct",
+   "first": "2018-02",
+   "last": "2023-05",
+   "months": 63
+  },
+  {
+   "name": "Aditya Birla Sun Life India Opportunities Fund - Dividend - Direct Plan",
+   "first": "2013-05",
+   "last": "2018-05",
+   "months": 60
+  },
+  {
+   "name": "Aditya Birla Sun Life India Reforms Fund - Dividend - Direct Plan",
+   "first": "2013-05",
+   "last": "2018-05",
+   "months": 60
+  },
+  {
+   "name": "Aditya Birla Sun Life Special Situations Fund - Dividend",
+   "first": "2013-05",
+   "last": "2018-05",
+   "months": 60
+  },
+  {
+   "name": "HDFC Index Fund Sensex Plus Plan-Direct Plan",
+   "first": "2013-05",
+   "last": "2018-05",
+   "months": 60
+  },
+  {
+   "name": "HDFC Index Fund-Sensex Plus( FV-Rs32.161)",
+   "first": "2013-05",
+   "last": "2018-05",
+   "months": 60
+  },
+  {
+   "name": "L&T Tax Saver Fund- Regular Plan - Dividend",
+   "first": "2013-05",
+   "last": "2018-05",
+   "months": 60
+  },
+  {
+   "name": "TATA Quant Equity Fund Direct Plan - Payout of Income Distribution cum capital withdrawal option",
+   "first": "2020-02",
+   "last": "2025-02",
+   "months": 60
+  },
+  {
+   "name": "TATA Quant Fund Direct Plan - Reinvestment of Income Distribution cum capital withdrawal option",
+   "first": "2020-02",
+   "last": "2025-02",
+   "months": 60
+  },
+  {
+   "name": "Reliance Focused Large Cap Fund - Direct Plan Dividend Plan",
+   "first": "2013-05",
+   "last": "2018-02",
+   "months": 57
+  },
+  {
+   "name": "UTI Bluechip Flexicap Fund - Direct Plan - Dividend Option",
+   "first": "2013-05",
+   "last": "2018-02",
+   "months": 57
+  },
+  {
+   "name": "IDBI Long Term Value Fund-Direct Plan- Growth",
+   "first": "2018-11",
+   "last": "2023-05",
+   "months": 54
+  },
+  {
+   "name": "BNP Paribas Focused 25 Equity Fund - Direct Plan - Growth Option",
+   "first": "2017-11",
+   "last": "2022-02",
+   "months": 51
+  },
+  {
+   "name": "BNP Paribas Focused 25 Equity Fund - Direct Plan - Income Distribution cum Capital Withdrawal Option",
+   "first": "2017-11",
+   "last": "2022-02",
+   "months": 51
+  },
+  {
+   "name": "IDBI Dividend Yield Fund - Direct Plan - Growth",
+   "first": "2019-02",
+   "last": "2023-05",
+   "months": 51
+  },
+  {
+   "name": "DSP BlackRock Technology.com   Fund - Regular Plan - Dividend",
+   "first": "2013-05",
+   "last": "2017-05",
+   "months": 48
+  },
+  {
+   "name": "HSBC Dividend Yield Equity Fund - Dividend",
+   "first": "2013-05",
+   "last": "2017-05",
+   "months": 48
+  },
+  {
+   "name": "Principal Tax Savings Fund Direct Plan - Half Yearly Income Distribution CUM Capital Withdrawal Option",
+   "first": "2017-11",
+   "last": "2021-11",
+   "months": 48
+  },
+  {
+   "name": "IDBI Healthcare Fund - Direct Plan - Growth",
+   "first": "2019-05",
+   "last": "2023-05",
+   "months": 48
+  },
+  {
+   "name": "IDFC Equity Fund -Plan B- Dividend",
+   "first": "2013-05",
+   "last": "2017-02",
+   "months": 45
+  },
+  {
+   "name": "IDFC Imperial Equity Fund-Plan B - Dividend",
+   "first": "2013-05",
+   "last": "2017-02",
+   "months": 45
+  },
+  {
+   "name": "IDFC Premier Equity Fund-Plan B - Dividend",
+   "first": "2013-05",
+   "last": "2017-02",
+   "months": 45
+  },
+  {
+   "name": "IDFC Core Equity Fund-Plan B- Dividend",
+   "first": "2013-05",
+   "last": "2017-02",
+   "months": 45
+  },
+  {
+   "name": "Edelweiss Emerging Leaders Fund - Direct Plan- Dividend",
+   "first": "2013-05",
+   "last": "2016-11",
+   "months": 42
+  },
+  {
+   "name": "JPMorgan India Equity Fund - Direct Plan - Dividend Option",
+   "first": "2013-05",
+   "last": "2016-11",
+   "months": 42
+  },
+  {
+   "name": "JPMorgan India Mid and Small Cap Fund - Direct Plan - Dividend Option",
+   "first": "2013-05",
+   "last": "2016-11",
+   "months": 42
+  },
+  {
+   "name": "JPMorgan India Tax Advantage Fund - Direct Plan - Dividend Option",
+   "first": "2013-05",
+   "last": "2016-11",
+   "months": 42
+  },
+  {
+   "name": "Aditya Birla Sun Life Tax Savings Fund - Direct Plan - Bonus Option",
+   "first": "2014-11",
+   "last": "2018-05",
+   "months": 42
+  },
+  {
+   "name": "Goldman Sachs CNX 500 Fund - Direct Plan - Dividend Option",
+   "first": "2013-05",
+   "last": "2016-08",
+   "months": 39
+  },
+  {
+   "name": "Goldman Sachs India Equity Fund - Direct Plan -Dividend Option",
+   "first": "2013-05",
+   "last": "2016-08",
+   "months": 39
+  },
+  {
+   "name": "Sundaram Growth Fund - Direct Plan - Dividend Option",
+   "first": "2013-05",
+   "last": "2016-08",
+   "months": 39
+  },
+  {
+   "name": "Sundaram Growth Fund- Inst Dividend",
+   "first": "2013-05",
+   "last": "2016-08",
+   "months": 39
+  },
+  {
+   "name": "BNP Paribas India Consumption Fund - Direct Plan - Income Distribution cum Capital Withdrawal Option",
+   "first": "2018-11",
+   "last": "2022-02",
+   "months": 39
+  },
+  {
+   "name": "DSP BlackRock Equity Fund - Institutional Plan - Growth",
+   "first": "2013-05",
+   "last": "2016-05",
+   "months": 36
+  },
+  {
+   "name": "Sundaram Entertainment Opportunities Fund - Direct Plan - Dividend Option",
+   "first": "2013-05",
+   "last": "2016-05",
+   "months": 36
+  },
+  {
+   "name": "Sundaram Entertainment Opportunities Fund - Inst  Dividend",
+   "first": "2013-05",
+   "last": "2016-05",
+   "months": 36
+  },
+  {
+   "name": "Sundaram PSU Opportunities Dividend Option",
+   "first": "2013-05",
+   "last": "2016-05",
+   "months": 36
+  },
+  {
+   "name": "Sundaram Select Thematic Funds PSU Opportunities - Direct Plan - Dividend Option",
+   "first": "2013-05",
+   "last": "2016-05",
+   "months": 36
+  },
+  {
+   "name": "Principal Index Fund- Midcap- Direct Plan - Dividend Option",
+   "first": "2014-05",
+   "last": "2017-05",
+   "months": 36
+  },
+  {
+   "name": "Edelweiss Tax Advantage Fund - Direct Plan - Dividend Option",
+   "first": "2017-02",
+   "last": "2020-02",
+   "months": 36
+  },
+  {
+   "name": "DWS ALPHA EQUITY FUND - BONUS OPTION",
+   "first": "2013-05",
+   "last": "2016-02",
+   "months": 33
+  },
+  {
+   "name": "DWS Alpha Equity Fund Wealth Plan - Growth Option",
+   "first": "2013-05",
+   "last": "2016-02",
+   "months": 33
+  },
+  {
+   "name": "DWS Equity Income Fund - Annual Dividend option",
+   "first": "2013-05",
+   "last": "2016-02",
+   "months": 33
+  },
+  {
+   "name": "DWS Equity Income Fund - Direct Plan - Growth",
+   "first": "2013-05",
+   "last": "2016-02",
+   "months": 33
+  },
+  {
+   "name": "DWS Equity Income Fund - Monthly Dividend option",
+   "first": "2013-05",
+   "last": "2016-02",
+   "months": 33
+  },
+  {
+   "name": "DWS Equity Income Fund - Quarterly  Dividend",
+   "first": "2013-05",
+   "last": "2016-02",
+   "months": 33
+  },
+  {
+   "name": "DWS INVESTMENT OPPORTUNITY FUND - BONUS OPTION",
+   "first": "2013-05",
+   "last": "2016-02",
+   "months": 33
+  },
+  {
+   "name": "DWS Investment Opportunity Fund Wealth Plan- Dividend Option",
+   "first": "2013-05",
+   "last": "2016-02",
+   "months": 33
+  },
+  {
+   "name": "ICICI Prudential Blended Plan A -  Dividend",
+   "first": "2013-05",
+   "last": "2016-02",
+   "months": 33
+  },
+  {
+   "name": "Mirae Asset Global Commodity Stocks - Direct Plan - Dividend",
+   "first": "2013-05",
+   "last": "2016-02",
+   "months": 33
+  },
+  {
+   "name": "DHFL Pramerica Dynamic Asset Allocation Fund - Direct Plan-Growth Option",
+   "first": "2013-05",
+   "last": "2016-02",
+   "months": 33
+  },
+  {
+   "name": "DHFL Pramerica Large Cap Equity Fund - Direct Plan-Dividend Option",
+   "first": "2013-05",
+   "last": "2016-02",
+   "months": 33
+  },
+  {
+   "name": "DWS Tax Saving Fund - Direct Plan - Dividend",
+   "first": "2013-05",
+   "last": "2016-02",
+   "months": 33
+  },
+  {
+   "name": "UTI Energy Fund-Growth Option",
+   "first": "2013-05",
+   "last": "2016-02",
+   "months": 33
+  },
+  {
+   "name": "UTI Energy Fund-Income Option",
+   "first": "2013-05",
+   "last": "2016-02",
+   "months": 33
+  },
+  {
+   "name": "Aditya Birla Sun Life Buy India Fund - Dividend - Direct Plan",
+   "first": "2013-05",
+   "last": "2015-11",
+   "months": 30
+  },
+  {
+   "name": "Aditya Birla Sun Life Long Term Advantage - Dividend - Direct Plan",
+   "first": "2013-05",
+   "last": "2015-11",
+   "months": 30
+  },
+  {
+   "name": "Aditya Birla Sun Life Long Term Fund- Growth Option",
+   "first": "2013-05",
+   "last": "2015-11",
+   "months": 30
+  },
+  {
+   "name": "Principal Small Cap Fund - Direct Plan - Growth Option",
+   "first": "2019-05",
+   "last": "2021-11",
+   "months": 30
+  },
+  {
+   "name": "Principal Small Cap Fund - Direct Plan- Income Distribution CUM Capital Withdrawal Option",
+   "first": "2019-05",
+   "last": "2021-11",
+   "months": 30
+  },
+  {
+   "name": "Religare Invesco AGILE Fund - Direct Plan - Dividend Option",
+   "first": "2013-05",
+   "last": "2015-08",
+   "months": 27
+  },
+  {
+   "name": "L&T Indo Asia Fund - Regular Plan - Dividend Option",
+   "first": "2013-05",
+   "last": "2015-08",
+   "months": 27
+  },
+  {
+   "name": "JPMorgan India Top 100 Fund - Direct Plan - Dividend Option",
+   "first": "2014-08",
+   "last": "2016-11",
+   "months": 27
+  },
+  {
+   "name": "Sundaram Equity Fund Direct Plan - Payout of Income Distribution cum Capital Withdrawal (IDCW)",
+   "first": "2019-11",
+   "last": "2021-11",
+   "months": 24
+  },
+  {
+   "name": "IIFL Dividend Opportunities Index Fund - Dividend",
+   "first": "2013-05",
+   "last": "2015-02",
+   "months": 21
+  },
+  {
+   "name": "Tata Growing Economies Infrastructure Fund Scheme A Plan A - Dividend",
+   "first": "2013-05",
+   "last": "2015-02",
+   "months": 21
+  },
+  {
+   "name": "Tata Index Fund - Sensex B",
+   "first": "2013-05",
+   "last": "2015-02",
+   "months": 21
+  },
+  {
+   "name": "JPMorgan India Economic Resurgence Fund - Direct Plan - Dividend Option",
+   "first": "2015-02",
+   "last": "2016-11",
+   "months": 21
+  },
+  {
+   "name": "Principal Midcap Fund - Direct Plan - Income Distribution CUM Capital Withdrawal Option",
+   "first": "2020-02",
+   "last": "2021-11",
+   "months": 21
+  },
+  {
+   "name": "Principal Midcap Fund - Direct Plan- Growth",
+   "first": "2020-02",
+   "last": "2021-11",
+   "months": 21
+  },
+  {
+   "name": "PineBridge India Equity Fund- Direct Plan- Dividend Option",
+   "first": "2013-05",
+   "last": "2014-11",
+   "months": 18
+  },
+  {
+   "name": "PineBridge India Equity Fund- Standard Plan- Dividend Option",
+   "first": "2013-05",
+   "last": "2014-11",
+   "months": 18
+  },
+  {
+   "name": "PineBridge Infrastructure & Economic Reform Fund - Institutional Plan-Growth",
+   "first": "2013-05",
+   "last": "2014-11",
+   "months": 18
+  },
+  {
+   "name": "PineBridge Infrastructure & Economic Reform Fund - Standard Plan-Dividend",
+   "first": "2013-05",
+   "last": "2014-11",
+   "months": 18
+  },
+  {
+   "name": "Tata Indo-Global Infrastructure Fund Plan A- Dividend",
+   "first": "2013-05",
+   "last": "2014-11",
+   "months": 18
+  },
+  {
+   "name": "Franklin India Index Fund - BSE Plan - Dividend Plan",
+   "first": "2013-05",
+   "last": "2014-08",
+   "months": 15
+  },
+  {
+   "name": "ING Core Equity Fund - Direct Plan - Dividend Option",
+   "first": "2013-05",
+   "last": "2014-08",
+   "months": 15
+  },
+  {
+   "name": "ING Dividend Yield Fund - Direct Plan - Dividend Option",
+   "first": "2013-05",
+   "last": "2014-08",
+   "months": 15
+  },
+  {
+   "name": "ING Large Cap Equity Fund - Direct Plan - Dividend Option",
+   "first": "2013-05",
+   "last": "2014-08",
+   "months": 15
+  },
+  {
+   "name": "ING Midcap Fund - Direct Plan - Dividend Option",
+   "first": "2013-05",
+   "last": "2014-08",
+   "months": 15
+  },
+  {
+   "name": "ING Multi Manager Equity Fund - Direct Plan - Option A -  Growth  Option",
+   "first": "2013-05",
+   "last": "2014-08",
+   "months": 15
+  },
+  {
+   "name": "UTI Contra Fund-Growth-Growth Option",
+   "first": "2013-05",
+   "last": "2014-08",
+   "months": 15
+  },
+  {
+   "name": "UTI Contra Fund-Income-Dividend Option",
+   "first": "2013-05",
+   "last": "2014-08",
+   "months": 15
+  },
+  {
+   "name": "ING Tax Savings Fund - Direct Plan - Bonus Option",
+   "first": "2013-05",
+   "last": "2014-08",
+   "months": 15
+  },
+  {
+   "name": "UTI Services Industries Fund-Growth Option",
+   "first": "2013-05",
+   "last": "2014-08",
+   "months": 15
+  },
+  {
+   "name": "UTI Services Industries Fund-Income Option",
+   "first": "2013-05",
+   "last": "2014-08",
+   "months": 15
+  },
+  {
+   "name": "DWS Arbitrage Fund - Direct Plan - Annual Dividend",
+   "first": "2014-11",
+   "last": "2016-02",
+   "months": 15
+  },
+  {
+   "name": "DWS Arbitrage Fund - Direct Plan - Growth",
+   "first": "2014-11",
+   "last": "2016-02",
+   "months": 15
+  },
+  {
+   "name": "DWS Arbitrage Fund - Direct Plan - Monthly Dividend",
+   "first": "2014-11",
+   "last": "2016-02",
+   "months": 15
+  },
+  {
+   "name": "DWS Arbitrage Fund - Direct Plan - Quarterly Dividend",
+   "first": "2014-11",
+   "last": "2016-02",
+   "months": 15
+  },
+  {
+   "name": "Morgan Stanley A.C.E. Fund- Regular Dividend Plan",
+   "first": "2013-05",
+   "last": "2014-05",
+   "months": 12
+  },
+  {
+   "name": "TI - Master Plus Unit Scheme-Income Option - Direct",
+   "first": "2013-05",
+   "last": "2014-05",
+   "months": 12
+  },
+  {
+   "name": "UTI - Master Plus Unit Scheme-Income Option",
+   "first": "2013-05",
+   "last": "2014-05",
+   "months": 12
+  },
+  {
+   "name": "Reliance Vision Fund Institutional Plan Growth Plan Growth Option",
+   "first": "2013-05",
+   "last": "2014-05",
+   "months": 12
+  },
+  {
+   "name": "Reliance Growth Fund Institutional Plan Growth Plan Growth Option",
+   "first": "2013-05",
+   "last": "2014-05",
+   "months": 12
+  },
+  {
+   "name": "Principal Large Cap Fund - Direct Growth",
+   "first": "2020-11",
+   "last": "2021-11",
+   "months": 12
+  },
+  {
+   "name": "Principal Large Cap Fund - Direct Income Distribution CUM Capital Withdrawal Option",
+   "first": "2020-11",
+   "last": "2021-11",
+   "months": 12
+  },
+  {
+   "name": "Canara Robeco Nifty Index - Regular Plan - Dividend",
+   "first": "2013-05",
+   "last": "2014-02",
+   "months": 9
+  },
+  {
+   "name": "Principal Retail Equity Savings Fund - Direct Plan - Growth Option",
+   "first": "2013-05",
+   "last": "2014-02",
+   "months": 9
+  },
+  {
+   "name": "Sundaram CAPEX Opportunities Fund-Dividend",
+   "first": "2013-05",
+   "last": "2014-02",
+   "months": 9
+  },
+  {
+   "name": "Sundaram Select Thematic Funds Capex Opportunities - Direct Plan - Dividend Option",
+   "first": "2013-05",
+   "last": "2014-02",
+   "months": 9
+  },
+  {
+   "name": "Sundaram Energy Opportunities Fund Dividend",
+   "first": "2013-05",
+   "last": "2014-02",
+   "months": 9
+  },
+  {
+   "name": "Sundaram Select Thematic Funds Energy Opportunities - Direct Plan - Dividend Option",
+   "first": "2013-05",
+   "last": "2014-02",
+   "months": 9
+  },
+  {
+   "name": "UTI - Master Value Fund-Income Option",
+   "first": "2013-05",
+   "last": "2014-02",
+   "months": 9
+  },
+  {
+   "name": "Daiwa Industry Leaders Fund - Direct - Dividend",
+   "first": "2013-05",
+   "last": "2013-11",
+   "months": 6
+  },
+  {
+   "name": "IDFC  India GDP Growth Fund-Direct Plan-Dividend",
+   "first": "2013-05",
+   "last": "2013-08",
+   "months": 3
+  },
+  {
+   "name": "IDFC  50-50 Strategic Sector Fund-Direct Plan-Dividend",
+   "first": "2013-05",
+   "last": "2013-08",
+   "months": 3
+  },
+  {
+   "name": "IDFC Strategic Sector (50-50) Equity Fund-Plan B - Dividend",
+   "first": "2013-05",
+   "last": "2013-08",
+   "months": 3
+  },
+  {
+   "name": "Reliance Infrastructure Fund - Direct Plan Dividend Plan - Dividend Payout Option",
+   "first": "2013-05",
+   "last": "2013-08",
+   "months": 3
+  },
+  {
+   "name": "Reliance Natural Resources Fund - Direct Plan Bonus Plan - Bonus",
+   "first": "2013-05",
+   "last": "2013-08",
+   "months": 3
+  },
+  {
+   "name": "Baroda Pioneer Banking And Financial Services Fund - Plan B (Direct) - Bonus Option",
+   "first": "2015-05",
+   "last": "2015-08",
+   "months": 3
+  },
+  {
+   "name": "Birla Sun Life Commodities Equities Fund Global Multi Commodity Plan - Dividend - Direct Plan",
+   "first": "2013-05",
+   "last": "2013-05",
+   "months": 0
+  },
+  {
+   "name": "Bsl Comm Eq Fund-Global Multi Comm Plan - Dividend",
+   "first": "2013-05",
+   "last": "2013-05",
+   "months": 0
+  },
+  {
+   "name": "Birla Sun Life Commodities Equities Fund Global Precious Metals Plan - Dividend - Direct Plan",
+   "first": "2013-05",
+   "last": "2013-05",
+   "months": 0
+  },
+  {
+   "name": "Bsl Comm Eq Fund-Global Prec Metals Plan - Dividend",
+   "first": "2013-05",
+   "last": "2013-05",
+   "months": 0
+  },
+  {
+   "name": "Sundaram CAPEX Opportunities Fund-Inst DIVD",
+   "first": "2013-05",
+   "last": "2013-05",
+   "months": 0
+  },
+  {
+   "name": "Sundaram CAPEX Opportunities Fund-Inst Growth",
+   "first": "2013-05",
+   "last": "2013-05",
+   "months": 0
+  },
+  {
+   "name": "Sundaram India Leadership Fund-Dividend",
+   "first": "2013-05",
+   "last": "2013-05",
+   "months": 0
+  },
+  {
+   "name": "Sundaram India Leadership Fund-Inst Dividend",
+   "first": "2013-05",
+   "last": "2013-05",
+   "months": 0
+  }
+ ]
+}

@@ -1,0 +1,180 @@
+I have everything I need. Here is the precise, conservative fix.
+
+---
+
+## Root cause (verified by reading the code)
+
+`_scheme_score` (lines 835-844) rewards length and the presence of the words `fund`/`index`:
+
+```python
+return penalty + (3.0 if "fund" in s2 else 0.0) \
+    + (1.0 if any(t in s2 for t in ("scheme","plan","fof","etf","index")) else 0.0) \
+    + 0.1 * min(len(s.split()), 6)
+```
+
+The `+0.1 * word_count` term (capped at 6 words) means a verbose objective sentence like *"360 ONE Balanced Hybrid Fund (An open ended scheme investing in...)"* or *"The Scheme seeks to generate long-term capital appreciation..."* outscores the short real name *"360 ONE Balanced Hybrid Fund"* — both contain `fund`, but the objective is always longer, so it always wins the word-count tiebreak. And the two regex strippers (`_clean`, lines 848-855) only remove a parenthesised `(An open-ended …)` tail and a date tail — they do NOT strip an **un-parenthesised** `- An open ended…` tail, nor do they reject a pure-objective cell (idx 100-120, real_name `""` — those sheets have ONLY objective text above the header and currently emit the objective as the scheme name).
+
+The fix has four parts, all inserted **inside `parse_sheet`, immediately before the `cand_pool = ...` line (line 856)**, plus one guard after line 857.
+
+---
+
+## The four-part fix (ready to paste)
+
+### Part 0 — module-level helpers
+
+Insert these two functions at module level, **just before `def parse_sheet` (before line 790)**:
+
+```python
+# --- objective / disclaimer detection (so a verbose objective sentence can't beat the real name) ---
+
+# A bare AMC house-name ("<House> Mutual Fund") with NOTHING after it is the legal entity, not a
+# scheme. We only treat it as garbage when "mutual fund" is the TAIL (so real names that merely
+# contain the words, e.g. "... Mutual Fund of Funds", are NOT killed — those have text after).
+_HOUSE_ONLY_RE = re.compile(r"^[\w.&'\- ]{2,40}\bmutual\s+fund$", re.I)
+
+# Phrases that only ever appear in an INVESTMENT OBJECTIVE / SEBI disclaimer / riskometer / legal
+# line — never inside a real scheme name. Matched case-insensitively as substrings.
+_OBJECTIVE_PHRASES = (
+    "an open ended", "an open-ended", "a open ended", "an openended",
+    "a close ended", "a closed ended", "a close-ended", "a closed-ended",
+    "an interval", "investors should", "investors are advised", "consult their",
+    "consult your", "consult a", "financial advisor", "financial adviser",
+    "riskometer", "risk-o-meter", "suitable for investors", "is suitable for",
+    "this product is suitable", "aims to provide", "aims to generate",
+    "seeks to provide", "seeks to generate", "seeks to achieve",
+    "endeavours to", "endeavors to", "to generate long", "to generate capital",
+    "to generate income", "capital appreciation", "safety and liquidity",
+    "liquidity and reasonable", "investing in", "investment in equity",
+    "predominantly in", "by investing", "tracking the", "that tracks the",
+    "replicating", "replicate the", "to replicate", "to track the",
+    "to correspond to", "subject to tracking", "tracking error",
+    "no assurance", "there is no assurance", "cannot be assured",
+    "will be realized", "will be realised", "may or may not", "is not a guarantee",
+    "past performance", "please read", "read all scheme", "scheme related documents",
+    "carefully before investing", "before investing", "before making any",
+    "the scheme seeks", "the scheme aims", "the scheme will", "the scheme would",
+    "the investment objective", "objective of the scheme", "objective of the fund",
+    "the primary objective", "however, there is no", "however there is no",
+)
+
+# A leading bullet / asterisk / footnote marker that prefixes a disclaimer line.
+_BULLET_LEAD_RE = re.compile(r"^[\*\u2022\u25cf\u25aa\u2219\u00b7\-–—#§]+\s")
+
+# An UN-parenthesised objective tail to strip from "<RealName> - An open ended scheme investing …".
+# Anchored on a separator (-, –, —, :, ,) followed by an open/close-ended (or interval-fund) clause,
+# consuming to end of string. Used only to RECOVER the real head; never to reject.
+_OBJECTIVE_TAIL_RE = re.compile(
+    r"\s*[\-–—:,]\s*(?:an?\s+)?(?:open[\s-]?ended|close[d]?[\s-]?ended|interval)\b.*$",
+    re.I,
+)
+
+
+def _looks_like_objective(s: str) -> bool:
+    """True if `s` reads like an investment objective / SEBI disclaimer / riskometer / bullet /
+    bare AMC house-name — i.e. NOT a real scheme name. Conservative: a real name that merely
+    contains 'Fund'/'ETF'/'Index'/'FOF'/'Plan' or an '(Erstwhile/Formerly …)' alias is NOT flagged
+    unless it ALSO carries one of the objective phrases above."""
+    if not s:
+        return False
+    low = s.lower().strip()
+    if _BULLET_LEAD_RE.match(s):                      # leading •/*/- footnote marker
+        return True
+    if _HOUSE_ONLY_RE.match(low):                     # bare "<House> Mutual Fund"
+        return True
+    if any(p in low for p in _OBJECTIVE_PHRASES):     # any objective/disclaimer phrase
+        return True
+    # A very long, sentence-like cell with terminal punctuation and no obvious scheme token is prose.
+    if len(s.split()) >= 14 and (low.endswith(".") or "," in low) \
+            and not any(t in low for t in (" fund", " etf", " fof", " plan", " index", " scheme")):
+        return True
+    return False
+
+
+def _strip_objective_tail(s: str) -> str:
+    """Recover the real head of a 'name_plus_objective' cell:
+    'X Balanced Hybrid Fund - An open ended scheme investing in …' -> 'X Balanced Hybrid Fund'.
+    Only strips an objective tail introduced by a separator; leaves clean names untouched and
+    NEVER touches an '(Erstwhile/Formerly …)' alias (those use parentheses, not this separator)."""
+    if not s:
+        return s
+    head = _OBJECTIVE_TAIL_RE.sub("", s).strip()
+    # Guard: don't strip down to nothing or to a fragment that lost its scheme token.
+    if head and len(head) >= 4:
+        return head
+    return s
+```
+
+### Part 1 + 2 + 3 — wire into candidate selection
+
+Replace the existing block (lines 856-857):
+
+```python
+    cand_pool = [_clean(scheme), _clean(name_hint)] + [_clean(c) for c in header_cands]
+    scheme = max(cand_pool, key=_scheme_score) or scheme
+```
+
+with:
+
+```python
+    # Build the candidate pool, then (3) strip any un-parenthesised "… - An open ended …" objective
+    # tail to recover the real head, and (1)(2) DROP candidates that still read like an objective /
+    # disclaimer so they can never win the score. Keep a cleaned-but-unfiltered copy as a fallback so
+    # we don't end up empty-handed on an all-objective sheet.
+    raw_pool = [_clean(scheme), _clean(name_hint)] + [_clean(c) for c in header_cands]
+    raw_pool = [_strip_objective_tail(c) for c in raw_pool]
+    cand_pool = [c for c in raw_pool if c and not _looks_like_objective(c)]
+    if cand_pool:
+        scheme = max(cand_pool, key=_scheme_score)
+    else:
+        # nothing survived the filter — fall back to the best raw candidate (guarded below)
+        scheme = max(raw_pool, key=_scheme_score) if raw_pool else scheme
+```
+
+### Part 4 — final guard (drop the sheet rather than emit garbage)
+
+Insert this **immediately after** the block above (i.e. right after the new `scheme = ...` lines, before the `# as-on date` comment on line 859):
+
+```python
+    # FINAL GUARD: if the chosen name STILL looks like an objective / disclaimer / bare house-name
+    # (e.g. a sheet whose only above-header text is the objective paragraph), DROP the sheet rather
+    # than emit a garbage scheme. A real name containing Fund/ETF/Index/FOF/Plan or an
+    # '(Erstwhile/Formerly …)' alias survives because _looks_like_objective only fires on the
+    # objective phrases / bullet / bare-house patterns, not on those tokens.
+    if not scheme or _looks_like_objective(scheme):
+        return None
+```
+
+---
+
+## Why this is conservative (does not reject real names)
+
+- `_looks_like_objective` fires **only** on (a) a leading bullet/asterisk, (b) a *tail-anchored* bare `"<House> Mutual Fund"`, (c) an explicit objective/disclaimer **phrase**, or (d) a 14+-word sentence with terminal punctuation **and** no scheme token. None of those match `"360 ONE QUANT FUND"`, `"DSP Equity FOF"`, `"Bharat Bond ETF - April 2030"`, `"Edelweiss Nifty 50 Index Fund"`, or an `"(Erstwhile/Formerly …)"` alias.
+- The `(d)` prose heuristic explicitly **exempts** any cell containing ` fund`/` etf`/` fof`/` plan`/` index`/` scheme`, so a long but legitimate name (e.g. *"Edelweiss Nifty LargeMidcap 250 Plus 8-13 Yr G-Sec 70:30 Index Fund"*, ~10 words and no terminal period anyway) is never flagged.
+- `_strip_objective_tail` only cuts at a separator (`-`/`–`/`—`/`:`/`,`) **followed by** an `open/close-ended/interval` clause. The `"(Erstwhile …)"` aliases use parentheses (handled by the existing `_clean`), so this never touches them. `"Bharat Bond ETF - April 2030"` is safe: after the `-` comes `April`, not an open/close-ended clause, so the regex doesn't match.
+- The 147 garbage cases map cleanly: the `name_plus_objective` rows (idx 0-10, 263, 271-272 …) are recovered by Part 3's tail-strip; the pure `objective` rows (idx 100-120, real_name `""`) are caught by Part 1/2's filter and, if nothing survives, dropped by Part 4. The `other` Edelweiss/Bharat-Bond rows are recovered intact (none trip a trigger), so they stop being mis-scored once the objective candidates are removed from the pool.
+
+---
+
+## Explicit trigger list (what `_looks_like_objective` rejects)
+
+**Structural triggers (regex):**
+- Leading bullet/footnote marker: `^[*•●▪∙·\-–—#§]+\s` (`_BULLET_LEAD_RE`)
+- Bare house name as the WHOLE cell: `^[\w.&'\- ]{2,40}\bmutual\s+fund$` (`_HOUSE_ONLY_RE`) — e.g. `"HSBC Mutual Fund"`, `"ICICI Prudential Mutual Fund"` (but NOT `"… Mutual Fund of Funds"`, which has a tail)
+- Long-prose fallback: `>=14` words, ends with `.` or contains `,`, AND none of ` fund / etf / fof / plan / index / scheme`
+
+**Phrase triggers (case-insensitive substring, `_OBJECTIVE_PHRASES`):**
+`an open ended`, `an open-ended`, `a open ended`, `an openended`, `a close ended`, `a closed ended`, `a close-ended`, `a closed-ended`, `an interval`, `investors should`, `investors are advised`, `consult their`, `consult your`, `consult a`, `financial advisor`, `financial adviser`, `riskometer`, `risk-o-meter`, `suitable for investors`, `is suitable for`, `this product is suitable`, `aims to provide`, `aims to generate`, `seeks to provide`, `seeks to generate`, `seeks to achieve`, `endeavours to`, `endeavors to`, `to generate long`, `to generate capital`, `to generate income`, `capital appreciation`, `safety and liquidity`, `liquidity and reasonable`, `investing in`, `investment in equity`, `predominantly in`, `by investing`, `tracking the`, `that tracks the`, `replicating`, `replicate the`, `to replicate`, `to track the`, `to correspond to`, `subject to tracking`, `tracking error`, `no assurance`, `there is no assurance`, `cannot be assured`, `will be realized`, `will be realised`, `may or may not`, `is not a guarantee`, `past performance`, `please read`, `read all scheme`, `scheme related documents`, `carefully before investing`, `before investing`, `before making any`, `the scheme seeks`, `the scheme aims`, `the scheme will`, `the scheme would`, `the investment objective`, `objective of the scheme`, `objective of the fund`, `the primary objective`, `however, there is no`, `however there is no`.
+
+**Tail-strip trigger (`_OBJECTIVE_TAIL_RE`, Part 3):** a separator (`-`/`–`/`—`/`:`/`,`) followed by an optional `an/a` then `open[-/ ]?ended` / `close[d][-/ ]?ended` / `interval`, consuming to end of string. The head before the separator is kept as the real name.
+
+---
+
+## Insertion summary
+
+| Part | What | Where |
+|---|---|---|
+| 0 | `_HOUSE_ONLY_RE`, `_OBJECTIVE_PHRASES`, `_BULLET_LEAD_RE`, `_OBJECTIVE_TAIL_RE`, `_looks_like_objective`, `_strip_objective_tail` | module level, **before `def parse_sheet` (line 790)** |
+| 1+2+3 | replace `cand_pool`/`scheme` selection (filter objectives out of pool, strip tails) | **replace lines 856-857** |
+| 4 | final guard `if not scheme or _looks_like_objective(scheme): return None` | **immediately after the replaced block, before line 859** |
+
+No change to `analytics.py` or any JS file — this is parser-only (no parity port needed). After pasting, re-run the funds build over the same workbook set and confirm the 147 audited garbage cases now either emit the recovered `real_name` (the `name_plus_objective` / `other` rows) or drop the sheet (the pure-`objective`, empty-`real_name` rows).

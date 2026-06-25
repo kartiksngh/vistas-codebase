@@ -1,0 +1,39 @@
+{
+ "amc": "PGIM India Asset Management Private Limited",
+ "file_type": "xlsx",
+ "method": "api",
+ "multi": true,
+ "max_files": 40,
+ "resolve": {
+  "landing": "https://www.pgimindia.com/mutual-funds/disclosures/Portfolios/Monthly-Portfolio",
+  "pick": "all"
+ },
+ "verified_urls": [
+  "https://www.pgimindia.com/api/v1/brochure/about-us/image/PGIM%20INDIA%20ARBITRAGE%20FUND%20May%202026.xlsx",
+  "https://www.pgimindia.com/api/v1/brochure/about-us/image/PGIM%20INDIA%20BALANCED%20ADVANTAGE%20FUND%20May%202026.xlsx",
+  "https://www.pgimindia.com/api/v1/brochure/about-us/image/PGIM%20INDIA%20EQUITY%20SAVINGS%20FUND%20May%202026.xlsx",
+  "https://www.pgimindia.com/api/v1/brochure/about-us/image/PGIM%20INDIA%20AGGRESSIVE%20HYBRID%20EQUITY%20FUND%20May%202026.xlsx",
+  "https://www.pgimindia.com/api/v1/brochure/about-us/image/PGIM%20INDIA%20FLEXI%20CAP%20FUND%20May%202026.xlsx",
+  "https://www.pgimindia.com/api/v1/brochure/about-us/image/PGIM%20INDIA%20LARGE%20CAP%20FUND%20May%202026.xlsx",
+  "https://www.pgimindia.com/api/v1/brochure/about-us/image/PGIM%20INDIA%20ELSS%20TAX%20SAVER%20FUND%20May%202026.xlsx",
+  "https://www.pgimindia.com/api/v1/brochure/about-us/image/PGIM%20INDIA%20MIDCAP%20FUND%20May%202026.xlsx",
+  "https://www.pgimindia.com/api/v1/brochure/about-us/image/PGIM%20INDIA%20SMALL%20CAP%20FUND%20May%202026.xlsx",
+  "https://www.pgimindia.com/api/v1/brochure/about-us/image/PGIM%20INDIA%20LARGE%20AND%20MIDCAP%20FUND%20May%202026.xlsx",
+  "https://www.pgimindia.com/api/v1/brochure/about-us/image/PGIM%20INDIA%20RETIREMENT%20FUND%20May%202026.xlsx",
+  "https://www.pgimindia.com/api/v1/brochure/about-us/image/PGIM%20INDIA%20MULTI%20CAP%20FUND%20May%202026.xlsx",
+  "https://www.pgimindia.com/api/v1/brochure/about-us/image/PGIM%20INDIA%20HEALTHCARE%20FUND%20May%202026.xlsx",
+  "https://www.pgimindia.com/api/v1/brochure/about-us/image/PGIM%20INDIA%20MULTI%20ASSET%20ALLOCATION%20FUND%20May%202026.xlsx",
+  "https://www.pgimindia.com/api/v1/brochure/about-us/image/PGIM%20INDIA%20MONEY%20MARKET%20FUND%20May%202026.xlsx",
+  "https://www.pgimindia.com/api/v1/brochure/about-us/image/PGIM%20INDIA%20DYNAMIC%20BOND%20FUND%20May%202026.xlsx",
+  "https://www.pgimindia.com/api/v1/brochure/about-us/image/PGIM%20INDIA%20GILT%20FUND%20May%202026.xlsx",
+  "https://www.pgimindia.com/api/v1/brochure/about-us/image/PGIM%20INDIA%20CORPORATE%20BOND%20FUND%20May%202026.xlsx",
+  "https://www.pgimindia.com/api/v1/brochure/about-us/image/PGIM%20INDIA%20ULTRA%20SHORT%20DURATION%20FUND%20May%202026.xlsx",
+  "https://www.pgimindia.com/api/v1/brochure/about-us/image/PGIM%20INDIA%20CRISIL%20IBX%20GILT%20INDEX%20-%20APR%202028%20May%202026.xlsx",
+  "https://www.pgimindia.com/api/v1/brochure/about-us/image/PGIM%20INDIA%20LIQUID%20FUND%20May%202026.xlsx",
+  "https://www.pgimindia.com/api/v1/brochure/about-us/image/PGIM%20INDIA%20OVERNIGHT%20FUND%20May%202026.xlsx",
+  "https://www.pgimindia.com/api/v1/brochure/about-us/image/PGIM%20INDIA%20GLOBAL%20EQUITY%20OPPORTUNITIES%20FUND%20OF%20FUND%20May%202026.xlsx",
+  "https://www.pgimindia.com/api/v1/brochure/about-us/image/PGIM%20INDIA%20EMERGING%20MARKETS%20EQUITY%20FUND%20OF%20FUND%20May%202026.xlsx",
+  "https://www.pgimindia.com/api/v1/brochure/about-us/image/PGIM%20INDIA%20GLOBAL%20SELECT%20REAL%20ESTATE%20SEC.%20FOF%20May%202026.xlsx"
+ ],
+ "verified_url": "https://www.pgimindia.com/api/v1/brochure/about-us/image/PGIM%20INDIA%20FLEXI%20CAP%20FUND%20May%202026.xlsx"
+}

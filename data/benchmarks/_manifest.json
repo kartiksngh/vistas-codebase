@@ -1,0 +1,154 @@
+{
+ "asof": "2026-06-25",
+ "mcap_period": "31Dec2025",
+ "n_indices": 21,
+ "indices": {
+  "NIFTY 50": {
+   "slug": "ind_nifty50list",
+   "n": 50,
+   "coverage": 0.98,
+   "broad": true,
+   "low_confidence": false
+  },
+  "NIFTY NEXT 50": {
+   "slug": "ind_niftynext50list",
+   "n": 50,
+   "coverage": 1.0,
+   "broad": true,
+   "low_confidence": false
+  },
+  "NIFTY 100": {
+   "slug": "ind_nifty100list",
+   "n": 100,
+   "coverage": 0.99,
+   "broad": true,
+   "low_confidence": false
+  },
+  "NIFTY 200": {
+   "slug": "ind_nifty200list",
+   "n": 200,
+   "coverage": 0.99,
+   "broad": true,
+   "low_confidence": false
+  },
+  "NIFTY 500": {
+   "slug": "ind_nifty500list",
+   "n": 500,
+   "coverage": 0.99,
+   "broad": true,
+   "low_confidence": false
+  },
+  "NIFTY MIDCAP 150": {
+   "slug": "ind_niftymidcap150list",
+   "n": 150,
+   "coverage": 0.987,
+   "broad": true,
+   "low_confidence": false
+  },
+  "NIFTY MIDCAP 100": {
+   "slug": "ind_niftymidcap100list",
+   "n": 100,
+   "coverage": 0.99,
+   "broad": true,
+   "low_confidence": false
+  },
+  "NIFTY SMALLCAP 250": {
+   "slug": "ind_niftysmallcap250list",
+   "n": 250,
+   "coverage": 0.992,
+   "broad": true,
+   "low_confidence": false
+  },
+  "NIFTY SMALLCAP 100": {
+   "slug": "ind_niftysmallcap100list",
+   "n": 100,
+   "coverage": 0.99,
+   "broad": true,
+   "low_confidence": false
+  },
+  "NIFTY LARGEMIDCAP 250": {
+   "slug": "ind_niftylargemidcap250list",
+   "n": 250,
+   "coverage": 0.988,
+   "broad": true,
+   "low_confidence": false
+  },
+  "NIFTY MIDSMALLCAP 400": {
+   "slug": "ind_niftymidsmallcap400list",
+   "n": 400,
+   "coverage": 0.99,
+   "broad": true,
+   "low_confidence": false
+  },
+  "NIFTY MICROCAP 250": {
+   "slug": "ind_niftymicrocap250_list",
+   "n": 251,
+   "coverage": 0.992,
+   "broad": true,
+   "low_confidence": false
+  },
+  "NIFTY BANK": {
+   "slug": "ind_niftybanklist",
+   "n": 14,
+   "coverage": 0.929,
+   "broad": false,
+   "low_confidence": false
+  },
+  "NIFTY IT": {
+   "slug": "ind_niftyITlist",
+   "n": 10,
+   "coverage": 1.0,
+   "broad": false,
+   "low_confidence": false
+  },
+  "NIFTY PHARMA": {
+   "slug": "ind_niftypharmalist",
+   "n": 20,
+   "coverage": 0.95,
+   "broad": false,
+   "low_confidence": false
+  },
+  "NIFTY FMCG": {
+   "slug": "ind_niftyfmcglist",
+   "n": 15,
+   "coverage": 1.0,
+   "broad": false,
+   "low_confidence": false
+  },
+  "NIFTY AUTO": {
+   "slug": "ind_niftyautolist",
+   "n": 15,
+   "coverage": 1.0,
+   "broad": false,
+   "low_confidence": false
+  },
+  "NIFTY METAL": {
+   "slug": "ind_niftymetallist",
+   "n": 15,
+   "coverage": 1.0,
+   "broad": false,
+   "low_confidence": false
+  },
+  "NIFTY ENERGY": {
+   "slug": "ind_niftyenergylist",
+   "n": 40,
+   "coverage": 1.0,
+   "broad": false,
+   "low_confidence": false
+  },
+  "NIFTY REALTY": {
+   "slug": "ind_niftyrealtylist",
+   "n": 10,
+   "coverage": 1.0,
+   "broad": false,
+   "low_confidence": false
+  },
+  "NIFTY FINANCIAL SERVICES": {
+   "slug": "ind_niftyfinancelist",
+   "n": 20,
+   "coverage": 0.95,
+   "broad": false,
+   "low_confidence": false
+  }
+ }
+}

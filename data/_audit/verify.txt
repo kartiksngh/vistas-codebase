@@ -1,0 +1,52 @@
+I have everything needed. The simulation is complete and the verdict is clear.
+
+---
+
+**ADVERSARIAL VERIFICATION — Funds-tab scheme-name parser fix**
+
+Code claims verified by reading `vistas/funds_portfolio.py`: `_scheme_score` (835-844), `_clean` (848-855), `cand_pool`/`scheme` (856-857) are exactly as the proposal states. The root-cause diagnosis is correct.
+
+**Caveat on the audit file:** `data/_audit/funds_names.json` (1298 rows) carries ONLY the parser's emitted `name` — there is NO `real_name` field. So the proposal's repeated references to "real_name '', idx 100-120" and a `name_plus_objective`/`objective`/`other` categorization describe data that is not in this file. I simulated the exact predicate + strip rules against the 1298 emitted names. Outcome: 46 dropped, 15 recovered (dash-tail stripped, verified clean), 1237 untouched.
+
+---
+
+**(A) FALSE POSITIVES — real schemes WRONGLY DROPPED (14). This is the expensive error.**
+
+Cause: `_strip_objective_tail` only cuts a tail introduced by a *separator* (`-`/`:`/`,`). These names attach the objective in a *parenthesis* `(An open/close ended …)`, which the strip never touches. The existing `_clean` paren-stripper `\([^()]*open[ -]?end[^()]*\)$` also fails them (it needs `open-end` literally, no nested parens, anchored at `$`) — close-ended ones say "Close Ended", and several have nested parens like `(MNC)`, `(ETF)`. So the phrase predicate fires and Part 4 drops the whole sheet:
+
+- 263 — Bank of India Credit Risk Fund
+- 913 — Nippon India Credit Risk Fund
+- 918 — Nippon India Diversified Equity Flexicap Passive FoF
+- 941 — Nippon India Fixed Maturity Plan - XLI - Series 8
+- 942 — Nippon India Fixed Maturity Plan - XLIII - Series 1
+- 943 — Nippon India Fixed Maturity Plan - XLIII - Series 5
+- 944 — Nippon India Fixed Maturity Plan - XLIV - Series 1
+- 945 — Nippon India Fixed Maturity Plan - XLV - Series 5
+- 947 — Nippon India Floater Fund
+- 962 — Nippon India MNC Fund
+- 997 — Nippon India Retirement Fund - Income Generation Scheme
+- 998 — Nippon India Retirement Fund - Wealth Creation Scheme
+- 1000 — Nippon India Silver ETF
+- 1055 — Quantum ESG Best In Class Strategy Fund
+
+All 14 have a clean, recoverable scheme head; the fix instead deletes them.
+
+**(B) FALSE NEGATIVES — garbage the rules still KEEP (81).**
+
+1. **80 `PORTFOLIO STATEMENT OF <name> AS ON <date>` wrapper rows** (Edelweiss + Bharat Bond, idx 404-474 and others). The proposal claims "the Edelweiss/Bharat-Bond rows are recovered intact" — FALSE. No rule strips the `PORTFOLIO STATEMENT OF …` prefix or the `AS ON …` suffix (single date, not a `dd–dd Month yyyy` range, so `_clean`'s date regex misses it; no objective phrase present). They survive as full sentences. Worse, idx 414 (`…EDEL NY LMCAP250…`) trips `long_prose` and IS dropped — inconsistent handling inside one AMC.
+2. **idx 996 — Nippon India Quarterly Interval Fund-Series 2 (A Debt Oriented Interval Scheme…)** — kept with the paren objective still attached, because the phrase list has `an interval` but the text reads `Interval Scheme`. Inconsistent with the close-ended FMPs that ARE dropped.
+
+(15 dash-tail recoveries idx 0-10, 1015-1020 are correct and unmangled; the 32 pure-objective/bullet/disclaimer drops idx 100-120, 788, 815, 1182-1225 are correct.)
+
+**(C) VERDICT: NEEDS-TIGHTENING.** Do not apply as written — it deletes 14 real schemes and fixes only 32 of ~113 garbage rows, leaving 81. Required changes:
+
+1. **Strip the paren objective BEFORE the predicate (fixes all 14 FPs).** Replace `_clean`'s line-851 regex with one that allows nested parens and both open/close-ended/interval, anchored at end:
+   `re.sub(r"\s*\((?:an?\s+)?(?:open|close)[\s-]?ended\b.*$", "", s, flags=re.I)` and a sibling for `(A … Interval Scheme`/`(A Debt Oriented Interval`. Equivalently, extend `_OBJECTIVE_TAIL_RE` to also fire on a `(` lead: change the separator class to `[\(\-–—:,]`. After this, the 14 recover to their clean heads and the predicate no longer fires.
+
+2. **Add a `PORTFOLIO STATEMENT OF … AS ON …` un-wrapper (fixes 80 FNs).** Before scoring: `m = re.match(r"(?i)^\s*(?:monthly\s+)?portfolio statement (?:of|for)\s+(.*?)\s+as on\b.*$", s)` → if matched, take `m.group(1)` as the candidate. Also strip a trailing single `AS ON <Month dd, yyyy>` generally. This recovers the Edelweiss/Bharat-Bond real names instead of keeping or dropping them.
+
+3. **Tighten the interval phrase:** add `"interval scheme"`, `"debt oriented interval"` to `_OBJECTIVE_PHRASES` (or rely on the paren-strip from fix 1, which is cleaner) so idx 996 is handled consistently.
+
+4. **Re-run the simulation after these edits** and confirm: 0 names with a recoverable real head are dropped, and the `PORTFOLIO STATEMENT OF` / paren-objective clusters emit clean heads — then it is safe-to-apply.
+
+One more pre-existing issue surfaced (not caused by this fix, but worth flagging): idx 1015-1020 emit bare category names ("Aggressive Hybrid Fund", "Liquid Fund", "Mid Cap Fund") with no AMC prefix — a separate parser gap.

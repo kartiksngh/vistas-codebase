@@ -1,0 +1,703 @@
+[
+ {
+  "key": "360-one",
+  "ok": true,
+  "src": "agent",
+  "n": 12,
+  "cov": 100.0,
+  "asof": "May 31,2026",
+  "alt": [
+   [
+    "det",
+    12,
+    "May 31,2026"
+   ]
+  ]
+ },
+ {
+  "key": "abakkus",
+  "ok": true,
+  "src": "agent",
+  "n": 3,
+  "cov": 100.0,
+  "asof": "May 31, 2026",
+  "alt": [
+   [
+    "det",
+    1,
+    "May 15, 2026"
+   ]
+  ]
+ },
+ {
+  "key": "aditya-birla-sun-life",
+  "ok": true,
+  "src": "agent",
+  "n": 106,
+  "cov": 100.0,
+  "asof": "May 31,2026",
+  "alt": [
+   [
+    "det",
+    106,
+    "May 31,2026"
+   ]
+  ]
+ },
+ {
+  "key": "alphagrep",
+  "ok": false,
+  "src": "no_feed"
+ },
+ {
+  "key": "angel-one",
+  "ok": true,
+  "src": "det",
+  "n": 31,
+  "cov": 100.0,
+  "asof": "31-MAY-2026",
+  "alt": [
+   [
+    "agent",
+    11,
+    "31-MAY-2026"
+   ]
+  ]
+ },
+ {
+  "key": "ask",
+  "ok": false,
+  "src": "no_feed"
+ },
+ {
+  "key": "axis",
+  "ok": true,
+  "src": "agent",
+  "n": 88,
+  "cov": 100.0,
+  "asof": "May 31, 2026",
+  "alt": [
+   [
+    "det",
+    88,
+    "May 31, 2026"
+   ]
+  ]
+ },
+ {
+  "key": "bajaj-finserv",
+  "ok": true,
+  "src": "agent",
+  "n": 24,
+  "cov": 100.0,
+  "asof": "May 31, 2026",
+  "alt": [
+   [
+    "det",
+    24,
+    "May 31, 2026"
+   ]
+  ]
+ },
+ {
+  "key": "bandhan",
+  "ok": true,
+  "src": "agent",
+  "n": 24,
+  "cov": 97.3,
+  "asof": "May 29,2026",
+  "alt": [
+   [
+    "det",
+    24,
+    "May 29,2026"
+   ]
+  ]
+ },
+ {
+  "key": "bank",
+  "ok": true,
+  "src": "agent",
+  "n": 24,
+  "cov": 100.0,
+  "asof": "May 31, 2026",
+  "alt": [
+   [
+    "det",
+    24,
+    "May 31, 2026"
+   ]
+  ]
+ },
+ {
+  "key": "baroda-bnp-paribas",
+  "ok": true,
+  "src": "agent",
+  "n": 48,
+  "cov": 100.0,
+  "asof": "May 31, 2026",
+  "alt": [
+   [
+    "det",
+    48,
+    "May 31, 2026"
+   ]
+  ]
+ },
+ {
+  "key": "canara-robeco",
+  "ok": false,
+  "src": "harness",
+  "needs_harness": true
+ },
+ {
+  "key": "capitalmind",
+  "ok": true,
+  "src": "det",
+  "n": 21,
+  "cov": 100.0,
+  "asof": "June 15, 2026",
+  "alt": [
+   [
+    "agent",
+    4,
+    "May 31, 2026"
+   ]
+  ]
+ },
+ {
+  "key": "choice",
+  "ok": true,
+  "src": "agent",
+  "n": 1,
+  "cov": 100.0,
+  "asof": "2026-05-31",
+  "alt": []
+ },
+ {
+  "key": "dsp",
+  "ok": true,
+  "src": "agent",
+  "n": 86,
+  "cov": 100.0,
+  "asof": "May 31, 2026",
+  "alt": [
+   [
+    "det",
+    25,
+    "May 31, 2026"
+   ]
+  ]
+ },
+ {
+  "key": "edelweiss",
+  "ok": false,
+  "src": "harness",
+  "needs_harness": true
+ },
+ {
+  "key": "franklin-templeton",
+  "ok": true,
+  "src": "agent",
+  "n": 40,
+  "cov": 96.2,
+  "asof": "May 29, 2026",
+  "alt": []
+ },
+ {
+  "key": "groww",
+  "ok": true,
+  "src": "agent",
+  "n": 59,
+  "cov": 100.0,
+  "asof": "31-MAY-2026",
+  "alt": [
+   [
+    "det",
+    59,
+    "31-MAY-2026"
+   ]
+  ]
+ },
+ {
+  "key": "hdfc",
+  "ok": true,
+  "src": "agent",
+  "n": 6,
+  "cov": 100.0,
+  "asof": "31-May-2026",
+  "alt": [
+   [
+    "det",
+    1,
+    "31-May-2026"
+   ]
+  ]
+ },
+ {
+  "key": "helios-capital",
+  "ok": true,
+  "src": "agent",
+  "n": 8,
+  "cov": 100.0,
+  "asof": "2026-05-31",
+  "alt": []
+ },
+ {
+  "key": "hsbc",
+  "ok": true,
+  "src": "agent",
+  "n": 45,
+  "cov": 100.0,
+  "asof": "May 31, 2026",
+  "alt": [
+   [
+    "det",
+    45,
+    "May 31, 2026"
+   ]
+  ]
+ },
+ {
+  "key": "icici-prudential",
+  "ok": true,
+  "src": "agent",
+  "n": 143,
+  "cov": 100.0,
+  "asof": "May 31,2026",
+  "alt": [
+   [
+    "det",
+    143,
+    "May 31,2026"
+   ]
+  ]
+ },
+ {
+  "key": "il-fs-infra",
+  "ok": true,
+  "src": "agent",
+  "n": 3,
+  "cov": 100.0,
+  "asof": "15-May-2026",
+  "alt": [
+   [
+    "det",
+    3,
+    "15-May-2026"
+   ]
+  ]
+ },
+ {
+  "key": "invesco",
+  "ok": true,
+  "src": "agent",
+  "n": 42,
+  "cov": 98.3,
+  "asof": "May 31, 2026",
+  "alt": [
+   [
+    "det",
+    42,
+    "May 31, 2026"
+   ]
+  ]
+ },
+ {
+  "key": "iti",
+  "ok": true,
+  "src": "agent",
+  "n": 20,
+  "cov": 100.0,
+  "asof": "May 31,2026",
+  "alt": [
+   [
+    "det",
+    20,
+    "May 31,2026"
+   ]
+  ]
+ },
+ {
+  "key": "jio-blackrock",
+  "ok": false,
+  "src": "harness",
+  "needs_harness": true
+ },
+ {
+  "key": "jm-financial",
+  "ok": true,
+  "src": "agent",
+  "n": 16,
+  "cov": 98.8,
+  "asof": null,
+  "alt": [
+   [
+    "det",
+    16,
+    null
+   ]
+  ]
+ },
+ {
+  "key": "kotak-mahindra",
+  "ok": false,
+  "src": "harness",
+  "needs_harness": true
+ },
+ {
+  "key": "lakshya",
+  "ok": false,
+  "src": "no_feed"
+ },
+ {
+  "key": "lic-mutual-fund",
+  "ok": true,
+  "src": "agent",
+  "n": 43,
+  "cov": 100.0,
+  "asof": "May 31,2026",
+  "alt": []
+ },
+ {
+  "key": "mahindra-manulife",
+  "ok": true,
+  "src": "agent",
+  "n": 27,
+  "cov": 98.0,
+  "asof": "May 31, 2026",
+  "alt": [
+   [
+    "det",
+    27,
+    "May 31, 2026"
+   ]
+  ]
+ },
+ {
+  "key": "mirae",
+  "ok": true,
+  "src": "agent",
+  "n": 1,
+  "cov": 100.0,
+  "asof": "May 31, 2026",
+  "alt": [
+   [
+    "det",
+    1,
+    "May 31, 2026"
+   ]
+  ]
+ },
+ {
+  "key": "monarch-networth",
+  "ok": false,
+  "src": "no_feed"
+ },
+ {
+  "key": "motilal-oswal",
+  "ok": true,
+  "src": "agent",
+  "n": 85,
+  "cov": 100.0,
+  "asof": "MAY 31, 2026",
+  "alt": [
+   [
+    "det",
+    85,
+    "MAY 31, 2026"
+   ]
+  ]
+ },
+ {
+  "key": "navi",
+  "ok": true,
+  "src": "agent",
+  "n": 17,
+  "cov": 100.0,
+  "asof": "31 May 2026",
+  "alt": [
+   [
+    "det",
+    17,
+    "31 May 2026"
+   ]
+  ]
+ },
+ {
+  "key": "nippon",
+  "ok": true,
+  "src": "agent",
+  "n": 108,
+  "cov": 98.8,
+  "asof": "May 31,2026",
+  "alt": [
+   [
+    "det",
+    108,
+    "May 31,2026"
+   ]
+  ]
+ },
+ {
+  "key": "nj",
+  "ok": true,
+  "src": "det",
+  "n": 1,
+  "cov": 100.0,
+  "asof": "May 31, 2026",
+  "alt": []
+ },
+ {
+  "key": "old-bridge",
+  "ok": true,
+  "src": "det",
+  "n": 19,
+  "cov": 90.8,
+  "asof": "May 31, 2026",
+  "alt": [
+   [
+    "agent",
+    3,
+    "May 31, 2026"
+   ]
+  ]
+ },
+ {
+  "key": "pgim",
+  "ok": true,
+  "src": "agent",
+  "n": 8,
+  "cov": 100.0,
+  "asof": "May 31,2026",
+  "alt": [
+   [
+    "det",
+    1,
+    "May 31,2026"
+   ]
+  ]
+ },
+ {
+  "key": "ppfas",
+  "ok": true,
+  "src": "agent",
+  "n": 7,
+  "cov": 98.2,
+  "asof": "May 31, 2026",
+  "alt": [
+   [
+    "det",
+    7,
+    "May 31, 2026"
+   ]
+  ]
+ },
+ {
+  "key": "quant-money",
+  "ok": true,
+  "src": "agent",
+  "n": 29,
+  "cov": 82.0,
+  "asof": "29 May 2026",
+  "alt": [
+   [
+    "det",
+    29,
+    "29 May 2026"
+   ]
+  ]
+ },
+ {
+  "key": "quantum",
+  "ok": true,
+  "src": "agent",
+  "n": 13,
+  "cov": 100.0,
+  "asof": null,
+  "alt": [
+   [
+    "det",
+    13,
+    null
+   ]
+  ]
+ },
+ {
+  "key": "samco",
+  "ok": true,
+  "src": "det",
+  "n": 56,
+  "cov": 100.0,
+  "asof": "May 31, 2026",
+  "alt": [
+   [
+    "agent",
+    12,
+    "May 31, 2026"
+   ]
+  ]
+ },
+ {
+  "key": "sbi-funds",
+  "ok": true,
+  "src": "agent",
+  "n": 125,
+  "cov": 100.0,
+  "asof": "2026-05-31",
+  "alt": []
+ },
+ {
+  "key": "shriram",
+  "ok": true,
+  "src": "agent",
+  "n": 10,
+  "cov": 100.2,
+  "asof": "May 31, 2026",
+  "alt": [
+   [
+    "det",
+    10,
+    "May 31, 2026"
+   ]
+  ]
+ },
+ {
+  "key": "sundaram",
+  "ok": true,
+  "src": "agent",
+  "n": 40,
+  "cov": 100.0,
+  "asof": "31 May 2026",
+  "alt": [
+   [
+    "det",
+    30,
+    "31 May 2026"
+   ]
+  ]
+ },
+ {
+  "key": "tata",
+  "ok": true,
+  "src": "agent",
+  "n": 66,
+  "cov": 99.5,
+  "asof": "31/05/26",
+  "alt": [
+   [
+    "det",
+    66,
+    "31/05/26"
+   ]
+  ]
+ },
+ {
+  "key": "taurus",
+  "ok": true,
+  "src": "agent",
+  "n": 8,
+  "cov": 100.0,
+  "asof": "2026-05-31",
+  "alt": []
+ },
+ {
+  "key": "trust",
+  "ok": true,
+  "src": "agent",
+  "n": 11,
+  "cov": 100.0,
+  "asof": "May 31, 2026",
+  "alt": [
+   [
+    "det",
+    11,
+    "May 31, 2026"
+   ]
+  ]
+ },
+ {
+  "key": "unifi",
+  "ok": true,
+  "src": "agent",
+  "n": 3,
+  "cov": 100.0,
+  "asof": "April 30, 2026",
+  "alt": []
+ },
+ {
+  "key": "union",
+  "ok": true,
+  "src": "agent",
+  "n": 27,
+  "cov": 100.0,
+  "asof": "MAY 31, 2026",
+  "alt": [
+   [
+    "det",
+    1,
+    "MAY 31, 2026"
+   ]
+  ]
+ },
+ {
+  "key": "uti",
+  "ok": true,
+  "src": "agent",
+  "n": 82,
+  "cov": 100.0,
+  "asof": "31/05/2026",
+  "alt": [
+   [
+    "det",
+    82,
+    "31/05/2026"
+   ]
+  ]
+ },
+ {
+  "key": "wealth-holdings",
+  "ok": true,
+  "src": "det",
+  "n": 22,
+  "cov": 100.0,
+  "asof": "31-MAY-2026",
+  "alt": [
+   [
+    "agent",
+    9,
+    "31-MAY-2026"
+   ]
+  ]
+ },
+ {
+  "key": "whiteoak-capital",
+  "ok": true,
+  "src": "agent",
+  "n": 20,
+  "cov": 100.0,
+  "asof": "May 31, 2026",
+  "alt": [
+   [
+    "det",
+    1,
+    "May 31, 2026"
+   ]
+  ]
+ },
+ {
+  "key": "zerodha",
+  "ok": true,
+  "src": "det",
+  "n": 120,
+  "cov": 100.0,
+  "asof": "MAY 2026",
+  "alt": [
+   [
+    "agent",
+    19,
+    "MAY 2026"
+   ]
+  ]
+ }
+]

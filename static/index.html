@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vistas · Passive NSE Index Terminal</title>
+<link rel="stylesheet" href="/static/vistas.css">
+<script src="/static/vendor/plotly.min.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <span class="brand">VISTAS</span>
+  <span class="sub">NSE · Global · Fundamentals · Macro</span>
+  <button class="cmdk-open" id="cmdk-open" title="Search everything — Ctrl-K">
+    <span class="cmdk-ic">⌕</span><span class="cmdk-ph">Search indices, stocks, companies, commodities…</span><kbd>Ctrl K</kbd>
+  </button>
+  <span class="asof" id="asof">loading…</span>
+</header>
+
+<!-- ----------------------------------------- sticky head: main tabs + controls (one unit) -->
+<div class="headctl" id="headctl">
+
+<!-- main tabs = the primary navigation (prominent buttons, always on top) -->
+<nav class="tabs" id="tabs">
+  <!-- data-view stays "performance" internally (hash/state/JS) — only the label is "Prices". -->
+  <button class="tab active" data-view="performance">Prices</button>
+  <!-- Valuation tab fully removed from the nav (KV 2026-06-22) — was non-functional; the
+       #view-valuation div + renderValuation JS stay dormant in the code for an easy restore. -->
+  <button class="tab" data-view="fundamentals">Fundamentals</button>
+  <button class="tab" data-view="quant">Quant &amp; MI</button>
+  <button class="tab" data-view="screen">Screens</button>
+  <!-- Funds + Fund Skill MERGED into one cockpit (KV 2026-06-24): the "Funds" tab is the
+       store-canonical cockpit (data-view="fundskill" kept so JS/state/hash are unchanged). The old
+       live-AMC holdings view (#view-funds + renderFunds) stays dormant for a future name→navindia bridge. -->
+  <button class="tab" data-view="fundskill">Funds</button>
+  <button class="tab" data-view="macro">Macro</button>
+  <span class="tabnote" id="tabnote"></span>
+</nav>
+
+<!-- Performance controls (hidden on the Fundamentals / Macro tabs) -->
+<div class="ctl" id="ctl">
+  <div class="row selrow">
+    <div class="field grow">
+      <label>Universe — indices &amp; stocks</label>
+      <div class="ms" id="ms-tickers"></div>
+    </div>
+    <div class="field grow">
+      <label>Benchmarks</label>
+      <div class="ms" id="ms-bench"></div>
+    </div>
+  </div>
+  <!-- one line: quick-range + From/To/Frequency on the left, Analyze + Options pushed right -->
+  <div class="row actrow">
+    <div class="field">
+      <label>Quick range</label>
+      <div class="presets" id="presets">
+        <button data-y="1">1Y</button><button data-y="3">3Y</button>
+        <button data-y="5">5Y</button><button data-y="10">10Y</button>
+        <button data-y="0">Max</button>
+      </div>
+    </div>
+    <div class="field"><label>From</label><input type="date" id="start"></div>
+    <div class="field"><label>To</label><input type="date" id="end"></div>
+    <div class="field">
+      <label>Frequency</label>
+      <select id="freq"><option value="daily">Daily</option><option value="weekly">Weekly (W-FRI)</option></select>
+    </div>
+    <button id="run">Analyze ▸</button>
+    <button class="ghost sm optstoggle" id="optstoggle" aria-expanded="false" title="Show / hide advanced options">⚙ Options</button>
+  </div>
+  <!-- advanced + utility (collapsed by default; the ⚙ Options button toggles it) -->
+  <div class="adv collapsed" id="adv">
+    <div class="row">
+      <div class="field">
+        <label>Rolling window</label>
+        <select id="rollwin">
+          <option>1M</option><option>3M</option><option>6M</option>
+          <option selected>1Y</option><option>2Y</option><option>3Y</option><option>5Y</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Alpha</label>
+        <select id="alphatype"><option value="excess">Excess return</option><option value="jensen">Jensen's α</option></select>
+      </div>
+      <div class="field"><label>Risk-free %</label><input type="number" id="rf" value="0" step="0.5" min="0"></div>
+      <div class="field"><label>&nbsp;</label><label class="toggle"><input type="checkbox" id="logscale"> Log NAV</label></div>
+      <div class="field"><label>&nbsp;</label><label class="toggle" title="When ON, the From/To window is shared across the Performance, Fundamentals and Macro tabs — switching tabs keeps the same dates. Turn OFF to give each tab its own window."><input type="checkbox" id="linkdates" checked> 🔗 Link window across tabs</label></div>
+    </div>
+    <div class="row btnrow">
+      <button class="ghost sm" id="refresh">⟳ Refresh to today</button>
+      <button class="ghost sm" id="fetchall">⬇ Fetch ALL NSE indices</button>
+      <button class="ghost sm" id="fetchcancel" style="display:none;border-color:#b3402f;color:#b3402f">■ Stop</button>
+      <button class="ghost sm" id="addidx">＋ Add one index</button>
+      <button class="ghost sm" id="exportxl">⬇ Export all NAV (Excel)</button>
+      <button class="ghost sm" id="savedeck">💾 Save offline deck (HTML)</button>
+      <span id="fetchprog" style="font-size:11.5px;color:var(--accent);align-self:center;font-weight:600"></span>
+      <span id="datainfo" style="font-size:11.5px;color:var(--muted);align-self:center"></span>
+    </div>
+  </div>
+</div>
+
+</div><!-- /headctl -->
+
+<!-- ------------------------------------------------------------- panels -->
+<main>
+
+  <div class="view" id="view-performance">
+
+  <div class="measurebar">
+    <span class="mlbl">Price basis</span>
+    <div class="seg" id="measure-seg">
+      <button data-m="TR" class="active">Total Return</button>
+      <button data-m="PR">Price Return</button>
+    </div>
+    <span class="measurenote" id="measure-note">Total-return index — dividends reinvested (the default; switch to Price Return to exclude dividends).</span>
+  </div>
+
+  <section class="panel" id="p-gp">
+    <div class="tools"><button class="sm ghost" data-csv="gp">CSV</button></div>
+    <h2><span class="tag-sec">GP</span>Indexed performance (NAV, rebased to 100)</h2>
+    <details><summary>Definition · Method · Why</summary>
+      <p><b>What:</b> each index's total-return level rebased to 100 at the window start, so paths are compared like-for-like from the same footing.</p>
+      <p><b>Method:</b> source = the NSE total-return index level (dividends reinvested). Series = <code>level / level[start] × 100</code>. Log toggle plots the y-axis on a log scale so equal % moves look equal. Drag the range slider or box-zoom to focus any sub-window; hover shows all series at a date.</p>
+      <p><b>Why:</b> the first read on any desk — who compounded more, and how the lead built up over time.</p>
+    </details>
+    <div class="seltog" id="tog-gp"></div>
+    <div class="plot" id="plot-gp" style="height:440px"></div>
+    <div class="statline" id="stat-gp"></div>
+  </section>
+
+  <section class="panel" id="p-comp">
+    <div class="tools"><button class="sm ghost" data-csv="comp">CSV</button></div>
+    <h2><span class="tag-sec">COMP</span>Comparative statistics</h2>
+    <details><summary>Definition · Method · Why</summary>
+      <p><b>What:</b> the standard return/risk scorecard over the chosen window, one row per series, plus a CAGR / alpha bar.</p>
+      <p><b>Method (each over the active window &amp; frequency):</b>
+        <code>Total</code> = level[end]/level[start]−1; <code>CAGR</code> = (level[end]/level[start])<sup>365/days</sup>−1;
+        <code>Vol</code> = stdev(returns)·√ppy; <code>Sharpe</code> = (mean−rf)·ppy ÷ vol; <code>Sortino</code> uses downside deviation only;
+        <code>MaxDD</code> = min(level/cummax−1); <code>Calmar</code> = CAGR ÷ |MaxDD|; <code>Best/Worst 1Y</code> = max/min trailing-1Y return;
+        <code>α</code> = CAGR(series) − CAGR(primary benchmark). ppy = 252 daily / 52 weekly; CAGR uses 365 calendar days.</p>
+      <p><b>Why:</b> CAGR alone is a trap — read return, risk and drawdown together.</p>
+    </details>
+    <div class="seltog" id="tog-comp"></div>
+    <div id="comp-table"></div>
+    <div class="plot" id="plot-comp" style="height:300px;margin-top:10px"></div>
+  </section>
+
+  <section class="panel" id="p-alpha">
+    <div class="tools"><button class="sm ghost" data-csv="alpha">CSV</button></div>
+    <h2><span class="tag-sec">α</span>Rolling alpha &amp; beta vs benchmark</h2>
+    <div class="subctl">
+      <div class="seg" id="alpha-seg">
+        <button data-k="alpha" class="active">Rolling α</button>
+        <button data-k="beta">Rolling β</button>
+      </div>
+      <span id="alpha-note" style="color:var(--muted)"></span>
+    </div>
+    <details><summary>Definition · Method · Why</summary>
+      <p><b>Rolling α (Excess):</b> trailing-window return of the index minus the benchmark, annualized when the window ≥ 1Y (else cumulative).
+         <b>Rolling α (Jensen):</b> intercept of <code>r_index − rf = α + β·(r_bench − rf)</code> fit over the trailing window, annualized — the part of return NOT explained by market exposure.</p>
+      <p><b>Rolling β:</b> <code>cov(r_index, r_bench) / var(r_bench)</code> over the trailing window — sensitivity to the benchmark.</p>
+      <p><b>Why:</b> a single full-period alpha hides when the edge actually showed up; the rolling view exposes regime dependence.</p>
+    </details>
+    <div class="seltog" id="tog-alpha"></div>
+    <div class="plot" id="plot-alpha" style="height:380px"></div>
+    <div class="statline" id="stat-alpha"></div>
+  </section>
+
+  <section class="panel" id="p-risk">
+    <div class="tools"><button class="sm ghost" data-csv="risk">CSV</button></div>
+    <h2><span class="tag-sec">RISK</span>Rolling risk</h2>
+    <div class="subctl">
+      <div class="seg" id="risk-seg">
+        <button data-k="drawdown" class="active">Drawdown</button>
+        <button data-k="vol">Volatility</button>
+        <button data-k="sharpe">Sharpe</button>
+        <button data-k="corr">Correlation</button>
+        <button data-k="relstrength">Relative strength</button>
+      </div>
+      <span id="risk-note" style="color:var(--muted)"></span>
+    </div>
+    <details><summary>Definition · Method · Why</summary>
+      <p><b>Drawdown</b> = level/running-max − 1 (the underwater curve). <b>Volatility</b> = rolling stdev(returns)·√ppy. <b>Sharpe</b> = rolling (mean−rf)·ppy ÷ vol. <b>Correlation</b> = rolling corr(index, benchmark). <b>Relative strength</b> = index/benchmark price ratio, rebased to 100.</p>
+      <p><b>Why:</b> investor experience lives here — how deep and how long the pain, how bumpy the ride, how the pair co-moves.</p>
+    </details>
+    <div class="seltog" id="tog-risk"></div>
+    <div class="plot" id="plot-risk" style="height:380px"></div>
+    <div class="statline" id="stat-risk"></div>
+  </section>
+
+  <section class="panel" id="p-corrmat">
+    <div class="tools"><button class="sm ghost" data-csv="corrmat">CSV</button></div>
+    <h2><span class="tag-sec">CORR</span>Correlation matrix</h2>
+    <details><summary>Definition · Method · Why</summary>
+      <p><b>What:</b> the full pairwise correlation of <b>all selected series</b> (indices and benchmarks) with each other — not just vs the benchmark — over the chosen window and frequency.</p>
+      <p><b>Method:</b> Pearson correlation of the period (<span id="corr-freq">daily</span>) returns for each pair, computed on their common dates. Colour grades continuously: <b>green = high (+1)</b>, <b>yellow = mid (0)</b>, <b>red = low (−1)</b>; the deeper the green, the higher the correlation.</p>
+      <p><b>Why:</b> shows which holdings actually diversify each other vs. move together — the rolling line above only compares each index to the benchmark.</p>
+    </details>
+    <div class="seltog" id="tog-corrmat"></div>
+    <div class="plot" id="plot-corrmat" style="height:460px"></div>
+  </section>
+
+  <section class="panel" id="p-capture">
+    <div class="tools"><button class="sm ghost" data-csv="capture">CSV</button></div>
+    <h2><span class="tag-sec">CAP</span>Up / down capture</h2>
+    <details><summary>Definition · Method · Why</summary>
+      <p><b>What:</b> how much of the benchmark's up-moves and down-moves each index captures. <b>Up</b> = Σ(index ret | bench&gt;0) ÷ Σ(bench ret | bench&gt;0); <b>Down</b> = Σ(index ret | bench&lt;0) ÷ Σ(bench ret | bench&lt;0); <b>Ratio</b> = Up ÷ Down.</p>
+      <p><b>Why:</b> a great profile captures the upside (Up→high) while ducking the downside (Down→low, Ratio≫1). Points below the 45° line in the scatter are favourable.</p>
+    </details>
+    <div class="seltog" id="tog-capture"></div>
+    <div id="capture-table"></div>
+    <div class="plot" id="plot-capture" style="height:360px;margin-top:10px"></div>
+  </section>
+
+  <section class="panel" id="p-cy">
+    <div class="tools"><button class="sm ghost" data-csv="cy">CSV</button></div>
+    <h2><span class="tag-sec">CY</span>Calendar-year returns &amp; alpha</h2>
+    <details><summary>Definition · Method · Why</summary>
+      <p><b>What:</b> total return for each calendar year = year-end level ÷ prior year-end level − 1 (first year uses the window start as base, marked <b>*</b>). Alpha = year return − primary-benchmark year return.</p>
+      <p><b>Method:</b> the % positive / % negative under each chart count the calendar years where that series was up vs down (alpha &gt; 0 vs &lt; 0 for the alpha chart).</p>
+      <p><b>Why:</b> shows consistency and which regimes helped or hurt, free of any rolling-window smoothing.</p>
+    </details>
+    <div class="seltog" id="tog-cy"></div>
+    <div class="subhdr">Calendar-year total return</div>
+    <div class="plot" id="plot-cy" style="height:320px"></div>
+    <div class="statline" id="stat-cy"></div>
+    <div class="subhdr">Calendar-year alpha vs primary benchmark</div>
+    <div class="plot" id="plot-cy-alpha" style="height:320px"></div>
+    <div class="statline" id="stat-cy-alpha"></div>
+    <span style="color:var(--muted);font-size:11px">* = partial first year (window start ≠ Jan 1)</span>
+  </section>
+
+  <section class="panel" id="p-month">
+    <div class="tools">
+      <select id="month-pick" class="sm"></select>
+      <button class="sm ghost" data-csv="month">CSV</button>
+    </div>
+    <h2><span class="tag-sec">SEAS</span>Monthly-return heatmap</h2>
+    <details><summary>Definition · Method · Why</summary>
+      <p><b>What:</b> month-by-year matrix of monthly total returns (month-end ÷ prior month-end − 1) for the selected index. Green = positive, red = negative.</p>
+      <p><b>Why:</b> surfaces seasonality and the months that drove or dragged a year.</p>
+    </details>
+    <div class="plot" id="plot-month" style="height:420px"></div>
+  </section>
+
+  <section class="panel" id="p-dist">
+    <h2><span class="tag-sec">DIST</span>Return &amp; alpha distributions</h2>
+    <details><summary>Definition · Method · Why</summary>
+      <p><b>What:</b> the distribution of <b>rolling, overlapping</b> returns at four horizons — Monthly, Quarterly, Yearly, and 3-Year (the 3Y is a CAGR; the others are cumulative) — drawn as smooth <b>density curves</b> (Gaussian kernel density) rather than bars, so several indices overlay cleanly. Below them, the same four horizons for <b>alpha</b> vs the primary benchmark.</p>
+      <p><b>Method:</b> at each date, the trailing-horizon return (e.g. trailing-1-year) is computed; the density curve is the smoothed frequency distribution of those overlapping observations. A horizon longer than the selected window is <b>omitted</b> (only that chart). The y-axis is probability density (area integrates to 1).</p>
+      <p><b>Why:</b> shows the full shape of outcomes at each horizon — central tendency, spread, skew and tails — not just a single average.</p>
+    </details>
+    <div class="seltog" id="tog-dist"></div>
+    <div class="subhdr">Return distributions (rolling, overlapping windows)</div>
+    <div class="distgrid" id="distret"></div>
+    <div class="subhdr">Alpha distributions vs primary benchmark (rolling, overlapping windows)</div>
+    <div class="distgrid" id="distalpha"></div>
+  </section>
+
+  </div><!-- /view-performance -->
+
+  <div class="view" id="view-valuation" hidden>
+
+  <div class="measurebar">
+    <span class="mlbl">Valuation metric</span>
+    <div class="seg" id="val-seg">
+      <button data-m="PE" class="active">P/E</button>
+      <button data-m="PB">P/B</button>
+      <button data-m="DY">Div Yield</button>
+    </div>
+    <span class="measurenote" id="val-note"></span>
+  </div>
+
+  <section class="panel" id="p-val-level">
+    <div class="tools"><button class="sm ghost" data-csv="vallevel">CSV</button></div>
+    <h2><span class="tag-sec">VAL</span>Valuation over time</h2>
+    <details><summary>Definition · Method · Why</summary>
+      <p><b>What:</b> the actual valuation level (P/E, P/B or dividend yield) of each selected index over the window — <b>not</b> rebased; the number itself is the information.</p>
+      <p><b>Method:</b> source = NSE's published daily index P/E, P/B and dividend-yield series. <b>P/E</b> = index price ÷ trailing earnings; <b>P/B</b> = price ÷ book value; <b>Div Yield</b> = trailing dividend ÷ price (%). The dashed band per series is its window <b>mean ±1σ</b> (lighter) and <b>±2σ</b> — the mean-reversion envelope.</p>
+      <p><b>Why:</b> the first valuation read — is this index trading rich or cheap versus where it usually sits, and is it stretching away from its band?</p>
+    </details>
+    <div class="seltog" id="tog-vallevel"></div>
+    <div class="plot" id="plot-vallevel" style="height:430px"></div>
+    <div class="statline" id="stat-vallevel"></div>
+  </section>
+
+  <section class="panel" id="p-val-gauge">
+    <h2><span class="tag-sec">RICH / CHEAP</span>Where each index sits in its own history</h2>
+    <details><summary>Definition · Method · Why</summary>
+      <p><b>What:</b> the cheap/rich gauge — for each index, where <b>today's</b> valuation sits within its <b>own</b> history over the window.</p>
+      <p><b>Method:</b> <b>percentile</b> = fraction of the window's observations at or below the current value (so 80% means dearer than 80% of its own history); <b>z-score</b> = (current − window mean) ÷ window σ. For P/E and P/B a <b>high</b> percentile = expensive (<span class="tag-cr rich">rich</span>); for dividend yield it inverts — a high yield = <span class="tag-cr cheap">cheap</span>. The pin marks the current percentile on the green→red scale.</p>
+      <p><b>Why:</b> "is 22× expensive?" only means something relative to that index's own range — this answers it at a glance, and is comparable across indices.</p>
+    </details>
+    <div id="val-gauge"></div>
+  </section>
+
+  <section class="panel" id="p-val-xsec">
+    <div class="tools"><button class="sm ghost" data-csv="valxsec">CSV</button></div>
+    <h2><span class="tag-sec">CROSS-SECTION</span>Snapshot — who is cheapest now</h2>
+    <details><summary>Definition · Method · Why</summary>
+      <p><b>What:</b> the current valuation of every selected series side by side, ranked, with each one's own-history percentile.</p>
+      <p><b>Method:</b> bars = the latest value of each series (most expensive first; for dividend yield, highest yield = cheapest first). The label shows the own-history percentile and the rich/cheap tag.</p>
+      <p><b>Why:</b> the relative-value read across your watchlist in one frame — which index is the dear one and which is the bargain right now.</p>
+    </details>
+    <div class="seltog" id="tog-valxsec"></div>
+    <div class="plot" id="plot-valxsec" style="height:340px"></div>
+    <div id="valxsec-table"></div>
+  </section>
+
+  <section class="panel" id="p-val-spread">
+    <div class="tools"><button class="sm ghost" data-csv="valspread">CSV</button></div>
+    <h2><span class="tag-sec">SPREAD</span>Valuation spread vs primary benchmark</h2>
+    <details><summary>Definition · Method · Why</summary>
+      <p><b>What:</b> each index's valuation <b>minus</b> the primary benchmark's, over time — the relative-richness series (e.g. Midcap P/E − NIFTY 500 P/E).</p>
+      <p><b>Method:</b> spread = index value − primary-benchmark value on each common date. The statline reports the latest spread, its window mean, and its percentile within the window.</p>
+      <p><b>Why:</b> absolute valuation drifts with the whole market; the spread isolates whether a segment is getting expensive <b>relative</b> to the broad market — a classic mean-reversion signal.</p>
+    </details>
+    <div class="seltog" id="tog-valspread"></div>
+    <div class="plot" id="plot-valspread" style="height:360px"></div>
+    <div class="statline" id="stat-valspread"></div>
+  </section>
+
+  <section class="panel" id="p-val-dist">
+    <h2><span class="tag-sec">DIST</span>Valuation distribution</h2>
+    <details><summary>Definition · Method · Why</summary>
+      <p><b>What:</b> the distribution (smooth density) of each index's valuation over the window — the full shape of where it has traded, with the current value marked.</p>
+      <p><b>Method:</b> Gaussian kernel density of the window's daily values. A right-shifted current value sits in the expensive tail (for a yield, the cheap tail).</p>
+      <p><b>Why:</b> shows whether today is a normal level or an outlier, and how wide the index's valuation range has been.</p>
+    </details>
+    <div class="seltog" id="tog-valdist"></div>
+    <div class="plot" id="plot-valdist" style="height:360px"></div>
+    <div class="statline" id="stat-valdist"></div>
+  </section>
+
+  </div><!-- /view-valuation -->
+
+  <div class="view" id="view-fundamentals" hidden>
+
+  <div class="measurebar fundbar">
+    <span class="mlbl">Company</span>
+    <div class="combo" id="fund-combo"></div>
+    <span class="mlbl">Compare</span>
+    <div class="combo" id="fund-combo2"></div>
+    <span class="measurenote" id="fund-note">Search by name, ticker or acronym. Add a second company to compare — every chart overlays both; tables show each (consolidated).</span>
+    <div class="daterange" id="fund-daterange"></div>
+  </div>
+
+  <nav class="fundnav" id="fund-nav"></nav>
+
+  <div class="fund-header" id="fund-header"></div>
+
+  <!-- chart panels are generated from FUND_PANELS (vistas.js) into here -->
+  <div id="fund-panels"></div>
+
+  <section class="panel" id="p-fund-stmts">
+    <div class="tools"><button class="sm ghost" data-csv="fund">CSV</button></div>
+    <h2><span class="tag-sec">STATEMENTS</span>Financials — full line items</h2>
+    <div class="subctl">
+      <div class="seg" id="fund-stmt-seg">
+        <button data-s="quarters" class="active">Quarterly</button>
+        <button data-s="profit_loss">P&amp;L (annual)</button>
+        <button data-s="balance_sheet">Balance Sheet</button>
+        <button data-s="cash_flow">Cash Flow</button>
+        <button data-s="ratios">Ratios</button>
+        <button data-s="shareholding">Shareholding</button>
+      </div>
+    </div>
+    <details><summary>Definition · Method · Why</summary>
+      <p><b>What:</b> the full statement tables exactly as Screener reports them (consolidated), ₹ crore — every line item, switchable between Quarterly results, annual P&amp;L, Balance Sheet, Cash Flow, Ratios and the Shareholding pattern.</p>
+      <p><b>Why:</b> the raw numbers behind every chart above, for a direct read; in compare mode each company's table is shown in turn.</p>
+    </details>
+    <div id="fund-table"></div>
+  </section>
+
+  </div><!-- /view-fundamentals -->
+
+  <div class="view" id="view-quant" hidden>
+    <div class="measurebar fundbar">
+      <span class="mlbl">Company</span>
+      <div class="combo" id="quant-combo"></div>
+      <span class="measurenote" id="quant-note">Per-stock Quant &amp; Market-Intelligence cockpit — market behaviour, business &amp; valuation confirmation, ownership/governance and a transparent rule-based research snapshot. Diagnostics only — NOT buy/sell advice.</span>
+    </div>
+    <div id="quant-body"></div>
+  </div><!-- /view-quant -->
+
+  <div class="view" id="view-screen" hidden>
+    <div class="measurebar">
+      <span class="mlbl">Smart-money vs the Street</span>
+      <span class="measurenote">A cross-sectional screen of the NSE-500: stocks already in price correction AND with deteriorating fundamentals, split into four quadrants by whether sell-side analysts are turning positive (LSEG StarMine ARM) and whether fund managers are net buying (our corp-action-adjusted active flow). Diagnostics only — NOT buy/sell advice.</span>
+    </div>
+    <div id="screen-body"></div>
+  </div><!-- /view-screen -->
+
+  <div class="view" id="view-funds" hidden>
+    <div class="measurebar fundbar">
+      <span class="mlbl">Scheme</span>
+      <div class="combo" id="funds-combo"></div>
+      <span class="measurenote" id="funds-note">Mutual-fund portfolio look-through — asset &amp; sector mix, top holdings and concentration, from the AMC's monthly SEBI portfolio disclosure. Diagnostics only.</span>
+    </div>
+    <div id="funds-body"></div>
+  </div><!-- /view-funds -->
+
+  <div class="view" id="view-fundskill" hidden>
+    <div class="measurebar fundbar">
+      <span class="mlbl">Scheme</span>
+      <div class="combo" id="fundskill-combo"></div>
+      <span class="measurenote">Holdings-based fund-manager skill — excess return vs the SEBI-category benchmark, statistical significance (t = IR·√years), stock-selection skill (IC), sizing and concentration, computed from 13 years of monthly portfolios on a total-return basis. GROSS (pre-cost) &amp; pre-factor-deflation. Diagnostics only — not advice.</span>
+    </div>
+    <div id="fundskill-body"></div>
+  </div><!-- /view-fundskill -->
+
+  <div class="view" id="view-macro" hidden>
+    <div class="measurebar">
+      <span class="mlbl">Macro &amp; cross-asset</span>
+      <span class="measurenote">Global rates, the rupee &amp; the dollar, commodities, volatility, credit and crypto — over the window set here. India-native series (CPI, repo rate, India 10Y, FII/DII flows) render first.</span>
+      <div class="daterange" id="macro-daterange"></div>
+    </div>
+    <div class="macro-snap" id="macro-snap"></div>
+    <nav class="fundnav" id="macro-nav"></nav>
+    <!-- panels generated from MACRO_PANELS (vistas.js) -->
+    <div id="macro-panels"></div>
+  </div><!-- /view-macro -->
+
+  <p class="foot" id="foot"></p>
+</main>
+
+<!-- universal command palette (Ctrl-K / click search / press "/") -->
+<div class="cmdk" id="cmdk" hidden>
+  <div class="cmdk-panel" role="dialog" aria-label="Search Vistas">
+    <input id="cmdk-input" class="cmdk-input" placeholder="Search indices · stocks · companies · commodities · FX · crypto…" autocomplete="off" spellcheck="false">
+    <div class="cmdk-list" id="cmdk-list"></div>
+    <div class="cmdk-foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>Enter</kbd> open · click an action</span><span><kbd>Esc</kbd> close</span></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+<script src="/static/vistas.js"></script>
+</body>
+</html>
