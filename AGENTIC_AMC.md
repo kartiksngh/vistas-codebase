@@ -289,6 +289,51 @@ defensible, none curve-fit.
 
 ---
 
+## ★ The agents' EVOLVING knowledge base — cross-project skill inheritance (KV 2026-06-26)
+
+The agents are **not static prompt templates** — each is backed by a **living knowledge base** it inherits
+and that **keeps evolving** with every project, every session, every method discovered. KV's framing: *"the
+FMs inherit the strategies, skills and knowledge — the truth, the fallacies, the practical, the pitfalls —
+from the various projects we work on; the FM, Analyst and CIO skills keep evolving and adapting with time,
+information and method discovery."*
+
+**Where the knowledge already lives (and compounds):** our global **skills** (`~/.claude/skills/`:
+first-principles-thinking, signal-backtest, grid-search, holdability, become-subject-matter-expert,
+research-discipline) + the **project memories** (FFT, ABQ, LS-SIF, Vistas). These ARE the accumulated
+cross-project methodology — and crucially they record **negative knowledge** (refuted fallacies + pitfalls),
+not just what works. An agent's charter **loads the relevant slice**, so it stands on everything learned and
+**avoids every known dead-end**.
+
+**The inheritance map:**
+- **Universal (all desks):** first-principles + no-curve-fit; the **signal-backtest** discipline (all-starts
+  × random, ≥5y windows, %tile-vs-random); the **Fundamental Law** lens (`IC·√BR·TC`); the
+  reporting/defensibility discipline; *recheck every favourable result by an independent method*.
+- **Analyst desks** inherit the *edge* knowledge: ARM IC ≈ 0.03–0.045 (a tilt, not a per-name guarantee);
+  **herding does NOT predict forward returns** (a live claim we refuted); the **flow decomposition** (price
+  vs scheme-inflow vs net-active); FFT's *"the edge is category ROTATION, not within-category selection"*;
+  value×revision is a *sign* to test, not Ambit's 9%; the over-optimism fade.
+- **FM desks** inherit the *construction / holdability* knowledge: ABQ's holdability findings (the **dn−up
+  capture gap IS the alpha**; momentum-crash = a short-leg event long-only already avoids; **no in-mandate
+  static hedge exists**; the V2 `dms` smoother); the **TC long-only leak**; FFT's *combine-de-correlated-
+  sleeves = a breadth win*; turnover-as-style-not-churn; capacity ceilings (~₹1–2.5k cr for momentum tilts).
+- **CIO desk** inherits the *allocation / risk* knowledge: LS-SIF findings (value works; **bonds are not a
+  hedge**; *"buy VIX" is a mirage*; E/P beats the Fed model); FFT's FoF suite (the **debt anchor = the
+  absolute-drawdown fix**; the DAA trend-glide); the AMC-systemic fragility lens; the team-IR **breadth**
+  principle.
+
+**The evolution mechanism (why it compounds):** every new finding flows into the skills/memories during
+normal work; the agents **re-load the updated knowledge on their next run** and benefit instantly — the same
+"terminal grows → agents benefit immediately" loop, now extended from *data* to *knowledge*. **Honesty
+guardrail:** knowledge updates follow the same **pre-registration** discipline (a "lesson" must beat a
+pre-registered expectation and replicate OOS) so evolution is genuine learning, never hindsight curve-fit.
+**Negative knowledge is first-class** — a refuted fallacy or a pitfall is as valuable as a truth; it stops an
+agent re-walking a dead-end (the `research-discipline` skill's core rule).
+
+This is what makes the firm **antifragile and compounding**: it is not a snapshot of today's signals, it is
+the *distilled experience of every project we have ever run*, getting sharper with time. (Build implication:
+agent charters reference the relevant skills + memories by name, and a periodic "knowledge sync" step folds
+new findings into the charters — versioned, pre-registered.)
+
 ## 9. What's with us vs what's needed
 
 **With us (ready):** the terminal/ontology + all forces; the three persona engines (Analyst/FM/CIO designs);
