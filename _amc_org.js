@@ -28,10 +28,20 @@ const ANALYSTS = [
   ['Diversified', 'Diversified & Special Situations'],
 ]
 const FMS = [
-  ['flexicap', 'Flexi Cap'], ['largecap', 'Large Cap'], ['midcap', 'Mid Cap'],
-  ['multicap', 'Multi Cap'], ['value', 'Value'], ['banking', 'Banking & Financial Services'],
+  // Core Equity
+  ['largecap', 'Large Cap'], ['largemid', 'Large & Mid Cap'], ['midcap', 'Mid Cap'],
+  ['smallcap', 'Small Cap'], ['multicap', 'Multi Cap'], ['flexicap', 'Flexi Cap'],
+  // Strategy
+  ['value', 'Value & Contra'], ['focused', 'Focused'], ['elss', 'ELSS (Tax Saver)'], ['divyield', 'Dividend Yield'],
+  // Thematic
+  ['banking', 'Banking & Financials'], ['pharma', 'Pharma & Healthcare'], ['tech', 'Technology & Digital'],
+  ['consumption', 'Consumption'], ['infra', 'Infrastructure'],
+  // Hybrid & Asset Allocation
+  ['baf', 'Balanced Advantage'], ['agghybrid', 'Aggressive Hybrid'], ['multiasset', 'Multi-Asset'], ['eqsavings', 'Equity Savings'],
+  // Quant
   ['quant', 'Quant / Systematic'],
 ]
+const FM_NAMES = FMS.map(([, n]) => n).join(', ')
 
 const DESKNOTE = {
   type: 'object', additionalProperties: false,
@@ -121,8 +131,8 @@ const analystNotes = (await parallel(ANALYSTS.map(([key, name]) => () =>
     `It has arm_ew/arm_ff (equal- and float-mcap-weighted sector ARM), coverage_n, recommending_n, quadrants, and stock lists ` +
     `(top_by_mcap, arm_leaders, arm_laggards, flow_accumulated, flow_distributed, growth_leaders) — each stock with sym/name/mcap_cr/arm/flow_3m/pat_yoy/quadrant/fii_chg. ` +
     `Write your morning desk note: your current sector STANCE, a 1-2 sentence headline view, 2-4 things you are WORKING ON, your top 3-5 stock PITCHES ` +
-    `(each with a crisp thesis + numeric EVIDENCE citing the actual ARM/flow/growth numbers, a horizon and conviction, routed via "to" to the relevant fund-manager desks by name ` +
-    `[Flexi Cap, Large Cap, Mid Cap, Multi Cap, Value, Banking & Financial Services, Quant / Systematic] and/or "CIO" for large or contentious calls), and key RISKS. Be specific and numeric.`,
+    `(each with a crisp thesis + numeric EVIDENCE citing the actual ARM/flow/growth numbers, a horizon and conviction, routed via "to" to the relevant fund-manager desks by EXACT name ` +
+    `[${FM_NAMES}] and/or "CIO" for large or contentious calls — route to the desks whose mandate actually fits the stock, e.g. a small-cap name to Small Cap/Mid Cap, a bank to Banking & Financials/Large Cap, a defensive compounder to Flexi Cap/Large Cap), and key RISKS. Be specific and numeric.`,
     { label: `analyst:${key}`, phase: 'Analysts', schema: DESKNOTE }
   ).then(r => r && ({ key, name, ...r }))
 ))).filter(Boolean)
@@ -166,7 +176,7 @@ const cio = await agent(
   `(per-sector ARM table arm_ew/arm_ff + each FM category's median IR).\n\n` +
   `Analyst desk headlines + stances:\n${notesSummary}\n\nFund-manager stances + tilts:\n${fmsSummary}\n\nEscalations raised to you:\n${escStr}\n\n` +
   `Produce: the HOUSE VIEW; the 3-LENS MARKET PULSE (street = what analysts/ARM say, smart_money = what fund flows say, reward = price/quadrant behaviour, and the GAPS between the lenses = the real signal); ` +
-  `your RULINGS on the escalations (and any cross-desk conflict); ALLOCATION stance across the seven mandates (Flexi Cap, Large Cap, Mid Cap, Multi Cap, Value, Banking, Quant); ` +
+  `your RULINGS on the escalations (and any cross-desk conflict); ALLOCATION stance across the firm's divisions (Core Equity, Strategy, Thematic, Hybrid & Asset Allocation, Quant) and the notable mandates within them; ` +
   `RISK FLAGS (crowding/fragility — agreement of LEVEL across forces = crowding, agreement of CHANGE = conviction); a firm SUMMARY; and the firm's bottom-line CONCLUSION with the top actionables. Be decisive and defensible.`,
   { label: 'cio', phase: 'CIO', schema: CIONOTE }
 )

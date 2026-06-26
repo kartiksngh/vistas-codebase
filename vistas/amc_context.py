@@ -36,15 +36,37 @@ ANALYST_DESKS = {
     "Diversified":       {"name": "Diversified & Special Situations", "sectors": ["Other", "Diversified"]},
 }
 
-# ── FM desks: real SEBI categories (+ a name-matched Banking & Quant) ─────────────────────────
+# ── FM desks: the full AMC roster grouped into 5 divisions ────────────────────────────────────
+# Each desk = a real SEBI mandate (category strings verified against the 745-fund attribution set).
+# Thematics live inside "Sectoral / Thematic" and are split by scheme-name keyword. A desk only
+# renders if at least one real fund matches (build_fm_context drops empties), so this is data-grounded.
+DIVISIONS = ["Core Equity", "Strategy", "Thematic", "Hybrid & Asset Allocation", "Quant"]
 FM_DESKS = [
-    {"key": "flexicap", "name": "Flexi Cap",  "match": {"category": ["Flexi Cap Fund"]}},
-    {"key": "largecap", "name": "Large Cap",  "match": {"category": ["Large Cap Fund"]}},
-    {"key": "midcap",   "name": "Mid Cap",    "match": {"category": ["Mid Cap Fund"]}},
-    {"key": "multicap", "name": "Multi Cap",  "match": {"category": ["Multi Cap Fund"]}},
-    {"key": "value",    "name": "Value",      "match": {"category": ["Value Fund", "Contra Fund"]}},
-    {"key": "banking",  "name": "Banking & Financial Services", "match": {"category": ["Sectoral / Thematic"], "name_kw": ["bank", "financ", "bfsi"]}},
-    {"key": "quant",    "name": "Quant / Systematic", "match": {"name_kw": ["quant"]}},
+    # ── Core Equity (market-cap mandates) ──
+    {"key": "largecap",   "division": "Core Equity", "name": "Large Cap",        "match": {"category": ["Large Cap Fund"]}},
+    {"key": "largemid",   "division": "Core Equity", "name": "Large & Mid Cap",  "match": {"category": ["Large & Mid Cap Fund"]}},
+    {"key": "midcap",     "division": "Core Equity", "name": "Mid Cap",          "match": {"category": ["Mid Cap Fund"]}},
+    {"key": "smallcap",   "division": "Core Equity", "name": "Small Cap",        "match": {"category": ["Small Cap Fund"]}},
+    {"key": "multicap",   "division": "Core Equity", "name": "Multi Cap",        "match": {"category": ["Multi Cap Fund"]}},
+    {"key": "flexicap",   "division": "Core Equity", "name": "Flexi Cap",        "match": {"category": ["Flexi Cap Fund"]}},
+    # ── Strategy / style mandates ──
+    {"key": "value",      "division": "Strategy", "name": "Value & Contra",      "match": {"category": ["Value Fund", "Contra Fund"]}},
+    {"key": "focused",    "division": "Strategy", "name": "Focused",             "match": {"category": ["Focused Fund"]}},
+    {"key": "elss",       "division": "Strategy", "name": "ELSS (Tax Saver)",    "match": {"category": ["ELSS"]}},
+    {"key": "divyield",   "division": "Strategy", "name": "Dividend Yield",      "match": {"category": ["Dividend Yield Fund"]}},
+    # ── Thematic / sectoral bench (inside Sectoral / Thematic, split by name) ──
+    {"key": "banking",    "division": "Thematic", "name": "Banking & Financials", "match": {"category": ["Sectoral / Thematic"], "name_kw": ["bank", "financ", "bfsi"]}},
+    {"key": "pharma",     "division": "Thematic", "name": "Pharma & Healthcare",  "match": {"category": ["Sectoral / Thematic"], "name_kw": ["pharma", "health"]}},
+    {"key": "tech",       "division": "Thematic", "name": "Technology & Digital", "match": {"category": ["Sectoral / Thematic"], "name_kw": ["technolog", "digital", "infotech"]}},
+    {"key": "consumption","division": "Thematic", "name": "Consumption",          "match": {"category": ["Sectoral / Thematic"], "name_kw": ["consum", "fmcg"]}},
+    {"key": "infra",      "division": "Thematic", "name": "Infrastructure",       "match": {"category": ["Sectoral / Thematic"], "name_kw": ["infra"]}},
+    # ── Hybrid / asset-allocation mandates ──
+    {"key": "baf",        "division": "Hybrid & Asset Allocation", "name": "Balanced Advantage", "match": {"category": ["Dynamic Asset Allocation or Balanced Advantage"]}},
+    {"key": "agghybrid",  "division": "Hybrid & Asset Allocation", "name": "Aggressive Hybrid",  "match": {"category": ["Aggressive Hybrid Fund"]}},
+    {"key": "multiasset", "division": "Hybrid & Asset Allocation", "name": "Multi-Asset",        "match": {"category": ["Multi Asset Allocation"]}},
+    {"key": "eqsavings",  "division": "Hybrid & Asset Allocation", "name": "Equity Savings",     "match": {"category": ["Equity Savings"]}},
+    # ── Quant / systematic ──
+    {"key": "quant",      "division": "Quant", "name": "Quant / Systematic", "match": {"name_kw": ["quant"]}},
 ]
 
 def _f(x, d=0.0):
@@ -153,7 +175,8 @@ def build_fm_context():
                 "verdict": d.get("verdict"), "verdict_why": d.get("verdict_why"),
             }
         out[desk["key"]] = {
-            "desk": desk["name"], "n_funds": len(sel), "median_ir": med_ir,
+            "desk": desk["name"], "division": desk.get("division", "Other"),
+            "n_funds": len(sel), "median_ir": med_ir,
             "benchmark": (sel_h[0].get("benchmark") if sel_h else None),
             "exemplars": [packf(d) for d in sel_h[:3]],
         }
@@ -183,8 +206,8 @@ def main():
         "sectors": {k: {"desk": v["desk"], "arm_ew": v["arm_ew"], "arm_ff": v["arm_ff"],
                         "coverage_n": v["coverage_n"], "recommending_n": v["recommending_n"],
                         "quadrants": v["quadrants"]} for k, v in ctx["analysts"].items()},
-        "fm_categories": {k: {"desk": v["desk"], "median_ir": v["median_ir"], "n_funds": v["n_funds"],
-                              "benchmark": v.get("benchmark")} for k, v in ctx["fund_managers"].items()},
+        "fm_categories": {k: {"desk": v["desk"], "division": v.get("division"), "median_ir": v["median_ir"],
+                              "n_funds": v["n_funds"], "benchmark": v.get("benchmark")} for k, v in ctx["fund_managers"].items()},
     }
     (desks / "market.json").write_text(json.dumps(market, indent=1, default=str), encoding="utf-8")
     print(f"[amc_context] wrote {len(ctx['analysts'])+len(ctx['fund_managers'])+1} desk slice files -> {desks}")

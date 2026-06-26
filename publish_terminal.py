@@ -14,11 +14,14 @@ both fits Pages and loads fast. The single-file deck stays for offline/email use
 
 One run: (1) optional incremental NSE refresh, (2) rebuild the hosted site
 (output/terminal_site/), (3) VALIDATE the shell via the Node runtime smoke-test (a
-faulty shell is NEVER published), (4) mirror the site into terminal/ and push.
+faulty shell is NEVER published), (4) mirror the site into terminal/ and push, (5)
+back up the SOURCE (code + project .md docs) to the private vistas-codebase repo so a
+local disk crash can't lose either the live site or its source.
 
 Flags:  --no-fetch    rebuild from current data, no NSE pull
         --no-rebuild  publish the site already on disk (skip the rebuild; fastest)
         --no-push     build + validate only
+        --no-backup   skip the source backup to vistas-codebase (step 5)
         --email       also build + email the single-file offline deck (needs VISTAS_SMTP_*)
 """
 from __future__ import annotations
@@ -146,11 +149,63 @@ def publish_site():
     return True
 
 
+def backup_codebase():
+    """Commit + push the SOURCE (code + project .md docs) to the private vistas-codebase
+    repo (this folder's own `origin`), so a local disk crash can't lose the source — the
+    live site AND its source are both safe after every publish.
+
+    NON-FATAL by design: the site is already live by the time this runs, so a backup
+    hiccup (offline, auth) only prints a warning and never blocks publishing. The dev-repo
+    .gitignore already excludes everything heavy/licensed (arm_repo, the 130-185 MB stock
+    CSVs, _pages/, the gated layers, node_modules), so only code + the .md docs + the small
+    seed data + the git-tracked amc_book/ audit trail go up.
+
+    Safety net: a staged file >95 MB would be hard-rejected by GitHub and is almost always
+    something that belongs in .gitignore — so we name it and SKIP the backup rather than
+    push a doomed commit."""
+    if not os.path.isdir(os.path.join(APP_DIR, ".git")):
+        pp.say("  (no source git repo in this folder — skipping codebase backup)")
+        return True
+    pp.run(["git", "add", "-A"], cwd=APP_DIR)
+    staged = [s.strip() for s in
+              pp.run(["git", "diff", "--cached", "--name-only"], cwd=APP_DIR).stdout.split("\n")
+              if s.strip()]
+    big = []
+    for rel in staged:
+        try:
+            mb = os.path.getsize(os.path.join(APP_DIR, rel)) / 1e6
+            if mb > 95:
+                big.append(f"{rel} ({mb:.0f} MB)")
+        except OSError:
+            pass
+    if big:
+        pp.say("  CODEBASE BACKUP SKIPPED — these staged files exceed GitHub's 100 MB limit:")
+        for b in big:
+            pp.say(f"    {b}")
+        pp.say("  Add them to .gitignore (they're almost certainly regenerable data), then retry.")
+        pp.run(["git", "reset"], cwd=APP_DIR)        # unstage so the working tree is left clean
+        return False
+    msg = "codebase + docs backup " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+    c = pp.run(["git", "commit", "-m", msg], cwd=APP_DIR)
+    if "nothing to commit" in (c.stdout + c.stderr):
+        pp.say("  (source unchanged since last backup — nothing to push)")
+        return True
+    p = pp.run(["git", "push", "origin", "HEAD"], cwd=APP_DIR)
+    if p.returncode != 0:
+        pp.say("  CODEBASE BACKUP PUSH FAILED (the live site IS published; only the source backup didn't go up):")
+        pp.say("  " + (p.stdout + p.stderr).strip()[-800:])
+        return False
+    short = pp.run(["git", "rev-parse", "--short", "HEAD"], cwd=APP_DIR).stdout.strip()
+    pp.say(f"  source backed up to vistas-codebase ({short})")
+    return True
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--no-fetch", action="store_true")
     ap.add_argument("--no-rebuild", action="store_true", help="publish the site already on disk")
     ap.add_argument("--no-push", action="store_true")
+    ap.add_argument("--no-backup", action="store_true", help="skip the source backup to vistas-codebase")
     ap.add_argument("--email", action="store_true", help="also build + email the single-file deck")
     args = ap.parse_args()
 
@@ -165,18 +220,18 @@ def main():
 
 def _run(args):
     if args.no_rebuild:
-        pp.say("[1-2/4] using the site already on disk (--no-rebuild)")
+        pp.say("[1-2/5] using the site already on disk (--no-rebuild)")
         if not os.path.exists(SHELL):
             pp.say("  ERROR: no site on disk — run once without --no-rebuild first."); return 1
     else:
         if not args.no_fetch:
-            pp.say("[1/4] refreshing NSE TR data (incremental tail)…"); refresh_all()
+            pp.say("[1/5] refreshing NSE TR data (incremental tail)…"); refresh_all()
         else:
-            pp.say("[1/4] skipping NSE pull (--no-fetch)")
+            pp.say("[1/5] skipping NSE pull (--no-fetch)")
             from vistas import data; data.reload()
-        pp.say("[2/4] rebuilding the hosted site…"); build_site()
+        pp.say("[2/5] rebuilding the hosted site…"); build_site()
 
-    pp.say("[3/4] validating the shell…")
+    pp.say("[3/5] validating the shell…")
     ok, detail = pp.validate(SHELL)
     pp.say("  " + detail.replace("\n", "\n  "))
     if not ok:
@@ -192,8 +247,15 @@ def _run(args):
     if args.no_push:
         pp.hr(); pp.say("Validation passed. (--no-push: not publishing.)"); pp.hr(); return 0
 
-    pp.say("[4/4] publishing terminal/ to GitHub…")
+    pp.say("[4/5] publishing terminal/ to GitHub…")
     pushed = publish_site()
+
+    if args.no_backup:
+        pp.say("[5/5] skipping source backup (--no-backup)")
+    else:
+        pp.say("[5/5] backing up source (code + .md docs) to vistas-codebase…")
+        backup_codebase()
+
     pp.hr(); pp.say("DONE." if pushed else "Built & validated, NOT published (see above)."); pp.hr()
     return 0 if pushed else 1
 

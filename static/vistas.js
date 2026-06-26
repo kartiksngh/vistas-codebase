@@ -433,6 +433,55 @@ function attachYAutoscale(id) {
   });
 }
 
+// ---- Relative-strength chart: horizon presets + crop-and-rebase (#48) ----------------------
+// The baked rs_line now carries full (≤8y) history; the user picks a horizon (1M…5Y/MAX) or
+// custom dates, and the line is re-rebased to 100 at the FIRST date in the chosen window so
+// relative performance inside the crop is readable. Frontend-only; no analytics.py change.
+let QRS_FULL = null;        // the full-history RS traces for the currently-shown stock
+function rsPreset(key) {
+  if (!QRS_FULL || !QRS_FULL.length) return null;
+  let dmin = null, dmax = null;
+  QRS_FULL.forEach((t) => { const d = t.x; if (d && d.length) { if (dmin === null || d[0] < dmin) dmin = d[0]; if (dmax === null || d[d.length - 1] > dmax) dmax = d[d.length - 1]; } });
+  if (dmax === null) return null;
+  if (key === "MAX") return [dmin, dmax];
+  const mo = { "1M": 1, "3M": 3, "6M": 6, "1Y": 12, "2Y": 24, "3Y": 36, "5Y": 60 }[key] || 12;
+  const s = new Date(dmax); s.setMonth(s.getMonth() - mo);
+  const sIso = s.toISOString().slice(0, 10);
+  return [sIso < dmin ? dmin : sIso, dmax];
+}
+function rsCrop(start, end) {
+  if (!QRS_FULL) return;
+  const cropped = QRS_FULL.map((t) => {
+    const xs = [], ys = []; let base = null;
+    for (let i = 0; i < t.x.length; i++) {
+      const d = t.x[i]; if (d < start || d > end) continue;
+      const v = t.y[i]; if (v === null || v === undefined) continue;
+      if (base === null) base = v;
+      xs.push(d); ys.push(base ? +(v / base * 100).toFixed(2) : v);
+    }
+    return Object.assign({}, t, { x: xs, y: ys });
+  });
+  Plotly.react("plot-quant-rs", cropped, baseLayout({ yaxis: { gridcolor: "#dfe3e8" } }), PCONF);
+  attachYAutoscale("plot-quant-rs");
+}
+function buildRSCtl(defKey) {
+  const host = $("rs-ctl"); if (!host) return;
+  const keys = ["1M", "3M", "6M", "1Y", "2Y", "3Y", "5Y", "MAX"];
+  host.innerHTML = '<div class="dr-presets">'
+    + keys.map((k) => `<button data-k="${k}"${k === defKey ? ' class="active"' : ''}>${k}</button>`).join("")
+    + '</div><input type="date" class="dr-from" id="rs-from"><span class="drsep">→</span><input type="date" class="dr-to" id="rs-to">';
+  const clearActive = () => host.querySelectorAll(".dr-presets button").forEach((x) => x.classList.remove("active"));
+  host.querySelectorAll(".dr-presets button").forEach((b) => b.addEventListener("click", () => {
+    clearActive(); b.classList.add("active");
+    const r = rsPreset(b.dataset.k);
+    if (r) { rsCrop(r[0], r[1]); const f = $("rs-from"), t = $("rs-to"); if (f) f.value = r[0]; if (t) t.value = r[1]; }
+  }));
+  const f = $("rs-from"), t = $("rs-to");
+  const onManual = () => { if (f.value && t.value && f.value <= t.value) { clearActive(); rsCrop(f.value, t.value); } };
+  if (f) f.addEventListener("change", onManual);
+  if (t) t.addEventListener("change", onManual);
+}
+
 // --------------------------------------------------------------------- MultiSelect
 class MultiSelect {
   constructor(el, opts) {
@@ -1464,7 +1513,9 @@ async function renderQuant() {
     if (liq.warning) html += `<div class="q-warn">${fEsc(liq.warning)}</div>`;
     html += `<div class="qgrid2">`
       + `<div class="qcell"><div class="q-cap">Trailing returns</div><div class="plot" id="plot-quant-returns" style="height:260px"></div></div>`
-      + `<div class="qcell"><div class="q-cap">Relative strength vs benchmarks (1Y, rebased to 100)</div><div class="plot" id="plot-quant-rs" style="height:260px"></div></div>`
+      + `<div class="qcell"><div class="q-cap">Relative strength vs benchmarks <span class="muted" style="font-weight:400">(rebased to 100 at the start of the chosen window)</span></div>`
+      + `<div class="rs-ctl" id="rs-ctl" style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:2px 0 6px"></div>`
+      + `<div class="plot" id="plot-quant-rs" style="height:260px"></div></div>`
       + `</div>`;
     html += `<details><summary>Definition · Method · Why</summary><p><b>Returns:</b> ${fEsc((m.formulas || {}).returns || "")}</p><p><b>Relative strength:</b> ${fEsc((m.formulas || {}).relative_strength || "")}</p><p><b>Why:</b> ${fEsc((m.notes || {}).why_useful || "")}</p><p><b>Can fail:</b> ${fEsc((m.notes || {}).why_it_can_fail || "")}</p></details>`;
   } else html += `<div class='empty-note'>${fEsc(m.na || "no market data")}</div>`;
@@ -1572,8 +1623,8 @@ async function renderQuant() {
       const rsTraces = []; const rb = m.rs_broad || {};
       Object.keys(rb).forEach((bn) => { const ln = (rb[bn] || {}).rs_line; if (ln && ln.values && ln.values.length) rsTraces.push({ type: "scatter", mode: "lines", name: "vs " + bn, x: ln.dates, y: ln.values, line: { color: COL[bn] || "#888", width: 2 }, hovertemplate: bn + ": %{y}<extra></extra>" }); });
       const rsec = m.rs_sector || {}; if (rsec.rs_line && rsec.rs_line.values && rsec.rs_line.values.length) rsTraces.push({ type: "scatter", mode: "lines", name: "vs " + (m.sector_index || "sector"), x: rsec.rs_line.dates, y: rsec.rs_line.values, line: { color: "#d62728", width: 2, dash: "dot" }, hovertemplate: "sector: %{y}<extra></extra>" });
-      if (rsTraces.length) { Plotly.react("plot-quant-rs", rsTraces, baseLayout({ yaxis: { gridcolor: "#dfe3e8" } }), PCONF); attachYAutoscale("plot-quant-rs"); }
-      else { const el = $("plot-quant-rs"); if (el) el.innerHTML = "<div class='empty-note'>no benchmark overlap to compute relative strength</div>"; }
+      if (rsTraces.length) { QRS_FULL = rsTraces; buildRSCtl("1Y"); const r = rsPreset("1Y"); if (r) rsCrop(r[0], r[1]); else { Plotly.react("plot-quant-rs", rsTraces, baseLayout({ yaxis: { gridcolor: "#dfe3e8" } }), PCONF); attachYAutoscale("plot-quant-rs"); } }
+      else { QRS_FULL = null; const rc = $("rs-ctl"); if (rc) rc.innerHTML = ""; const el = $("plot-quant-rs"); if (el) el.innerHTML = "<div class='empty-note'>no benchmark overlap to compute relative strength</div>"; }
       attachYAutoscale("plot-quant-returns");
     }
     if (Object.keys(holders).length) {
@@ -3836,7 +3887,98 @@ function buildMacroToggle(p, items) {  // the per-panel "show" bar (isolate one 
   const el = $("tog-macro-" + p.id); if (!el) return;
   renderToggleBar(el, "macro-" + p.id, items || macroPanelSeries(p), () => renderMacroPanel(p));
 }
+// ── Analyst Consensus Flow (#46): per-stock ARM rolled up to the 11 analyst-desk sectors —
+// EW history + FF (mcap-weighted) snapshot + the 4 ARM components + sector net-active fund flow.
+// Reads the baked window.VISTAS_CONSENSUS (no client recompute → no parity port). Renders into
+// #consensus-cockpit at the top of the Macro tab.
+let _consSel = null;
+function _armColor(v) {
+  if (v === null || v === undefined) return "#9aa6b2";
+  if (v >= 55) return "#2e7d32"; if (v >= 52) return "#66a35f";
+  if (v > 48) return "#9aa6b2"; if (v > 45) return "#d99a2b"; return "#b3402f";
+}
+function _consPlot(id, traces, layout) {
+  const el = $(id); if (!el) return;
+  if (!traces.length) { el.innerHTML = ""; return; }
+  Plotly.purge(id); Plotly.react(id, traces, baseLayout(layout), PCONF); attachYAutoscale(id);
+}
+function renderConsensus() {
+  const host = $("consensus-cockpit"); if (!host) return;
+  const C = window.VISTAS_CONSENSUS;
+  if (!C || !C.sectors || !C.sectors.length) { host.innerHTML = ""; return; }
+  const sectors = C.sectors;                       // [{key,name}], includes _MARKET
+  if (!_consSel || !sectors.some((s) => s.key === _consSel)) _consSel = sectors[0].key;
+  const sel = _consSel, snapSel = (C.snap && C.snap[sel]) || {};
+  const fmtFlow = (v) => (v === null || v === undefined) ? "—" : (v >= 0 ? "+" : "") + Math.round(v).toLocaleString() + " cr";
+
+  const chips = sectors.map((s) =>
+    `<button class="cchip${s.key === sel ? " on" : ""}" data-sec="${s.key}">${s.name}</button>`).join("");
+  const stat = (lbl, val, cls) => `<div class="cstat"><span class="ck">${lbl}</span><span class="cv ${cls || ""}">${val}</span></div>`;
+  const selName = (sectors.find((s) => s.key === sel) || {}).name || sel;
+  host.innerHTML =
+    `<section class="panel cpanel">
+       <h2><span class="tag-sec">ANALYST CONSENSUS</span>Analyst Consensus Flow — where the street stands, by sector</h2>
+       <details><summary>Definition · Method · Why</summary>
+         <p><b>What:</b> Per-stock <b>ARM</b> (LSEG StarMine analyst-revision momentum, 0-100 — high = analysts revising estimates/recommendations UP) rolled up to the 11 analyst-desk sectors. <b>EW</b> = equal-weight mean (one vote per stock); <b>FF</b> = market-cap-weighted (the big names dominate). 50 = neutral; above = the sector is being net-upgraded by the street, below = net-downgraded.</p>
+         <p><b>Method:</b> ${C.method || ""} ${C.ff_note || ""}</p>
+         <p><b>Why:</b> This is the <i>street lens</i> of the market — whose estimates are rising, which driver (revenue / earnings / EBITDA / recommendation) is moving them, and whether real money (fund flow) agrees. Gaps between the EW line, the FF snapshot and the flow are the signal.</p>
+         <p class="src">Source: LSEG StarMine ARM (sector aggregates only) · ARM asof ${C.arm_asof || "—"} · flow asof ${C.flow_asof || "—"}. ARM IC is small (~0.03-0.045) and ~1-3 month horizon — a tilt, not a verdict.</p>
+       </details>
+       <div class="plot" id="cons-snapshot" style="height:380px"></div>
+     </section>
+     <section class="panel cpanel">
+       <div class="cchiprow">${chips}</div>
+       <div class="cstatrow">
+         ${stat("EW ARM (now)", num(snapSel.ew, 1), snapSel.ew >= 50 ? "pos" : "neg")}
+         ${stat("FF-mcap ARM (now)", num(snapSel.ff, 1), snapSel.ff >= 50 ? "pos" : "neg")}
+         ${stat("Coverage", (snapSel.coverage_pct == null ? "—" : snapSel.coverage_pct + "%") + " (" + (snapSel.coverage_n || 0) + "/" + (snapSel.n_sector || 0) + ")", "")}
+       </div>
+       <div class="cgrid3">
+         <div><div class="ctitle">Consensus level — ARM (EW), ${selName}</div><div class="plot" id="cons-ew" style="height:260px"></div></div>
+         <div><div class="ctitle">What's driving it — the 4 ARM components (EW)</div><div class="plot" id="cons-comp" style="height:260px"></div></div>
+         <div><div class="ctitle">Smart money — net-active fund flow (3M, ₹ cr)</div><div class="plot" id="cons-flow" style="height:260px"></div></div>
+       </div>
+     </section>`;
+  host.querySelectorAll(".cchip").forEach((b) => b.addEventListener("click", () => { _consSel = b.dataset.sec; renderConsensus(); }));
+
+  // (1) cross-sector snapshot: EW vs FF bars, sorted by EW desc, with a 50 neutral line
+  const ord = sectors.slice().sort((a, b) => ((C.snap[b.key] || {}).ew || 0) - ((C.snap[a.key] || {}).ew || 0));
+  const yN = ord.map((s) => s.name);
+  const ewV = ord.map((s) => (C.snap[s.key] || {}).ew);
+  const ffV = ord.map((s) => (C.snap[s.key] || {}).ff);
+  _consPlot("cons-snapshot",
+    [{ type: "bar", orientation: "h", name: "ARM (EW)", y: yN, x: ewV, marker: { color: ewV.map(_armColor) } },
+     { type: "bar", orientation: "h", name: "ARM (FF-mcap, now)", y: yN, x: ffV, marker: { color: "#c3cad3" } }],
+    { barmode: "group", xaxis: { title: "ARM 0-100 (50 = neutral)", gridcolor: "#dfe3e8", range: [0, Math.max(70, Math.ceil((Math.max.apply(null, ewV.concat(ffV).filter((v) => v != null)) + 5) / 5) * 5)] },
+      yaxis: { automargin: true }, margin: { l: 8, r: 18, t: 8, b: 36 }, height: 380,
+      shapes: [{ type: "line", x0: 50, x1: 50, y0: -0.5, y1: yN.length - 0.5, line: { color: "#5b6770", width: 1, dash: "dot" } }] });
+
+  // (2) EW ARM history for the selected sector + a 50 neutral reference line
+  const ewSeries = (C.ew && C.ew[sel]) || [];
+  const ewTr = { type: "scatter", mode: "lines", name: "ARM (EW)", x: C.dates, y: ewSeries, line: { color: "#1f77b4", width: 1.8 }, connectgaps: true };
+  _consPlot("cons-ew", [ewTr],
+    { yaxis: { title: "ARM 0-100", gridcolor: "#dfe3e8" }, xaxis: { type: "date", gridcolor: "#dfe3e8" },
+      shapes: [{ type: "line", xref: "paper", x0: 0, x1: 1, y0: 50, y1: 50, line: { color: "#aab2bd", width: 1, dash: "dot" } }] });
+
+  // (3) the 4 ARM components for the selected sector
+  const ccol = { REVENUE: "#1f77b4", PREF_EARN: "#7b1fa2", SEC_EARN: "#2ca02c", REC: "#d99a2b" };
+  const compTr = (C.comp_labels || []).map(([ck, lbl]) => {
+    const ser = ((C.comp && C.comp[sel]) || {})[ck] || [];
+    return { type: "scatter", mode: "lines", name: lbl, x: C.dates, y: ser, line: { color: ccol[ck] || "#888", width: 1.6 }, connectgaps: true };
+  });
+  _consPlot("cons-comp", compTr,
+    { yaxis: { title: "ARM 0-100", gridcolor: "#dfe3e8" }, xaxis: { type: "date", gridcolor: "#dfe3e8" },
+      shapes: [{ type: "line", xref: "paper", x0: 0, x1: 1, y0: 50, y1: 50, line: { color: "#aab2bd", width: 1, dash: "dot" } }] });
+
+  // (4) sector net-active fund flow (3M trailing ₹cr), bars coloured by sign
+  const fl = (C.flow && C.flow[sel]) || [];
+  const flowTr = { type: "bar", name: "Net flow (3M, ₹ cr)", x: C.flow_dates, y: fl, marker: { color: fl.map((v) => (v >= 0 ? "#2e7d32" : "#b3402f")) } };
+  _consPlot("cons-flow", (fl.length ? [flowTr] : []),
+    { yaxis: { title: "₹ cr (3M net)", gridcolor: "#dfe3e8" }, xaxis: { type: "category", gridcolor: "#dfe3e8" } });
+}
+
 async function renderMacro() {
+  renderConsensus();                          // analyst-consensus cockpit (top of the Macro tab)
   buildMacroDom();
   if (LAZY && LAZY.world) {                 // hosted: fetch the world series the panels/snapshot need
     const need = new Set();

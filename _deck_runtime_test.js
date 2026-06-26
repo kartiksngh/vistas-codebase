@@ -24,7 +24,7 @@ function slab(s, a, end) {
   return v;
 }
 const isV2 = deck.indexOf("window.VISTAS_MEASURES=") !== -1;
-let DATA, CATALOG, MEASURES = null, STOCKS = null, WORLD = null, MACRO = null, FUND = null, LAZY = null, FUND_MANIFEST = null, QUANT_MANIFEST = null, FUNDS_HOLDINGS_MANIFEST = null, FUNDS_ATTR_MANIFEST = null;
+let DATA, CATALOG, MEASURES = null, STOCKS = null, WORLD = null, MACRO = null, FUND = null, LAZY = null, FUND_MANIFEST = null, QUANT_MANIFEST = null, FUNDS_HOLDINGS_MANIFEST = null, FUNDS_ATTR_MANIFEST = null, CONSENSUS = null;
 if (isV2) {                       // Terminal Deck v2: TR/PR + valuation measures (+ stocks + world + fundamentals)
   MEASURES = JSON.parse(slab(deck, "window.VISTAS_MEASURES=", "window.VISTAS_DATA="));
   CATALOG = JSON.parse(slab(deck, "window.VISTAS_CATALOG=", "window.VISTAS_VERSION="));
@@ -57,6 +57,12 @@ if (isV2) {                       // Terminal Deck v2: TR/PR + valuation measure
   if (hasFundsHold) { try { FUNDS_HOLDINGS_MANIFEST = JSON.parse(slab(deck, "window.VISTAS_FUNDS_HOLDINGS_MANIFEST=", afterFundsHold)); } catch (e) {} }
   if (hasFundsAttr) { try { FUNDS_ATTR_MANIFEST = JSON.parse(slab(deck, "window.VISTAS_FUNDS_ATTR_MANIFEST=", afterFundsAttr)); } catch (e) {} }
   if (hasLazy) { try { LAZY = JSON.parse(slab(deck, "window.VISTAS_LAZY=", "window.VISTAS_CATALOG=")); } catch (e) {} }
+  // Analyst Consensus Flow (#46): embedded between market_flows and survivorship (then lazy/catalog).
+  if (deck.indexOf("window.VISTAS_CONSENSUS=") !== -1) {
+    const cEnd = deck.indexOf("window.VISTAS_SURVIVORSHIP=") !== -1 ? "window.VISTAS_SURVIVORSHIP="
+               : (hasLazy ? "window.VISTAS_LAZY=" : "window.VISTAS_CATALOG=");
+    try { CONSENSUS = JSON.parse(slab(deck, "window.VISTAS_CONSENSUS=", cEnd)); } catch (e) {}
+  }
   console.log(`[deck v2] ${path.basename(deckPath)}: measures=${Object.keys(MEASURES).join(",")}, ` +
     `${Object.keys(DATA.series).length} TR indices, ${DATA.dates.length} dates` +
     (LAZY ? ` [LAZY hosted shell: ${(LAZY.indices && LAZY.indices.TR || []).length} idx + ${(LAZY.world || []).length} world fetchable]` : "") +
@@ -157,7 +163,7 @@ function fakeFetch(url) {
 }
 const sandbox = {
   document, Plotly, console,
-  window: null, VistasAnalytics: null, VISTAS_DATA: DATA, VISTAS_CATALOG: CATALOG, VISTAS_MEASURES: MEASURES, VISTAS_STOCKS: STOCKS, VISTAS_WORLD: WORLD, VISTAS_MACRO: MACRO, VISTAS_FUNDAMENTALS: FUND, VISTAS_LAZY: LAZY, VISTAS_FUND_MANIFEST: FUND_MANIFEST, VISTAS_QUANT: null, VISTAS_QUANT_MANIFEST: QUANT_MANIFEST, VISTAS_FUNDS_HOLDINGS_MANIFEST: FUNDS_HOLDINGS_MANIFEST, VISTAS_FUNDS_ATTR_MANIFEST: FUNDS_ATTR_MANIFEST,
+  window: null, VistasAnalytics: null, VISTAS_DATA: DATA, VISTAS_CATALOG: CATALOG, VISTAS_MEASURES: MEASURES, VISTAS_STOCKS: STOCKS, VISTAS_WORLD: WORLD, VISTAS_MACRO: MACRO, VISTAS_FUNDAMENTALS: FUND, VISTAS_LAZY: LAZY, VISTAS_FUND_MANIFEST: FUND_MANIFEST, VISTAS_QUANT: null, VISTAS_QUANT_MANIFEST: QUANT_MANIFEST, VISTAS_FUNDS_HOLDINGS_MANIFEST: FUNDS_HOLDINGS_MANIFEST, VISTAS_FUNDS_ATTR_MANIFEST: FUNDS_ATTR_MANIFEST, VISTAS_CONSENSUS: CONSENSUS,
   setTimeout: (f) => { if (typeof f === "function") f(); return 0; }, clearTimeout() {},
   Blob: function () {}, URL: { createObjectURL: () => "" },
   prompt: () => null, confirm: () => true,

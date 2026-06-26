@@ -361,7 +361,7 @@ def _market_behaviour(sym, ctx):
         for k, n in HZ.items():
             sr, br = _ret(j["s"], n), _ret(j["b"], n)
             rels[k] = _r((sr - br), 1) if (sr is not None and br is not None) else None
-        tail = j.tail(HIGH_WINDOW)
+        tail = j.tail(252 * 8)   # full RS history (≤8y) so the chart offers 1M…5Y/MAX horizon presets
         ratio = (tail["s"] / tail["b"])
         base = ratio.iloc[0]
         line = {"dates": [d.strftime("%Y-%m-%d") for d in tail.index],

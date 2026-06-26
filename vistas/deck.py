@@ -458,6 +458,7 @@ def build_deck_html(built_str: str, reason: str = "manual", terminal: bool = Fal
             _ss_marker["lazy"] = True
         screen_svs_line = (f"window.VISTAS_SCREEN_SVS={_json_for_script(_ss_marker)};\n" if (lazy and _ss) else "")
         market_flows_line = (f"window.VISTAS_MARKET_FLOWS={_json_for_script(site_embed.get('market_flows', {}))};\n" if (lazy and site_embed.get('market_flows')) else "")
+        consensus_line = (f"window.VISTAS_CONSENSUS={_json_for_script(site_embed.get('consensus', {}))};\n" if (lazy and site_embed.get('consensus')) else "")
         survivorship_line = (f"window.VISTAS_SURVIVORSHIP={_json_for_script(site_embed.get('survivorship', {}))};\n" if (lazy and site_embed.get('survivorship')) else "")
         lazy_cfg = {"base": "data/", "stocks": True, "fundamentals": True, "quant": True,
                     "funds_holdings": True, "funds_attribution": True, "benchmarks": True,
@@ -480,6 +481,7 @@ def build_deck_html(built_str: str, reason: str = "manual", terminal: bool = Fal
             f"{benchmark_manifest_line}"
             f"{screen_svs_line}"
             f"{market_flows_line}"
+            f"{consensus_line}"
             f"{survivorship_line}"
             f"{lazy_line}"
             f"window.VISTAS_CATALOG={_json_for_script(cat)};\n"
@@ -827,6 +829,19 @@ def save_terminal_site(reason: str = "manual", watchlist=None) -> dict:
     except Exception as e:
         print(f"[deck] smart-vs-street screen skipped: {e}")
 
+    # 2f-consensus) ANALYST CONSENSUS FLOW (#46) — roll per-stock ARM up to the 11 analyst-desk
+    # sectors as a TIME SERIES (EW history + FF snapshot + 4 components) + sector net-active fund
+    # flow. Reuses the already-built per-stock flow series + the just-built screen rows (sector,
+    # mcap). Emits sector AGGREGATES only (no licensed per-stock ARM). Graceful-degrade.
+    consensus = {}
+    try:
+        from . import arm_sectors as _armsec
+        _crows = (screen_svs.get("rows") if isinstance(screen_svs, dict) else None)
+        consensus = _armsec.build_consensus_dataset(rows=_crows, flows_by_sym=flows_by_sym,
+                                                    log=lambda m: print(m, flush=True))
+    except Exception as e:
+        print(f"[deck] analyst consensus flow skipped: {e}")
+
     # 2g) BRIDGE live-AMC holdings -> store by HOLDINGS FINGERPRINT so the cockpit lists ALL funds
     # without duplicates: matched live funds collapse to their store scheme; unmatched (passive
     # index/ETF + debt/liquid) become HOLDINGS-ONLY cockpit entries (KV: full coverage, survivorship-safe).
@@ -853,6 +868,7 @@ def save_terminal_site(reason: str = "manual", watchlist=None) -> dict:
         "survivorship": survivorship,
         "benchmark_manifest": benchmark_manifest,
         "screen_svs": screen_svs,
+        "consensus": consensus,
         "all_stocks": all_stocks,
     }
     html = build_deck_html(built_str, reason, terminal=True, site_embed=site_embed)
