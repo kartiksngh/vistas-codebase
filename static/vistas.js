@@ -1691,7 +1691,11 @@ async function renderFundsBench(holdings, category, hostId) {
   try {
     const t = r.tilt.slice(0, 12).slice().reverse();
     const tel = document.getElementById("plot-fb-tilt");   // guard: a concurrent re-render may have wiped it
-    if (tel && t.length) Plotly.react(tel, [{ type: "bar", orientation: "h", x: t.map((s) => s.d), y: t.map((s) => s.sector), marker: { color: t.map((s) => s.d >= 0 ? "#2ca02c" : "#d62728") }, hovertemplate: "%{y}: %{x:.2f} pts<extra></extra>" }], baseLayout({ xaxis: { title: "fund − benchmark (% pts)", gridcolor: "#dfe3e8", zeroline: true }, margin: { l: 175, r: 12, t: 8, b: 36 } }), PCONF);
+    if (tel && t.length) {
+      const cats = t.map((s) => s.sector);   // PIN the y category order to the data order (+ purge stale
+      Plotly.purge(tel);                     // state) so a re-render can't desync ticks/bars/hover labels
+      Plotly.react(tel, [{ type: "bar", orientation: "h", x: t.map((s) => s.d), y: cats, marker: { color: t.map((s) => s.d >= 0 ? "#2ca02c" : "#d62728") }, hovertemplate: "%{y}: %{x:.2f} pts<extra></extra>" }], baseLayout({ yaxis: { type: "category", categoryorder: "array", categoryarray: cats, automargin: true }, xaxis: { title: "fund − benchmark (% pts)", gridcolor: "#dfe3e8", zeroline: true }, margin: { l: 175, r: 12, t: 8, b: 36 } }), PCONF);
+    }
   } catch (e) { console.error("fb tilt:", e); }
   const si = $("fb-index"); if (si) si.onchange = () => { FUNDS_BENCH.slug = si.value; renderFundsBench(holdings, category, hostId); };
   const sw = $("fb-weight"); if (sw) sw.onchange = () => { FUNDS_BENCH.weight = sw.value; renderFundsBench(holdings, category, hostId); };

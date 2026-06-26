@@ -42,6 +42,71 @@ def _load_secmap() -> dict:
         return {}
 
 
+def _funds_portfolio_dir():
+    """The directory of per-scheme monthly-portfolio JSONs (each holding carries the AMC-disclosed
+    industry). Prefer the freshly-built site, fall back to the published copy. None if absent."""
+    for base in (os.path.join(_ROOT, "output", "terminal_site", "data", "funds_portfolio"),
+                 os.path.join(_ROOT, "_pages", "terminal", "data", "funds_portfolio")):
+        if os.path.isdir(base):
+            return base
+    return None
+
+
+def _disclosed_industry_map() -> dict:
+    """{SYMBOL: AMC-disclosed industry} unioned across every scheme's portfolio JSON. The SEBI
+    disclosure tags EVERY holding (including the small/micro-caps the Nifty-Total-Market list misses),
+    so this is the broad-coverage source — but in the granular SEBI taxonomy, not the NSE macro one."""
+    import glob
+    d = _funds_portfolio_dir()
+    if not d:
+        return {}
+    out = {}
+    for fp in glob.glob(os.path.join(d, "*.json")):
+        if os.path.basename(fp).startswith("_"):
+            continue
+        try:
+            data = json.load(open(fp, encoding="utf-8"))
+        except Exception:
+            continue
+        for hd in (data.get("holdings") or []):
+            s = str(hd.get("symbol") or "").strip().upper()
+            ind = str(hd.get("industry") or "").strip()
+            if s and ind and s not in out:
+                out[s] = ind
+    return out
+
+
+def _extended_secmap(log=None) -> dict:
+    """The fund-holdings sector map, broadened well beyond the Nifty-Total-Market base so a small-cap
+    book isn't dominated by 'Unclassified'. Two tiers, BOTH resolved to the NSE macro-sector taxonomy:
+      1. data/stock_industry.json — the authoritative NSE macro sector for ~750 Total-Market names.
+      2. the AMC-DISCLOSED industry (every scheme's monthly portfolio) crosswalked to that taxonomy —
+         and the crosswalk (e.g. 'Banks'→'Financial Services', 'Pharmaceuticals & Biotechnology'→
+         'Healthcare') is LEARNED by majority vote from the symbols present in BOTH tiers, so it needs
+         no hand-maintained table and tracks the data. Tier 2 covers the small/micro-caps.
+    Returns {SYMBOL: macro_sector}. Degrades to tier-1 only if the portfolios aren't available."""
+    import collections
+    macro = _load_secmap()
+    disc = _disclosed_industry_map()
+    if not disc:
+        return macro
+    votes = collections.defaultdict(collections.Counter)
+    for s, m in macro.items():
+        if s in disc:
+            votes[disc[s]][m] += 1
+    xwalk = {ind: c.most_common(1)[0][0] for ind, c in votes.items() if c}
+    out = dict(macro)
+    added = 0
+    for s, ind in disc.items():
+        if s not in out and ind in xwalk:
+            out[s] = xwalk[ind]
+            added += 1
+    if log:
+        log(f"[funds_portfolio_viz] sector map: {len(macro)} (Total-Market) + {added} "
+            f"(disclosed→macro via {len(xwalk)} learned crosswalks) = {len(out)} symbols")
+    return out
+
+
 def _asset_class(it: str) -> str:
     """Coarse asset class from the disclosed investment_type string (diagnostic buckets)."""
     s = str(it).lower()
@@ -78,7 +143,7 @@ def build_viz(holdings_path: str = HOLDINGS) -> dict:
     from . import scheme_identity as _sid
     h["navindia_code"] = h["navindia_code"].map(_sid.canonical_code)
 
-    sec = _load_secmap()
+    sec = _extended_secmap(log=lambda m: print(m, flush=True))
     h["asset_class"] = h["investment_type"].map(_asset_class)
     is_eq = h["asset_class"].values == "Equity"
     sym = h["nse_symbol"].astype("string")
