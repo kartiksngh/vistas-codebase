@@ -2976,11 +2976,31 @@ const FUND_PANELS = [
     what: "Earnings per share — net profit divided by the number of shares — plotted over time, in rupees.",
     method: "A line rising steadily is the engine of value; flat or falling EPS means there's nothing underneath for the price to compound on. Watch for downward steps caused by issuing new shares — more shares split the same profit, so EPS falls even if the business didn't.",
     why: "Over years, price follows EPS. If EPS isn't growing, any price rise is just the market paying a richer multiple — which can un-pay just as fast." },
+  { id: "ev_ebitda", sec: "valpx", tag: "VALUATION · F", kind: "plot", stat: true, dateaxis: true,
+    title: "EV/EBITDA vs its own median", keys: "analytics.valuation.ev_ebitda_series · .now · .median · .percentile",
+    what: "Enterprise value (market cap + debt) divided by operating profit (EBITDA) through time, with the stock's own long-run median as a dashed line.",
+    method: "EV/EBITDA values the WHOLE business — equity plus debt — against its cash operating profit, so two firms with very different borrowing are judged fairly on the business itself. Lower = cheaper. EV here uses GROSS debt (the data source doesn't isolate cash, so cash isn't netted off — a small upward bias for cash-rich firms). Blank for banks, which have no operating EBITDA.",
+    why: "The multiple a strategic or private-equity buyer actually thinks in — it strips out how the company is financed, so the comparison is about the business, not the balance-sheet mix." },
+  { id: "ps", sec: "valpx", tag: "VALUATION · F", kind: "plot", stat: true, dateaxis: true,
+    title: "Price/Sales vs its own median", keys: "analytics.valuation.ps_series · .now · .median · .percentile",
+    what: "Market cap divided by sales (price-to-sales) through time, with the stock's own median as a dashed reference.",
+    method: "P/S = what you pay for each rupee of revenue. It keeps working when earnings are tiny, volatile or negative (a loss-maker has no P/E but still has a P/S), so it's the steady valuation anchor through margin cycles and turnarounds. Lower = cheaper — but read it WITH margins: a low P/S on a wafer-thin-margin business isn't truly cheap.",
+    why: "Sales are far harder to massage than earnings, so P/S is the most manipulation-resistant first read — and the one that still speaks when the P/E goes blank." },
+  { id: "ev_sales", sec: "valpx", tag: "VALUATION · F", kind: "plot", stat: true, dateaxis: true,
+    title: "EV/Sales vs its own median", keys: "analytics.valuation.ev_sales_series · .now · .median · .percentile",
+    what: "Enterprise value (market cap + debt) divided by sales through time, with the stock's own median dashed.",
+    method: "EV/Sales is Price/Sales done at the whole-firm level — it adds debt to the numerator, so a company that looks cheap on P/S only because it is loaded with debt no longer does. Lower = cheaper; gross debt is used (cash not netted). Blank for banks.",
+    why: "Catches the leverage that a bare Price/Sales hides — two firms on the same P/S can be very differently valued once their borrowings are counted." },
   { id: "valsnap", sec: "valpx", tag: "VALUATION · F", kind: "table",
     title: "Valuation snapshot — multiples & yields", keys: "analytics.valuation.snapshot {pe, pb, ev_ebitda, ev_sales, mcap_sales, earnings_yield, fcf_yield, mcap_collected_cr, mktcap_cr, mcap_cohort, mcap_source}",
     what: "Today's full set of valuation multiples and yields in one table — P/E, P/B, EV/EBITDA, EV/Sales, market-cap/Sales, earnings yield, free-cash-flow yield — plus two market-cap rows and the AMFI size cohort, on the latest reported year and latest price.",
     method: "Multiples (P/E, P/B, EV/EBITDA…) are price relative to a fundamental: lower = cheaper. Yields are their inverse and read the opposite way — earnings yield (profit ÷ price) and FCF yield (free cash ÷ price), higher = cheaper. For banks the EBITDA-based rows are blank: a lender has no operating EBITDA, so those multiples are meaningless. Two market-cap rows: 'Market cap (collected)' is the COLLECTED figure — AMFI's published full market cap, or exact NSE issuedSize × NSE price where pulled — never estimated from earnings; 'Market cap (derived, approx)' is the older price × (profit ÷ EPS) reconstruction, kept only as a labelled fallback (and as the consistent driver of the EV/PB/Mcap-ratio rows above). The 'Size cohort' is AMFI's SEBI Large/Mid/Small classification.",
     why: "Cross-checks value from several independent angles at once — a stock can look cheap on P/E yet dear on cash-flow yield, and this is where you catch the disagreement." },
+  { id: "peers", sec: "valpx", tag: "PEERS", kind: "table", wide: true,
+    title: "Closest 10 peers — valuation & growth", keys: "analytics.peers {sector, self, rows[]}",
+    what: "The ten companies closest to this one — same sector, nearest market cap — side by side on the headline valuation multiples (P/E, EV/EBITDA, P/S, EV/Sales, P/B), return on equity, and 3-year sales & earnings growth. This stock's own row is highlighted at the top.",
+    method: "Peers are the same-sector names whose market cap is closest to this stock's (size-matched, so it's like-for-like). Each multiple is the latest reported figure; growth is the 3-year compound annual rate of sales and net profit; ROE is the latest return on equity. A multiple well BELOW the peer set while growth/ROE is AT or ABOVE it is the classic 'cheap for no obvious reason' screen; a multiple ABOVE the set is only earned by faster growth or fatter, more durable returns.",
+    why: "A multiple means nothing in isolation — 20× is dear for a utility and cheap for a compounder. Peers turn 'expensive or cheap' from a gut call into a relative, like-for-like judgement." },
   // ----------------------------------------------------------- LSEG StarMine — Analyst Revision Model (ARM)
   { id: "arm", sec: "estimates", tag: "LSEG STARMINE · ARM", kind: "both", wide: true,
     title: "Analyst Revision Score — headline & the parts driving it", keys: "starmine.headline · starmine.components[]",
@@ -3327,6 +3347,45 @@ async function renderFundamentals() {
     });
     h += `</tbody></table>`;
     setTbl("valsnap", h);
+  };
+
+  // ============================================================ Module F: EV/EBITDA · P/S · EV/Sales (date-axis)
+  const valMultiChart = (panelId, seriesKey, label) => {
+    const traces = [], shapes = [];
+    let any = false;
+    syms.forEach((sym, i) => {
+      const a = fAnalytics(sym); if (!a || !a.valuation) return;
+      const ser = a.valuation[seriesKey] || { dates: [], values: [] };
+      const x = ser.dates || [], yv = ser.values || [];
+      const xs = [], ys = []; for (let k = 0; k < x.length; k++) if (inWin(x[k])) { xs.push(x[k]); ys.push(yv[k]); }
+      if (ys.some((v) => v !== null && v !== undefined)) any = true;
+      traces.push({ type: "scatter", mode: "lines", name: multi ? sym : label, x: xs, y: ys, line: { color: C(i), width: 1.4 }, connectgaps: false, hovertemplate: `${multi ? sym : label}: %{y}<extra></extra>` });
+      const m = ser.median;
+      if (m !== null && m !== undefined && xs.length) shapes.push({ type: "line", x0: xs[0], x1: xs[xs.length - 1], y0: m, y1: m, line: { color: C(i), width: 1.2, dash: "dash" } });
+    });
+    if (!any) { note(panelId, `${label} not meaningful for this company.`); return; }
+    draw(panelId, traces, { shapes, yaxis: { title: `${label} (×)`, gridcolor: "#dfe3e8" }, xaxis: { type: "date", gridcolor: "#dfe3e8", rangeslider: { thickness: 0.06 } } });
+    setStat(panelId, syms.map((sym) => { const a = fAnalytics(sym); const v = a && a.valuation && a.valuation[seriesKey]; if (!v) return `${sym}: —`; const cur = v.now, m = v.median, pc = v.percentile; return `${sym}: ${label} ${num(cur, 1)}× vs median ${num(m, 1)}× (${num(pc, 0)}ᵗʰ %ile of own history${(cur !== null && cur !== undefined && m !== null && m !== undefined) ? ", " + (cur < m ? "cheaper than its norm" : "richer than its norm") : ""})`; }).join("   ·   "));
+  };
+  R.ev_ebitda = () => valMultiChart("ev_ebitda", "ev_ebitda_series", "EV/EBITDA");
+  R.ps = () => valMultiChart("ps", "ps_series", "P/S");
+  R.ev_sales = () => valMultiChart("ev_sales", "ev_sales_series", "EV/Sales");
+
+  // ============================================================ Closest-10-peers comparison (table)
+  R.peers = () => {
+    const a = fAnalytics(syms[0]);
+    const pk = a && a.peers;
+    if (!pk || !(pk.rows && pk.rows.length)) { setTbl("peers", `<div class='empty-note'>No peer set (needs sector + market cap).</div>`); return; }
+    const COLS = [["name", "Company", "txt"], ["mcap_cr", "Mcap ₹cr", "int"], ["pe", "P/E", "x"], ["ev_ebitda", "EV/EBITDA", "x"], ["ps", "P/S", "x"], ["ev_sales", "EV/Sales", "x"], ["pb", "P/B", "x"], ["roe", "ROE %", "pct"], ["sales_gr", "Sales 3y", "pct"], ["pat_gr", "PAT 3y", "pct"]];
+    const fc = (v, t) => { if (v === null || v === undefined) return "—"; if (t === "txt") return fEsc(v); if (t === "int") return Math.round(v).toLocaleString("en-IN"); if (t === "pct") return num(v, 1) + "%"; return num(v, 1) + "×"; };
+    let h = `<div class="fund-sub">Same sector (${fEsc(pk.sector || "—")}), nearest market cap. This stock highlighted.</div>`;
+    h += `<table class="gauge-tbl peers-tbl"><thead><tr>` + COLS.map(([k, l]) => `<th>${fEsc(l)}</th>`).join("") + `</tr></thead><tbody>`;
+    const rows = [Object.assign({ _self: true }, pk.self || {}), ...pk.rows];
+    rows.forEach((r) => {
+      h += `<tr${r._self ? ' class="peer-self"' : ""}>` + COLS.map(([k, l, t]) => `<td${t === "txt" ? ' class="name"' : ""}>${fc(r[k], t)}</td>`).join("") + `</tr>`;
+    });
+    h += `</tbody></table>`;
+    setTbl("peers", h);
   };
 
   // ============================================================ LSEG StarMine ARM — headline + sum-of-parts

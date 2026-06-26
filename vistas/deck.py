@@ -356,7 +356,95 @@ def _fundamentals_dataset():
             print(f"[deck] StarMine ARM cards attached to {n_arm} companies")
     except Exception as e:
         print(f"[deck] StarMine attach skipped: {e}")
+    # attach the closest-10-peers comparable set (same sector, nearest market cap) to each company
+    try:
+        n_peers = _attach_peers(out)
+        if n_peers:
+            print(f"[deck] peer comparison attached to {n_peers} companies")
+    except Exception as e:
+        print(f"[deck] peer attach skipped: {e}")
     return out or None
+
+
+def _roe_pct(an):
+    """Latest ROE (already a %) from the analytics margins block, or None."""
+    s = ((an.get("margins") or {}).get("ROE") or {})
+    vals = [v for v in (s.get("values") or []) if isinstance(v, (int, float))]
+    return round(vals[-1], 1) if vals else None
+
+
+def _peer_card(sym, out, mcap_of):
+    """One row of the peer table: latest valuation multiples + 3-year sales/PAT growth for `sym`."""
+    o = out.get(sym) or {}
+    an = o.get("analytics") or {}
+    snap = ((an.get("valuation") or {}).get("snapshot") or {})
+    g = an.get("growth") or {}
+
+    def cagr3(metric):
+        c = ((g.get(metric) or {}).get("cagr") or {}).get("3y")
+        return round(c * 100, 1) if isinstance(c, (int, float)) else None
+
+    return {"symbol": sym, "name": o.get("name") or sym, "mcap_cr": mcap_of.get(sym),
+            "pe": snap.get("pe"), "ev_ebitda": snap.get("ev_ebitda"), "ps": snap.get("mcap_sales"),
+            "ev_sales": snap.get("ev_sales"), "pb": snap.get("pb"), "roe": _roe_pct(an),
+            "sales_gr": cagr3("Sales"), "pat_gr": cagr3("PAT")}
+
+
+def _attach_peers(out, k=10):
+    """Attach a same-sector, nearest-market-cap peer set (≤k) to each company's analytics — the
+    Screener-style comparables table. Sector + market cap come from the smart-vs-street screen rows
+    (one-build-stale at worst); each peer's multiples/growth from its already-computed analytics.
+    Best-effort: a company with no sector simply gets no peer set."""
+    try:
+        from . import arm_sectors as _asec
+        rows = _asec._load_rows(None) or []
+    except Exception:
+        rows = []
+    sector_of, mcap_of = {}, {}
+    for r in rows:
+        s = r.get("symbol")
+        if not s:
+            continue
+        s = str(s).upper()
+        if r.get("sector"):
+            sector_of[s] = r.get("sector")
+        if r.get("mcap_cr"):
+            try:
+                mcap_of[s] = float(r["mcap_cr"])
+            except Exception:
+                pass
+    # fall back to the collected market cap on each bundle's snapshot
+    for sym, o in out.items():
+        if sym in mcap_of:
+            continue
+        snap = (((o.get("analytics") or {}).get("valuation") or {}).get("snapshot") or {})
+        mc = snap.get("mcap_collected_cr") or snap.get("mktcap_cr")
+        if mc:
+            try:
+                mcap_of[sym] = float(mc)
+            except Exception:
+                pass
+
+    by_sector = {}
+    for sym in out:
+        sec = sector_of.get(sym)
+        if sec:
+            by_sector.setdefault(sec, []).append(sym)
+
+    n = 0
+    for sym, o in out.items():
+        sec, mc = sector_of.get(sym), mcap_of.get(sym)
+        if not sec or not mc or not isinstance(o.get("analytics"), dict):
+            continue
+        cohort = [s for s in by_sector.get(sec, []) if s != sym and mcap_of.get(s)]
+        cohort.sort(key=lambda s: abs(math.log(mcap_of[s]) - math.log(mc)))
+        peers = [_peer_card(s, out, mcap_of) for s in cohort[:k]]
+        if not peers:
+            continue
+        o["analytics"]["peers"] = {"sector": sec, "basis": "same sector, nearest market cap",
+                                   "self": _peer_card(sym, out, mcap_of), "rows": peers}
+        n += 1
+    return n
 
 
 def _offline_catalog(built_str: str) -> dict:

@@ -621,6 +621,60 @@ def _eps_bridge(sales, pat, eps, shares, li):
             "residual": e1 - (base + rev + mar + shr)}
 
 
+def _multiple_series(pe_dates, pe_vals, ap, sales, op, pat, debt_ap, is_bank):
+    """Dense EV/EBITDA, P/S and EV/Sales TIME SERIES, aligned to the (weekly) P/E dates so they
+    plot alongside the P/E chart. Built from the identity P/E = market-cap ÷ PAT, so each multiple
+    is the dense P/E series re-scaled by a STEPPED annual statement ratio (each fiscal year's ratio
+    held forward from its report date):
+        P/S       = P/E × (PAT ÷ Sales)
+        EV/Sales  = P/S  + (Debt ÷ Sales)              [EV = market-cap + GROSS debt; cash not netted]
+        EV/EBITDA = P/E × (PAT ÷ Operating-Profit) + (Debt ÷ Operating-Profit)
+    Blanked in loss years (P/E ≤ 0, where the sign identity is unreliable) and for banks (no operating
+    EBITDA). Exactness depends on P/E and the statements sharing an earnings basis, so treat these as a
+    close approximation of the reported multiples — the snapshot table carries the precise latest values."""
+    keys = [_pdate(p) for p in ap]
+    pat_margin = [_div(p, s) for p, s in zip(pat, sales)]
+    pat_op = [_div(p, o) for p, o in zip(pat, op)]
+    debt_sales = [_div(d, s) for d, s in zip(debt_ap, sales)]
+    debt_op = [_div(d, o) for d, o in zip(debt_ap, op)]
+
+    def _isokey(ds):
+        try:
+            y, m = str(ds)[:7].split("-")[:2]
+            return (int(y), int(m))
+        except Exception:
+            return None
+
+    def _step(ratio):
+        out, j, n = [], -1, len(keys)
+        for ds in pe_dates:
+            k = _isokey(ds)
+            if k is not None:
+                while j + 1 < n and keys[j + 1] is not None and keys[j + 1] <= k:
+                    j += 1
+            out.append(ratio[j] if 0 <= j < n else None)
+        return out
+
+    sm, spo, sds, sdo = _step(pat_margin), _step(pat_op), _step(debt_sales), _step(debt_op)
+    ps_v, evs_v, eve_v = [], [], []
+    for i, raw in enumerate(pe_vals):
+        pe = _num(raw)
+        if pe is None or pe <= 0:
+            ps_v.append(None); evs_v.append(None); eve_v.append(None); continue
+        ps = _mul(pe, sm[i])
+        ps_v.append(ps)
+        evs_v.append(None if is_bank else _add(ps, sds[i]))
+        eve_v.append(None if is_bank else _add(_mul(pe, spo[i]), sdo[i]))
+
+    def _ser(vals):
+        nn = [v for v in vals if v is not None]
+        now = _last(vals)
+        return {"dates": pe_dates, "values": vals, "now": now,
+                "median": _median(vals),
+                "percentile": (_pct_rank(vals, now) if (now is not None and nn) else None)}
+    return {"ps_series": _ser(ps_v), "ev_sales_series": _ser(evs_v), "ev_ebitda_series": _ser(eve_v)}
+
+
 def _valuation_block(bundle, is_bank, sales, op, ebit, networth, pat, eps, fcf, debt, ap, bp, cp):
     val = bundle.get("valuation") or {}
     price_blk = bundle.get("price") or {}
@@ -659,10 +713,12 @@ def _valuation_block(bundle, is_bank, sales, op, ebit, networth, pat, eps, fcf, 
             "mcap_sales": _div(mcap, sales_l),
             "fcf_yield": _pct(_div(fcf_l, mcap)),
         })
+    debt_ap = _reindex(bp, debt, ap)
+    mser = _multiple_series(pe_dates, pe_vals, ap, sales, op, pat, debt_ap, is_bank)
     return {
         "pe_series": {"dates": pe_dates, "values": pe_vals},
         "pe_now": pe_now, "pe_percentile": pe_pctile, "median_pe": median_pe,
-        "snapshot": snap,
+        "snapshot": snap, **mser,
         "formulas": {k: FORMULAS[k] for k in
                      ("pe", "earnings_yield", "fcf_yield", "pb", "ev_ebitda", "ev_sales", "mcap_sales")},
     }

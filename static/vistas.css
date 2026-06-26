@@ -847,3 +847,9 @@ details.fs-market > summary { cursor:pointer; font-size:13px; padding:4px 0; }
 .cmp-tbl td.sec { color: var(--muted); font-size: 11px; }
 .cmp-tbl tr.cmp-anchor-row { background: #fff8e1; }
 .cmp-tbl tr.cmp-anchor-row td b { color: var(--navy); }
+
+/* ---- closest-peers comparison table + valuation-multiple captions (Fundamentals tab) ---- */
+.fund-sub { font-size: 12px; color: #5b6b7a; margin: 2px 0 7px; }
+.peers-tbl td { white-space: nowrap; }
+.peers-tbl tr.peer-self { background: #fff5e6; font-weight: 600; }
+.peers-tbl tr.peer-self td.name { color: #b06a00; }
