@@ -2991,6 +2991,21 @@ const FUND_PANELS = [
     what: "Enterprise value (market cap + debt) divided by sales through time, with the stock's own median dashed.",
     method: "EV/Sales is Price/Sales done at the whole-firm level — it adds debt to the numerator, so a company that looks cheap on P/S only because it is loaded with debt no longer does. Lower = cheaper; gross debt is used (cash not netted). Blank for banks.",
     why: "Catches the leverage that a bare Price/Sales hides — two firms on the same P/S can be very differently valued once their borrowings are counted." },
+  { id: "pb", sec: "valpx", tag: "VALUATION · F", kind: "plot", stat: true, dateaxis: true,
+    title: "P/B vs its own median", keys: "analytics.valuation.pb_series · .now · .median · .percentile",
+    what: "Price-to-book — market cap divided by net worth (shareholders' equity) — through time, with the stock's own median dashed.",
+    method: "P/B = what you pay for each rupee of the company's accounting net worth. It's the natural anchor for asset-heavy and financial businesses (banks, NBFCs, capital goods) where book value is real and earnings are lumpy. Read it WITH return on equity: a high P/B is only justified by a high, durable ROE — a bank at 3× book earning 8% ROE is dear; at 3× book earning 18% it can be fair. Lower = cheaper.",
+    why: "For banks and asset-heavy firms, P/B paired with ROE is the primary valuation lens — earnings multiples there mislead through the credit cycle." },
+  { id: "dy", sec: "valpx", tag: "VALUATION · F", kind: "plot", stat: true, dateaxis: true,
+    title: "Dividend yield vs its own median", keys: "analytics.valuation.dy_series · .now · .median · .percentile",
+    what: "The dividend yield — annual dividend as a % of the share price — through time, with the stock's own median dashed.",
+    method: "Dividend yield = dividend per share ÷ price (derived here as the dividend-payout ratio ÷ P/E). Unlike the multiples, HIGHER is 'cheaper' — you're paid more income per rupee invested. A yield well above its own norm can flag either genuine value or a market doubting the dividend is sustainable; check it against the payout ratio and free cash flow. Near-zero for deliberate non-payers (high-reinvestment compounders).",
+    why: "For income and the steadier end of the market, the yield and its trend is the first thing read — a yield spiking above its history is often the earliest 'this looks cheap' signal." },
+  { id: "fcfy", sec: "valpx", tag: "VALUATION · F", kind: "plot", stat: true, dateaxis: true,
+    title: "Free-cash-flow yield vs its own median", keys: "analytics.valuation.fcfy_series · .now · .median · .percentile",
+    what: "Free cash flow as a % of market cap, through time, with the stock's own median dashed.",
+    method: "FCF yield = free cash flow (operating cash − capex) ÷ market cap — the cash the business actually throws off per rupee of price, after keeping the lights on and investing. HIGHER = cheaper. It's the multiple hardest to fake: earnings can be flattered, but cash is cash. A high earnings yield with a low FCF yield is the classic warning that profit isn't converting to cash. Lumpy by nature (capex cycles), so read the trend, not one year.",
+    why: "Cash, not accounting profit, funds dividends, buybacks and debt repayment — so FCF yield is the truest 'what am I really getting' read." },
   { id: "valsnap", sec: "valpx", tag: "VALUATION · F", kind: "table",
     title: "Valuation snapshot — multiples & yields", keys: "analytics.valuation.snapshot {pe, pb, ev_ebitda, ev_sales, mcap_sales, earnings_yield, fcf_yield, mcap_collected_cr, mktcap_cr, mcap_cohort, mcap_source}",
     what: "Today's full set of valuation multiples and yields in one table — P/E, P/B, EV/EBITDA, EV/Sales, market-cap/Sales, earnings yield, free-cash-flow yield — plus two market-cap rows and the AMFI size cohort, on the latest reported year and latest price.",
@@ -3349,8 +3364,9 @@ async function renderFundamentals() {
     setTbl("valsnap", h);
   };
 
-  // ============================================================ Module F: EV/EBITDA · P/S · EV/Sales (date-axis)
-  const valMultiChart = (panelId, seriesKey, label) => {
+  // ============================================================ Module F: EV/EBITDA · P/S · EV/Sales · P/B · yields (date-axis)
+  const valMultiChart = (panelId, seriesKey, label, unit, higherIsCheaper) => {
+    unit = unit || "×";
     const traces = [], shapes = [];
     let any = false;
     syms.forEach((sym, i) => {
@@ -3364,12 +3380,15 @@ async function renderFundamentals() {
       if (m !== null && m !== undefined && xs.length) shapes.push({ type: "line", x0: xs[0], x1: xs[xs.length - 1], y0: m, y1: m, line: { color: C(i), width: 1.2, dash: "dash" } });
     });
     if (!any) { note(panelId, `${label} not meaningful for this company.`); return; }
-    draw(panelId, traces, { shapes, yaxis: { title: `${label} (×)`, gridcolor: "#dfe3e8" }, xaxis: { type: "date", gridcolor: "#dfe3e8", rangeslider: { thickness: 0.06 } } });
-    setStat(panelId, syms.map((sym) => { const a = fAnalytics(sym); const v = a && a.valuation && a.valuation[seriesKey]; if (!v) return `${sym}: —`; const cur = v.now, m = v.median, pc = v.percentile; return `${sym}: ${label} ${num(cur, 1)}× vs median ${num(m, 1)}× (${num(pc, 0)}ᵗʰ %ile of own history${(cur !== null && cur !== undefined && m !== null && m !== undefined) ? ", " + (cur < m ? "cheaper than its norm" : "richer than its norm") : ""})`; }).join("   ·   "));
+    draw(panelId, traces, { shapes, yaxis: { title: `${label} (${unit})`, gridcolor: "#dfe3e8" }, xaxis: { type: "date", gridcolor: "#dfe3e8", rangeslider: { thickness: 0.06 } } });
+    setStat(panelId, syms.map((sym) => { const a = fAnalytics(sym); const v = a && a.valuation && a.valuation[seriesKey]; if (!v) return `${sym}: —`; const cur = v.now, m = v.median, pc = v.percentile; const cheap = higherIsCheaper ? (cur > m) : (cur < m); return `${sym}: ${label} ${num(cur, 1)}${unit} vs median ${num(m, 1)}${unit} (${num(pc, 0)}ᵗʰ %ile of own history${(cur !== null && cur !== undefined && m !== null && m !== undefined) ? ", " + (cheap ? "cheaper than its norm" : "richer than its norm") : ""})`; }).join("   ·   "));
   };
-  R.ev_ebitda = () => valMultiChart("ev_ebitda", "ev_ebitda_series", "EV/EBITDA");
-  R.ps = () => valMultiChart("ps", "ps_series", "P/S");
-  R.ev_sales = () => valMultiChart("ev_sales", "ev_sales_series", "EV/Sales");
+  R.ev_ebitda = () => valMultiChart("ev_ebitda", "ev_ebitda_series", "EV/EBITDA", "×", false);
+  R.ps = () => valMultiChart("ps", "ps_series", "P/S", "×", false);
+  R.ev_sales = () => valMultiChart("ev_sales", "ev_sales_series", "EV/Sales", "×", false);
+  R.pb = () => valMultiChart("pb", "pb_series", "P/B", "×", false);
+  R.dy = () => valMultiChart("dy", "dy_series", "Dividend yield", "%", true);
+  R.fcfy = () => valMultiChart("fcfy", "fcfy_series", "FCF yield", "%", true);
 
   // ============================================================ Closest-10-peers comparison (table)
   R.peers = () => {

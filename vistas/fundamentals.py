@@ -621,22 +621,27 @@ def _eps_bridge(sales, pat, eps, shares, li):
             "residual": e1 - (base + rev + mar + shr)}
 
 
-def _multiple_series(pe_dates, pe_vals, ap, sales, op, pat, debt_ap, is_bank):
-    """Dense EV/EBITDA, P/S and EV/Sales TIME SERIES, aligned to the (weekly) P/E dates so they
-    plot alongside the P/E chart. Built from the identity P/E = market-cap ÷ PAT, so each multiple
-    is the dense P/E series re-scaled by a STEPPED annual statement ratio (each fiscal year's ratio
-    held forward from its report date):
-        P/S       = P/E × (PAT ÷ Sales)
-        EV/Sales  = P/S  + (Debt ÷ Sales)              [EV = market-cap + GROSS debt; cash not netted]
-        EV/EBITDA = P/E × (PAT ÷ Operating-Profit) + (Debt ÷ Operating-Profit)
-    Blanked in loss years (P/E ≤ 0, where the sign identity is unreliable) and for banks (no operating
-    EBITDA). Exactness depends on P/E and the statements sharing an earnings basis, so treat these as a
-    close approximation of the reported multiples — the snapshot table carries the precise latest values."""
+def _multiple_series(pe_dates, pe_vals, ap, sales, op, pat, debt_ap, nw_ap, fcf_ap, payout, is_bank):
+    """Dense valuation-multiple TIME SERIES aligned to the (weekly) P/E dates so they plot alongside
+    the P/E chart. Built from the identity P/E = market-cap ÷ PAT, so each is the dense P/E series
+    re-scaled by a STEPPED annual statement ratio (held forward from each fiscal year's report date):
+        P/S         = P/E × (PAT ÷ Sales)
+        EV/Sales    = P/S  + (Debt ÷ Sales)            [EV = market-cap + GROSS debt; cash not netted]
+        EV/EBITDA   = P/E × (PAT ÷ Op-Profit) + (Debt ÷ Op-Profit)
+        P/B         = P/E × (PAT ÷ Net-worth) = P/E × ROE
+        Div yield % = (Dividend-payout %) ÷ P/E
+        FCF yield % = 100 × (FCF ÷ PAT) ÷ P/E
+    P/B tolerates loss years (P/E<0 × ROE<0 = a positive book multiple); the rest blank where P/E ≤ 0
+    (the sign identity is unreliable). EV multiples blank for banks. Exactness depends on P/E and the
+    statements sharing an earnings basis, so treat these as a close approximation of the reported
+    multiples — the snapshot table carries the precise latest values."""
     keys = [_pdate(p) for p in ap]
     pat_margin = [_div(p, s) for p, s in zip(pat, sales)]
     pat_op = [_div(p, o) for p, o in zip(pat, op)]
     debt_sales = [_div(d, s) for d, s in zip(debt_ap, sales)]
     debt_op = [_div(d, o) for d, o in zip(debt_ap, op)]
+    roe_frac = [_div(p, n) for p, n in zip(pat, nw_ap)]
+    fcf_pat = [_div(fc, p) for fc, p in zip(fcf_ap, pat)]
 
     def _isokey(ds):
         try:
@@ -656,15 +661,25 @@ def _multiple_series(pe_dates, pe_vals, ap, sales, op, pat, debt_ap, is_bank):
         return out
 
     sm, spo, sds, sdo = _step(pat_margin), _step(pat_op), _step(debt_sales), _step(debt_op)
-    ps_v, evs_v, eve_v = [], [], []
+    srf, sfp, spay = _step(roe_frac), _step(fcf_pat), _step(payout)
+    ps_v, evs_v, eve_v, pb_v, dy_v, fy_v = [], [], [], [], [], []
     for i, raw in enumerate(pe_vals):
         pe = _num(raw)
-        if pe is None or pe <= 0:
-            ps_v.append(None); evs_v.append(None); eve_v.append(None); continue
+        if pe is None:
+            for L in (ps_v, evs_v, eve_v, pb_v, dy_v, fy_v):
+                L.append(None)
+            continue
+        pb_v.append(_mul(pe, srf[i]))                       # P/B = P/E × ROE (valid through loss years)
+        if pe <= 0:
+            for L in (ps_v, evs_v, eve_v, dy_v, fy_v):
+                L.append(None)
+            continue
         ps = _mul(pe, sm[i])
         ps_v.append(ps)
         evs_v.append(None if is_bank else _add(ps, sds[i]))
         eve_v.append(None if is_bank else _add(_mul(pe, spo[i]), sdo[i]))
+        dy_v.append(_div(spay[i], pe))                      # dividend yield % = payout % ÷ P/E
+        fy_v.append(_mul(100.0, _div(sfp[i], pe)) if sfp[i] is not None else None)  # FCF yield %
 
     def _ser(vals):
         nn = [v for v in vals if v is not None]
@@ -672,7 +687,8 @@ def _multiple_series(pe_dates, pe_vals, ap, sales, op, pat, debt_ap, is_bank):
         return {"dates": pe_dates, "values": vals, "now": now,
                 "median": _median(vals),
                 "percentile": (_pct_rank(vals, now) if (now is not None and nn) else None)}
-    return {"ps_series": _ser(ps_v), "ev_sales_series": _ser(evs_v), "ev_ebitda_series": _ser(eve_v)}
+    return {"ps_series": _ser(ps_v), "ev_sales_series": _ser(evs_v), "ev_ebitda_series": _ser(eve_v),
+            "pb_series": _ser(pb_v), "dy_series": _ser(dy_v), "fcfy_series": _ser(fy_v)}
 
 
 def _valuation_block(bundle, is_bank, sales, op, ebit, networth, pat, eps, fcf, debt, ap, bp, cp):
@@ -714,7 +730,10 @@ def _valuation_block(bundle, is_bank, sales, op, ebit, networth, pat, eps, fcf, 
             "fcf_yield": _pct(_div(fcf_l, mcap)),
         })
     debt_ap = _reindex(bp, debt, ap)
-    mser = _multiple_series(pe_dates, pe_vals, ap, sales, op, pat, debt_ap, is_bank)
+    nw_ap = _reindex(bp, networth, ap)
+    fcf_ap = _reindex(cp, fcf, ap)
+    payout = _vals(_table(bundle, "profit_loss"), "dividend payout", cols=ap)
+    mser = _multiple_series(pe_dates, pe_vals, ap, sales, op, pat, debt_ap, nw_ap, fcf_ap, payout, is_bank)
     return {
         "pe_series": {"dates": pe_dates, "values": pe_vals},
         "pe_now": pe_now, "pe_percentile": pe_pctile, "median_pe": median_pe,
