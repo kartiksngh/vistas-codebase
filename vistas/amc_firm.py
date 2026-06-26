@@ -443,6 +443,42 @@ def _play_type(arm):
     return "structural"
 
 
+def waterfill(sel, equity_target, max_sector, sector_free="Unclassified", iters=50):
+    """Place `equity_target` (fraction of NAV) across the names in `sel` ∝ each name's `score`,
+    honoring per-name caps (`u['cap']`) AND a per-sector ceiling `max_sector` (the `sector_free`
+    pseudo-sector is exempt — unknown-sector names aren't really one sector). Leftover weight from
+    names that hit a cap redistributes to those with headroom over `iters` passes; whatever still
+    can't fit (a genuine capacity limit) is left undeployed. Mutates `u['w']` in place; returns the
+    total fraction actually deployed. THE single water-fill used by both build_rules_v0 (today's
+    book) and amc_replay (the historical walk-forward) so they stay numerically identical."""
+    for u in sel:
+        u["w"] = 0.0
+    remaining = equity_target
+    for _ in range(iters):
+        if remaining <= 1e-4:
+            break
+        secw = {}
+        for u in sel:
+            secw[u["sector"]] = secw.get(u["sector"], 0.0) + u["w"]
+        active = [u for u in sel if u["w"] < u["cap"] - 1e-9 and
+                  (u["sector"] == sector_free or secw.get(u["sector"], 0.0) < max_sector - 1e-9)]
+        if not active:
+            break
+        tot_score = sum(x["score"] for x in active) or 1.0
+        placed = 0.0
+        for u in active:
+            sec_room = 1e9 if u["sector"] == sector_free else max_sector - secw.get(u["sector"], 0.0)
+            add = min(remaining * u["score"] / tot_score, u["cap"] - u["w"], sec_room)
+            if add > 0:
+                u["w"] += add
+                secw[u["sector"]] = secw.get(u["sector"], 0.0) + add
+                placed += add
+        remaining -= placed
+        if placed <= 1e-7:
+            break
+    return equity_target - remaining
+
+
 def build_rules_v0(reg_entry, asof, equity_target=0.95, log=print):
     """Deploy a fresh 100%-cash book into a mandate+liquidity-constrained, ARM-scored portfolio
     as-of `asof`. Returns (book, trades, diag). No look-ahead: only prices/ARM ≤ asof are read.
@@ -497,29 +533,7 @@ def build_rules_v0(reg_entry, asof, equity_target=0.95, log=print):
     # iterative water-fill: place equity_target across names ∝ score, honoring per-name caps AND
     # per-sector caps; leftover from capped names redistributes to those with headroom. Whatever
     # still can't fit (a genuine capacity limit — e.g. a huge book in illiquid small-caps) stays cash.
-    remaining = equity_target
-    for _ in range(50):
-        if remaining <= 1e-4:
-            break
-        secw = {}
-        for u in sel:
-            secw[u["sector"]] = secw.get(u["sector"], 0.0) + u["w"]
-        active = [u for u in sel if u["w"] < u["cap"] - 1e-9 and
-                  (u["sector"] == SECTOR_FREE or secw.get(u["sector"], 0.0) < m["max_sector"] - 1e-9)]
-        if not active:
-            break
-        tot_score = sum(x["score"] for x in active) or 1.0
-        placed = 0.0
-        for u in active:
-            sec_room = 1e9 if u["sector"] == SECTOR_FREE else m["max_sector"] - secw.get(u["sector"], 0.0)
-            add = min(remaining * u["score"] / tot_score, u["cap"] - u["w"], sec_room)
-            if add > 0:
-                u["w"] += add
-                secw[u["sector"]] = secw.get(u["sector"], 0.0) + add
-                placed += add
-        remaining -= placed
-        if placed <= 1e-7:
-            break
+    waterfill(sel, equity_target, m["max_sector"], SECTOR_FREE)
 
     book = new_book(reg_entry)
     book["inception"] = asof

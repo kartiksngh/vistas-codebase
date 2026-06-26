@@ -1,0 +1,59 @@
+{
+ "scheme": "Aditya Birla SL Flexi Cap Fund (G)",
+ "amc": "Aditya Birla Sun Life Mutual Fund",
+ "category": "Flexi Cap Fund",
+ "diag": {
+  "aum0_cr": 25899.9,
+  "start": "2015-01-30",
+  "end": "2026-06-25",
+  "n_rebalances": 138,
+  "cost_bps": 15.0,
+  "avg_universe": 1169.0,
+  "avg_arm_cov_pct": 64.1,
+  "avg_dead_included": 69.9,
+  "avg_holdings": 70.0,
+  "avg_oneway_turnover_pct": 46.17
+ },
+ "scorecard": {
+  "window": {
+   "start": "2015-01-30",
+   "end": "2026-06-25",
+   "years": 11.4
+  },
+  "book": {
+   "cagr_pct": 19.52,
+   "vol_pct": 20.05,
+   "sharpe": 1.01,
+   "maxdd_pct": -42.12,
+   "final_nav": 763.73
+  },
+  "benchmark_name": "NIFTY 500",
+  "benchmark": {
+   "cagr_pct": 12.03,
+   "vol_pct": 16.21,
+   "maxdd_pct": -38.11,
+   "excess_cagr_pct": 7.49,
+   "tracking_error_pct": 9.43,
+   "info_ratio": 0.79,
+   "beta": 1.1,
+   "up_capture": 1.13,
+   "down_capture": 1.07
+  },
+  "real_scheme": {
+   "matched_name": "Aditya Birla Sun Life Flexi Cap Fund - Growth - Direct Plan",
+   "real_cagr_pct": 13.56,
+   "book_cagr_pct": 19.54,
+   "book_minus_real_cagr_pct": 5.99,
+   "overlap_years": 11.4
+  },
+  "fundamental_law": {
+   "ic_mean": 0.0331,
+   "ic_tstat": 7.03,
+   "transfer_coefficient": 0.327,
+   "breadth_per_year_UPPER": 840.0,
+   "implied_IR_UPPER": 0.31,
+   "realized_IR_vs_bench": 0.79,
+   "note": "IC = mean cross-sectional Spearman(ARM score, next-rebalance return) over the candidate universe; TC = mean corr(actual target weights, unconstrained score-weights); BR is an UPPER bound (monthly holdings are NOT independent \u2014 true breadth is far lower), so implied_IR is an upper bound on what the signal could deliver, to be read against the realized IR."
+  }
+ }
+}

@@ -1,0 +1,11536 @@
+[
+ {
+  "date": "2015-01-30",
+  "nav": 99.9108,
+  "n_holdings": 60,
+  "equity_pct": 59.48,
+  "cash_pct": 40.52,
+  "oneway_turnover_pct": 29.74,
+  "universe_n": 746,
+  "arm_coverage_pct": 77.2,
+  "n_dead_included": 144,
+  "deployed_pct": 59.48,
+  "top_holdings": [
+   {
+    "name": "HINDUSTAN UNILEVER LTD.",
+    "sym": "HINDUNILVR",
+    "pct": 7.15
+   },
+   {
+    "name": "YES BANK LIMITED",
+    "sym": "YESBANK",
+    "pct": 6.32
+   },
+   {
+    "name": "SUN PHARMACEUTICAL IND L",
+    "sym": "SUNPHARMA",
+    "pct": 3.49
+   },
+   {
+    "name": "JET AIRWAYS (INDIA) LTD.",
+    "sym": "JETAIRWAYS",
+    "pct": 3.35
+   },
+   {
+    "name": "ASIAN PAINTS LIMITED",
+    "sym": "ASIANPAINT",
+    "pct": 3.31
+   },
+   {
+    "name": "ASHOK LEYLAND LTD",
+    "sym": "ASHOKLEY",
+    "pct": 2.35
+   },
+   {
+    "name": "BANK OF INDIA",
+    "sym": "BANKINDIA",
+    "pct": 2.11
+   },
+   {
+    "name": "AUROBINDO PHARMA LTD",
+    "sym": "AUROPHARMA",
+    "pct": 1.91
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Consumer",
+    "pct": 14.9
+   },
+   {
+    "sector": "Financials",
+    "pct": 10.88
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 7.95
+   },
+   {
+    "sector": "Energy",
+    "pct": 7.02
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 5.91
+   },
+   {
+    "sector": "Auto",
+    "pct": 4.93
+   }
+  ],
+  "play_mix": {
+   "tactical": 59.48
+  }
+ },
+ {
+  "date": "2015-02-28",
+  "nav": 98.9725,
+  "n_holdings": 60,
+  "equity_pct": 69.43,
+  "cash_pct": 30.57,
+  "oneway_turnover_pct": 32.91,
+  "universe_n": 728,
+  "arm_coverage_pct": 79.1,
+  "n_dead_included": 133,
+  "deployed_pct": 69.43,
+  "top_holdings": [
+   {
+    "name": "WOCKHARDT LIMITED",
+    "sym": "WOCKPHARMA",
+    "pct": 7.64
+   },
+   {
+    "name": "YES BANK LIMITED",
+    "sym": "YESBANK",
+    "pct": 6.37
+   },
+   {
+    "name": "HCL TECHNOLOGIES LTD",
+    "sym": "HCLTECH",
+    "pct": 5.08
+   },
+   {
+    "name": "AUROBINDO PHARMA LTD",
+    "sym": "AUROPHARMA",
+    "pct": 3.41
+   },
+   {
+    "name": "BOSCH LIMITED",
+    "sym": "BOSCHLTD",
+    "pct": 3.14
+   },
+   {
+    "name": "ASIAN PAINTS LIMITED",
+    "sym": "ASIANPAINT",
+    "pct": 3.0
+   },
+   {
+    "name": "BHARAT FORGE LTD",
+    "sym": "BHARATFORG",
+    "pct": 2.84
+   },
+   {
+    "name": "BHARAT PETROLEUM CORP  LT",
+    "sym": "BPCL",
+    "pct": 2.58
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Healthcare",
+    "pct": 12.36
+   },
+   {
+    "sector": "Consumer",
+    "pct": 10.66
+   },
+   {
+    "sector": "Financials",
+    "pct": 10.28
+   },
+   {
+    "sector": "Auto",
+    "pct": 9.45
+   },
+   {
+    "sector": "Energy",
+    "pct": 7.02
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 6.29
+   }
+  ],
+  "play_mix": {
+   "tactical": 54.84,
+   "structural": 14.59
+  }
+ },
+ {
+  "date": "2015-03-31",
+  "nav": 100.7971,
+  "n_holdings": 60,
+  "equity_pct": 64.8,
+  "cash_pct": 35.2,
+  "oneway_turnover_pct": 22.82,
+  "universe_n": 726,
+  "arm_coverage_pct": 78.8,
+  "n_dead_included": 140,
+  "deployed_pct": 64.8,
+  "top_holdings": [
+   {
+    "name": "WOCKHARDT LIMITED",
+    "sym": "WOCKPHARMA",
+    "pct": 6.22
+   },
+   {
+    "name": "YES BANK LIMITED",
+    "sym": "YESBANK",
+    "pct": 5.54
+   },
+   {
+    "name": "LUPIN LIMITED",
+    "sym": "LUPIN",
+    "pct": 4.27
+   },
+   {
+    "name": "AUROBINDO PHARMA LTD",
+    "sym": "AUROPHARMA",
+    "pct": 3.99
+   },
+   {
+    "name": "VODAFONE IDEA LIMITED",
+    "sym": "IDEA",
+    "pct": 3.51
+   },
+   {
+    "name": "HINDUSTAN UNILEVER LTD.",
+    "sym": "HINDUNILVR",
+    "pct": 3.12
+   },
+   {
+    "name": "BHARAT PETROLEUM CORP  LT",
+    "sym": "BPCL",
+    "pct": 2.54
+   },
+   {
+    "name": "NTPC LTD",
+    "sym": "NTPC",
+    "pct": 2.41
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Healthcare",
+    "pct": 18.72
+   },
+   {
+    "sector": "Financials",
+    "pct": 9.28
+   },
+   {
+    "sector": "Consumer",
+    "pct": 9.26
+   },
+   {
+    "sector": "Auto",
+    "pct": 6.5
+   },
+   {
+    "sector": "Energy",
+    "pct": 6.04
+   },
+   {
+    "sector": "Industrials",
+    "pct": 5.29
+   }
+  ],
+  "play_mix": {
+   "tactical": 57.39,
+   "structural": 7.41
+  }
+ },
+ {
+  "date": "2015-04-30",
+  "nav": 96.7388,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 23.78,
+  "universe_n": 727,
+  "arm_coverage_pct": 78.4,
+  "n_dead_included": 136,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "WOCKHARDT LIMITED",
+    "sym": "WOCKPHARMA",
+    "pct": 5.64
+   },
+   {
+    "name": "YES BANK LIMITED",
+    "sym": "YESBANK",
+    "pct": 4.22
+   },
+   {
+    "name": "AXIS BANK LIMITED",
+    "sym": "AXISBANK",
+    "pct": 3.87
+   },
+   {
+    "name": "VODAFONE IDEA LIMITED",
+    "sym": "IDEA",
+    "pct": 3.76
+   },
+   {
+    "name": "AUROBINDO PHARMA LTD",
+    "sym": "AUROPHARMA",
+    "pct": 3.76
+   },
+   {
+    "name": "KOTAK MAHINDRA BANK LTD",
+    "sym": "KOTAKBANK",
+    "pct": 2.83
+   },
+   {
+    "name": "HINDUSTAN UNILEVER LTD.",
+    "sym": "HINDUNILVR",
+    "pct": 2.8
+   },
+   {
+    "name": "BHARAT FORGE LTD",
+    "sym": "BHARATFORG",
+    "pct": 2.4
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 15.46
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 13.07
+   },
+   {
+    "sector": "Auto",
+    "pct": 9.06
+   },
+   {
+    "sector": "Industrials",
+    "pct": 8.83
+   },
+   {
+    "sector": "Energy",
+    "pct": 7.33
+   },
+   {
+    "sector": "Consumer",
+    "pct": 6.01
+   }
+  ],
+  "play_mix": {
+   "tactical": 32.36,
+   "structural": 40.14
+  }
+ },
+ {
+  "date": "2015-05-29",
+  "nav": 100.2455,
+  "n_holdings": 60,
+  "equity_pct": 59.18,
+  "cash_pct": 40.82,
+  "oneway_turnover_pct": 31.69,
+  "universe_n": 674,
+  "arm_coverage_pct": 79.7,
+  "n_dead_included": 125,
+  "deployed_pct": 59.18,
+  "top_holdings": [
+   {
+    "name": "AXIS BANK LIMITED",
+    "sym": "AXISBANK",
+    "pct": 7.26
+   },
+   {
+    "name": "YES BANK LIMITED",
+    "sym": "YESBANK",
+    "pct": 4.9
+   },
+   {
+    "name": "HOUSING DEV & INFRA LTD",
+    "sym": "HDIL",
+    "pct": 3.84
+   },
+   {
+    "name": "UPL LIMITED",
+    "sym": "UPL",
+    "pct": 3.52
+   },
+   {
+    "name": "CIPLA LTD",
+    "sym": "CIPLA",
+    "pct": 2.96
+   },
+   {
+    "name": "MARUTI SUZUKI INDIA LTD.",
+    "sym": "MARUTI",
+    "pct": 2.51
+   },
+   {
+    "name": "KOTAK MAHINDRA BANK LTD",
+    "sym": "KOTAKBANK",
+    "pct": 2.25
+   },
+   {
+    "name": "BHARAT PETROLEUM CORP  LT",
+    "sym": "BPCL",
+    "pct": 1.87
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 17.93
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 8.69
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 7.56
+   },
+   {
+    "sector": "Industrials",
+    "pct": 6.76
+   },
+   {
+    "sector": "Energy",
+    "pct": 6.52
+   },
+   {
+    "sector": "Consumer",
+    "pct": 4.21
+   }
+  ],
+  "play_mix": {
+   "tactical": 27.94,
+   "structural": 31.24
+  }
+ },
+ {
+  "date": "2015-06-30",
+  "nav": 98.2524,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 28.9,
+  "universe_n": 653,
+  "arm_coverage_pct": 80.9,
+  "n_dead_included": 117,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "RELIANCE INDUSTRIES LTD",
+    "sym": "RELIANCE",
+    "pct": 4.75
+   },
+   {
+    "name": "AXIS BANK LIMITED",
+    "sym": "AXISBANK",
+    "pct": 4.49
+   },
+   {
+    "name": "HDFC",
+    "sym": "HDFC",
+    "pct": 4.35
+   },
+   {
+    "name": "YES BANK LIMITED",
+    "sym": "YESBANK",
+    "pct": 4.29
+   },
+   {
+    "name": "WOCKHARDT LIMITED",
+    "sym": "WOCKPHARMA",
+    "pct": 4.07
+   },
+   {
+    "name": "COAL INDIA LTD",
+    "sym": "COALINDIA",
+    "pct": 3.96
+   },
+   {
+    "name": "EICHER MOTORS LTD",
+    "sym": "EICHERMOT",
+    "pct": 3.95
+   },
+   {
+    "name": "AUROBINDO PHARMA LTD",
+    "sym": "AUROPHARMA",
+    "pct": 3.21
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Energy",
+    "pct": 16.91
+   },
+   {
+    "sector": "Financials",
+    "pct": 13.68
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 11.2
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 9.87
+   },
+   {
+    "sector": "Industrials",
+    "pct": 7.26
+   },
+   {
+    "sector": "Auto",
+    "pct": 6.8
+   }
+  ],
+  "play_mix": {
+   "tactical": 38.98,
+   "structural": 33.52
+  }
+ },
+ {
+  "date": "2015-07-31",
+  "nav": 102.3589,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 30.21,
+  "universe_n": 780,
+  "arm_coverage_pct": 75.8,
+  "n_dead_included": 142,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "INFOSYS LIMITED",
+    "sym": "INFY",
+    "pct": 5.9
+   },
+   {
+    "name": "YES BANK LIMITED",
+    "sym": "YESBANK",
+    "pct": 4.54
+   },
+   {
+    "name": "COAL INDIA LTD",
+    "sym": "COALINDIA",
+    "pct": 4.0
+   },
+   {
+    "name": "HINDUSTAN PETROLEUM CORP",
+    "sym": "HINDPETRO",
+    "pct": 3.59
+   },
+   {
+    "name": "BHARAT PETROLEUM CORP  LT",
+    "sym": "BPCL",
+    "pct": 3.4
+   },
+   {
+    "name": "EICHER MOTORS LTD",
+    "sym": "EICHERMOT",
+    "pct": 3.26
+   },
+   {
+    "name": "WOCKHARDT LIMITED",
+    "sym": "WOCKPHARMA",
+    "pct": 2.99
+   },
+   {
+    "name": "AUROBINDO PHARMA LTD",
+    "sym": "AUROPHARMA",
+    "pct": 2.9
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Energy",
+    "pct": 14.82
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 12.77
+   },
+   {
+    "sector": "Auto",
+    "pct": 8.29
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 8.17
+   },
+   {
+    "sector": "Technology",
+    "pct": 8.16
+   },
+   {
+    "sector": "Industrials",
+    "pct": 7.08
+   }
+  ],
+  "play_mix": {
+   "tactical": 42.89,
+   "structural": 29.61
+  }
+ },
+ {
+  "date": "2015-08-31",
+  "nav": 98.7161,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 29.0,
+  "universe_n": 797,
+  "arm_coverage_pct": 75.7,
+  "n_dead_included": 139,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "WOCKHARDT LIMITED",
+    "sym": "WOCKPHARMA",
+    "pct": 3.58
+   },
+   {
+    "name": "ASHOK LEYLAND LTD",
+    "sym": "ASHOKLEY",
+    "pct": 3.58
+   },
+   {
+    "name": "BHARAT PETROLEUM CORP  LT",
+    "sym": "BPCL",
+    "pct": 3.51
+   },
+   {
+    "name": "INFOSYS LIMITED",
+    "sym": "INFY",
+    "pct": 3.44
+   },
+   {
+    "name": "TATA ELXSI LIMITED",
+    "sym": "TATAELXSI",
+    "pct": 3.37
+   },
+   {
+    "name": "CIPLA LTD",
+    "sym": "CIPLA",
+    "pct": 3.19
+   },
+   {
+    "name": "INDIAN OIL CORP LTD",
+    "sym": "IOC",
+    "pct": 2.99
+   },
+   {
+    "name": "HINDUSTAN PETROLEUM CORP",
+    "sym": "HINDPETRO",
+    "pct": 2.9
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Healthcare",
+    "pct": 16.51
+   },
+   {
+    "sector": "Industrials",
+    "pct": 13.34
+   },
+   {
+    "sector": "Energy",
+    "pct": 11.98
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 8.5
+   },
+   {
+    "sector": "Technology",
+    "pct": 8.08
+   },
+   {
+    "sector": "Auto",
+    "pct": 6.53
+   }
+  ],
+  "play_mix": {
+   "tactical": 63.75,
+   "structural": 8.75
+  }
+ },
+ {
+  "date": "2015-09-30",
+  "nav": 99.3604,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 21.48,
+  "universe_n": 668,
+  "arm_coverage_pct": 80.2,
+  "n_dead_included": 114,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "INFOSYS LIMITED",
+    "sym": "INFY",
+    "pct": 4.16
+   },
+   {
+    "name": "MAHINDRA & MAHINDRA LTD",
+    "sym": "M&M",
+    "pct": 3.51
+   },
+   {
+    "name": "TATA ELXSI LIMITED",
+    "sym": "TATAELXSI",
+    "pct": 3.44
+   },
+   {
+    "name": "WOCKHARDT LIMITED",
+    "sym": "WOCKPHARMA",
+    "pct": 3.43
+   },
+   {
+    "name": "AUROBINDO PHARMA LTD",
+    "sym": "AUROPHARMA",
+    "pct": 3.36
+   },
+   {
+    "name": "TATA CONSULTANCY SERV LT",
+    "sym": "TCS",
+    "pct": 3.34
+   },
+   {
+    "name": "DR. REDDY S LABORATORIES",
+    "sym": "DRREDDY",
+    "pct": 3.34
+   },
+   {
+    "name": "LUPIN LIMITED",
+    "sym": "LUPIN",
+    "pct": 3.3
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Healthcare",
+    "pct": 20.71
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 13.22
+   },
+   {
+    "sector": "Technology",
+    "pct": 11.42
+   },
+   {
+    "sector": "Energy",
+    "pct": 9.0
+   },
+   {
+    "sector": "Industrials",
+    "pct": 6.62
+   },
+   {
+    "sector": "Auto",
+    "pct": 6.33
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2015-10-30",
+  "nav": 100.5279,
+  "n_holdings": 60,
+  "equity_pct": 69.26,
+  "cash_pct": 30.74,
+  "oneway_turnover_pct": 29.82,
+  "universe_n": 735,
+  "arm_coverage_pct": 77.4,
+  "n_dead_included": 125,
+  "deployed_pct": 69.26,
+  "top_holdings": [
+   {
+    "name": "INFOSYS LIMITED",
+    "sym": "INFY",
+    "pct": 9.0
+   },
+   {
+    "name": "RELIANCE INDUSTRIES LTD",
+    "sym": "RELIANCE",
+    "pct": 5.96
+   },
+   {
+    "name": "YES BANK LIMITED",
+    "sym": "YESBANK",
+    "pct": 4.84
+   },
+   {
+    "name": "WOCKHARDT LIMITED",
+    "sym": "WOCKPHARMA",
+    "pct": 3.43
+   },
+   {
+    "name": "DR. REDDY S LABORATORIES",
+    "sym": "DRREDDY",
+    "pct": 3.43
+   },
+   {
+    "name": "CIPLA LTD",
+    "sym": "CIPLA",
+    "pct": 3.1
+   },
+   {
+    "name": "JET AIRWAYS (INDIA) LTD.",
+    "sym": "JETAIRWAYS",
+    "pct": 2.9
+   },
+   {
+    "name": "AUROBINDO PHARMA LTD",
+    "sym": "AUROPHARMA",
+    "pct": 2.84
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Energy",
+    "pct": 14.82
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 14.37
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 13.85
+   },
+   {
+    "sector": "Technology",
+    "pct": 10.48
+   },
+   {
+    "sector": "Financials",
+    "pct": 5.43
+   },
+   {
+    "sector": "Industrials",
+    "pct": 4.05
+   }
+  ],
+  "play_mix": {
+   "tactical": 69.26
+  }
+ },
+ {
+  "date": "2015-11-30",
+  "nav": 100.4264,
+  "n_holdings": 60,
+  "equity_pct": 57.67,
+  "cash_pct": 42.33,
+  "oneway_turnover_pct": 21.56,
+  "universe_n": 745,
+  "arm_coverage_pct": 75.8,
+  "n_dead_included": 127,
+  "deployed_pct": 57.67,
+  "top_holdings": [
+   {
+    "name": "INFOSYS LIMITED",
+    "sym": "INFY",
+    "pct": 6.46
+   },
+   {
+    "name": "RELIANCE INDUSTRIES LTD",
+    "sym": "RELIANCE",
+    "pct": 5.81
+   },
+   {
+    "name": "JET AIRWAYS (INDIA) LTD.",
+    "sym": "JETAIRWAYS",
+    "pct": 5.73
+   },
+   {
+    "name": "ASHOK LEYLAND LTD",
+    "sym": "ASHOKLEY",
+    "pct": 3.12
+   },
+   {
+    "name": "WOCKHARDT LIMITED",
+    "sym": "WOCKPHARMA",
+    "pct": 2.74
+   },
+   {
+    "name": "AUROBINDO PHARMA LTD",
+    "sym": "AUROPHARMA",
+    "pct": 2.48
+   },
+   {
+    "name": "ZEE ENTERTAINMENT ENT LTD",
+    "sym": "ZEEL",
+    "pct": 2.45
+   },
+   {
+    "name": "HINDUSTAN PETROLEUM CORP",
+    "sym": "HINDPETRO",
+    "pct": 1.89
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Unclassified",
+    "pct": 14.19
+   },
+   {
+    "sector": "Energy",
+    "pct": 11.4
+   },
+   {
+    "sector": "Technology",
+    "pct": 9.68
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 8.69
+   },
+   {
+    "sector": "Industrials",
+    "pct": 3.44
+   },
+   {
+    "sector": "TelecomMedia",
+    "pct": 3.24
+   }
+  ],
+  "play_mix": {
+   "tactical": 49.53,
+   "structural": 8.14
+  }
+ },
+ {
+  "date": "2015-12-31",
+  "nav": 103.6129,
+  "n_holdings": 60,
+  "equity_pct": 62.07,
+  "cash_pct": 37.93,
+  "oneway_turnover_pct": 15.07,
+  "universe_n": 831,
+  "arm_coverage_pct": 72.2,
+  "n_dead_included": 146,
+  "deployed_pct": 62.07,
+  "top_holdings": [
+   {
+    "name": "JET AIRWAYS (INDIA) LTD.",
+    "sym": "JETAIRWAYS",
+    "pct": 7.53
+   },
+   {
+    "name": "RELIANCE INDUSTRIES LTD",
+    "sym": "RELIANCE",
+    "pct": 6.81
+   },
+   {
+    "name": "INFOSYS LIMITED",
+    "sym": "INFY",
+    "pct": 6.68
+   },
+   {
+    "name": "INTERGLOBE AVIATION LTD",
+    "sym": "INDIGO",
+    "pct": 4.37
+   },
+   {
+    "name": "TATA ELXSI LIMITED",
+    "sym": "TATAELXSI",
+    "pct": 3.19
+   },
+   {
+    "name": "AUROBINDO PHARMA LTD",
+    "sym": "AUROPHARMA",
+    "pct": 2.57
+   },
+   {
+    "name": "WOCKHARDT LIMITED",
+    "sym": "WOCKPHARMA",
+    "pct": 2.55
+   },
+   {
+    "name": "RELIANCE INFRASTRUCTU LTD",
+    "sym": "RELINFRA",
+    "pct": 2.3
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Unclassified",
+    "pct": 15.6
+   },
+   {
+    "sector": "Energy",
+    "pct": 13.3
+   },
+   {
+    "sector": "Technology",
+    "pct": 10.85
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 8.54
+   },
+   {
+    "sector": "Industrials",
+    "pct": 7.17
+   },
+   {
+    "sector": "TelecomMedia",
+    "pct": 2.29
+   }
+  ],
+  "play_mix": {
+   "tactical": 49.04,
+   "structural": 13.03
+  }
+ },
+ {
+  "date": "2016-01-29",
+  "nav": 98.8783,
+  "n_holdings": 60,
+  "equity_pct": 69.29,
+  "cash_pct": 30.71,
+  "oneway_turnover_pct": 31.86,
+  "universe_n": 837,
+  "arm_coverage_pct": 72.0,
+  "n_dead_included": 148,
+  "deployed_pct": 69.29,
+  "top_holdings": [
+   {
+    "name": "INFOSYS LIMITED",
+    "sym": "INFY",
+    "pct": 9.0
+   },
+   {
+    "name": "JET AIRWAYS (INDIA) LTD.",
+    "sym": "JETAIRWAYS",
+    "pct": 9.0
+   },
+   {
+    "name": "RELIANCE INFRASTRUCTU LTD",
+    "sym": "RELINFRA",
+    "pct": 8.85
+   },
+   {
+    "name": "HDFC BANK LTD",
+    "sym": "HDFCBANK",
+    "pct": 3.37
+   },
+   {
+    "name": "AUROBINDO PHARMA LTD",
+    "sym": "AUROPHARMA",
+    "pct": 2.88
+   },
+   {
+    "name": "ASIAN PAINTS LIMITED",
+    "sym": "ASIANPAINT",
+    "pct": 2.76
+   },
+   {
+    "name": "HOUSING DEV & INFRA LTD",
+    "sym": "HDIL",
+    "pct": 2.39
+   },
+   {
+    "name": "BHARAT PETROLEUM CORP  LT",
+    "sym": "BPCL",
+    "pct": 2.34
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Unclassified",
+    "pct": 23.63
+   },
+   {
+    "sector": "Energy",
+    "pct": 13.85
+   },
+   {
+    "sector": "Technology",
+    "pct": 9.16
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 5.64
+   },
+   {
+    "sector": "Financials",
+    "pct": 5.2
+   },
+   {
+    "sector": "Consumer",
+    "pct": 3.78
+   }
+  ],
+  "play_mix": {
+   "tactical": 58.49,
+   "structural": 10.8
+  }
+ },
+ {
+  "date": "2016-02-29",
+  "nav": 90.7818,
+  "n_holdings": 60,
+  "equity_pct": 62.64,
+  "cash_pct": 37.36,
+  "oneway_turnover_pct": 21.41,
+  "universe_n": 687,
+  "arm_coverage_pct": 78.7,
+  "n_dead_included": 111,
+  "deployed_pct": 62.64,
+  "top_holdings": [
+   {
+    "name": "JET AIRWAYS (INDIA) LTD.",
+    "sym": "JETAIRWAYS",
+    "pct": 8.7
+   },
+   {
+    "name": "INFOSYS LIMITED",
+    "sym": "INFY",
+    "pct": 7.27
+   },
+   {
+    "name": "HDFC BANK LTD",
+    "sym": "HDFCBANK",
+    "pct": 4.39
+   },
+   {
+    "name": "RELIANCE INFRASTRUCTU LTD",
+    "sym": "RELINFRA",
+    "pct": 4.33
+   },
+   {
+    "name": "BHARAT PETROLEUM CORP  LT",
+    "sym": "BPCL",
+    "pct": 3.17
+   },
+   {
+    "name": "INDUSIND BANK LIMITED",
+    "sym": "INDUSINDBK",
+    "pct": 3.15
+   },
+   {
+    "name": "HINDUSTAN PETROLEUM CORP",
+    "sym": "HINDPETRO",
+    "pct": 2.41
+   },
+   {
+    "name": "ASIAN PAINTS LIMITED",
+    "sym": "ASIANPAINT",
+    "pct": 2.14
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Unclassified",
+    "pct": 16.51
+   },
+   {
+    "sector": "Energy",
+    "pct": 14.4
+   },
+   {
+    "sector": "Financials",
+    "pct": 9.36
+   },
+   {
+    "sector": "Technology",
+    "pct": 7.27
+   },
+   {
+    "sector": "Consumer",
+    "pct": 6.6
+   },
+   {
+    "sector": "Industrials",
+    "pct": 3.02
+   }
+  ],
+  "play_mix": {
+   "tactical": 48.15,
+   "structural": 14.48
+  }
+ },
+ {
+  "date": "2016-03-31",
+  "nav": 97.7622,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 24.43,
+  "universe_n": 714,
+  "arm_coverage_pct": 77.5,
+  "n_dead_included": 120,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 5.47
+   },
+   {
+    "name": "INFOSYS LIMITED",
+    "sym": "INFY",
+    "pct": 4.89
+   },
+   {
+    "name": "JET AIRWAYS (INDIA) LTD.",
+    "sym": "JETAIRWAYS",
+    "pct": 4.61
+   },
+   {
+    "name": "RELIANCE INFRASTRUCTU LTD",
+    "sym": "RELINFRA",
+    "pct": 4.15
+   },
+   {
+    "name": "INDUSIND BANK LIMITED",
+    "sym": "INDUSINDBK",
+    "pct": 3.48
+   },
+   {
+    "name": "ASHOK LEYLAND LTD",
+    "sym": "ASHOKLEY",
+    "pct": 3.46
+   },
+   {
+    "name": "HDFC BANK LTD",
+    "sym": "HDFCBANK",
+    "pct": 3.37
+   },
+   {
+    "name": "BHARAT PETROLEUM CORP  LT",
+    "sym": "BPCL",
+    "pct": 3.29
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Unclassified",
+    "pct": 19.13
+   },
+   {
+    "sector": "Energy",
+    "pct": 13.29
+   },
+   {
+    "sector": "Financials",
+    "pct": 11.4
+   },
+   {
+    "sector": "Materials",
+    "pct": 10.05
+   },
+   {
+    "sector": "Consumer",
+    "pct": 7.12
+   },
+   {
+    "sector": "Technology",
+    "pct": 4.89
+   }
+  ],
+  "play_mix": {
+   "tactical": 35.68,
+   "structural": 36.82
+  }
+ },
+ {
+  "date": "2016-04-29",
+  "nav": 101.4118,
+  "n_holdings": 60,
+  "equity_pct": 68.88,
+  "cash_pct": 31.12,
+  "oneway_turnover_pct": 24.62,
+  "universe_n": 757,
+  "arm_coverage_pct": 74.6,
+  "n_dead_included": 124,
+  "deployed_pct": 68.88,
+  "top_holdings": [
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 6.92
+   },
+   {
+    "name": "YES BANK LIMITED",
+    "sym": "YESBANK",
+    "pct": 6.18
+   },
+   {
+    "name": "JET AIRWAYS (INDIA) LTD.",
+    "sym": "JETAIRWAYS",
+    "pct": 3.72
+   },
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 3.6
+   },
+   {
+    "name": "RELIANCE INFRASTRUCTU LTD",
+    "sym": "RELINFRA",
+    "pct": 3.42
+   },
+   {
+    "name": "INDUSIND BANK LIMITED",
+    "sym": "INDUSINDBK",
+    "pct": 3.28
+   },
+   {
+    "name": "KOTAK MAHINDRA BANK LTD",
+    "sym": "KOTAKBANK",
+    "pct": 3.11
+   },
+   {
+    "name": "REL CAPITAL - DEPO. SETT.",
+    "sym": "RELCAPITAL",
+    "pct": 2.71
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Unclassified",
+    "pct": 18.6
+   },
+   {
+    "sector": "Materials",
+    "pct": 14.32
+   },
+   {
+    "sector": "Financials",
+    "pct": 14.25
+   },
+   {
+    "sector": "Energy",
+    "pct": 11.52
+   },
+   {
+    "sector": "Industrials",
+    "pct": 3.29
+   },
+   {
+    "sector": "Consumer",
+    "pct": 2.7
+   }
+  ],
+  "play_mix": {
+   "tactical": 43.57,
+   "structural": 25.3
+  }
+ },
+ {
+  "date": "2016-05-31",
+  "nav": 103.1084,
+  "n_holdings": 60,
+  "equity_pct": 66.35,
+  "cash_pct": 33.65,
+  "oneway_turnover_pct": 30.55,
+  "universe_n": 759,
+  "arm_coverage_pct": 74.6,
+  "n_dead_included": 117,
+  "deployed_pct": 66.35,
+  "top_holdings": [
+   {
+    "name": "YES BANK LIMITED",
+    "sym": "YESBANK",
+    "pct": 6.97
+   },
+   {
+    "name": "INFOSYS LIMITED",
+    "sym": "INFY",
+    "pct": 6.3
+   },
+   {
+    "name": "LARSEN & TOUBRO LTD.",
+    "sym": "LT",
+    "pct": 4.92
+   },
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 4.19
+   },
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 3.2
+   },
+   {
+    "name": "UPL LIMITED",
+    "sym": "UPL",
+    "pct": 2.74
+   },
+   {
+    "name": "INDUSIND BANK LIMITED",
+    "sym": "INDUSINDBK",
+    "pct": 2.54
+   },
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 2.47
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Materials",
+    "pct": 17.3
+   },
+   {
+    "sector": "Financials",
+    "pct": 11.8
+   },
+   {
+    "sector": "Energy",
+    "pct": 8.66
+   },
+   {
+    "sector": "Technology",
+    "pct": 8.16
+   },
+   {
+    "sector": "Industrials",
+    "pct": 8.01
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 4.43
+   }
+  ],
+  "play_mix": {
+   "tactical": 35.47,
+   "structural": 30.88
+  }
+ },
+ {
+  "date": "2016-06-30",
+  "nav": 105.3782,
+  "n_holdings": 60,
+  "equity_pct": 68.82,
+  "cash_pct": 31.18,
+  "oneway_turnover_pct": 13.5,
+  "universe_n": 817,
+  "arm_coverage_pct": 72.3,
+  "n_dead_included": 132,
+  "deployed_pct": 68.82,
+  "top_holdings": [
+   {
+    "name": "INFOSYS LIMITED",
+    "sym": "INFY",
+    "pct": 7.38
+   },
+   {
+    "name": "YES BANK LIMITED",
+    "sym": "YESBANK",
+    "pct": 6.47
+   },
+   {
+    "name": "LARSEN & TOUBRO LTD.",
+    "sym": "LT",
+    "pct": 5.23
+   },
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 4.22
+   },
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 3.89
+   },
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 2.97
+   },
+   {
+    "name": "UJJIVAN FIN. SERVC. LTD.",
+    "sym": "UJJIVAN",
+    "pct": 2.85
+   },
+   {
+    "name": "BHARAT PETROLEUM CORP  LT",
+    "sym": "BPCL",
+    "pct": 2.47
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Materials",
+    "pct": 18.61
+   },
+   {
+    "sector": "Industrials",
+    "pct": 10.21
+   },
+   {
+    "sector": "Financials",
+    "pct": 9.84
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 8.8
+   },
+   {
+    "sector": "Technology",
+    "pct": 7.81
+   },
+   {
+    "sector": "Energy",
+    "pct": 7.06
+   }
+  ],
+  "play_mix": {
+   "tactical": 47.19,
+   "structural": 21.63
+  }
+ },
+ {
+  "date": "2016-07-29",
+  "nav": 111.8495,
+  "n_holdings": 60,
+  "equity_pct": 68.22,
+  "cash_pct": 31.78,
+  "oneway_turnover_pct": 28.11,
+  "universe_n": 891,
+  "arm_coverage_pct": 69.4,
+  "n_dead_included": 150,
+  "deployed_pct": 68.22,
+  "top_holdings": [
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 6.07
+   },
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 5.63
+   },
+   {
+    "name": "YES BANK LIMITED",
+    "sym": "YESBANK",
+    "pct": 4.69
+   },
+   {
+    "name": "BHARAT PETROLEUM CORP  LT",
+    "sym": "BPCL",
+    "pct": 3.5
+   },
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 3.21
+   },
+   {
+    "name": "HINDUSTAN PETROLEUM CORP",
+    "sym": "HINDPETRO",
+    "pct": 3.18
+   },
+   {
+    "name": "BHARATFIN",
+    "sym": "BHARATFIN",
+    "pct": 2.74
+   },
+   {
+    "name": "RELIANCE INFRASTRUCTU LTD",
+    "sym": "RELINFRA",
+    "pct": 2.44
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Materials",
+    "pct": 24.04
+   },
+   {
+    "sector": "Energy",
+    "pct": 11.61
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 11.23
+   },
+   {
+    "sector": "Financials",
+    "pct": 9.99
+   },
+   {
+    "sector": "Industrials",
+    "pct": 4.17
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 3.79
+   }
+  ],
+  "play_mix": {
+   "tactical": 39.54,
+   "structural": 28.68
+  }
+ },
+ {
+  "date": "2016-08-31",
+  "nav": 114.3111,
+  "n_holdings": 60,
+  "equity_pct": 69.55,
+  "cash_pct": 30.45,
+  "oneway_turnover_pct": 33.76,
+  "universe_n": 867,
+  "arm_coverage_pct": 70.8,
+  "n_dead_included": 140,
+  "deployed_pct": 69.55,
+  "top_holdings": [
+   {
+    "name": "HINDUSTAN PETROLEUM CORP",
+    "sym": "HINDPETRO",
+    "pct": 4.64
+   },
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 4.42
+   },
+   {
+    "name": "INDIAN OIL CORP LTD",
+    "sym": "IOC",
+    "pct": 3.79
+   },
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 3.45
+   },
+   {
+    "name": "REL CAPITAL - DEPO. SETT.",
+    "sym": "RELCAPITAL",
+    "pct": 3.19
+   },
+   {
+    "name": "RELIANCE INFRASTRUCTU LTD",
+    "sym": "RELINFRA",
+    "pct": 2.86
+   },
+   {
+    "name": "BHARATFIN",
+    "sym": "BHARATFIN",
+    "pct": 2.8
+   },
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 2.72
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Materials",
+    "pct": 17.37
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 14.83
+   },
+   {
+    "sector": "Energy",
+    "pct": 11.8
+   },
+   {
+    "sector": "Financials",
+    "pct": 10.69
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 3.75
+   },
+   {
+    "sector": "Industrials",
+    "pct": 3.72
+   }
+  ],
+  "play_mix": {
+   "tactical": 33.19,
+   "structural": 36.36
+  }
+ },
+ {
+  "date": "2016-09-30",
+  "nav": 115.0181,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 28.3,
+  "universe_n": 895,
+  "arm_coverage_pct": 70.5,
+  "n_dead_included": 145,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "OIL AND NATURAL GAS CORP.",
+    "sym": "ONGC",
+    "pct": 3.2
+   },
+   {
+    "name": "REL CAPITAL - DEPO. SETT.",
+    "sym": "RELCAPITAL",
+    "pct": 3.13
+   },
+   {
+    "name": "MARUTI SUZUKI INDIA LTD.",
+    "sym": "MARUTI",
+    "pct": 3.09
+   },
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 3.0
+   },
+   {
+    "name": "CEAT LIMITED",
+    "sym": "CEATLTD",
+    "pct": 2.87
+   },
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 2.8
+   },
+   {
+    "name": "ICICI BANK LTD.",
+    "sym": "ICICIBANK",
+    "pct": 2.61
+   },
+   {
+    "name": "HINDUSTAN PETROLEUM CORP",
+    "sym": "HINDPETRO",
+    "pct": 2.61
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Unclassified",
+    "pct": 14.47
+   },
+   {
+    "sector": "Materials",
+    "pct": 14.17
+   },
+   {
+    "sector": "Financials",
+    "pct": 12.13
+   },
+   {
+    "sector": "Energy",
+    "pct": 11.98
+   },
+   {
+    "sector": "Auto",
+    "pct": 7.89
+   },
+   {
+    "sector": "Consumer",
+    "pct": 3.51
+   }
+  ],
+  "play_mix": {
+   "tactical": 52.9,
+   "structural": 19.6
+  }
+ },
+ {
+  "date": "2016-10-30",
+  "nav": 118.8586,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 32.1,
+  "universe_n": 955,
+  "arm_coverage_pct": 67.1,
+  "n_dead_included": 162,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "MARUTI SUZUKI INDIA LTD.",
+    "sym": "MARUTI",
+    "pct": 3.08
+   },
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 3.08
+   },
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 2.95
+   },
+   {
+    "name": "CEAT LIMITED",
+    "sym": "CEATLTD",
+    "pct": 2.65
+   },
+   {
+    "name": "ICICI BANK LTD.",
+    "sym": "ICICIBANK",
+    "pct": 2.62
+   },
+   {
+    "name": "YES BANK LIMITED",
+    "sym": "YESBANK",
+    "pct": 2.55
+   },
+   {
+    "name": "OIL AND NATURAL GAS CORP.",
+    "sym": "ONGC",
+    "pct": 2.52
+   },
+   {
+    "name": "HCL TECHNOLOGIES LTD",
+    "sym": "HCLTECH",
+    "pct": 2.46
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 17.29
+   },
+   {
+    "sector": "Materials",
+    "pct": 16.78
+   },
+   {
+    "sector": "Energy",
+    "pct": 9.92
+   },
+   {
+    "sector": "Auto",
+    "pct": 8.88
+   },
+   {
+    "sector": "Industrials",
+    "pct": 6.11
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 6.03
+   }
+  ],
+  "play_mix": {
+   "tactical": 65.73,
+   "structural": 6.77
+  }
+ },
+ {
+  "date": "2016-11-30",
+  "nav": 116.4838,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 30.06,
+  "universe_n": 905,
+  "arm_coverage_pct": 69.8,
+  "n_dead_included": 142,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 3.04
+   },
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 3.01
+   },
+   {
+    "name": "HINDUSTAN PETROLEUM CORP",
+    "sym": "HINDPETRO",
+    "pct": 2.98
+   },
+   {
+    "name": "MARUTI SUZUKI INDIA LTD.",
+    "sym": "MARUTI",
+    "pct": 2.95
+   },
+   {
+    "name": "BANK OF BARODA",
+    "sym": "BANKBARODA",
+    "pct": 2.89
+   },
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 2.86
+   },
+   {
+    "name": "SUN PHARMACEUTICAL IND L",
+    "sym": "SUNPHARMA",
+    "pct": 2.61
+   },
+   {
+    "name": "BHARATFIN",
+    "sym": "BHARATFIN",
+    "pct": 2.31
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Materials",
+    "pct": 14.26
+   },
+   {
+    "sector": "Financials",
+    "pct": 12.89
+   },
+   {
+    "sector": "Energy",
+    "pct": 12.78
+   },
+   {
+    "sector": "Auto",
+    "pct": 11.08
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 10.06
+   },
+   {
+    "sector": "Industrials",
+    "pct": 5.89
+   }
+  ],
+  "play_mix": {
+   "tactical": 60.01,
+   "structural": 12.49
+  }
+ },
+ {
+  "date": "2016-12-30",
+  "nav": 112.1747,
+  "n_holdings": 60,
+  "equity_pct": 65.02,
+  "cash_pct": 34.98,
+  "oneway_turnover_pct": 21.62,
+  "universe_n": 786,
+  "arm_coverage_pct": 73.3,
+  "n_dead_included": 123,
+  "deployed_pct": 65.02,
+  "top_holdings": [
+   {
+    "name": "MARUTI SUZUKI INDIA LTD.",
+    "sym": "MARUTI",
+    "pct": 6.26
+   },
+   {
+    "name": "SUN PHARMACEUTICAL IND L",
+    "sym": "SUNPHARMA",
+    "pct": 5.31
+   },
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 4.56
+   },
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 3.23
+   },
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 3.13
+   },
+   {
+    "name": "HINDUSTAN PETROLEUM CORP",
+    "sym": "HINDPETRO",
+    "pct": 2.84
+   },
+   {
+    "name": "OIL AND NATURAL GAS CORP.",
+    "sym": "ONGC",
+    "pct": 2.6
+   },
+   {
+    "name": "INDIAN OIL CORP LTD",
+    "sym": "IOC",
+    "pct": 2.18
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Materials",
+    "pct": 16.51
+   },
+   {
+    "sector": "Energy",
+    "pct": 12.57
+   },
+   {
+    "sector": "Auto",
+    "pct": 10.06
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 8.04
+   },
+   {
+    "sector": "Financials",
+    "pct": 7.2
+   },
+   {
+    "sector": "Industrials",
+    "pct": 5.5
+   }
+  ],
+  "play_mix": {
+   "tactical": 51.56,
+   "structural": 13.47
+  }
+ },
+ {
+  "date": "2017-01-31",
+  "nav": 119.1774,
+  "n_holdings": 60,
+  "equity_pct": 70.09,
+  "cash_pct": 29.91,
+  "oneway_turnover_pct": 32.69,
+  "universe_n": 875,
+  "arm_coverage_pct": 70.2,
+  "n_dead_included": 138,
+  "deployed_pct": 70.09,
+  "top_holdings": [
+   {
+    "name": "YES BANK LIMITED",
+    "sym": "YESBANK",
+    "pct": 6.43
+   },
+   {
+    "name": "RELIANCE INDUSTRIES LTD",
+    "sym": "RELIANCE",
+    "pct": 5.64
+   },
+   {
+    "name": "MARUTI SUZUKI INDIA LTD.",
+    "sym": "MARUTI",
+    "pct": 4.85
+   },
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 4.19
+   },
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 3.94
+   },
+   {
+    "name": "INDIAN OIL CORP LTD",
+    "sym": "IOC",
+    "pct": 2.77
+   },
+   {
+    "name": "HCL TECHNOLOGIES LTD",
+    "sym": "HCLTECH",
+    "pct": 2.77
+   },
+   {
+    "name": "OIL AND NATURAL GAS CORP.",
+    "sym": "ONGC",
+    "pct": 2.71
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Energy",
+    "pct": 19.76
+   },
+   {
+    "sector": "Materials",
+    "pct": 12.24
+   },
+   {
+    "sector": "Financials",
+    "pct": 10.77
+   },
+   {
+    "sector": "Auto",
+    "pct": 6.11
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 5.14
+   },
+   {
+    "sector": "Technology",
+    "pct": 4.45
+   }
+  ],
+  "play_mix": {
+   "tactical": 46.58,
+   "structural": 23.51
+  }
+ },
+ {
+  "date": "2017-02-28",
+  "nav": 124.2183,
+  "n_holdings": 60,
+  "equity_pct": 70.49,
+  "cash_pct": 29.51,
+  "oneway_turnover_pct": 25.5,
+  "universe_n": 921,
+  "arm_coverage_pct": 71.1,
+  "n_dead_included": 142,
+  "deployed_pct": 70.49,
+  "top_holdings": [
+   {
+    "name": "MARUTI SUZUKI INDIA LTD.",
+    "sym": "MARUTI",
+    "pct": 5.02
+   },
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 4.77
+   },
+   {
+    "name": "YES BANK LIMITED",
+    "sym": "YESBANK",
+    "pct": 4.47
+   },
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 4.44
+   },
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 4.06
+   },
+   {
+    "name": "INDIAN OIL CORP LTD",
+    "sym": "IOC",
+    "pct": 3.23
+   },
+   {
+    "name": "HINDUSTAN PETROLEUM CORP",
+    "sym": "HINDPETRO",
+    "pct": 2.83
+   },
+   {
+    "name": "JINDAL STEEL LIMITED",
+    "sym": "JINDALSTEL",
+    "pct": 2.69
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Materials",
+    "pct": 20.7
+   },
+   {
+    "sector": "Energy",
+    "pct": 16.55
+   },
+   {
+    "sector": "Financials",
+    "pct": 14.93
+   },
+   {
+    "sector": "Auto",
+    "pct": 5.18
+   },
+   {
+    "sector": "Technology",
+    "pct": 2.84
+   },
+   {
+    "sector": "Industrials",
+    "pct": 2.76
+   }
+  ],
+  "play_mix": {
+   "tactical": 53.26,
+   "structural": 17.23
+  }
+ },
+ {
+  "date": "2017-03-31",
+  "nav": 126.7563,
+  "n_holdings": 60,
+  "equity_pct": 63.56,
+  "cash_pct": 36.44,
+  "oneway_turnover_pct": 17.74,
+  "universe_n": 928,
+  "arm_coverage_pct": 71.9,
+  "n_dead_included": 139,
+  "deployed_pct": 63.56,
+  "top_holdings": [
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 5.22
+   },
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 4.85
+   },
+   {
+    "name": "YES BANK LIMITED",
+    "sym": "YESBANK",
+    "pct": 4.73
+   },
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 4.18
+   },
+   {
+    "name": "GAIL (INDIA) LTD",
+    "sym": "GAIL",
+    "pct": 3.04
+   },
+   {
+    "name": "HINDUSTAN PETROLEUM CORP",
+    "sym": "HINDPETRO",
+    "pct": 2.88
+   },
+   {
+    "name": "JINDAL STEEL LIMITED",
+    "sym": "JINDALSTEL",
+    "pct": 2.79
+   },
+   {
+    "name": "OIL AND NATURAL GAS CORP.",
+    "sym": "ONGC",
+    "pct": 2.43
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Materials",
+    "pct": 21.84
+   },
+   {
+    "sector": "Financials",
+    "pct": 12.61
+   },
+   {
+    "sector": "Energy",
+    "pct": 12.23
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 5.97
+   },
+   {
+    "sector": "Industrials",
+    "pct": 5.57
+   },
+   {
+    "sector": "Consumer",
+    "pct": 1.75
+   }
+  ],
+  "play_mix": {
+   "tactical": 46.79,
+   "structural": 16.77
+  }
+ },
+ {
+  "date": "2017-04-28",
+  "nav": 128.5761,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 24.44,
+  "universe_n": 1009,
+  "arm_coverage_pct": 70.5,
+  "n_dead_included": 147,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 5.11
+   },
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 4.65
+   },
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 3.9
+   },
+   {
+    "name": "INDIAN OIL CORP LTD",
+    "sym": "IOC",
+    "pct": 3.61
+   },
+   {
+    "name": "INDUSIND BANK LIMITED",
+    "sym": "INDUSINDBK",
+    "pct": 2.85
+   },
+   {
+    "name": "AVENUE SUPERMARTS LIMITED",
+    "sym": "DMART",
+    "pct": 2.81
+   },
+   {
+    "name": "ADANI PORT & SEZ LTD",
+    "sym": "ADANIPORTS",
+    "pct": 2.64
+   },
+   {
+    "name": "HINDUSTAN PETROLEUM CORP",
+    "sym": "HINDPETRO",
+    "pct": 2.64
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Materials",
+    "pct": 19.98
+   },
+   {
+    "sector": "Energy",
+    "pct": 15.46
+   },
+   {
+    "sector": "Financials",
+    "pct": 14.57
+   },
+   {
+    "sector": "Industrials",
+    "pct": 9.35
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 6.71
+   },
+   {
+    "sector": "Consumer",
+    "pct": 4.54
+   }
+  ],
+  "play_mix": {
+   "tactical": 43.83,
+   "structural": 28.67
+  }
+ },
+ {
+  "date": "2017-05-31",
+  "nav": 129.2687,
+  "n_holdings": 60,
+  "equity_pct": 59.14,
+  "cash_pct": 40.86,
+  "oneway_turnover_pct": 38.96,
+  "universe_n": 956,
+  "arm_coverage_pct": 72.8,
+  "n_dead_included": 132,
+  "deployed_pct": 59.14,
+  "top_holdings": [
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 5.61
+   },
+   {
+    "name": "REL CAPITAL - DEPO. SETT.",
+    "sym": "RELCAPITAL",
+    "pct": 3.41
+   },
+   {
+    "name": "REC LIMITED",
+    "sym": "RECLTD",
+    "pct": 2.79
+   },
+   {
+    "name": "HINDUSTAN UNILEVER LTD.",
+    "sym": "HINDUNILVR",
+    "pct": 2.75
+   },
+   {
+    "name": "KOTAK MAHINDRA BANK LTD",
+    "sym": "KOTAKBANK",
+    "pct": 2.41
+   },
+   {
+    "name": "BHARAT PETROLEUM CORP  LT",
+    "sym": "BPCL",
+    "pct": 2.3
+   },
+   {
+    "name": "MAHINDRA & MAHINDRA LTD",
+    "sym": "M&M",
+    "pct": 2.25
+   },
+   {
+    "name": "ADANI PORT & SEZ LTD",
+    "sym": "ADANIPORTS",
+    "pct": 2.2
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 12.52
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 10.33
+   },
+   {
+    "sector": "Materials",
+    "pct": 10.18
+   },
+   {
+    "sector": "Energy",
+    "pct": 7.79
+   },
+   {
+    "sector": "Consumer",
+    "pct": 7.51
+   },
+   {
+    "sector": "Industrials",
+    "pct": 7.1
+   }
+  ],
+  "play_mix": {
+   "tactical": 47.14,
+   "structural": 12.0
+  }
+ },
+ {
+  "date": "2017-06-30",
+  "nav": 130.1752,
+  "n_holdings": 60,
+  "equity_pct": 63.97,
+  "cash_pct": 36.03,
+  "oneway_turnover_pct": 22.44,
+  "universe_n": 919,
+  "arm_coverage_pct": 75.1,
+  "n_dead_included": 119,
+  "deployed_pct": 63.97,
+  "top_holdings": [
+   {
+    "name": "HDFC",
+    "sym": "HDFC",
+    "pct": 8.08
+   },
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 4.33
+   },
+   {
+    "name": "REL CAPITAL - DEPO. SETT.",
+    "sym": "RELCAPITAL",
+    "pct": 3.77
+   },
+   {
+    "name": "MAHINDRA & MAHINDRA LTD",
+    "sym": "M&M",
+    "pct": 2.88
+   },
+   {
+    "name": "ADANI PORT & SEZ LTD",
+    "sym": "ADANIPORTS",
+    "pct": 2.64
+   },
+   {
+    "name": "ESCORTS KUBOTA LIMITED",
+    "sym": "ESCORTS",
+    "pct": 2.47
+   },
+   {
+    "name": "HINDUSTAN UNILEVER LTD.",
+    "sym": "HINDUNILVR",
+    "pct": 2.4
+   },
+   {
+    "name": "REC LIMITED",
+    "sym": "RECLTD",
+    "pct": 2.18
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Unclassified",
+    "pct": 21.43
+   },
+   {
+    "sector": "Financials",
+    "pct": 12.91
+   },
+   {
+    "sector": "Industrials",
+    "pct": 7.28
+   },
+   {
+    "sector": "Materials",
+    "pct": 6.44
+   },
+   {
+    "sector": "Consumer",
+    "pct": 6.43
+   },
+   {
+    "sector": "Energy",
+    "pct": 4.8
+   }
+  ],
+  "play_mix": {
+   "tactical": 48.46,
+   "structural": 15.52
+  }
+ },
+ {
+  "date": "2017-07-31",
+  "nav": 135.8451,
+  "n_holdings": 60,
+  "equity_pct": 63.53,
+  "cash_pct": 36.47,
+  "oneway_turnover_pct": 28.64,
+  "universe_n": 969,
+  "arm_coverage_pct": 73.4,
+  "n_dead_included": 128,
+  "deployed_pct": 63.53,
+  "top_holdings": [
+   {
+    "name": "HDFC",
+    "sym": "HDFC",
+    "pct": 6.02
+   },
+   {
+    "name": "YES BANK LIMITED",
+    "sym": "YESBANK",
+    "pct": 5.65
+   },
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 3.97
+   },
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 3.19
+   },
+   {
+    "name": "HDFC BANK LTD",
+    "sym": "HDFCBANK",
+    "pct": 2.97
+   },
+   {
+    "name": "HINDUSTAN UNILEVER LTD.",
+    "sym": "HINDUNILVR",
+    "pct": 2.36
+   },
+   {
+    "name": "REL CAPITAL - DEPO. SETT.",
+    "sym": "RELCAPITAL",
+    "pct": 2.21
+   },
+   {
+    "name": "ADANI PORT & SEZ LTD",
+    "sym": "ADANIPORTS",
+    "pct": 2.01
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Unclassified",
+    "pct": 18.58
+   },
+   {
+    "sector": "Financials",
+    "pct": 14.94
+   },
+   {
+    "sector": "Materials",
+    "pct": 11.37
+   },
+   {
+    "sector": "Industrials",
+    "pct": 7.1
+   },
+   {
+    "sector": "Consumer",
+    "pct": 6.26
+   },
+   {
+    "sector": "Energy",
+    "pct": 3.02
+   }
+  ],
+  "play_mix": {
+   "tactical": 51.05,
+   "structural": 12.47
+  }
+ },
+ {
+  "date": "2017-08-31",
+  "nav": 136.8981,
+  "n_holdings": 60,
+  "equity_pct": 64.88,
+  "cash_pct": 35.12,
+  "oneway_turnover_pct": 32.35,
+  "universe_n": 932,
+  "arm_coverage_pct": 75.1,
+  "n_dead_included": 117,
+  "deployed_pct": 64.88,
+  "top_holdings": [
+   {
+    "name": "YES BANK LIMITED",
+    "sym": "YESBANK",
+    "pct": 6.4
+   },
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 5.06
+   },
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 4.2
+   },
+   {
+    "name": "BAJAJ FINANCE LIMITED",
+    "sym": "BAJFINANCE",
+    "pct": 3.47
+   },
+   {
+    "name": "BEML LIMITED",
+    "sym": "BEML",
+    "pct": 2.88
+   },
+   {
+    "name": "AUROBINDO PHARMA LTD",
+    "sym": "AUROPHARMA",
+    "pct": 2.31
+   },
+   {
+    "name": "MAHINDRA & MAHINDRA LTD",
+    "sym": "M&M",
+    "pct": 1.89
+   },
+   {
+    "name": "HINDUSTAN UNILEVER LTD.",
+    "sym": "HINDUNILVR",
+    "pct": 1.79
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 14.99
+   },
+   {
+    "sector": "Materials",
+    "pct": 14.53
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 10.67
+   },
+   {
+    "sector": "Industrials",
+    "pct": 8.34
+   },
+   {
+    "sector": "Consumer",
+    "pct": 7.33
+   },
+   {
+    "sector": "Energy",
+    "pct": 3.99
+   }
+  ],
+  "play_mix": {
+   "tactical": 55.25,
+   "structural": 9.63
+  }
+ },
+ {
+  "date": "2017-09-29",
+  "nav": 135.5857,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 27.69,
+  "universe_n": 991,
+  "arm_coverage_pct": 73.5,
+  "n_dead_included": 121,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 3.82
+   },
+   {
+    "name": "RELIANCE INDUSTRIES LTD",
+    "sym": "RELIANCE",
+    "pct": 3.24
+   },
+   {
+    "name": "AUROBINDO PHARMA LTD",
+    "sym": "AUROPHARMA",
+    "pct": 3.22
+   },
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 3.21
+   },
+   {
+    "name": "BAJAJ FINANCE LIMITED",
+    "sym": "BAJFINANCE",
+    "pct": 3.2
+   },
+   {
+    "name": "DIVI S LABORATORIES LTD",
+    "sym": "DIVISLAB",
+    "pct": 2.97
+   },
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 2.97
+   },
+   {
+    "name": "YES BANK LIMITED",
+    "sym": "YESBANK",
+    "pct": 2.74
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Materials",
+    "pct": 17.49
+   },
+   {
+    "sector": "Financials",
+    "pct": 14.43
+   },
+   {
+    "sector": "Energy",
+    "pct": 10.35
+   },
+   {
+    "sector": "Industrials",
+    "pct": 7.18
+   },
+   {
+    "sector": "Consumer",
+    "pct": 6.48
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 6.44
+   }
+  ],
+  "play_mix": {
+   "tactical": 57.42,
+   "structural": 15.08
+  }
+ },
+ {
+  "date": "2017-10-31",
+  "nav": 144.242,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 27.65,
+  "universe_n": 986,
+  "arm_coverage_pct": 75.1,
+  "n_dead_included": 117,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "RELIANCE INDUSTRIES LTD",
+    "sym": "RELIANCE",
+    "pct": 4.52
+   },
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 4.47
+   },
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 3.57
+   },
+   {
+    "name": "MARUTI SUZUKI INDIA LTD.",
+    "sym": "MARUTI",
+    "pct": 3.39
+   },
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 3.3
+   },
+   {
+    "name": "JUBILANT FOODWORKS LTD",
+    "sym": "JUBLFOOD",
+    "pct": 3.25
+   },
+   {
+    "name": "HDFC BANK LTD",
+    "sym": "HDFCBANK",
+    "pct": 3.16
+   },
+   {
+    "name": "INDIAN OIL CORP LTD",
+    "sym": "IOC",
+    "pct": 2.68
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Materials",
+    "pct": 18.21
+   },
+   {
+    "sector": "Energy",
+    "pct": 14.22
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 7.66
+   },
+   {
+    "sector": "Industrials",
+    "pct": 7.5
+   },
+   {
+    "sector": "Consumer",
+    "pct": 6.92
+   },
+   {
+    "sector": "Financials",
+    "pct": 5.78
+   }
+  ],
+  "play_mix": {
+   "tactical": 52.66,
+   "structural": 19.84
+  }
+ },
+ {
+  "date": "2017-11-30",
+  "nav": 144.5847,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 30.78,
+  "universe_n": 1036,
+  "arm_coverage_pct": 73.7,
+  "n_dead_included": 126,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "TITAN COMPANY LIMITED",
+    "sym": "TITAN",
+    "pct": 2.86
+   },
+   {
+    "name": "RELIANCE INDUSTRIES LTD",
+    "sym": "RELIANCE",
+    "pct": 2.83
+   },
+   {
+    "name": "RAIN INDUSTRIES LIMITED",
+    "sym": "RAIN",
+    "pct": 2.83
+   },
+   {
+    "name": "VAKRANGEE LIMITED",
+    "sym": "VAKRANGEE",
+    "pct": 2.6
+   },
+   {
+    "name": "MARUTI SUZUKI INDIA LTD.",
+    "sym": "MARUTI",
+    "pct": 2.54
+   },
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 2.46
+   },
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 2.43
+   },
+   {
+    "name": "GAIL (INDIA) LTD",
+    "sym": "GAIL",
+    "pct": 2.42
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Materials",
+    "pct": 15.02
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 13.12
+   },
+   {
+    "sector": "Energy",
+    "pct": 10.56
+   },
+   {
+    "sector": "Consumer",
+    "pct": 10.21
+   },
+   {
+    "sector": "Industrials",
+    "pct": 8.98
+   },
+   {
+    "sector": "Auto",
+    "pct": 5.72
+   }
+  ],
+  "play_mix": {
+   "tactical": 67.53,
+   "structural": 4.97
+  }
+ },
+ {
+  "date": "2017-12-29",
+  "nav": 155.3294,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 19.49,
+  "universe_n": 1059,
+  "arm_coverage_pct": 73.5,
+  "n_dead_included": 129,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "BHARTI AIRTEL LIMITED",
+    "sym": "BHARTIARTL",
+    "pct": 3.16
+   },
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 3.13
+   },
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 3.06
+   },
+   {
+    "name": "GAIL (INDIA) LTD",
+    "sym": "GAIL",
+    "pct": 3.01
+   },
+   {
+    "name": "MARUTI SUZUKI INDIA LTD.",
+    "sym": "MARUTI",
+    "pct": 2.88
+   },
+   {
+    "name": "RELIANCE INDUSTRIES LTD",
+    "sym": "RELIANCE",
+    "pct": 2.8
+   },
+   {
+    "name": "MAHINDRA & MAHINDRA LTD",
+    "sym": "M&M",
+    "pct": 2.77
+   },
+   {
+    "name": "HDFC",
+    "sym": "HDFC",
+    "pct": 2.66
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Unclassified",
+    "pct": 17.94
+   },
+   {
+    "sector": "Materials",
+    "pct": 14.87
+   },
+   {
+    "sector": "Energy",
+    "pct": 11.58
+   },
+   {
+    "sector": "Consumer",
+    "pct": 9.46
+   },
+   {
+    "sector": "Industrials",
+    "pct": 6.09
+   },
+   {
+    "sector": "Auto",
+    "pct": 5.2
+   }
+  ],
+  "play_mix": {
+   "tactical": 64.37,
+   "structural": 8.13
+  }
+ },
+ {
+  "date": "2018-01-31",
+  "nav": 154.6181,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 33.84,
+  "universe_n": 1121,
+  "arm_coverage_pct": 72.2,
+  "n_dead_included": 143,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "JUBILANT FOODWORKS LTD",
+    "sym": "JUBLFOOD",
+    "pct": 1.97
+   },
+   {
+    "name": "COAL INDIA LTD",
+    "sym": "COALINDIA",
+    "pct": 1.95
+   },
+   {
+    "name": "GAIL (INDIA) LTD",
+    "sym": "GAIL",
+    "pct": 1.93
+   },
+   {
+    "name": "HEG LTD",
+    "sym": "HEG",
+    "pct": 1.89
+   },
+   {
+    "name": "RELIANCE INDUSTRIES LTD",
+    "sym": "RELIANCE",
+    "pct": 1.87
+   },
+   {
+    "name": "TECH MAHINDRA LIMITED",
+    "sym": "TECHM",
+    "pct": 1.87
+   },
+   {
+    "name": "RAIN INDUSTRIES LIMITED",
+    "sym": "RAIN",
+    "pct": 1.87
+   },
+   {
+    "name": "NTPC LTD",
+    "sym": "NTPC",
+    "pct": 1.86
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Materials",
+    "pct": 14.98
+   },
+   {
+    "sector": "Energy",
+    "pct": 13.03
+   },
+   {
+    "sector": "Industrials",
+    "pct": 9.98
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 9.15
+   },
+   {
+    "sector": "Consumer",
+    "pct": 8.43
+   },
+   {
+    "sector": "Technology",
+    "pct": 6.58
+   }
+  ],
+  "play_mix": {
+   "tactical": 64.06,
+   "structural": 8.44
+  }
+ },
+ {
+  "date": "2018-02-28",
+  "nav": 149.3057,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 37.54,
+  "universe_n": 1023,
+  "arm_coverage_pct": 77.4,
+  "n_dead_included": 112,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 6.54
+   },
+   {
+    "name": "RELIANCE INDUSTRIES LTD",
+    "sym": "RELIANCE",
+    "pct": 5.8
+   },
+   {
+    "name": "JINDAL STEEL LIMITED",
+    "sym": "JINDALSTEL",
+    "pct": 4.07
+   },
+   {
+    "name": "ASHOK LEYLAND LTD",
+    "sym": "ASHOKLEY",
+    "pct": 3.14
+   },
+   {
+    "name": "JSW STEEL LIMITED",
+    "sym": "JSWSTEEL",
+    "pct": 3.03
+   },
+   {
+    "name": "TECH MAHINDRA LIMITED",
+    "sym": "TECHM",
+    "pct": 3.02
+   },
+   {
+    "name": "JUBILANT FOODWORKS LTD",
+    "sym": "JUBLFOOD",
+    "pct": 2.75
+   },
+   {
+    "name": "HEG LTD",
+    "sym": "HEG",
+    "pct": 2.66
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Materials",
+    "pct": 19.7
+   },
+   {
+    "sector": "Energy",
+    "pct": 18.25
+   },
+   {
+    "sector": "Industrials",
+    "pct": 13.75
+   },
+   {
+    "sector": "Consumer",
+    "pct": 6.95
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 5.31
+   },
+   {
+    "sector": "Technology",
+    "pct": 4.46
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2018-03-28",
+  "nav": 144.3799,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 25.32,
+  "universe_n": 998,
+  "arm_coverage_pct": 77.5,
+  "n_dead_included": 112,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "ASHOK LEYLAND LTD",
+    "sym": "ASHOKLEY",
+    "pct": 2.73
+   },
+   {
+    "name": "JUBILANT FOODWORKS LTD",
+    "sym": "JUBLFOOD",
+    "pct": 2.73
+   },
+   {
+    "name": "MINDTREE",
+    "sym": "MINDTREE",
+    "pct": 2.68
+   },
+   {
+    "name": "JSW STEEL LIMITED",
+    "sym": "JSWSTEEL",
+    "pct": 2.62
+   },
+   {
+    "name": "HEG LTD",
+    "sym": "HEG",
+    "pct": 2.57
+   },
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 2.51
+   },
+   {
+    "name": "GRAPHITE INDIA LTD",
+    "sym": "GRAPHITE",
+    "pct": 2.39
+   },
+   {
+    "name": "TECH MAHINDRA LIMITED",
+    "sym": "TECHM",
+    "pct": 2.36
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Materials",
+    "pct": 16.39
+   },
+   {
+    "sector": "Industrials",
+    "pct": 15.33
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 14.33
+   },
+   {
+    "sector": "Energy",
+    "pct": 9.32
+   },
+   {
+    "sector": "Consumer",
+    "pct": 6.64
+   },
+   {
+    "sector": "Technology",
+    "pct": 5.27
+   }
+  ],
+  "play_mix": {
+   "tactical": 62.49,
+   "structural": 10.01
+  }
+ },
+ {
+  "date": "2018-04-30",
+  "nav": 148.1772,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 34.19,
+  "universe_n": 950,
+  "arm_coverage_pct": 78.7,
+  "n_dead_included": 104,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "TATA CONSULTANCY SERV LT",
+    "sym": "TCS",
+    "pct": 3.53
+   },
+   {
+    "name": "ASHOK LEYLAND LTD",
+    "sym": "ASHOKLEY",
+    "pct": 3.42
+   },
+   {
+    "name": "YES BANK LIMITED",
+    "sym": "YESBANK",
+    "pct": 3.28
+   },
+   {
+    "name": "RELIANCE INDUSTRIES LTD",
+    "sym": "RELIANCE",
+    "pct": 3.13
+   },
+   {
+    "name": "MAHINDRA & MAHINDRA LTD",
+    "sym": "M&M",
+    "pct": 3.05
+   },
+   {
+    "name": "JINDAL STEEL LIMITED",
+    "sym": "JINDALSTEL",
+    "pct": 3.02
+   },
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 2.91
+   },
+   {
+    "name": "TECH MAHINDRA LIMITED",
+    "sym": "TECHM",
+    "pct": 2.85
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Materials",
+    "pct": 14.03
+   },
+   {
+    "sector": "Financials",
+    "pct": 10.1
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 9.88
+   },
+   {
+    "sector": "Industrials",
+    "pct": 9.35
+   },
+   {
+    "sector": "Technology",
+    "pct": 9.06
+   },
+   {
+    "sector": "Energy",
+    "pct": 7.61
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2018-05-31",
+  "nav": 145.1193,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 30.07,
+  "universe_n": 905,
+  "arm_coverage_pct": 81.2,
+  "n_dead_included": 94,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "ASHOK LEYLAND LTD",
+    "sym": "ASHOKLEY",
+    "pct": 2.89
+   },
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 2.86
+   },
+   {
+    "name": "JUSTDIAL LTD.",
+    "sym": "JUSTDIAL",
+    "pct": 2.81
+   },
+   {
+    "name": "HEG LTD",
+    "sym": "HEG",
+    "pct": 2.78
+   },
+   {
+    "name": "JUBILANT FOODWORKS LTD",
+    "sym": "JUBLFOOD",
+    "pct": 2.75
+   },
+   {
+    "name": "KOTAK MAHINDRA BANK LTD",
+    "sym": "KOTAKBANK",
+    "pct": 2.72
+   },
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 2.66
+   },
+   {
+    "name": "REL CAPITAL - DEPO. SETT.",
+    "sym": "RELCAPITAL",
+    "pct": 2.55
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Industrials",
+    "pct": 16.19
+   },
+   {
+    "sector": "Consumer",
+    "pct": 12.45
+   },
+   {
+    "sector": "Materials",
+    "pct": 10.66
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 9.87
+   },
+   {
+    "sector": "Energy",
+    "pct": 7.2
+   },
+   {
+    "sector": "Financials",
+    "pct": 7.02
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2018-06-29",
+  "nav": 140.3307,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 18.36,
+  "universe_n": 878,
+  "arm_coverage_pct": 81.7,
+  "n_dead_included": 90,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "JUSTDIAL LTD.",
+    "sym": "JUSTDIAL",
+    "pct": 2.76
+   },
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 2.73
+   },
+   {
+    "name": "INFOSYS LIMITED",
+    "sym": "INFY",
+    "pct": 2.7
+   },
+   {
+    "name": "TATA CONSULTANCY SERV LT",
+    "sym": "TCS",
+    "pct": 2.68
+   },
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 2.59
+   },
+   {
+    "name": "JUBILANT FOODWORKS LTD",
+    "sym": "JUBLFOOD",
+    "pct": 2.59
+   },
+   {
+    "name": "KOTAK MAHINDRA BANK LTD",
+    "sym": "KOTAKBANK",
+    "pct": 2.56
+   },
+   {
+    "name": "STEEL AUTHORITY OF INDIA",
+    "sym": "SAIL",
+    "pct": 2.47
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Consumer",
+    "pct": 13.41
+   },
+   {
+    "sector": "Industrials",
+    "pct": 11.44
+   },
+   {
+    "sector": "Materials",
+    "pct": 11.37
+   },
+   {
+    "sector": "Technology",
+    "pct": 9.96
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 9.29
+   },
+   {
+    "sector": "Energy",
+    "pct": 8.32
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2018-07-31",
+  "nav": 143.942,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 21.35,
+  "universe_n": 839,
+  "arm_coverage_pct": 81.6,
+  "n_dead_included": 88,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "JUSTDIAL LTD.",
+    "sym": "JUSTDIAL",
+    "pct": 3.06
+   },
+   {
+    "name": "TATA CONSULTANCY SERV LT",
+    "sym": "TCS",
+    "pct": 3.03
+   },
+   {
+    "name": "HCL TECHNOLOGIES LTD",
+    "sym": "HCLTECH",
+    "pct": 3.03
+   },
+   {
+    "name": "TECH MAHINDRA LIMITED",
+    "sym": "TECHM",
+    "pct": 3.03
+   },
+   {
+    "name": "JUBILANT FOODWORKS LTD",
+    "sym": "JUBLFOOD",
+    "pct": 2.99
+   },
+   {
+    "name": "INFOSYS LIMITED",
+    "sym": "INFY",
+    "pct": 2.97
+   },
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 2.88
+   },
+   {
+    "name": "RELIANCE INDUSTRIES LTD",
+    "sym": "RELIANCE",
+    "pct": 2.85
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Technology",
+    "pct": 14.49
+   },
+   {
+    "sector": "Energy",
+    "pct": 11.64
+   },
+   {
+    "sector": "Consumer",
+    "pct": 11.18
+   },
+   {
+    "sector": "Industrials",
+    "pct": 9.57
+   },
+   {
+    "sector": "Materials",
+    "pct": 8.94
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 8.83
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2018-08-31",
+  "nav": 151.1668,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 32.59,
+  "universe_n": 910,
+  "arm_coverage_pct": 81.1,
+  "n_dead_included": 92,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "BHARAT PETROLEUM CORP  LT",
+    "sym": "BPCL",
+    "pct": 2.55
+   },
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 2.53
+   },
+   {
+    "name": "TATA CONSULTANCY SERV LT",
+    "sym": "TCS",
+    "pct": 2.53
+   },
+   {
+    "name": "MAHINDRA & MAHINDRA LTD",
+    "sym": "M&M",
+    "pct": 2.5
+   },
+   {
+    "name": "JUBILANT FOODWORKS LTD",
+    "sym": "JUBLFOOD",
+    "pct": 2.5
+   },
+   {
+    "name": "TECH MAHINDRA LIMITED",
+    "sym": "TECHM",
+    "pct": 2.48
+   },
+   {
+    "name": "GAIL (INDIA) LTD",
+    "sym": "GAIL",
+    "pct": 2.48
+   },
+   {
+    "name": "HCL TECHNOLOGIES LTD",
+    "sym": "HCLTECH",
+    "pct": 2.34
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Consumer",
+    "pct": 12.22
+   },
+   {
+    "sector": "Technology",
+    "pct": 12.13
+   },
+   {
+    "sector": "Materials",
+    "pct": 10.77
+   },
+   {
+    "sector": "Energy",
+    "pct": 10.69
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 8.03
+   },
+   {
+    "sector": "Industrials",
+    "pct": 6.6
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2018-09-28",
+  "nav": 140.6208,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 16.3,
+  "universe_n": 905,
+  "arm_coverage_pct": 81.0,
+  "n_dead_included": 86,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "GAIL (INDIA) LTD",
+    "sym": "GAIL",
+    "pct": 2.42
+   },
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 2.4
+   },
+   {
+    "name": "TECH MAHINDRA LIMITED",
+    "sym": "TECHM",
+    "pct": 2.4
+   },
+   {
+    "name": "DLF LIMITED",
+    "sym": "DLF",
+    "pct": 2.4
+   },
+   {
+    "name": "MAHINDRA & MAHINDRA LTD",
+    "sym": "M&M",
+    "pct": 2.38
+   },
+   {
+    "name": "MINDTREE",
+    "sym": "MINDTREE",
+    "pct": 2.38
+   },
+   {
+    "name": "TATA CONSULTANCY SERV LT",
+    "sym": "TCS",
+    "pct": 2.33
+   },
+   {
+    "name": "HCL TECHNOLOGIES LTD",
+    "sym": "HCLTECH",
+    "pct": 2.33
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Technology",
+    "pct": 15.22
+   },
+   {
+    "sector": "Materials",
+    "pct": 10.28
+   },
+   {
+    "sector": "Consumer",
+    "pct": 10.02
+   },
+   {
+    "sector": "Energy",
+    "pct": 9.79
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 8.44
+   },
+   {
+    "sector": "Industrials",
+    "pct": 5.95
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2018-10-31",
+  "nav": 136.2811,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 23.73,
+  "universe_n": 836,
+  "arm_coverage_pct": 83.0,
+  "n_dead_included": 79,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "TECH MAHINDRA LIMITED",
+    "sym": "TECHM",
+    "pct": 2.19
+   },
+   {
+    "name": "HCL TECHNOLOGIES LTD",
+    "sym": "HCLTECH",
+    "pct": 2.19
+   },
+   {
+    "name": "INFOSYS LIMITED",
+    "sym": "INFY",
+    "pct": 2.17
+   },
+   {
+    "name": "TATA CONSULTANCY SERV LT",
+    "sym": "TCS",
+    "pct": 2.17
+   },
+   {
+    "name": "DR. REDDY S LABORATORIES",
+    "sym": "DRREDDY",
+    "pct": 2.17
+   },
+   {
+    "name": "GAIL (INDIA) LTD",
+    "sym": "GAIL",
+    "pct": 2.17
+   },
+   {
+    "name": "MINDTREE",
+    "sym": "MINDTREE",
+    "pct": 2.17
+   },
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 2.1
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Technology",
+    "pct": 12.82
+   },
+   {
+    "sector": "Materials",
+    "pct": 10.23
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 10.23
+   },
+   {
+    "sector": "Consumer",
+    "pct": 10.06
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 9.12
+   },
+   {
+    "sector": "Energy",
+    "pct": 6.57
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2018-11-30",
+  "nav": 136.1798,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 27.17,
+  "universe_n": 793,
+  "arm_coverage_pct": 83.9,
+  "n_dead_included": 75,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "LARSEN & TOUBRO LTD.",
+    "sym": "LT",
+    "pct": 3.24
+   },
+   {
+    "name": "ASHOK LEYLAND LTD",
+    "sym": "ASHOKLEY",
+    "pct": 3.24
+   },
+   {
+    "name": "TECH MAHINDRA LIMITED",
+    "sym": "TECHM",
+    "pct": 3.24
+   },
+   {
+    "name": "TATA CONSULTANCY SERV LT",
+    "sym": "TCS",
+    "pct": 3.21
+   },
+   {
+    "name": "INFOSYS LIMITED",
+    "sym": "INFY",
+    "pct": 3.17
+   },
+   {
+    "name": "DR. REDDY S LABORATORIES",
+    "sym": "DRREDDY",
+    "pct": 3.14
+   },
+   {
+    "name": "HCL TECHNOLOGIES LTD",
+    "sym": "HCLTECH",
+    "pct": 3.14
+   },
+   {
+    "name": "HDFC",
+    "sym": "HDFC",
+    "pct": 3.11
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Technology",
+    "pct": 15.97
+   },
+   {
+    "sector": "Industrials",
+    "pct": 11.11
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 9.4
+   },
+   {
+    "sector": "Consumer",
+    "pct": 8.41
+   },
+   {
+    "sector": "Energy",
+    "pct": 7.34
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 6.66
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2018-12-31",
+  "nav": 136.1752,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 16.13,
+  "universe_n": 788,
+  "arm_coverage_pct": 82.1,
+  "n_dead_included": 78,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "LARSEN & TOUBRO LTD.",
+    "sym": "LT",
+    "pct": 3.65
+   },
+   {
+    "name": "INFOSYS LIMITED",
+    "sym": "INFY",
+    "pct": 3.61
+   },
+   {
+    "name": "TATA CONSULTANCY SERV LT",
+    "sym": "TCS",
+    "pct": 3.53
+   },
+   {
+    "name": "HINDUSTAN UNILEVER LTD.",
+    "sym": "HINDUNILVR",
+    "pct": 3.3
+   },
+   {
+    "name": "AUROBINDO PHARMA LTD",
+    "sym": "AUROPHARMA",
+    "pct": 3.14
+   },
+   {
+    "name": "HDFC",
+    "sym": "HDFC",
+    "pct": 3.11
+   },
+   {
+    "name": "HCL TECHNOLOGIES LTD",
+    "sym": "HCLTECH",
+    "pct": 3.07
+   },
+   {
+    "name": "DR. REDDY S LABORATORIES",
+    "sym": "DRREDDY",
+    "pct": 3.03
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Technology",
+    "pct": 16.48
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 11.66
+   },
+   {
+    "sector": "Consumer",
+    "pct": 11.22
+   },
+   {
+    "sector": "Industrials",
+    "pct": 8.92
+   },
+   {
+    "sector": "Energy",
+    "pct": 7.22
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 6.23
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2019-01-31",
+  "nav": 135.1706,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 44.7,
+  "universe_n": 778,
+  "arm_coverage_pct": 82.3,
+  "n_dead_included": 74,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "BAJAJ FINANCE LIMITED",
+    "sym": "BAJFINANCE",
+    "pct": 3.98
+   },
+   {
+    "name": "ZEE ENTERTAINMENT ENT LTD",
+    "sym": "ZEEL",
+    "pct": 3.94
+   },
+   {
+    "name": "AXIS BANK LIMITED",
+    "sym": "AXISBANK",
+    "pct": 3.73
+   },
+   {
+    "name": "LARSEN & TOUBRO LTD.",
+    "sym": "LT",
+    "pct": 3.53
+   },
+   {
+    "name": "HINDUSTAN UNILEVER LTD.",
+    "sym": "HINDUNILVR",
+    "pct": 3.37
+   },
+   {
+    "name": "JUBILANT FOODWORKS LTD",
+    "sym": "JUBLFOOD",
+    "pct": 3.33
+   },
+   {
+    "name": "ASIAN PAINTS LIMITED",
+    "sym": "ASIANPAINT",
+    "pct": 3.11
+   },
+   {
+    "name": "WIPRO LTD",
+    "sym": "WIPRO",
+    "pct": 3.04
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 17.24
+   },
+   {
+    "sector": "Consumer",
+    "pct": 15.2
+   },
+   {
+    "sector": "Industrials",
+    "pct": 12.0
+   },
+   {
+    "sector": "Energy",
+    "pct": 6.91
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 6.77
+   },
+   {
+    "sector": "TelecomMedia",
+    "pct": 4.83
+   }
+  ],
+  "play_mix": {
+   "tactical": 66.0,
+   "structural": 6.5
+  }
+ },
+ {
+  "date": "2019-02-28",
+  "nav": 136.2538,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 23.57,
+  "universe_n": 765,
+  "arm_coverage_pct": 82.9,
+  "n_dead_included": 71,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "JUBILANT FOODWORKS LTD",
+    "sym": "JUBLFOOD",
+    "pct": 3.53
+   },
+   {
+    "name": "BAJAJ FINANCE LIMITED",
+    "sym": "BAJFINANCE",
+    "pct": 3.53
+   },
+   {
+    "name": "TITAN COMPANY LIMITED",
+    "sym": "TITAN",
+    "pct": 3.43
+   },
+   {
+    "name": "AXIS BANK LIMITED",
+    "sym": "AXISBANK",
+    "pct": 3.31
+   },
+   {
+    "name": "ZEE ENTERTAINMENT ENT LTD",
+    "sym": "ZEEL",
+    "pct": 3.31
+   },
+   {
+    "name": "LARSEN & TOUBRO LTD.",
+    "sym": "LT",
+    "pct": 3.02
+   },
+   {
+    "name": "TECH MAHINDRA LIMITED",
+    "sym": "TECHM",
+    "pct": 3.02
+   },
+   {
+    "name": "UPL LIMITED",
+    "sym": "UPL",
+    "pct": 2.66
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 18.27
+   },
+   {
+    "sector": "Consumer",
+    "pct": 15.92
+   },
+   {
+    "sector": "Industrials",
+    "pct": 9.91
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 6.32
+   },
+   {
+    "sector": "Materials",
+    "pct": 6.07
+   },
+   {
+    "sector": "Energy",
+    "pct": 5.75
+   }
+  ],
+  "play_mix": {
+   "tactical": 65.97,
+   "structural": 6.53
+  }
+ },
+ {
+  "date": "2019-03-29",
+  "nav": 146.2734,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 17.2,
+  "universe_n": 870,
+  "arm_coverage_pct": 80.1,
+  "n_dead_included": 79,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "AXIS BANK LIMITED",
+    "sym": "AXISBANK",
+    "pct": 2.8
+   },
+   {
+    "name": "JUBILANT FOODWORKS LTD",
+    "sym": "JUBLFOOD",
+    "pct": 2.8
+   },
+   {
+    "name": "TITAN COMPANY LIMITED",
+    "sym": "TITAN",
+    "pct": 2.74
+   },
+   {
+    "name": "BAJAJ FINANCE LIMITED",
+    "sym": "BAJFINANCE",
+    "pct": 2.71
+   },
+   {
+    "name": "REC LIMITED",
+    "sym": "RECLTD",
+    "pct": 2.66
+   },
+   {
+    "name": "INTERGLOBE AVIATION LTD",
+    "sym": "INDIGO",
+    "pct": 2.61
+   },
+   {
+    "name": "ZEE ENTERTAINMENT ENT LTD",
+    "sym": "ZEEL",
+    "pct": 2.51
+   },
+   {
+    "name": "HCL TECHNOLOGIES LTD",
+    "sym": "HCLTECH",
+    "pct": 2.48
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 18.68
+   },
+   {
+    "sector": "Consumer",
+    "pct": 13.54
+   },
+   {
+    "sector": "Industrials",
+    "pct": 7.84
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 6.46
+   },
+   {
+    "sector": "Energy",
+    "pct": 5.76
+   },
+   {
+    "sector": "Technology",
+    "pct": 5.45
+   }
+  ],
+  "play_mix": {
+   "tactical": 65.92,
+   "structural": 6.58
+  }
+ },
+ {
+  "date": "2019-04-30",
+  "nav": 144.7795,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 35.97,
+  "universe_n": 807,
+  "arm_coverage_pct": 80.7,
+  "n_dead_included": 70,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "LARSEN & TOUBRO LTD.",
+    "sym": "LT",
+    "pct": 5.23
+   },
+   {
+    "name": "INDUSIND BANK LIMITED",
+    "sym": "INDUSINDBK",
+    "pct": 4.78
+   },
+   {
+    "name": "DLF LIMITED",
+    "sym": "DLF",
+    "pct": 4.39
+   },
+   {
+    "name": "TECH MAHINDRA LIMITED",
+    "sym": "TECHM",
+    "pct": 3.13
+   },
+   {
+    "name": "INTERGLOBE AVIATION LTD",
+    "sym": "INDIGO",
+    "pct": 3.12
+   },
+   {
+    "name": "TITAN COMPANY LIMITED",
+    "sym": "TITAN",
+    "pct": 2.9
+   },
+   {
+    "name": "ULTRATECH CEMENT LIMITED",
+    "sym": "ULTRACEMCO",
+    "pct": 2.74
+   },
+   {
+    "name": "DR. REDDY S LABORATORIES",
+    "sym": "DRREDDY",
+    "pct": 2.7
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 13.99
+   },
+   {
+    "sector": "Industrials",
+    "pct": 13.8
+   },
+   {
+    "sector": "Consumer",
+    "pct": 10.78
+   },
+   {
+    "sector": "Materials",
+    "pct": 9.15
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 6.92
+   },
+   {
+    "sector": "Energy",
+    "pct": 5.06
+   }
+  ],
+  "play_mix": {
+   "tactical": 49.02,
+   "structural": 23.48
+  }
+ },
+ {
+  "date": "2019-05-31",
+  "nav": 146.7778,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 44.52,
+  "universe_n": 792,
+  "arm_coverage_pct": 81.6,
+  "n_dead_included": 68,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "STATE BANK OF INDIA",
+    "sym": "SBIN",
+    "pct": 5.33
+   },
+   {
+    "name": "ULTRATECH CEMENT LIMITED",
+    "sym": "ULTRACEMCO",
+    "pct": 4.42
+   },
+   {
+    "name": "INTERGLOBE AVIATION LTD",
+    "sym": "INDIGO",
+    "pct": 4.05
+   },
+   {
+    "name": "BAJAJ FINANCE LIMITED",
+    "sym": "BAJFINANCE",
+    "pct": 4.0
+   },
+   {
+    "name": "BHARTI AIRTEL LIMITED",
+    "sym": "BHARTIARTL",
+    "pct": 3.73
+   },
+   {
+    "name": "JUSTDIAL LTD.",
+    "sym": "JUSTDIAL",
+    "pct": 3.54
+   },
+   {
+    "name": "VODAFONE IDEA LIMITED",
+    "sym": "IDEA",
+    "pct": 3.21
+   },
+   {
+    "name": "HINDUSTAN PETROLEUM CORP",
+    "sym": "HINDPETRO",
+    "pct": 3.15
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 15.77
+   },
+   {
+    "sector": "Materials",
+    "pct": 13.85
+   },
+   {
+    "sector": "Industrials",
+    "pct": 11.33
+   },
+   {
+    "sector": "Energy",
+    "pct": 8.84
+   },
+   {
+    "sector": "TelecomMedia",
+    "pct": 6.94
+   },
+   {
+    "sector": "Consumer",
+    "pct": 4.39
+   }
+  ],
+  "play_mix": {
+   "tactical": 57.05,
+   "structural": 15.45
+  }
+ },
+ {
+  "date": "2019-06-28",
+  "nav": 144.3797,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 21.26,
+  "universe_n": 766,
+  "arm_coverage_pct": 80.8,
+  "n_dead_included": 61,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "STATE BANK OF INDIA",
+    "sym": "SBIN",
+    "pct": 7.12
+   },
+   {
+    "name": "BAJAJ FINANCE LIMITED",
+    "sym": "BAJFINANCE",
+    "pct": 6.18
+   },
+   {
+    "name": "JUSTDIAL LTD.",
+    "sym": "JUSTDIAL",
+    "pct": 4.17
+   },
+   {
+    "name": "ITC LTD",
+    "sym": "ITC",
+    "pct": 4.13
+   },
+   {
+    "name": "ULTRATECH CEMENT LIMITED",
+    "sym": "ULTRACEMCO",
+    "pct": 3.31
+   },
+   {
+    "name": "INTERGLOBE AVIATION LTD",
+    "sym": "INDIGO",
+    "pct": 3.16
+   },
+   {
+    "name": "UPL LIMITED",
+    "sym": "UPL",
+    "pct": 2.67
+   },
+   {
+    "name": "HINDUSTAN PETROLEUM CORP",
+    "sym": "HINDPETRO",
+    "pct": 2.25
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 22.59
+   },
+   {
+    "sector": "Materials",
+    "pct": 14.8
+   },
+   {
+    "sector": "Industrials",
+    "pct": 11.11
+   },
+   {
+    "sector": "Consumer",
+    "pct": 8.62
+   },
+   {
+    "sector": "Energy",
+    "pct": 5.3
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 5.27
+   }
+  ],
+  "play_mix": {
+   "tactical": 61.02,
+   "structural": 11.48
+  }
+ },
+ {
+  "date": "2019-07-31",
+  "nav": 132.2212,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 27.93,
+  "universe_n": 721,
+  "arm_coverage_pct": 82.7,
+  "n_dead_included": 58,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "INTERGLOBE AVIATION LTD",
+    "sym": "INDIGO",
+    "pct": 4.28
+   },
+   {
+    "name": "UPL LIMITED",
+    "sym": "UPL",
+    "pct": 4.19
+   },
+   {
+    "name": "STATE BANK OF INDIA",
+    "sym": "SBIN",
+    "pct": 4.15
+   },
+   {
+    "name": "BAJAJ FINSERV LTD.",
+    "sym": "BAJAJFINSV",
+    "pct": 3.85
+   },
+   {
+    "name": "ITC LTD",
+    "sym": "ITC",
+    "pct": 3.12
+   },
+   {
+    "name": "JUSTDIAL LTD.",
+    "sym": "JUSTDIAL",
+    "pct": 3.12
+   },
+   {
+    "name": "BAJAJ FINANCE LIMITED",
+    "sym": "BAJFINANCE",
+    "pct": 3.08
+   },
+   {
+    "name": "INFOSYS LIMITED",
+    "sym": "INFY",
+    "pct": 3.04
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 17.68
+   },
+   {
+    "sector": "Materials",
+    "pct": 15.73
+   },
+   {
+    "sector": "Industrials",
+    "pct": 11.08
+   },
+   {
+    "sector": "Energy",
+    "pct": 9.84
+   },
+   {
+    "sector": "Consumer",
+    "pct": 8.12
+   },
+   {
+    "sector": "Technology",
+    "pct": 5.7
+   }
+  ],
+  "play_mix": {
+   "tactical": 51.54,
+   "structural": 20.96
+  }
+ },
+ {
+  "date": "2019-08-30",
+  "nav": 129.9187,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 34.54,
+  "universe_n": 720,
+  "arm_coverage_pct": 81.7,
+  "n_dead_included": 58,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "HDFC LIFE INS CO LTD",
+    "sym": "HDFCLIFE",
+    "pct": 4.64
+   },
+   {
+    "name": "ULTRATECH CEMENT LIMITED",
+    "sym": "ULTRACEMCO",
+    "pct": 4.5
+   },
+   {
+    "name": "BHARTI AIRTEL LIMITED",
+    "sym": "BHARTIARTL",
+    "pct": 4.48
+   },
+   {
+    "name": "COAL INDIA LTD",
+    "sym": "COALINDIA",
+    "pct": 3.72
+   },
+   {
+    "name": "INFOSYS LIMITED",
+    "sym": "INFY",
+    "pct": 3.67
+   },
+   {
+    "name": "ASIAN PAINTS LIMITED",
+    "sym": "ASIANPAINT",
+    "pct": 3.48
+   },
+   {
+    "name": "INTERGLOBE AVIATION LTD",
+    "sym": "INDIGO",
+    "pct": 3.41
+   },
+   {
+    "name": "HCL TECHNOLOGIES LTD",
+    "sym": "HCLTECH",
+    "pct": 3.25
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Consumer",
+    "pct": 13.94
+   },
+   {
+    "sector": "Materials",
+    "pct": 12.2
+   },
+   {
+    "sector": "Financials",
+    "pct": 11.06
+   },
+   {
+    "sector": "Energy",
+    "pct": 10.19
+   },
+   {
+    "sector": "Technology",
+    "pct": 7.29
+   },
+   {
+    "sector": "Industrials",
+    "pct": 7.16
+   }
+  ],
+  "play_mix": {
+   "tactical": 48.42,
+   "structural": 24.08
+  }
+ },
+ {
+  "date": "2019-09-30",
+  "nav": 136.5503,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 35.43,
+  "universe_n": 755,
+  "arm_coverage_pct": 80.4,
+  "n_dead_included": 58,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "ASIAN PAINTS LIMITED",
+    "sym": "ASIANPAINT",
+    "pct": 2.32
+   },
+   {
+    "name": "INTERGLOBE AVIATION LTD",
+    "sym": "INDIGO",
+    "pct": 2.32
+   },
+   {
+    "name": "HINDUSTAN UNILEVER LTD.",
+    "sym": "HINDUNILVR",
+    "pct": 2.3
+   },
+   {
+    "name": "BAJAJ FINSERV LTD.",
+    "sym": "BAJAJFINSV",
+    "pct": 2.27
+   },
+   {
+    "name": "ULTRATECH CEMENT LIMITED",
+    "sym": "ULTRACEMCO",
+    "pct": 2.27
+   },
+   {
+    "name": "BHARAT PETROLEUM CORP  LT",
+    "sym": "BPCL",
+    "pct": 2.22
+   },
+   {
+    "name": "HINDUSTAN PETROLEUM CORP",
+    "sym": "HINDPETRO",
+    "pct": 2.15
+   },
+   {
+    "name": "MULTI COMMODITY EXCHANGE",
+    "sym": "MCX",
+    "pct": 2.15
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 19.22
+   },
+   {
+    "sector": "Consumer",
+    "pct": 18.54
+   },
+   {
+    "sector": "Energy",
+    "pct": 11.69
+   },
+   {
+    "sector": "Materials",
+    "pct": 6.52
+   },
+   {
+    "sector": "Industrials",
+    "pct": 5.6
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 4.03
+   }
+  ],
+  "play_mix": {
+   "tactical": 61.08,
+   "structural": 11.42
+  }
+ },
+ {
+  "date": "2019-10-31",
+  "nav": 139.5138,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 33.91,
+  "universe_n": 726,
+  "arm_coverage_pct": 82.5,
+  "n_dead_included": 49,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "BAJAJ FINANCE LIMITED",
+    "sym": "BAJFINANCE",
+    "pct": 3.22
+   },
+   {
+    "name": "HDFC BANK LTD",
+    "sym": "HDFCBANK",
+    "pct": 3.12
+   },
+   {
+    "name": "ULTRATECH CEMENT LIMITED",
+    "sym": "ULTRACEMCO",
+    "pct": 3.09
+   },
+   {
+    "name": "HINDUSTAN PETROLEUM CORP",
+    "sym": "HINDPETRO",
+    "pct": 2.99
+   },
+   {
+    "name": "INDIAN OIL CORP LTD",
+    "sym": "IOC",
+    "pct": 2.89
+   },
+   {
+    "name": "BAJAJ FINSERV LTD.",
+    "sym": "BAJAJFINSV",
+    "pct": 2.86
+   },
+   {
+    "name": "HINDUSTAN UNILEVER LTD.",
+    "sym": "HINDUNILVR",
+    "pct": 2.83
+   },
+   {
+    "name": "KOTAK MAHINDRA BANK LTD",
+    "sym": "KOTAKBANK",
+    "pct": 2.8
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 24.34
+   },
+   {
+    "sector": "Consumer",
+    "pct": 17.74
+   },
+   {
+    "sector": "Energy",
+    "pct": 10.45
+   },
+   {
+    "sector": "Materials",
+    "pct": 7.04
+   },
+   {
+    "sector": "Industrials",
+    "pct": 4.93
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 3.42
+   }
+  ],
+  "play_mix": {
+   "tactical": 68.23,
+   "structural": 4.27
+  }
+ },
+ {
+  "date": "2019-11-29",
+  "nav": 138.8294,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 35.34,
+  "universe_n": 775,
+  "arm_coverage_pct": 80.9,
+  "n_dead_included": 53,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "BHARTI AIRTEL LIMITED",
+    "sym": "BHARTIARTL",
+    "pct": 4.61
+   },
+   {
+    "name": "BAJAJ FINANCE LIMITED",
+    "sym": "BAJFINANCE",
+    "pct": 4.43
+   },
+   {
+    "name": "HDFC",
+    "sym": "HDFC",
+    "pct": 4.34
+   },
+   {
+    "name": "RELIANCE INDUSTRIES LTD",
+    "sym": "RELIANCE",
+    "pct": 4.06
+   },
+   {
+    "name": "KOTAK MAHINDRA BANK LTD",
+    "sym": "KOTAKBANK",
+    "pct": 4.06
+   },
+   {
+    "name": "HDFC BANK LTD",
+    "sym": "HDFCBANK",
+    "pct": 3.97
+   },
+   {
+    "name": "ITC LTD",
+    "sym": "ITC",
+    "pct": 3.83
+   },
+   {
+    "name": "BAJAJ FINSERV LTD.",
+    "sym": "BAJAJFINSV",
+    "pct": 3.82
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 22.27
+   },
+   {
+    "sector": "Consumer",
+    "pct": 16.05
+   },
+   {
+    "sector": "Technology",
+    "pct": 9.36
+   },
+   {
+    "sector": "Energy",
+    "pct": 8.4
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 5.54
+   },
+   {
+    "sector": "TelecomMedia",
+    "pct": 4.61
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2019-12-31",
+  "nav": 139.8393,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 23.8,
+  "universe_n": 725,
+  "arm_coverage_pct": 81.2,
+  "n_dead_included": 47,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "BHARTI AIRTEL LIMITED",
+    "sym": "BHARTIARTL",
+    "pct": 6.52
+   },
+   {
+    "name": "RELIANCE INDUSTRIES LTD",
+    "sym": "RELIANCE",
+    "pct": 6.39
+   },
+   {
+    "name": "HDFC",
+    "sym": "HDFC",
+    "pct": 6.26
+   },
+   {
+    "name": "BAJAJ FINANCE LIMITED",
+    "sym": "BAJFINANCE",
+    "pct": 5.8
+   },
+   {
+    "name": "HDFC BANK LTD",
+    "sym": "HDFCBANK",
+    "pct": 5.07
+   },
+   {
+    "name": "JINDAL STEEL LIMITED",
+    "sym": "JINDALSTEL",
+    "pct": 5.01
+   },
+   {
+    "name": "INFOSYS LIMITED",
+    "sym": "INFY",
+    "pct": 4.94
+   },
+   {
+    "name": "VODAFONE IDEA LIMITED",
+    "sym": "IDEA",
+    "pct": 2.81
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 18.35
+   },
+   {
+    "sector": "TelecomMedia",
+    "pct": 9.33
+   },
+   {
+    "sector": "Energy",
+    "pct": 9.18
+   },
+   {
+    "sector": "Consumer",
+    "pct": 8.78
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 8.39
+   },
+   {
+    "sector": "Technology",
+    "pct": 7.51
+   }
+  ],
+  "play_mix": {
+   "tactical": 70.74,
+   "structural": 1.76
+  }
+ },
+ {
+  "date": "2020-01-31",
+  "nav": 142.5282,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 37.43,
+  "universe_n": 820,
+  "arm_coverage_pct": 79.6,
+  "n_dead_included": 54,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "HDFC",
+    "sym": "HDFC",
+    "pct": 4.27
+   },
+   {
+    "name": "BAJAJ FINANCE LIMITED",
+    "sym": "BAJFINANCE",
+    "pct": 4.23
+   },
+   {
+    "name": "BHARTI AIRTEL LIMITED",
+    "sym": "BHARTIARTL",
+    "pct": 3.92
+   },
+   {
+    "name": "HCL TECHNOLOGIES LTD",
+    "sym": "HCLTECH",
+    "pct": 3.5
+   },
+   {
+    "name": "ICICI BANK LTD.",
+    "sym": "ICICIBANK",
+    "pct": 3.38
+   },
+   {
+    "name": "INFOSYS LIMITED",
+    "sym": "INFY",
+    "pct": 3.38
+   },
+   {
+    "name": "STATE BANK OF INDIA",
+    "sym": "SBIN",
+    "pct": 3.25
+   },
+   {
+    "name": "JINDAL STEEL LIMITED",
+    "sym": "JINDALSTEL",
+    "pct": 3.25
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 20.37
+   },
+   {
+    "sector": "Technology",
+    "pct": 10.23
+   },
+   {
+    "sector": "Materials",
+    "pct": 9.71
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 7.86
+   },
+   {
+    "sector": "TelecomMedia",
+    "pct": 5.72
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 5.35
+   }
+  ],
+  "play_mix": {
+   "tactical": 62.44,
+   "structural": 10.06
+  }
+ },
+ {
+  "date": "2020-02-28",
+  "nav": 136.4512,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 29.13,
+  "universe_n": 801,
+  "arm_coverage_pct": 80.5,
+  "n_dead_included": 54,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "BHARTI AIRTEL LIMITED",
+    "sym": "BHARTIARTL",
+    "pct": 3.03
+   },
+   {
+    "name": "PIRAMAL ENTERPRISES LTD",
+    "sym": "PEL",
+    "pct": 3.03
+   },
+   {
+    "name": "HINDUSTAN UNILEVER LTD.",
+    "sym": "HINDUNILVR",
+    "pct": 2.94
+   },
+   {
+    "name": "ESCORTS KUBOTA LIMITED",
+    "sym": "ESCORTS",
+    "pct": 2.94
+   },
+   {
+    "name": "HCL TECHNOLOGIES LTD",
+    "sym": "HCLTECH",
+    "pct": 2.75
+   },
+   {
+    "name": "BAJAJ FINANCE LIMITED",
+    "sym": "BAJFINANCE",
+    "pct": 2.66
+   },
+   {
+    "name": "DR. REDDY S LABORATORIES",
+    "sym": "DRREDDY",
+    "pct": 2.63
+   },
+   {
+    "name": "JSW STEEL LIMITED",
+    "sym": "JSWSTEEL",
+    "pct": 2.6
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 13.35
+   },
+   {
+    "sector": "Materials",
+    "pct": 12.31
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 11.28
+   },
+   {
+    "sector": "Consumer",
+    "pct": 8.04
+   },
+   {
+    "sector": "Technology",
+    "pct": 7.72
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 7.64
+   }
+  ],
+  "play_mix": {
+   "tactical": 65.0,
+   "structural": 7.5
+  }
+ },
+ {
+  "date": "2020-03-31",
+  "nav": 109.8153,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 28.56,
+  "universe_n": 755,
+  "arm_coverage_pct": 82.9,
+  "n_dead_included": 47,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "BHARTI AIRTEL LIMITED",
+    "sym": "BHARTIARTL",
+    "pct": 2.36
+   },
+   {
+    "name": "BANDHAN BANK LIMITED",
+    "sym": "BANDHANBNK",
+    "pct": 2.34
+   },
+   {
+    "name": "ESCORTS KUBOTA LIMITED",
+    "sym": "ESCORTS",
+    "pct": 2.34
+   },
+   {
+    "name": "HINDUSTAN UNILEVER LTD.",
+    "sym": "HINDUNILVR",
+    "pct": 2.29
+   },
+   {
+    "name": "JINDAL STEEL LIMITED",
+    "sym": "JINDALSTEL",
+    "pct": 2.29
+   },
+   {
+    "name": "BATA INDIA LTD",
+    "sym": "BATAINDIA",
+    "pct": 2.29
+   },
+   {
+    "name": "VODAFONE IDEA LIMITED",
+    "sym": "IDEA",
+    "pct": 2.29
+   },
+   {
+    "name": "TATA CONSUMER PRODUCT LTD",
+    "sym": "TATACONSUM",
+    "pct": 2.27
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Consumer",
+    "pct": 14.12
+   },
+   {
+    "sector": "Financials",
+    "pct": 13.27
+   },
+   {
+    "sector": "Materials",
+    "pct": 8.7
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 8.14
+   },
+   {
+    "sector": "Industrials",
+    "pct": 6.34
+   },
+   {
+    "sector": "Energy",
+    "pct": 5.41
+   }
+  ],
+  "play_mix": {
+   "tactical": 68.97,
+   "structural": 3.53
+  }
+ },
+ {
+  "date": "2020-04-30",
+  "nav": 122.363,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 39.58,
+  "universe_n": 720,
+  "arm_coverage_pct": 83.5,
+  "n_dead_included": 43,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "BANDHAN BANK LIMITED",
+    "sym": "BANDHANBNK",
+    "pct": 3.18
+   },
+   {
+    "name": "PIRAMAL ENTERPRISES LTD",
+    "sym": "PEL",
+    "pct": 3.02
+   },
+   {
+    "name": "TATA CONSUMER PRODUCT LTD",
+    "sym": "TATACONSUM",
+    "pct": 2.95
+   },
+   {
+    "name": "MUTHOOT FINANCE LIMITED",
+    "sym": "MUTHOOTFIN",
+    "pct": 2.82
+   },
+   {
+    "name": "HINDUSTAN UNILEVER LTD.",
+    "sym": "HINDUNILVR",
+    "pct": 2.76
+   },
+   {
+    "name": "DR. REDDY S LABORATORIES",
+    "sym": "DRREDDY",
+    "pct": 2.76
+   },
+   {
+    "name": "POWER GRID CORP. LTD.",
+    "sym": "POWERGRID",
+    "pct": 2.72
+   },
+   {
+    "name": "HDFC",
+    "sym": "HDFC",
+    "pct": 2.66
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Healthcare",
+    "pct": 16.08
+   },
+   {
+    "sector": "Financials",
+    "pct": 13.48
+   },
+   {
+    "sector": "Energy",
+    "pct": 11.38
+   },
+   {
+    "sector": "Consumer",
+    "pct": 8.81
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 8.19
+   },
+   {
+    "sector": "Materials",
+    "pct": 4.57
+   }
+  ],
+  "play_mix": {
+   "tactical": 44.7,
+   "structural": 27.8
+  }
+ },
+ {
+  "date": "2020-05-29",
+  "nav": 122.1131,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 34.97,
+  "universe_n": 692,
+  "arm_coverage_pct": 84.1,
+  "n_dead_included": 41,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "BHARTI AIRTEL LIMITED",
+    "sym": "BHARTIARTL",
+    "pct": 4.03
+   },
+   {
+    "name": "BANDHAN BANK LIMITED",
+    "sym": "BANDHANBNK",
+    "pct": 3.99
+   },
+   {
+    "name": "DR. REDDY S LABORATORIES",
+    "sym": "DRREDDY",
+    "pct": 3.5
+   },
+   {
+    "name": "POWER GRID CORP. LTD.",
+    "sym": "POWERGRID",
+    "pct": 3.29
+   },
+   {
+    "name": "VODAFONE IDEA LIMITED",
+    "sym": "IDEA",
+    "pct": 2.89
+   },
+   {
+    "name": "BRITANNIA INDUSTRIES LTD",
+    "sym": "BRITANNIA",
+    "pct": 2.81
+   },
+   {
+    "name": "TATA CONSUMER PRODUCT LTD",
+    "sym": "TATACONSUM",
+    "pct": 2.73
+   },
+   {
+    "name": "AUROBINDO PHARMA LTD",
+    "sym": "AUROPHARMA",
+    "pct": 2.72
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Healthcare",
+    "pct": 21.88
+   },
+   {
+    "sector": "Financials",
+    "pct": 13.42
+   },
+   {
+    "sector": "Consumer",
+    "pct": 8.94
+   },
+   {
+    "sector": "Energy",
+    "pct": 7.41
+   },
+   {
+    "sector": "TelecomMedia",
+    "pct": 6.91
+   },
+   {
+    "sector": "Technology",
+    "pct": 4.92
+   }
+  ],
+  "play_mix": {
+   "tactical": 27.44,
+   "structural": 45.06
+  }
+ },
+ {
+  "date": "2020-06-30",
+  "nav": 132.554,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 29.9,
+  "universe_n": 867,
+  "arm_coverage_pct": 76.5,
+  "n_dead_included": 53,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "BRITANNIA INDUSTRIES LTD",
+    "sym": "BRITANNIA",
+    "pct": 3.25
+   },
+   {
+    "name": "BANDHAN BANK LIMITED",
+    "sym": "BANDHANBNK",
+    "pct": 3.22
+   },
+   {
+    "name": "CANARA BANK",
+    "sym": "CANBK",
+    "pct": 3.22
+   },
+   {
+    "name": "AUROBINDO PHARMA LTD",
+    "sym": "AUROPHARMA",
+    "pct": 3.16
+   },
+   {
+    "name": "BHARTI AIRTEL LIMITED",
+    "sym": "BHARTIARTL",
+    "pct": 2.96
+   },
+   {
+    "name": "VODAFONE IDEA LIMITED",
+    "sym": "IDEA",
+    "pct": 2.86
+   },
+   {
+    "name": "DR. REDDY S LABORATORIES",
+    "sym": "DRREDDY",
+    "pct": 2.56
+   },
+   {
+    "name": "MUTHOOT FINANCE LIMITED",
+    "sym": "MUTHOOTFIN",
+    "pct": 2.53
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Healthcare",
+    "pct": 16.97
+   },
+   {
+    "sector": "Financials",
+    "pct": 15.32
+   },
+   {
+    "sector": "Consumer",
+    "pct": 8.13
+   },
+   {
+    "sector": "Technology",
+    "pct": 6.66
+   },
+   {
+    "sector": "Materials",
+    "pct": 6.57
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 5.94
+   }
+  ],
+  "play_mix": {
+   "tactical": 33.38,
+   "structural": 39.12
+  }
+ },
+ {
+  "date": "2020-07-31",
+  "nav": 140.838,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 36.38,
+  "universe_n": 847,
+  "arm_coverage_pct": 77.2,
+  "n_dead_included": 54,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "BRITANNIA INDUSTRIES LTD",
+    "sym": "BRITANNIA",
+    "pct": 2.49
+   },
+   {
+    "name": "INFOSYS LIMITED",
+    "sym": "INFY",
+    "pct": 2.46
+   },
+   {
+    "name": "BANDHAN BANK LIMITED",
+    "sym": "BANDHANBNK",
+    "pct": 2.44
+   },
+   {
+    "name": "WIPRO LTD",
+    "sym": "WIPRO",
+    "pct": 2.41
+   },
+   {
+    "name": "TECH MAHINDRA LIMITED",
+    "sym": "TECHM",
+    "pct": 2.39
+   },
+   {
+    "name": "ESCORTS KUBOTA LIMITED",
+    "sym": "ESCORTS",
+    "pct": 2.36
+   },
+   {
+    "name": "HCL TECHNOLOGIES LTD",
+    "sym": "HCLTECH",
+    "pct": 2.31
+   },
+   {
+    "name": "ULTRATECH CEMENT LIMITED",
+    "sym": "ULTRACEMCO",
+    "pct": 2.31
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Healthcare",
+    "pct": 15.03
+   },
+   {
+    "sector": "Materials",
+    "pct": 12.1
+   },
+   {
+    "sector": "Financials",
+    "pct": 11.83
+   },
+   {
+    "sector": "Consumer",
+    "pct": 11.12
+   },
+   {
+    "sector": "Technology",
+    "pct": 10.87
+   },
+   {
+    "sector": "Industrials",
+    "pct": 3.88
+   }
+  ],
+  "play_mix": {
+   "tactical": 56.06,
+   "structural": 16.44
+  }
+ },
+ {
+  "date": "2020-08-31",
+  "nav": 143.5592,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 30.59,
+  "universe_n": 966,
+  "arm_coverage_pct": 71.7,
+  "n_dead_included": 59,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "DIVI S LABORATORIES LTD",
+    "sym": "DIVISLAB",
+    "pct": 2.2
+   },
+   {
+    "name": "BANDHAN BANK LIMITED",
+    "sym": "BANDHANBNK",
+    "pct": 2.18
+   },
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 2.16
+   },
+   {
+    "name": "INFOSYS LIMITED",
+    "sym": "INFY",
+    "pct": 2.13
+   },
+   {
+    "name": "CIPLA LTD",
+    "sym": "CIPLA",
+    "pct": 2.13
+   },
+   {
+    "name": "BRITANNIA INDUSTRIES LTD",
+    "sym": "BRITANNIA",
+    "pct": 2.13
+   },
+   {
+    "name": "YES BANK LIMITED",
+    "sym": "YESBANK",
+    "pct": 2.09
+   },
+   {
+    "name": "AARTI DRUGS LTD.",
+    "sym": "AARTIDRUGS",
+    "pct": 2.07
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Healthcare",
+    "pct": 19.73
+   },
+   {
+    "sector": "Materials",
+    "pct": 16.14
+   },
+   {
+    "sector": "Technology",
+    "pct": 9.78
+   },
+   {
+    "sector": "Financials",
+    "pct": 7.6
+   },
+   {
+    "sector": "Consumer",
+    "pct": 5.83
+   },
+   {
+    "sector": "Industrials",
+    "pct": 3.78
+   }
+  ],
+  "play_mix": {
+   "tactical": 70.08,
+   "structural": 2.42
+  }
+ },
+ {
+  "date": "2020-09-30",
+  "nav": 146.9952,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 21.69,
+  "universe_n": 876,
+  "arm_coverage_pct": 76.0,
+  "n_dead_included": 52,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "DIVI S LABORATORIES LTD",
+    "sym": "DIVISLAB",
+    "pct": 2.14
+   },
+   {
+    "name": "BANDHAN BANK LIMITED",
+    "sym": "BANDHANBNK",
+    "pct": 2.14
+   },
+   {
+    "name": "JINDAL STEEL LIMITED",
+    "sym": "JINDALSTEL",
+    "pct": 2.12
+   },
+   {
+    "name": "DR. REDDY S LABORATORIES",
+    "sym": "DRREDDY",
+    "pct": 2.09
+   },
+   {
+    "name": "HCL TECHNOLOGIES LTD",
+    "sym": "HCLTECH",
+    "pct": 2.07
+   },
+   {
+    "name": "JSW STEEL LIMITED",
+    "sym": "JSWSTEEL",
+    "pct": 2.07
+   },
+   {
+    "name": "ULTRATECH CEMENT LIMITED",
+    "sym": "ULTRACEMCO",
+    "pct": 2.05
+   },
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 2.01
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Materials",
+    "pct": 16.8
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 16.0
+   },
+   {
+    "sector": "Technology",
+    "pct": 12.42
+   },
+   {
+    "sector": "Financials",
+    "pct": 10.15
+   },
+   {
+    "sector": "Consumer",
+    "pct": 5.6
+   },
+   {
+    "sector": "Energy",
+    "pct": 3.57
+   }
+  ],
+  "play_mix": {
+   "tactical": 60.66,
+   "structural": 11.84
+  }
+ },
+ {
+  "date": "2020-10-30",
+  "nav": 147.2519,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 39.92,
+  "universe_n": 853,
+  "arm_coverage_pct": 74.8,
+  "n_dead_included": 56,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "ULTRATECH CEMENT LIMITED",
+    "sym": "ULTRACEMCO",
+    "pct": 2.34
+   },
+   {
+    "name": "TECH MAHINDRA LIMITED",
+    "sym": "TECHM",
+    "pct": 2.31
+   },
+   {
+    "name": "AXIS BANK LIMITED",
+    "sym": "AXISBANK",
+    "pct": 2.29
+   },
+   {
+    "name": "BANDHAN BANK LIMITED",
+    "sym": "BANDHANBNK",
+    "pct": 2.29
+   },
+   {
+    "name": "HCL TECHNOLOGIES LTD",
+    "sym": "HCLTECH",
+    "pct": 2.27
+   },
+   {
+    "name": "FEDERAL BANK LTD",
+    "sym": "FEDERALBNK",
+    "pct": 2.27
+   },
+   {
+    "name": "TATA CONSULTANCY SERV LT",
+    "sym": "TCS",
+    "pct": 2.24
+   },
+   {
+    "name": "INFOSYS LIMITED",
+    "sym": "INFY",
+    "pct": 2.24
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 19.66
+   },
+   {
+    "sector": "Materials",
+    "pct": 13.37
+   },
+   {
+    "sector": "Technology",
+    "pct": 10.57
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 8.47
+   },
+   {
+    "sector": "Consumer",
+    "pct": 6.92
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 4.57
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2020-11-27",
+  "nav": 161.7016,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 34.78,
+  "universe_n": 921,
+  "arm_coverage_pct": 72.6,
+  "n_dead_included": 57,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 2.14
+   },
+   {
+    "name": "CHOLAMANDALAM IN & FIN CO",
+    "sym": "CHOLAFIN",
+    "pct": 2.12
+   },
+   {
+    "name": "HAVELLS INDIA LIMITED",
+    "sym": "HAVELLS",
+    "pct": 2.12
+   },
+   {
+    "name": "SHREE CEMENT LIMITED",
+    "sym": "SHREECEM",
+    "pct": 2.12
+   },
+   {
+    "name": "BANDHAN BANK LIMITED",
+    "sym": "BANDHANBNK",
+    "pct": 2.1
+   },
+   {
+    "name": "ULTRATECH CEMENT LIMITED",
+    "sym": "ULTRACEMCO",
+    "pct": 2.1
+   },
+   {
+    "name": "BALKRISHNA IND. LTD",
+    "sym": "BALKRISIND",
+    "pct": 2.08
+   },
+   {
+    "name": "HINDUSTAN PETROLEUM CORP",
+    "sym": "HINDPETRO",
+    "pct": 2.08
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 18.19
+   },
+   {
+    "sector": "Materials",
+    "pct": 11.38
+   },
+   {
+    "sector": "Consumer",
+    "pct": 7.66
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 7.38
+   },
+   {
+    "sector": "Auto",
+    "pct": 7.34
+   },
+   {
+    "sector": "Industrials",
+    "pct": 7.06
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2020-12-31",
+  "nav": 170.2271,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 27.04,
+  "universe_n": 1064,
+  "arm_coverage_pct": 65.5,
+  "n_dead_included": 63,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 2.52
+   },
+   {
+    "name": "STEEL AUTHORITY OF INDIA",
+    "sym": "SAIL",
+    "pct": 2.5
+   },
+   {
+    "name": "CANARA BANK",
+    "sym": "CANBK",
+    "pct": 2.45
+   },
+   {
+    "name": "FEDERAL BANK LTD",
+    "sym": "FEDERALBNK",
+    "pct": 2.45
+   },
+   {
+    "name": "ULTRATECH CEMENT LIMITED",
+    "sym": "ULTRACEMCO",
+    "pct": 2.4
+   },
+   {
+    "name": "YES BANK LIMITED",
+    "sym": "YESBANK",
+    "pct": 2.37
+   },
+   {
+    "name": "HINDUSTAN PETROLEUM CORP",
+    "sym": "HINDPETRO",
+    "pct": 2.36
+   },
+   {
+    "name": "DIVI S LABORATORIES LTD",
+    "sym": "DIVISLAB",
+    "pct": 2.35
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 19.4
+   },
+   {
+    "sector": "Materials",
+    "pct": 18.59
+   },
+   {
+    "sector": "Industrials",
+    "pct": 10.49
+   },
+   {
+    "sector": "Consumer",
+    "pct": 7.23
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 6.46
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 4.49
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2021-01-29",
+  "nav": 169.3008,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 34.67,
+  "universe_n": 1052,
+  "arm_coverage_pct": 65.8,
+  "n_dead_included": 64,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "CANARA BANK",
+    "sym": "CANBK",
+    "pct": 2.07
+   },
+   {
+    "name": "BANK OF BARODA",
+    "sym": "BANKBARODA",
+    "pct": 2.07
+   },
+   {
+    "name": "JSW STEEL LIMITED",
+    "sym": "JSWSTEEL",
+    "pct": 2.07
+   },
+   {
+    "name": "FEDERAL BANK LTD",
+    "sym": "FEDERALBNK",
+    "pct": 2.07
+   },
+   {
+    "name": "TVS MOTOR COMPANY  LTD",
+    "sym": "TVSMOTOR",
+    "pct": 2.07
+   },
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 2.05
+   },
+   {
+    "name": "PUNJAB NATIONAL BANK",
+    "sym": "PNB",
+    "pct": 2.01
+   },
+   {
+    "name": "BAJAJ AUTO LIMITED",
+    "sym": "BAJAJ-AUTO",
+    "pct": 2.01
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 19.73
+   },
+   {
+    "sector": "Materials",
+    "pct": 13.12
+   },
+   {
+    "sector": "Industrials",
+    "pct": 10.75
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 8.36
+   },
+   {
+    "sector": "Consumer",
+    "pct": 8.11
+   },
+   {
+    "sector": "Energy",
+    "pct": 4.41
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2021-02-26",
+  "nav": 188.6731,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 29.22,
+  "universe_n": 1036,
+  "arm_coverage_pct": 66.5,
+  "n_dead_included": 59,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "PUNJAB NATIONAL BANK",
+    "sym": "PNB",
+    "pct": 1.95
+   },
+   {
+    "name": "BANK OF BARODA",
+    "sym": "BANKBARODA",
+    "pct": 1.95
+   },
+   {
+    "name": "CANARA BANK",
+    "sym": "CANBK",
+    "pct": 1.95
+   },
+   {
+    "name": "STEEL AUTHORITY OF INDIA",
+    "sym": "SAIL",
+    "pct": 1.95
+   },
+   {
+    "name": "APOLLO TYRES LTD",
+    "sym": "APOLLOTYRE",
+    "pct": 1.95
+   },
+   {
+    "name": "JSW STEEL LIMITED",
+    "sym": "JSWSTEEL",
+    "pct": 1.93
+   },
+   {
+    "name": "INDUSIND BANK LIMITED",
+    "sym": "INDUSINDBK",
+    "pct": 1.91
+   },
+   {
+    "name": "OIL AND NATURAL GAS CORP.",
+    "sym": "ONGC",
+    "pct": 1.91
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 22.88
+   },
+   {
+    "sector": "Materials",
+    "pct": 13.5
+   },
+   {
+    "sector": "Industrials",
+    "pct": 9.45
+   },
+   {
+    "sector": "Auto",
+    "pct": 6.63
+   },
+   {
+    "sector": "Consumer",
+    "pct": 6.04
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 4.47
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2021-03-31",
+  "nav": 188.8275,
+  "n_holdings": 60,
+  "equity_pct": 72.49,
+  "cash_pct": 27.51,
+  "oneway_turnover_pct": 30.02,
+  "universe_n": 1064,
+  "arm_coverage_pct": 64.6,
+  "n_dead_included": 63,
+  "deployed_pct": 72.49,
+  "top_holdings": [
+   {
+    "name": "STEEL AUTHORITY OF INDIA",
+    "sym": "SAIL",
+    "pct": 1.77
+   },
+   {
+    "name": "JSW STEEL LIMITED",
+    "sym": "JSWSTEEL",
+    "pct": 1.77
+   },
+   {
+    "name": "CANARA BANK",
+    "sym": "CANBK",
+    "pct": 1.77
+   },
+   {
+    "name": "BANK OF BARODA",
+    "sym": "BANKBARODA",
+    "pct": 1.75
+   },
+   {
+    "name": "PUNJAB NATIONAL BANK",
+    "sym": "PNB",
+    "pct": 1.75
+   },
+   {
+    "name": "INDUSIND BANK LIMITED",
+    "sym": "INDUSINDBK",
+    "pct": 1.74
+   },
+   {
+    "name": "APOLLO TYRES LTD",
+    "sym": "APOLLOTYRE",
+    "pct": 1.74
+   },
+   {
+    "name": "AU SMALL FINANCE BANK LTD",
+    "sym": "AUBANK",
+    "pct": 1.73
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 17.21
+   },
+   {
+    "sector": "Materials",
+    "pct": 14.67
+   },
+   {
+    "sector": "Auto",
+    "pct": 8.17
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 6.62
+   },
+   {
+    "sector": "Technology",
+    "pct": 6.55
+   },
+   {
+    "sector": "Energy",
+    "pct": 6.36
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.49
+  }
+ },
+ {
+  "date": "2021-04-30",
+  "nav": 194.9091,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 26.57,
+  "universe_n": 1050,
+  "arm_coverage_pct": 65.1,
+  "n_dead_included": 61,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 1.93
+   },
+   {
+    "name": "JSW STEEL LIMITED",
+    "sym": "JSWSTEEL",
+    "pct": 1.93
+   },
+   {
+    "name": "STEEL AUTHORITY OF INDIA",
+    "sym": "SAIL",
+    "pct": 1.93
+   },
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 1.87
+   },
+   {
+    "name": "OIL AND NATURAL GAS CORP.",
+    "sym": "ONGC",
+    "pct": 1.87
+   },
+   {
+    "name": "LAURUS LABS LIMITED",
+    "sym": "LAURUSLABS",
+    "pct": 1.87
+   },
+   {
+    "name": "PUNJAB NATIONAL BANK",
+    "sym": "PNB",
+    "pct": 1.85
+   },
+   {
+    "name": "CANARA BANK",
+    "sym": "CANBK",
+    "pct": 1.85
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 22.05
+   },
+   {
+    "sector": "Materials",
+    "pct": 15.77
+   },
+   {
+    "sector": "Industrials",
+    "pct": 5.85
+   },
+   {
+    "sector": "Energy",
+    "pct": 5.46
+   },
+   {
+    "sector": "Technology",
+    "pct": 5.2
+   },
+   {
+    "sector": "Auto",
+    "pct": 5.01
+   }
+  ],
+  "play_mix": {
+   "tactical": 62.77,
+   "structural": 9.73
+  }
+ },
+ {
+  "date": "2021-05-31",
+  "nav": 206.555,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 28.0,
+  "universe_n": 1167,
+  "arm_coverage_pct": 58.9,
+  "n_dead_included": 67,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "JSW STEEL LIMITED",
+    "sym": "JSWSTEEL",
+    "pct": 1.9
+   },
+   {
+    "name": "CANARA BANK",
+    "sym": "CANBK",
+    "pct": 1.9
+   },
+   {
+    "name": "NMDC LTD.",
+    "sym": "NMDC",
+    "pct": 1.9
+   },
+   {
+    "name": "STEEL AUTHORITY OF INDIA",
+    "sym": "SAIL",
+    "pct": 1.88
+   },
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 1.88
+   },
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 1.86
+   },
+   {
+    "name": "COFORGE LIMITED",
+    "sym": "COFORGE",
+    "pct": 1.86
+   },
+   {
+    "name": "PRAJ INDUSTRIES LTD",
+    "sym": "PRAJIND",
+    "pct": 1.84
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Materials",
+    "pct": 23.2
+   },
+   {
+    "sector": "Financials",
+    "pct": 18.53
+   },
+   {
+    "sector": "Industrials",
+    "pct": 7.66
+   },
+   {
+    "sector": "Energy",
+    "pct": 6.28
+   },
+   {
+    "sector": "Technology",
+    "pct": 4.98
+   },
+   {
+    "sector": "Auto",
+    "pct": 4.34
+   }
+  ],
+  "play_mix": {
+   "tactical": 62.79,
+   "structural": 9.71
+  }
+ },
+ {
+  "date": "2021-06-30",
+  "nav": 212.7438,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 24.05,
+  "universe_n": 1273,
+  "arm_coverage_pct": 54.4,
+  "n_dead_included": 78,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "CANARA BANK",
+    "sym": "CANBK",
+    "pct": 2.12
+   },
+   {
+    "name": "JSW STEEL LIMITED",
+    "sym": "JSWSTEEL",
+    "pct": 2.1
+   },
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 2.08
+   },
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 2.08
+   },
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 2.06
+   },
+   {
+    "name": "IDFC FIRST BANK LIMITED",
+    "sym": "IDFCFIRSTB",
+    "pct": 2.05
+   },
+   {
+    "name": "BANK OF BARODA",
+    "sym": "BANKBARODA",
+    "pct": 2.04
+   },
+   {
+    "name": "OIL AND NATURAL GAS CORP.",
+    "sym": "ONGC",
+    "pct": 2.04
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Materials",
+    "pct": 24.15
+   },
+   {
+    "sector": "Financials",
+    "pct": 16.9
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 6.78
+   },
+   {
+    "sector": "Energy",
+    "pct": 5.41
+   },
+   {
+    "sector": "Industrials",
+    "pct": 4.69
+   },
+   {
+    "sector": "Auto",
+    "pct": 4.09
+   }
+  ],
+  "play_mix": {
+   "tactical": 65.87,
+   "structural": 6.63
+  }
+ },
+ {
+  "date": "2021-07-30",
+  "nav": 219.7494,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 30.08,
+  "universe_n": 1295,
+  "arm_coverage_pct": 53.0,
+  "n_dead_included": 75,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "JSW STEEL LIMITED",
+    "sym": "JSWSTEEL",
+    "pct": 2.74
+   },
+   {
+    "name": "STEEL AUTHORITY OF INDIA",
+    "sym": "SAIL",
+    "pct": 2.71
+   },
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 2.68
+   },
+   {
+    "name": "NATIONAL ALUMINIUM CO LTD",
+    "sym": "NATIONALUM",
+    "pct": 2.6
+   },
+   {
+    "name": "JINDAL STEEL LIMITED",
+    "sym": "JINDALSTEL",
+    "pct": 2.46
+   },
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 2.46
+   },
+   {
+    "name": "ULTRATECH CEMENT LIMITED",
+    "sym": "ULTRACEMCO",
+    "pct": 2.41
+   },
+   {
+    "name": "STATE BANK OF INDIA",
+    "sym": "SBIN",
+    "pct": 2.3
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Materials",
+    "pct": 33.08
+   },
+   {
+    "sector": "Financials",
+    "pct": 9.23
+   },
+   {
+    "sector": "Technology",
+    "pct": 7.71
+   },
+   {
+    "sector": "Energy",
+    "pct": 5.13
+   },
+   {
+    "sector": "Industrials",
+    "pct": 4.82
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 3.68
+   }
+  ],
+  "play_mix": {
+   "tactical": 63.88,
+   "structural": 8.62
+  }
+ },
+ {
+  "date": "2021-08-31",
+  "nav": 221.7117,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 32.14,
+  "universe_n": 1252,
+  "arm_coverage_pct": 54.4,
+  "n_dead_included": 63,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 2.47
+   },
+   {
+    "name": "NATIONAL ALUMINIUM CO LTD",
+    "sym": "NATIONALUM",
+    "pct": 2.47
+   },
+   {
+    "name": "SUN PHARMACEUTICAL IND L",
+    "sym": "SUNPHARMA",
+    "pct": 2.33
+   },
+   {
+    "name": "HAVELLS INDIA LIMITED",
+    "sym": "HAVELLS",
+    "pct": 2.3
+   },
+   {
+    "name": "NMDC LTD.",
+    "sym": "NMDC",
+    "pct": 2.25
+   },
+   {
+    "name": "APOLLO HOSPITALS ENTER. L",
+    "sym": "APOLLOHOSP",
+    "pct": 2.2
+   },
+   {
+    "name": "HDFC",
+    "sym": "HDFC",
+    "pct": 2.18
+   },
+   {
+    "name": "CANARA BANK",
+    "sym": "CANBK",
+    "pct": 2.15
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Materials",
+    "pct": 27.07
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 9.03
+   },
+   {
+    "sector": "Financials",
+    "pct": 7.41
+   },
+   {
+    "sector": "Industrials",
+    "pct": 6.45
+   },
+   {
+    "sector": "Consumer",
+    "pct": 5.32
+   },
+   {
+    "sector": "Technology",
+    "pct": 4.33
+   }
+  ],
+  "play_mix": {
+   "tactical": 63.47,
+   "structural": 9.03
+  }
+ },
+ {
+  "date": "2021-09-30",
+  "nav": 224.2127,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 22.37,
+  "universe_n": 1208,
+  "arm_coverage_pct": 55.6,
+  "n_dead_included": 59,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "NATIONAL ALUMINIUM CO LTD",
+    "sym": "NATIONALUM",
+    "pct": 2.62
+   },
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 2.57
+   },
+   {
+    "name": "OIL AND NATURAL GAS CORP.",
+    "sym": "ONGC",
+    "pct": 2.39
+   },
+   {
+    "name": "TATA CHEMICALS LTD",
+    "sym": "TATACHEM",
+    "pct": 2.32
+   },
+   {
+    "name": "HDFC",
+    "sym": "HDFC",
+    "pct": 2.23
+   },
+   {
+    "name": "SRF LTD",
+    "sym": "SRF",
+    "pct": 2.2
+   },
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 2.18
+   },
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 2.18
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Materials",
+    "pct": 25.6
+   },
+   {
+    "sector": "Financials",
+    "pct": 8.16
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 6.74
+   },
+   {
+    "sector": "Industrials",
+    "pct": 6.25
+   },
+   {
+    "sector": "Energy",
+    "pct": 5.89
+   },
+   {
+    "sector": "Technology",
+    "pct": 5.79
+   }
+  ],
+  "play_mix": {
+   "tactical": 54.27,
+   "structural": 18.23
+  }
+ },
+ {
+  "date": "2021-10-29",
+  "nav": 225.2868,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 31.62,
+  "universe_n": 1259,
+  "arm_coverage_pct": 51.9,
+  "n_dead_included": 64,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "CANARA BANK",
+    "sym": "CANBK",
+    "pct": 2.07
+   },
+   {
+    "name": "TITAN COMPANY LIMITED",
+    "sym": "TITAN",
+    "pct": 2.07
+   },
+   {
+    "name": "NATIONAL ALUMINIUM CO LTD",
+    "sym": "NATIONALUM",
+    "pct": 2.05
+   },
+   {
+    "name": "JSW STEEL LIMITED",
+    "sym": "JSWSTEEL",
+    "pct": 2.05
+   },
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 2.03
+   },
+   {
+    "name": "TECH MAHINDRA LIMITED",
+    "sym": "TECHM",
+    "pct": 2.0
+   },
+   {
+    "name": "TATA CHEMICALS LTD",
+    "sym": "TATACHEM",
+    "pct": 1.98
+   },
+   {
+    "name": "OIL AND NATURAL GAS CORP.",
+    "sym": "ONGC",
+    "pct": 1.9
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Materials",
+    "pct": 21.74
+   },
+   {
+    "sector": "Technology",
+    "pct": 12.27
+   },
+   {
+    "sector": "Financials",
+    "pct": 7.97
+   },
+   {
+    "sector": "Consumer",
+    "pct": 7.81
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 5.02
+   },
+   {
+    "sector": "Auto",
+    "pct": 4.85
+   }
+  ],
+  "play_mix": {
+   "tactical": 61.69,
+   "structural": 10.81
+  }
+ },
+ {
+  "date": "2021-11-30",
+  "nav": 222.1226,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 29.4,
+  "universe_n": 1238,
+  "arm_coverage_pct": 53.4,
+  "n_dead_included": 64,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "CANARA BANK",
+    "sym": "CANBK",
+    "pct": 2.41
+   },
+   {
+    "name": "NATIONAL ALUMINIUM CO LTD",
+    "sym": "NATIONALUM",
+    "pct": 2.41
+   },
+   {
+    "name": "APOLLO HOSPITALS ENTER. L",
+    "sym": "APOLLOHOSP",
+    "pct": 2.38
+   },
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 2.36
+   },
+   {
+    "name": "BANK OF BARODA",
+    "sym": "BANKBARODA",
+    "pct": 2.31
+   },
+   {
+    "name": "JSW STEEL LIMITED",
+    "sym": "JSWSTEEL",
+    "pct": 2.31
+   },
+   {
+    "name": "TITAN COMPANY LIMITED",
+    "sym": "TITAN",
+    "pct": 2.24
+   },
+   {
+    "name": "SUN PHARMACEUTICAL IND L",
+    "sym": "SUNPHARMA",
+    "pct": 2.24
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Materials",
+    "pct": 18.91
+   },
+   {
+    "sector": "Financials",
+    "pct": 11.82
+   },
+   {
+    "sector": "Technology",
+    "pct": 10.32
+   },
+   {
+    "sector": "Consumer",
+    "pct": 7.22
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 6.18
+   },
+   {
+    "sector": "Energy",
+    "pct": 4.0
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2021-12-31",
+  "nav": 230.4165,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 24.6,
+  "universe_n": 1284,
+  "arm_coverage_pct": 51.5,
+  "n_dead_included": 71,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "BSE LIMITED",
+    "sym": "BSE",
+    "pct": 2.45
+   },
+   {
+    "name": "APOLLO HOSPITALS ENTER. L",
+    "sym": "APOLLOHOSP",
+    "pct": 2.45
+   },
+   {
+    "name": "FSN E COMMERCE VENTURES",
+    "sym": "NYKAA",
+    "pct": 2.4
+   },
+   {
+    "name": "STATE BANK OF INDIA",
+    "sym": "SBIN",
+    "pct": 2.32
+   },
+   {
+    "name": "NATIONAL ALUMINIUM CO LTD",
+    "sym": "NATIONALUM",
+    "pct": 2.32
+   },
+   {
+    "name": "SUN PHARMACEUTICAL IND L",
+    "sym": "SUNPHARMA",
+    "pct": 2.22
+   },
+   {
+    "name": "TITAN COMPANY LIMITED",
+    "sym": "TITAN",
+    "pct": 2.17
+   },
+   {
+    "name": "TECH MAHINDRA LIMITED",
+    "sym": "TECHM",
+    "pct": 2.1
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 15.33
+   },
+   {
+    "sector": "Materials",
+    "pct": 14.55
+   },
+   {
+    "sector": "Consumer",
+    "pct": 10.26
+   },
+   {
+    "sector": "Technology",
+    "pct": 7.58
+   },
+   {
+    "sector": "Energy",
+    "pct": 6.96
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 6.13
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2022-01-31",
+  "nav": 231.065,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 34.34,
+  "universe_n": 1411,
+  "arm_coverage_pct": 47.1,
+  "n_dead_included": 80,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "MINDTREE",
+    "sym": "MINDTREE",
+    "pct": 1.85
+   },
+   {
+    "name": "GRASIM INDUSTRIES LTD",
+    "sym": "GRASIM",
+    "pct": 1.81
+   },
+   {
+    "name": "BAJAJ FINANCE LIMITED",
+    "sym": "BAJFINANCE",
+    "pct": 1.8
+   },
+   {
+    "name": "KOTAK MAHINDRA BANK LTD",
+    "sym": "KOTAKBANK",
+    "pct": 1.8
+   },
+   {
+    "name": "TITAN COMPANY LIMITED",
+    "sym": "TITAN",
+    "pct": 1.8
+   },
+   {
+    "name": "APOLLO HOSPITALS ENTER. L",
+    "sym": "APOLLOHOSP",
+    "pct": 1.78
+   },
+   {
+    "name": "MARUTI SUZUKI INDIA LTD.",
+    "sym": "MARUTI",
+    "pct": 1.74
+   },
+   {
+    "name": "ASIAN PAINTS LIMITED",
+    "sym": "ASIANPAINT",
+    "pct": 1.74
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 18.31
+   },
+   {
+    "sector": "Consumer",
+    "pct": 12.03
+   },
+   {
+    "sector": "Materials",
+    "pct": 9.97
+   },
+   {
+    "sector": "Technology",
+    "pct": 7.95
+   },
+   {
+    "sector": "Energy",
+    "pct": 7.84
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 3.76
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2022-02-28",
+  "nav": 224.5463,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 21.28,
+  "universe_n": 1338,
+  "arm_coverage_pct": 49.9,
+  "n_dead_included": 64,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "MINDTREE",
+    "sym": "MINDTREE",
+    "pct": 2.04
+   },
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 2.02
+   },
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 2.0
+   },
+   {
+    "name": "TITAN COMPANY LIMITED",
+    "sym": "TITAN",
+    "pct": 1.98
+   },
+   {
+    "name": "PIRAMAL ENTERPRISES LTD",
+    "sym": "PEL",
+    "pct": 1.98
+   },
+   {
+    "name": "TATA ELXSI LIMITED",
+    "sym": "TATAELXSI",
+    "pct": 1.92
+   },
+   {
+    "name": "BAJAJ FINANCE LIMITED",
+    "sym": "BAJFINANCE",
+    "pct": 1.89
+   },
+   {
+    "name": "SUN PHARMACEUTICAL IND L",
+    "sym": "SUNPHARMA",
+    "pct": 1.89
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 18.29
+   },
+   {
+    "sector": "Materials",
+    "pct": 14.81
+   },
+   {
+    "sector": "Consumer",
+    "pct": 10.68
+   },
+   {
+    "sector": "Energy",
+    "pct": 8.18
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 4.88
+   },
+   {
+    "sector": "Technology",
+    "pct": 4.06
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2022-03-31",
+  "nav": 236.1021,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 25.02,
+  "universe_n": 1306,
+  "arm_coverage_pct": 51.2,
+  "n_dead_included": 62,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 2.35
+   },
+   {
+    "name": "BANK OF BARODA",
+    "sym": "BANKBARODA",
+    "pct": 2.28
+   },
+   {
+    "name": "NATIONAL ALUMINIUM CO LTD",
+    "sym": "NATIONALUM",
+    "pct": 2.28
+   },
+   {
+    "name": "OIL AND NATURAL GAS CORP.",
+    "sym": "ONGC",
+    "pct": 2.25
+   },
+   {
+    "name": "MINDTREE",
+    "sym": "MINDTREE",
+    "pct": 2.25
+   },
+   {
+    "name": "BHARTI AIRTEL LIMITED",
+    "sym": "BHARTIARTL",
+    "pct": 2.09
+   },
+   {
+    "name": "TITAN COMPANY LIMITED",
+    "sym": "TITAN",
+    "pct": 2.09
+   },
+   {
+    "name": "TATA ELXSI LIMITED",
+    "sym": "TATAELXSI",
+    "pct": 2.09
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 18.72
+   },
+   {
+    "sector": "Materials",
+    "pct": 16.41
+   },
+   {
+    "sector": "Energy",
+    "pct": 8.2
+   },
+   {
+    "sector": "Consumer",
+    "pct": 6.99
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 5.27
+   },
+   {
+    "sector": "Technology",
+    "pct": 4.99
+   }
+  ],
+  "play_mix": {
+   "tactical": 71.47,
+   "structural": 1.03
+  }
+ },
+ {
+  "date": "2022-04-29",
+  "nav": 232.2771,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 19.1,
+  "universe_n": 1376,
+  "arm_coverage_pct": 49.4,
+  "n_dead_included": 65,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 2.57
+   },
+   {
+    "name": "OIL AND NATURAL GAS CORP.",
+    "sym": "ONGC",
+    "pct": 2.49
+   },
+   {
+    "name": "KOTAK MAHINDRA BANK LTD",
+    "sym": "KOTAKBANK",
+    "pct": 2.29
+   },
+   {
+    "name": "NTPC LTD",
+    "sym": "NTPC",
+    "pct": 2.26
+   },
+   {
+    "name": "ICICI BANK LTD.",
+    "sym": "ICICIBANK",
+    "pct": 2.18
+   },
+   {
+    "name": "BANDHAN BANK LIMITED",
+    "sym": "BANDHANBNK",
+    "pct": 2.18
+   },
+   {
+    "name": "BANK OF BARODA",
+    "sym": "BANKBARODA",
+    "pct": 2.08
+   },
+   {
+    "name": "GAIL (INDIA) LTD",
+    "sym": "GAIL",
+    "pct": 2.07
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 19.88
+   },
+   {
+    "sector": "Materials",
+    "pct": 18.58
+   },
+   {
+    "sector": "Energy",
+    "pct": 10.87
+   },
+   {
+    "sector": "Consumer",
+    "pct": 7.82
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 3.73
+   },
+   {
+    "sector": "Technology",
+    "pct": 3.54
+   }
+  ],
+  "play_mix": {
+   "tactical": 69.35,
+   "structural": 3.15
+  }
+ },
+ {
+  "date": "2022-05-31",
+  "nav": 218.8191,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 39.21,
+  "universe_n": 1275,
+  "arm_coverage_pct": 53.3,
+  "n_dead_included": 53,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "DLF LIMITED",
+    "sym": "DLF",
+    "pct": 2.32
+   },
+   {
+    "name": "BANDHAN BANK LIMITED",
+    "sym": "BANDHANBNK",
+    "pct": 2.26
+   },
+   {
+    "name": "MAHINDRA & MAHINDRA LTD",
+    "sym": "M&M",
+    "pct": 2.25
+   },
+   {
+    "name": "INFO EDGE (I) LTD",
+    "sym": "NAUKRI",
+    "pct": 2.21
+   },
+   {
+    "name": "COAL INDIA LTD",
+    "sym": "COALINDIA",
+    "pct": 2.18
+   },
+   {
+    "name": "UPL LIMITED",
+    "sym": "UPL",
+    "pct": 2.13
+   },
+   {
+    "name": "OIL AND NATURAL GAS CORP.",
+    "sym": "ONGC",
+    "pct": 2.11
+   },
+   {
+    "name": "ITC LTD",
+    "sym": "ITC",
+    "pct": 2.08
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 15.85
+   },
+   {
+    "sector": "Materials",
+    "pct": 14.27
+   },
+   {
+    "sector": "Consumer",
+    "pct": 11.56
+   },
+   {
+    "sector": "Energy",
+    "pct": 11.54
+   },
+   {
+    "sector": "RealtyInfra",
+    "pct": 4.52
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 4.49
+   }
+  ],
+  "play_mix": {
+   "tactical": 60.17,
+   "structural": 12.33
+  }
+ },
+ {
+  "date": "2022-06-30",
+  "nav": 206.7953,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 26.59,
+  "universe_n": 1171,
+  "arm_coverage_pct": 57.1,
+  "n_dead_included": 43,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "OIL AND NATURAL GAS CORP.",
+    "sym": "ONGC",
+    "pct": 2.88
+   },
+   {
+    "name": "RELIANCE INDUSTRIES LTD",
+    "sym": "RELIANCE",
+    "pct": 2.82
+   },
+   {
+    "name": "ITC LTD",
+    "sym": "ITC",
+    "pct": 2.62
+   },
+   {
+    "name": "MRPL",
+    "sym": "MRPL",
+    "pct": 2.6
+   },
+   {
+    "name": "MAHINDRA & MAHINDRA LTD",
+    "sym": "M&M",
+    "pct": 2.56
+   },
+   {
+    "name": "HDFC",
+    "sym": "HDFC",
+    "pct": 2.42
+   },
+   {
+    "name": "ADANI ENTERPRISES LIMITED",
+    "sym": "ADANIENT",
+    "pct": 2.36
+   },
+   {
+    "name": "MARUTI SUZUKI INDIA LTD.",
+    "sym": "MARUTI",
+    "pct": 2.33
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Energy",
+    "pct": 20.01
+   },
+   {
+    "sector": "Financials",
+    "pct": 10.48
+   },
+   {
+    "sector": "Materials",
+    "pct": 7.85
+   },
+   {
+    "sector": "Consumer",
+    "pct": 6.86
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 6.49
+   },
+   {
+    "sector": "Auto",
+    "pct": 6.07
+   }
+  ],
+  "play_mix": {
+   "tactical": 70.96,
+   "structural": 1.54
+  }
+ },
+ {
+  "date": "2022-07-29",
+  "nav": 217.915,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 29.56,
+  "universe_n": 1206,
+  "arm_coverage_pct": 56.4,
+  "n_dead_included": 45,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "ASIAN PAINTS LIMITED",
+    "sym": "ASIANPAINT",
+    "pct": 3.36
+   },
+   {
+    "name": "MARUTI SUZUKI INDIA LTD.",
+    "sym": "MARUTI",
+    "pct": 3.26
+   },
+   {
+    "name": "AXIS BANK LIMITED",
+    "sym": "AXISBANK",
+    "pct": 3.09
+   },
+   {
+    "name": "TATA POWER CO LTD",
+    "sym": "TATAPOWER",
+    "pct": 2.88
+   },
+   {
+    "name": "RELIANCE INDUSTRIES LTD",
+    "sym": "RELIANCE",
+    "pct": 2.85
+   },
+   {
+    "name": "ICICI BANK LTD.",
+    "sym": "ICICIBANK",
+    "pct": 2.85
+   },
+   {
+    "name": "MAHINDRA & MAHINDRA LTD",
+    "sym": "M&M",
+    "pct": 2.61
+   },
+   {
+    "name": "ADANI ENTERPRISES LIMITED",
+    "sym": "ADANIENT",
+    "pct": 2.58
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 13.96
+   },
+   {
+    "sector": "Energy",
+    "pct": 10.43
+   },
+   {
+    "sector": "Materials",
+    "pct": 10.07
+   },
+   {
+    "sector": "Consumer",
+    "pct": 8.11
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 7.76
+   },
+   {
+    "sector": "Industrials",
+    "pct": 7.49
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2022-08-30",
+  "nav": 228.3314,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 37.08,
+  "universe_n": 1327,
+  "arm_coverage_pct": 52.3,
+  "n_dead_included": 48,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "EICHER MOTORS LTD",
+    "sym": "EICHERMOT",
+    "pct": 2.41
+   },
+   {
+    "name": "COAL INDIA LTD",
+    "sym": "COALINDIA",
+    "pct": 2.36
+   },
+   {
+    "name": "ASIAN PAINTS LIMITED",
+    "sym": "ASIANPAINT",
+    "pct": 2.34
+   },
+   {
+    "name": "TATA CHEMICALS LTD",
+    "sym": "TATACHEM",
+    "pct": 2.31
+   },
+   {
+    "name": "MARUTI SUZUKI INDIA LTD.",
+    "sym": "MARUTI",
+    "pct": 2.27
+   },
+   {
+    "name": "MAHINDRA & MAHINDRA LTD",
+    "sym": "M&M",
+    "pct": 2.24
+   },
+   {
+    "name": "INFO EDGE (I) LTD",
+    "sym": "NAUKRI",
+    "pct": 2.22
+   },
+   {
+    "name": "BANK OF BARODA",
+    "sym": "BANKBARODA",
+    "pct": 1.92
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Consumer",
+    "pct": 20.22
+   },
+   {
+    "sector": "Financials",
+    "pct": 14.55
+   },
+   {
+    "sector": "Materials",
+    "pct": 10.72
+   },
+   {
+    "sector": "Energy",
+    "pct": 9.4
+   },
+   {
+    "sector": "Auto",
+    "pct": 7.63
+   },
+   {
+    "sector": "Industrials",
+    "pct": 3.86
+   }
+  ],
+  "play_mix": {
+   "tactical": 57.81,
+   "structural": 14.68
+  }
+ },
+ {
+  "date": "2022-09-30",
+  "nav": 225.8341,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 21.95,
+  "universe_n": 1399,
+  "arm_coverage_pct": 50.0,
+  "n_dead_included": 52,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "TATA POWER CO LTD",
+    "sym": "TATAPOWER",
+    "pct": 2.82
+   },
+   {
+    "name": "BANK OF BARODA",
+    "sym": "BANKBARODA",
+    "pct": 2.73
+   },
+   {
+    "name": "MAHINDRA & MAHINDRA LTD",
+    "sym": "M&M",
+    "pct": 2.65
+   },
+   {
+    "name": "ASIAN PAINTS LIMITED",
+    "sym": "ASIANPAINT",
+    "pct": 2.5
+   },
+   {
+    "name": "EICHER MOTORS LTD",
+    "sym": "EICHERMOT",
+    "pct": 2.37
+   },
+   {
+    "name": "ITC LTD",
+    "sym": "ITC",
+    "pct": 2.3
+   },
+   {
+    "name": "ICICI BANK LTD.",
+    "sym": "ICICIBANK",
+    "pct": 2.21
+   },
+   {
+    "name": "MARUTI SUZUKI INDIA LTD.",
+    "sym": "MARUTI",
+    "pct": 2.19
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Consumer",
+    "pct": 20.3
+   },
+   {
+    "sector": "Financials",
+    "pct": 13.85
+   },
+   {
+    "sector": "Materials",
+    "pct": 9.24
+   },
+   {
+    "sector": "Auto",
+    "pct": 8.84
+   },
+   {
+    "sector": "Energy",
+    "pct": 6.14
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 3.78
+   }
+  ],
+  "play_mix": {
+   "tactical": 60.4,
+   "structural": 12.1
+  }
+ },
+ {
+  "date": "2022-10-31",
+  "nav": 232.1567,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 34.56,
+  "universe_n": 1274,
+  "arm_coverage_pct": 54.7,
+  "n_dead_included": 44,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "IDFC FIRST BANK LIMITED",
+    "sym": "IDFCFIRSTB",
+    "pct": 2.4
+   },
+   {
+    "name": "KOTAK MAHINDRA BANK LTD",
+    "sym": "KOTAKBANK",
+    "pct": 2.37
+   },
+   {
+    "name": "HCL TECHNOLOGIES LTD",
+    "sym": "HCLTECH",
+    "pct": 2.35
+   },
+   {
+    "name": "BAJAJ FINSERV LTD.",
+    "sym": "BAJAJFINSV",
+    "pct": 2.32
+   },
+   {
+    "name": "AXIS BANK LIMITED",
+    "sym": "AXISBANK",
+    "pct": 2.3
+   },
+   {
+    "name": "ICICI BANK LTD.",
+    "sym": "ICICIBANK",
+    "pct": 2.27
+   },
+   {
+    "name": "COAL INDIA LTD",
+    "sym": "COALINDIA",
+    "pct": 2.19
+   },
+   {
+    "name": "ADANI PORT & SEZ LTD",
+    "sym": "ADANIPORTS",
+    "pct": 2.18
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 21.35
+   },
+   {
+    "sector": "Consumer",
+    "pct": 10.78
+   },
+   {
+    "sector": "Industrials",
+    "pct": 9.68
+   },
+   {
+    "sector": "Technology",
+    "pct": 8.99
+   },
+   {
+    "sector": "Auto",
+    "pct": 5.1
+   },
+   {
+    "sector": "Energy",
+    "pct": 4.7
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2022-11-30",
+  "nav": 236.2855,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 36.67,
+  "universe_n": 1360,
+  "arm_coverage_pct": 52.1,
+  "n_dead_included": 50,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "BANK OF BARODA",
+    "sym": "BANKBARODA",
+    "pct": 2.17
+   },
+   {
+    "name": "AXIS BANK LIMITED",
+    "sym": "AXISBANK",
+    "pct": 2.15
+   },
+   {
+    "name": "AMBUJA CEMENTS LTD",
+    "sym": "AMBUJACEM",
+    "pct": 2.15
+   },
+   {
+    "name": "UNION BANK OF INDIA",
+    "sym": "UNIONBANK",
+    "pct": 2.15
+   },
+   {
+    "name": "PB FINTECH LIMITED",
+    "sym": "POLICYBZR",
+    "pct": 2.1
+   },
+   {
+    "name": "MAHINDRA & MAHINDRA LTD",
+    "sym": "M&M",
+    "pct": 2.08
+   },
+   {
+    "name": "BAJAJ FINSERV LTD.",
+    "sym": "BAJAJFINSV",
+    "pct": 2.02
+   },
+   {
+    "name": "HCL TECHNOLOGIES LTD",
+    "sym": "HCLTECH",
+    "pct": 2.02
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 26.77
+   },
+   {
+    "sector": "Consumer",
+    "pct": 10.57
+   },
+   {
+    "sector": "Industrials",
+    "pct": 10.1
+   },
+   {
+    "sector": "Materials",
+    "pct": 7.8
+   },
+   {
+    "sector": "Technology",
+    "pct": 5.23
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 4.83
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2022-12-30",
+  "nav": 232.9751,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 23.87,
+  "universe_n": 1387,
+  "arm_coverage_pct": 51.3,
+  "n_dead_included": 45,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "HINDUSTAN UNILEVER LTD.",
+    "sym": "HINDUNILVR",
+    "pct": 2.15
+   },
+   {
+    "name": "BANK OF INDIA",
+    "sym": "BANKINDIA",
+    "pct": 2.14
+   },
+   {
+    "name": "ADANI ENTERPRISES LIMITED",
+    "sym": "ADANIENT",
+    "pct": 2.1
+   },
+   {
+    "name": "MARUTI SUZUKI INDIA LTD.",
+    "sym": "MARUTI",
+    "pct": 2.1
+   },
+   {
+    "name": "MAHINDRA & MAHINDRA LTD",
+    "sym": "M&M",
+    "pct": 2.1
+   },
+   {
+    "name": "ADANI PORT & SEZ LTD",
+    "sym": "ADANIPORTS",
+    "pct": 2.08
+   },
+   {
+    "name": "AXIS BANK LIMITED",
+    "sym": "AXISBANK",
+    "pct": 2.04
+   },
+   {
+    "name": "BANK OF BARODA",
+    "sym": "BANKBARODA",
+    "pct": 2.04
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 35.0
+   },
+   {
+    "sector": "Consumer",
+    "pct": 12.68
+   },
+   {
+    "sector": "Industrials",
+    "pct": 7.2
+   },
+   {
+    "sector": "Materials",
+    "pct": 6.04
+   },
+   {
+    "sector": "Auto",
+    "pct": 3.49
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 2.81
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2023-01-31",
+  "nav": 225.0559,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 39.17,
+  "universe_n": 1303,
+  "arm_coverage_pct": 53.9,
+  "n_dead_included": 45,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "INFOSYS LIMITED",
+    "sym": "INFY",
+    "pct": 4.86
+   },
+   {
+    "name": "MARUTI SUZUKI INDIA LTD.",
+    "sym": "MARUTI",
+    "pct": 4.34
+   },
+   {
+    "name": "AXIS BANK LIMITED",
+    "sym": "AXISBANK",
+    "pct": 3.56
+   },
+   {
+    "name": "INDUSIND BANK LIMITED",
+    "sym": "INDUSINDBK",
+    "pct": 3.34
+   },
+   {
+    "name": "BANK OF BARODA",
+    "sym": "BANKBARODA",
+    "pct": 3.23
+   },
+   {
+    "name": "CANARA BANK",
+    "sym": "CANBK",
+    "pct": 3.22
+   },
+   {
+    "name": "BAJAJ FINANCE LIMITED",
+    "sym": "BAJFINANCE",
+    "pct": 2.9
+   },
+   {
+    "name": "STATE BANK OF INDIA",
+    "sym": "SBIN",
+    "pct": 2.18
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 35.0
+   },
+   {
+    "sector": "Technology",
+    "pct": 12.16
+   },
+   {
+    "sector": "Industrials",
+    "pct": 6.6
+   },
+   {
+    "sector": "Energy",
+    "pct": 5.76
+   },
+   {
+    "sector": "Auto",
+    "pct": 5.71
+   },
+   {
+    "sector": "Consumer",
+    "pct": 3.15
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2023-02-28",
+  "nav": 221.3051,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 39.98,
+  "universe_n": 1288,
+  "arm_coverage_pct": 54.4,
+  "n_dead_included": 41,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "BANK OF BARODA",
+    "sym": "BANKBARODA",
+    "pct": 4.38
+   },
+   {
+    "name": "STATE BANK OF INDIA",
+    "sym": "SBIN",
+    "pct": 4.34
+   },
+   {
+    "name": "ITC LTD",
+    "sym": "ITC",
+    "pct": 4.25
+   },
+   {
+    "name": "AXIS BANK LIMITED",
+    "sym": "AXISBANK",
+    "pct": 3.98
+   },
+   {
+    "name": "MAHINDRA & MAHINDRA LTD",
+    "sym": "M&M",
+    "pct": 3.08
+   },
+   {
+    "name": "ONE 97 COMMUNICATIONS LTD",
+    "sym": "PAYTM",
+    "pct": 2.63
+   },
+   {
+    "name": "BAJAJ FINSERV LTD.",
+    "sym": "BAJAJFINSV",
+    "pct": 2.23
+   },
+   {
+    "name": "CANARA BANK",
+    "sym": "CANBK",
+    "pct": 2.18
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 24.62
+   },
+   {
+    "sector": "Consumer",
+    "pct": 12.0
+   },
+   {
+    "sector": "Industrials",
+    "pct": 10.9
+   },
+   {
+    "sector": "Energy",
+    "pct": 5.8
+   },
+   {
+    "sector": "Technology",
+    "pct": 5.53
+   },
+   {
+    "sector": "Materials",
+    "pct": 5.18
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2023-03-31",
+  "nav": 221.9347,
+  "n_holdings": 60,
+  "equity_pct": 71.81,
+  "cash_pct": 28.19,
+  "oneway_turnover_pct": 22.45,
+  "universe_n": 1304,
+  "arm_coverage_pct": 54.1,
+  "n_dead_included": 42,
+  "deployed_pct": 71.81,
+  "top_holdings": [
+   {
+    "name": "AXIS BANK LIMITED",
+    "sym": "AXISBANK",
+    "pct": 6.52
+   },
+   {
+    "name": "STATE BANK OF INDIA",
+    "sym": "SBIN",
+    "pct": 6.3
+   },
+   {
+    "name": "KOTAK MAHINDRA BANK LTD",
+    "sym": "KOTAKBANK",
+    "pct": 5.16
+   },
+   {
+    "name": "BANK OF BARODA",
+    "sym": "BANKBARODA",
+    "pct": 4.41
+   },
+   {
+    "name": "ITC LTD",
+    "sym": "ITC",
+    "pct": 3.98
+   },
+   {
+    "name": "ONE 97 COMMUNICATIONS LTD",
+    "sym": "PAYTM",
+    "pct": 2.57
+   },
+   {
+    "name": "GAIL (INDIA) LTD",
+    "sym": "GAIL",
+    "pct": 2.52
+   },
+   {
+    "name": "BAJAJ FINSERV LTD.",
+    "sym": "BAJAJFINSV",
+    "pct": 2.29
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 35.0
+   },
+   {
+    "sector": "Consumer",
+    "pct": 10.44
+   },
+   {
+    "sector": "Energy",
+    "pct": 8.28
+   },
+   {
+    "sector": "Industrials",
+    "pct": 6.71
+   },
+   {
+    "sector": "Materials",
+    "pct": 5.64
+   },
+   {
+    "sector": "Technology",
+    "pct": 2.07
+   }
+  ],
+  "play_mix": {
+   "tactical": 71.81
+  }
+ },
+ {
+  "date": "2023-04-28",
+  "nav": 232.8987,
+  "n_holdings": 60,
+  "equity_pct": 71.77,
+  "cash_pct": 28.23,
+  "oneway_turnover_pct": 29.11,
+  "universe_n": 1315,
+  "arm_coverage_pct": 53.8,
+  "n_dead_included": 39,
+  "deployed_pct": 71.77,
+  "top_holdings": [
+   {
+    "name": "AXIS BANK LIMITED",
+    "sym": "AXISBANK",
+    "pct": 5.0
+   },
+   {
+    "name": "KOTAK MAHINDRA BANK LTD",
+    "sym": "KOTAKBANK",
+    "pct": 4.94
+   },
+   {
+    "name": "ICICI BANK LTD.",
+    "sym": "ICICIBANK",
+    "pct": 4.83
+   },
+   {
+    "name": "STATE BANK OF INDIA",
+    "sym": "SBIN",
+    "pct": 4.28
+   },
+   {
+    "name": "BANK OF BARODA",
+    "sym": "BANKBARODA",
+    "pct": 4.0
+   },
+   {
+    "name": "ITC LTD",
+    "sym": "ITC",
+    "pct": 3.92
+   },
+   {
+    "name": "INDUSIND BANK LIMITED",
+    "sym": "INDUSINDBK",
+    "pct": 3.28
+   },
+   {
+    "name": "KPIT TECHNOLOGIES LIMITED",
+    "sym": "KPITTECH",
+    "pct": 2.56
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 35.0
+   },
+   {
+    "sector": "Consumer",
+    "pct": 13.5
+   },
+   {
+    "sector": "Materials",
+    "pct": 5.46
+   },
+   {
+    "sector": "Industrials",
+    "pct": 5.4
+   },
+   {
+    "sector": "Technology",
+    "pct": 4.15
+   },
+   {
+    "sector": "Energy",
+    "pct": 3.5
+   }
+  ],
+  "play_mix": {
+   "tactical": 71.77
+  }
+ },
+ {
+  "date": "2023-05-31",
+  "nav": 242.2752,
+  "n_holdings": 60,
+  "equity_pct": 70.63,
+  "cash_pct": 29.37,
+  "oneway_turnover_pct": 41.59,
+  "universe_n": 1345,
+  "arm_coverage_pct": 52.9,
+  "n_dead_included": 39,
+  "deployed_pct": 70.63,
+  "top_holdings": [
+   {
+    "name": "AXIS BANK LIMITED",
+    "sym": "AXISBANK",
+    "pct": 8.47
+   },
+   {
+    "name": "ITC LTD",
+    "sym": "ITC",
+    "pct": 4.87
+   },
+   {
+    "name": "INDUSIND BANK LIMITED",
+    "sym": "INDUSINDBK",
+    "pct": 3.46
+   },
+   {
+    "name": "RAIL VIKAS NIGAM LIMITED",
+    "sym": "RVNL",
+    "pct": 2.62
+   },
+   {
+    "name": "MAHINDRA & MAHINDRA LTD",
+    "sym": "M&M",
+    "pct": 2.54
+   },
+   {
+    "name": "IDFC FIRST BANK LIMITED",
+    "sym": "IDFCFIRSTB",
+    "pct": 2.13
+   },
+   {
+    "name": "POWER GRID CORP. LTD.",
+    "sym": "POWERGRID",
+    "pct": 2.03
+   },
+   {
+    "name": "CANARA BANK",
+    "sym": "CANBK",
+    "pct": 1.94
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 27.61
+   },
+   {
+    "sector": "Industrials",
+    "pct": 10.28
+   },
+   {
+    "sector": "Consumer",
+    "pct": 8.94
+   },
+   {
+    "sector": "Energy",
+    "pct": 6.22
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 5.29
+   },
+   {
+    "sector": "Auto",
+    "pct": 3.83
+   }
+  ],
+  "play_mix": {
+   "tactical": 70.63
+  }
+ },
+ {
+  "date": "2023-06-30",
+  "nav": 253.3049,
+  "n_holdings": 60,
+  "equity_pct": 68.34,
+  "cash_pct": 31.66,
+  "oneway_turnover_pct": 30.82,
+  "universe_n": 1429,
+  "arm_coverage_pct": 50.2,
+  "n_dead_included": 39,
+  "deployed_pct": 68.34,
+  "top_holdings": [
+   {
+    "name": "MAZAGON DOCK SHIPBUIL LTD",
+    "sym": "MAZDOCK",
+    "pct": 6.03
+   },
+   {
+    "name": "INDUSIND BANK LIMITED",
+    "sym": "INDUSINDBK",
+    "pct": 3.71
+   },
+   {
+    "name": "ONE 97 COMMUNICATIONS LTD",
+    "sym": "PAYTM",
+    "pct": 3.29
+   },
+   {
+    "name": "ITC LTD",
+    "sym": "ITC",
+    "pct": 2.97
+   },
+   {
+    "name": "ASIAN PAINTS LIMITED",
+    "sym": "ASIANPAINT",
+    "pct": 2.49
+   },
+   {
+    "name": "BANK OF BARODA",
+    "sym": "BANKBARODA",
+    "pct": 2.36
+   },
+   {
+    "name": "VARUN BEVERAGES LIMITED",
+    "sym": "VBL",
+    "pct": 1.85
+   },
+   {
+    "name": "POWER FIN CORP LTD.",
+    "sym": "PFC",
+    "pct": 1.79
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 24.15
+   },
+   {
+    "sector": "Industrials",
+    "pct": 15.04
+   },
+   {
+    "sector": "Consumer",
+    "pct": 12.21
+   },
+   {
+    "sector": "Energy",
+    "pct": 6.08
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 3.83
+   },
+   {
+    "sector": "Technology",
+    "pct": 2.13
+   }
+  ],
+  "play_mix": {
+   "tactical": 68.34
+  }
+ },
+ {
+  "date": "2023-07-31",
+  "nav": 268.5599,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 37.47,
+  "universe_n": 1429,
+  "arm_coverage_pct": 50.5,
+  "n_dead_included": 38,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "BAJAJ FINANCE LIMITED",
+    "sym": "BAJFINANCE",
+    "pct": 3.24
+   },
+   {
+    "name": "RBL BANK LIMITED",
+    "sym": "RBLBANK",
+    "pct": 3.14
+   },
+   {
+    "name": "MAZAGON DOCK SHIPBUIL LTD",
+    "sym": "MAZDOCK",
+    "pct": 3.08
+   },
+   {
+    "name": "BANK OF BARODA",
+    "sym": "BANKBARODA",
+    "pct": 2.98
+   },
+   {
+    "name": "INDUSIND BANK LIMITED",
+    "sym": "INDUSINDBK",
+    "pct": 2.88
+   },
+   {
+    "name": "HDFC",
+    "sym": "HDFC",
+    "pct": 2.62
+   },
+   {
+    "name": "MAHINDRA & MAHINDRA LTD",
+    "sym": "M&M",
+    "pct": 2.62
+   },
+   {
+    "name": "IDFC FIRST BANK LIMITED",
+    "sym": "IDFCFIRSTB",
+    "pct": 2.6
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 29.03
+   },
+   {
+    "sector": "Industrials",
+    "pct": 15.58
+   },
+   {
+    "sector": "Consumer",
+    "pct": 7.39
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 6.86
+   },
+   {
+    "sector": "Technology",
+    "pct": 3.62
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 3.17
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2023-08-31",
+  "nav": 273.6788,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 29.46,
+  "universe_n": 1462,
+  "arm_coverage_pct": 49.3,
+  "n_dead_included": 35,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "BAJAJ FINANCE LIMITED",
+    "sym": "BAJFINANCE",
+    "pct": 2.33
+   },
+   {
+    "name": "REC LIMITED",
+    "sym": "RECLTD",
+    "pct": 2.31
+   },
+   {
+    "name": "MAHINDRA & MAHINDRA LTD",
+    "sym": "M&M",
+    "pct": 2.31
+   },
+   {
+    "name": "IDFC FIRST BANK LIMITED",
+    "sym": "IDFCFIRSTB",
+    "pct": 2.31
+   },
+   {
+    "name": "MAZAGON DOCK SHIPBUIL LTD",
+    "sym": "MAZDOCK",
+    "pct": 2.19
+   },
+   {
+    "name": "ADANI PORT & SEZ LTD",
+    "sym": "ADANIPORTS",
+    "pct": 2.14
+   },
+   {
+    "name": "ASHOK LEYLAND LTD",
+    "sym": "ASHOKLEY",
+    "pct": 2.07
+   },
+   {
+    "name": "NTPC LTD",
+    "sym": "NTPC",
+    "pct": 2.04
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 23.03
+   },
+   {
+    "sector": "Industrials",
+    "pct": 16.51
+   },
+   {
+    "sector": "Consumer",
+    "pct": 7.65
+   },
+   {
+    "sector": "Energy",
+    "pct": 7.04
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 5.18
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 3.67
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2023-09-29",
+  "nav": 287.2842,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 24.98,
+  "universe_n": 1500,
+  "arm_coverage_pct": 48.3,
+  "n_dead_included": 36,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "COAL INDIA LTD",
+    "sym": "COALINDIA",
+    "pct": 1.81
+   },
+   {
+    "name": "MAHINDRA & MAHINDRA LTD",
+    "sym": "M&M",
+    "pct": 1.79
+   },
+   {
+    "name": "UNION BANK OF INDIA",
+    "sym": "UNIONBANK",
+    "pct": 1.79
+   },
+   {
+    "name": "RBL BANK LIMITED",
+    "sym": "RBLBANK",
+    "pct": 1.79
+   },
+   {
+    "name": "JSW ENERGY LIMITED",
+    "sym": "JSWENERGY",
+    "pct": 1.79
+   },
+   {
+    "name": "BAJAJ FINANCE LIMITED",
+    "sym": "BAJFINANCE",
+    "pct": 1.77
+   },
+   {
+    "name": "SHRIRAM FINANCE LIMITED",
+    "sym": "SHRIRAMFIN",
+    "pct": 1.75
+   },
+   {
+    "name": "POLYCAB INDIA LIMITED",
+    "sym": "POLYCAB",
+    "pct": 1.71
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Industrials",
+    "pct": 21.18
+   },
+   {
+    "sector": "Financials",
+    "pct": 19.89
+   },
+   {
+    "sector": "Energy",
+    "pct": 8.1
+   },
+   {
+    "sector": "Consumer",
+    "pct": 5.51
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 4.0
+   },
+   {
+    "sector": "Auto",
+    "pct": 3.72
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2023-10-31",
+  "nav": 282.9051,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 28.65,
+  "universe_n": 1502,
+  "arm_coverage_pct": 48.6,
+  "n_dead_included": 33,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "COAL INDIA LTD",
+    "sym": "COALINDIA",
+    "pct": 1.89
+   },
+   {
+    "name": "UNION BANK OF INDIA",
+    "sym": "UNIONBANK",
+    "pct": 1.87
+   },
+   {
+    "name": "ANGEL ONE LIMITED",
+    "sym": "ANGELONE",
+    "pct": 1.87
+   },
+   {
+    "name": "SHRIRAM FINANCE LIMITED",
+    "sym": "SHRIRAMFIN",
+    "pct": 1.87
+   },
+   {
+    "name": "PUNJAB NATIONAL BANK",
+    "sym": "PNB",
+    "pct": 1.85
+   },
+   {
+    "name": "CANARA BANK",
+    "sym": "CANBK",
+    "pct": 1.85
+   },
+   {
+    "name": "ICICI BANK LTD.",
+    "sym": "ICICIBANK",
+    "pct": 1.84
+   },
+   {
+    "name": "ONE 97 COMMUNICATIONS LTD",
+    "sym": "PAYTM",
+    "pct": 1.84
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 29.06
+   },
+   {
+    "sector": "Industrials",
+    "pct": 12.99
+   },
+   {
+    "sector": "Energy",
+    "pct": 8.53
+   },
+   {
+    "sector": "Consumer",
+    "pct": 5.51
+   },
+   {
+    "sector": "Materials",
+    "pct": 4.55
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 4.2
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2023-11-30",
+  "nav": 305.3767,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 31.0,
+  "universe_n": 1541,
+  "arm_coverage_pct": 48.0,
+  "n_dead_included": 32,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "BSE LIMITED",
+    "sym": "BSE",
+    "pct": 2.43
+   },
+   {
+    "name": "COAL INDIA LTD",
+    "sym": "COALINDIA",
+    "pct": 2.41
+   },
+   {
+    "name": "MULTI COMMODITY EXCHANGE",
+    "sym": "MCX",
+    "pct": 2.41
+   },
+   {
+    "name": "MARUTI SUZUKI INDIA LTD.",
+    "sym": "MARUTI",
+    "pct": 2.38
+   },
+   {
+    "name": "INDIAN OIL CORP LTD",
+    "sym": "IOC",
+    "pct": 2.36
+   },
+   {
+    "name": "LARSEN & TOUBRO LTD.",
+    "sym": "LT",
+    "pct": 2.34
+   },
+   {
+    "name": "POWER FIN CORP LTD.",
+    "sym": "PFC",
+    "pct": 2.26
+   },
+   {
+    "name": "SUZLON ENERGY LIMITED",
+    "sym": "SUZLON",
+    "pct": 2.24
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 24.92
+   },
+   {
+    "sector": "Energy",
+    "pct": 13.07
+   },
+   {
+    "sector": "Industrials",
+    "pct": 11.73
+   },
+   {
+    "sector": "Auto",
+    "pct": 6.03
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 4.46
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 3.95
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2023-12-29",
+  "nav": 321.5001,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 24.78,
+  "universe_n": 1648,
+  "arm_coverage_pct": 45.1,
+  "n_dead_included": 34,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "TATA POWER CO LTD",
+    "sym": "TATAPOWER",
+    "pct": 1.63
+   },
+   {
+    "name": "HINDUSTAN AERONAUTICS LTD",
+    "sym": "HAL",
+    "pct": 1.63
+   },
+   {
+    "name": "RBL BANK LIMITED",
+    "sym": "RBLBANK",
+    "pct": 1.63
+   },
+   {
+    "name": "BHARAT PETROLEUM CORP  LT",
+    "sym": "BPCL",
+    "pct": 1.62
+   },
+   {
+    "name": "HINDUSTAN PETROLEUM CORP",
+    "sym": "HINDPETRO",
+    "pct": 1.62
+   },
+   {
+    "name": "HERO MOTOCORP LIMITED",
+    "sym": "HEROMOTOCO",
+    "pct": 1.62
+   },
+   {
+    "name": "MAHINDRA & MAHINDRA LTD",
+    "sym": "M&M",
+    "pct": 1.6
+   },
+   {
+    "name": "LIFE INSURA CORP OF INDIA",
+    "sym": "LICI",
+    "pct": 1.6
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 22.58
+   },
+   {
+    "sector": "Energy",
+    "pct": 15.16
+   },
+   {
+    "sector": "Industrials",
+    "pct": 11.61
+   },
+   {
+    "sector": "Auto",
+    "pct": 4.8
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 4.53
+   },
+   {
+    "sector": "Consumer",
+    "pct": 4.08
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2024-01-31",
+  "nav": 343.1442,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 37.36,
+  "universe_n": 1707,
+  "arm_coverage_pct": 44.0,
+  "n_dead_included": 34,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "TATA POWER CO LTD",
+    "sym": "TATAPOWER",
+    "pct": 2.0
+   },
+   {
+    "name": "HINDUSTAN AERONAUTICS LTD",
+    "sym": "HAL",
+    "pct": 2.0
+   },
+   {
+    "name": "INDUS TOWERS LIMITED",
+    "sym": "INDUSTOWER",
+    "pct": 2.0
+   },
+   {
+    "name": "SHRIRAM FINANCE LIMITED",
+    "sym": "SHRIRAMFIN",
+    "pct": 1.96
+   },
+   {
+    "name": "COAL INDIA LTD",
+    "sym": "COALINDIA",
+    "pct": 1.94
+   },
+   {
+    "name": "BANK OF INDIA",
+    "sym": "BANKINDIA",
+    "pct": 1.9
+   },
+   {
+    "name": "BHARTI AIRTEL LIMITED",
+    "sym": "BHARTIARTL",
+    "pct": 1.84
+   },
+   {
+    "name": "SUZLON ENERGY LIMITED",
+    "sym": "SUZLON",
+    "pct": 1.84
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 19.86
+   },
+   {
+    "sector": "Industrials",
+    "pct": 11.18
+   },
+   {
+    "sector": "Energy",
+    "pct": 9.49
+   },
+   {
+    "sector": "Consumer",
+    "pct": 6.85
+   },
+   {
+    "sector": "Auto",
+    "pct": 5.62
+   },
+   {
+    "sector": "Materials",
+    "pct": 5.47
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2024-02-29",
+  "nav": 349.9544,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 33.7,
+  "universe_n": 1694,
+  "arm_coverage_pct": 44.8,
+  "n_dead_included": 30,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "AUROBINDO PHARMA LTD",
+    "sym": "AUROPHARMA",
+    "pct": 1.93
+   },
+   {
+    "name": "ADANI PORT & SEZ LTD",
+    "sym": "ADANIPORTS",
+    "pct": 1.91
+   },
+   {
+    "name": "INDUS TOWERS LIMITED",
+    "sym": "INDUSTOWER",
+    "pct": 1.89
+   },
+   {
+    "name": "OIL INDIA LTD",
+    "sym": "OIL",
+    "pct": 1.73
+   },
+   {
+    "name": "KOTAK MAHINDRA BANK LTD",
+    "sym": "KOTAKBANK",
+    "pct": 1.71
+   },
+   {
+    "name": "BANK OF BARODA",
+    "sym": "BANKBARODA",
+    "pct": 1.71
+   },
+   {
+    "name": "INDIAN RAIL TOUR CORP LTD",
+    "sym": "IRCTC",
+    "pct": 1.7
+   },
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 1.66
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 16.78
+   },
+   {
+    "sector": "Industrials",
+    "pct": 9.67
+   },
+   {
+    "sector": "Energy",
+    "pct": 8.96
+   },
+   {
+    "sector": "Materials",
+    "pct": 8.47
+   },
+   {
+    "sector": "Consumer",
+    "pct": 7.99
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 7.5
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2024-03-28",
+  "nav": 348.2918,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 23.41,
+  "universe_n": 1664,
+  "arm_coverage_pct": 45.7,
+  "n_dead_included": 31,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "INTERGLOBE AVIATION LTD",
+    "sym": "INDIGO",
+    "pct": 2.53
+   },
+   {
+    "name": "ADANI PORT & SEZ LTD",
+    "sym": "ADANIPORTS",
+    "pct": 2.37
+   },
+   {
+    "name": "CANARA BANK",
+    "sym": "CANBK",
+    "pct": 2.24
+   },
+   {
+    "name": "COAL INDIA LTD",
+    "sym": "COALINDIA",
+    "pct": 2.22
+   },
+   {
+    "name": "INDUS TOWERS LIMITED",
+    "sym": "INDUSTOWER",
+    "pct": 2.19
+   },
+   {
+    "name": "SHRIRAM FINANCE LIMITED",
+    "sym": "SHRIRAMFIN",
+    "pct": 2.19
+   },
+   {
+    "name": "KOTAK MAHINDRA BANK LTD",
+    "sym": "KOTAKBANK",
+    "pct": 2.07
+   },
+   {
+    "name": "HINDUSTAN PETROLEUM CORP",
+    "sym": "HINDPETRO",
+    "pct": 2.04
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 19.04
+   },
+   {
+    "sector": "Industrials",
+    "pct": 15.47
+   },
+   {
+    "sector": "Consumer",
+    "pct": 8.13
+   },
+   {
+    "sector": "Energy",
+    "pct": 7.98
+   },
+   {
+    "sector": "Materials",
+    "pct": 6.61
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 5.89
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2024-04-30",
+  "nav": 365.377,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 39.66,
+  "universe_n": 1674,
+  "arm_coverage_pct": 45.6,
+  "n_dead_included": 30,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "COAL INDIA LTD",
+    "sym": "COALINDIA",
+    "pct": 2.07
+   },
+   {
+    "name": "COCHIN SHIPYARD LIMITED",
+    "sym": "COCHINSHIP",
+    "pct": 2.05
+   },
+   {
+    "name": "MULTI COMMODITY EXCHANGE",
+    "sym": "MCX",
+    "pct": 2.05
+   },
+   {
+    "name": "MAZAGON DOCK SHIPBUIL LTD",
+    "sym": "MAZDOCK",
+    "pct": 2.03
+   },
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 2.03
+   },
+   {
+    "name": "INTERGLOBE AVIATION LTD",
+    "sym": "INDIGO",
+    "pct": 2.0
+   },
+   {
+    "name": "ICICI BANK LTD.",
+    "sym": "ICICIBANK",
+    "pct": 1.98
+   },
+   {
+    "name": "INDIAN RENEWABLE ENERGY",
+    "sym": "IREDA",
+    "pct": 1.96
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 15.64
+   },
+   {
+    "sector": "Industrials",
+    "pct": 15.28
+   },
+   {
+    "sector": "Consumer",
+    "pct": 8.95
+   },
+   {
+    "sector": "Materials",
+    "pct": 7.98
+   },
+   {
+    "sector": "Energy",
+    "pct": 7.25
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 7.14
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2024-05-31",
+  "nav": 379.9276,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 40.7,
+  "universe_n": 1647,
+  "arm_coverage_pct": 46.4,
+  "n_dead_included": 26,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "BHARAT ELECTRONICS LTD",
+    "sym": "BEL",
+    "pct": 1.71
+   },
+   {
+    "name": "VODAFONE IDEA LIMITED",
+    "sym": "IDEA",
+    "pct": 1.71
+   },
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 1.71
+   },
+   {
+    "name": "ASHOK LEYLAND LTD",
+    "sym": "ASHOKLEY",
+    "pct": 1.71
+   },
+   {
+    "name": "INDUS TOWERS LIMITED",
+    "sym": "INDUSTOWER",
+    "pct": 1.71
+   },
+   {
+    "name": "COAL INDIA LTD",
+    "sym": "COALINDIA",
+    "pct": 1.69
+   },
+   {
+    "name": "HDFC LIFE INS CO LTD",
+    "sym": "HDFCLIFE",
+    "pct": 1.69
+   },
+   {
+    "name": "SIEMENS LTD",
+    "sym": "SIEMENS",
+    "pct": 1.66
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 20.21
+   },
+   {
+    "sector": "Industrials",
+    "pct": 18.3
+   },
+   {
+    "sector": "Energy",
+    "pct": 9.35
+   },
+   {
+    "sector": "Consumer",
+    "pct": 8.72
+   },
+   {
+    "sector": "Materials",
+    "pct": 5.46
+   },
+   {
+    "sector": "TelecomMedia",
+    "pct": 4.26
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2024-06-28",
+  "nav": 402.309,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 23.81,
+  "universe_n": 1747,
+  "arm_coverage_pct": 43.6,
+  "n_dead_included": 28,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 1.58
+   },
+   {
+    "name": "DIXON TECHNO (INDIA) LTD",
+    "sym": "DIXON",
+    "pct": 1.55
+   },
+   {
+    "name": "SAMVRDHNA MTHRSN INTL LTD",
+    "sym": "MOTHERSON",
+    "pct": 1.53
+   },
+   {
+    "name": "TRENT LTD",
+    "sym": "TRENT",
+    "pct": 1.53
+   },
+   {
+    "name": "INDUS TOWERS LIMITED",
+    "sym": "INDUSTOWER",
+    "pct": 1.51
+   },
+   {
+    "name": "HSG & URBAN DEV CORPN LTD",
+    "sym": "HUDCO",
+    "pct": 1.51
+   },
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 1.51
+   },
+   {
+    "name": "NBCC (INDIA) LIMITED",
+    "sym": "NBCC",
+    "pct": 1.51
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 22.62
+   },
+   {
+    "sector": "Industrials",
+    "pct": 16.77
+   },
+   {
+    "sector": "Consumer",
+    "pct": 8.47
+   },
+   {
+    "sector": "Energy",
+    "pct": 6.76
+   },
+   {
+    "sector": "Materials",
+    "pct": 5.23
+   },
+   {
+    "sector": "TelecomMedia",
+    "pct": 4.35
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2024-07-31",
+  "nav": 416.6802,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 39.15,
+  "universe_n": 1796,
+  "arm_coverage_pct": 42.9,
+  "n_dead_included": 27,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "PUNJAB NATIONAL BANK",
+    "sym": "PNB",
+    "pct": 2.11
+   },
+   {
+    "name": "VODAFONE IDEA LIMITED",
+    "sym": "IDEA",
+    "pct": 2.08
+   },
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 2.08
+   },
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 2.06
+   },
+   {
+    "name": "GARDEN REACH SHIP&ENG LTD",
+    "sym": "GRSE",
+    "pct": 2.04
+   },
+   {
+    "name": "NBCC (INDIA) LIMITED",
+    "sym": "NBCC",
+    "pct": 2.02
+   },
+   {
+    "name": "HSG & URBAN DEV CORPN LTD",
+    "sym": "HUDCO",
+    "pct": 2.0
+   },
+   {
+    "name": "OIL INDIA LTD",
+    "sym": "OIL",
+    "pct": 2.0
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 20.06
+   },
+   {
+    "sector": "Industrials",
+    "pct": 18.5
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 7.48
+   },
+   {
+    "sector": "Consumer",
+    "pct": 5.72
+   },
+   {
+    "sector": "Energy",
+    "pct": 5.62
+   },
+   {
+    "sector": "Materials",
+    "pct": 5.32
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2024-08-30",
+  "nav": 420.3071,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 37.92,
+  "universe_n": 1815,
+  "arm_coverage_pct": 43.0,
+  "n_dead_included": 27,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "NBCC (INDIA) LIMITED",
+    "sym": "NBCC",
+    "pct": 2.03
+   },
+   {
+    "name": "BHEL",
+    "sym": "BHEL",
+    "pct": 1.91
+   },
+   {
+    "name": "DIXON TECHNO (INDIA) LTD",
+    "sym": "DIXON",
+    "pct": 1.91
+   },
+   {
+    "name": "INTERGLOBE AVIATION LTD",
+    "sym": "INDIGO",
+    "pct": 1.89
+   },
+   {
+    "name": "HFCL LIMITED",
+    "sym": "HFCL",
+    "pct": 1.85
+   },
+   {
+    "name": "VOLTAS LTD",
+    "sym": "VOLTAS",
+    "pct": 1.82
+   },
+   {
+    "name": "CENTRAL DEPO SER (I) LTD",
+    "sym": "CDSL",
+    "pct": 1.81
+   },
+   {
+    "name": "COCHIN SHIPYARD LIMITED",
+    "sym": "COCHINSHIP",
+    "pct": 1.79
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 22.28
+   },
+   {
+    "sector": "Industrials",
+    "pct": 15.98
+   },
+   {
+    "sector": "Consumer",
+    "pct": 8.32
+   },
+   {
+    "sector": "Energy",
+    "pct": 5.84
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 4.74
+   },
+   {
+    "sector": "TelecomMedia",
+    "pct": 3.56
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2024-09-30",
+  "nav": 421.8383,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 26.23,
+  "universe_n": 1821,
+  "arm_coverage_pct": 42.6,
+  "n_dead_included": 24,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "INDIAN ENERGY EXC LTD",
+    "sym": "IEX",
+    "pct": 2.05
+   },
+   {
+    "name": "BAJAJ FINSERV LTD.",
+    "sym": "BAJAJFINSV",
+    "pct": 2.03
+   },
+   {
+    "name": "TRENT LTD",
+    "sym": "TRENT",
+    "pct": 2.01
+   },
+   {
+    "name": "BHEL",
+    "sym": "BHEL",
+    "pct": 1.88
+   },
+   {
+    "name": "HFCL LIMITED",
+    "sym": "HFCL",
+    "pct": 1.86
+   },
+   {
+    "name": "DIXON TECHNO (INDIA) LTD",
+    "sym": "DIXON",
+    "pct": 1.82
+   },
+   {
+    "name": "INDUS TOWERS LIMITED",
+    "sym": "INDUSTOWER",
+    "pct": 1.8
+   },
+   {
+    "name": "MAZAGON DOCK SHIPBUIL LTD",
+    "sym": "MAZDOCK",
+    "pct": 1.78
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 21.2
+   },
+   {
+    "sector": "Industrials",
+    "pct": 11.57
+   },
+   {
+    "sector": "Consumer",
+    "pct": 8.63
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 7.04
+   },
+   {
+    "sector": "Energy",
+    "pct": 5.75
+   },
+   {
+    "sector": "TelecomMedia",
+    "pct": 5.31
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2024-10-31",
+  "nav": 401.6703,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 37.85,
+  "universe_n": 1786,
+  "arm_coverage_pct": 43.8,
+  "n_dead_included": 21,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "ONE 97 COMMUNICATIONS LTD",
+    "sym": "PAYTM",
+    "pct": 2.14
+   },
+   {
+    "name": "TRENT LTD",
+    "sym": "TRENT",
+    "pct": 2.14
+   },
+   {
+    "name": "COFORGE LIMITED",
+    "sym": "COFORGE",
+    "pct": 2.14
+   },
+   {
+    "name": "BHARAT ELECTRONICS LTD",
+    "sym": "BEL",
+    "pct": 2.12
+   },
+   {
+    "name": "NATIONAL ALUMINIUM CO LTD",
+    "sym": "NATIONALUM",
+    "pct": 2.12
+   },
+   {
+    "name": "AMBER ENTERPRISES (I) LTD",
+    "sym": "AMBER",
+    "pct": 2.08
+   },
+   {
+    "name": "ANGEL ONE LIMITED",
+    "sym": "ANGELONE",
+    "pct": 2.01
+   },
+   {
+    "name": "HINDUSTAN AERONAUTICS LTD",
+    "sym": "HAL",
+    "pct": 1.99
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 25.46
+   },
+   {
+    "sector": "Industrials",
+    "pct": 10.37
+   },
+   {
+    "sector": "Consumer",
+    "pct": 9.41
+   },
+   {
+    "sector": "Technology",
+    "pct": 8.31
+   },
+   {
+    "sector": "Materials",
+    "pct": 5.22
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 5.03
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2024-11-29",
+  "nav": 411.1904,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 28.68,
+  "universe_n": 1739,
+  "arm_coverage_pct": 45.4,
+  "n_dead_included": 14,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "NATIONAL ALUMINIUM CO LTD",
+    "sym": "NATIONALUM",
+    "pct": 2.7
+   },
+   {
+    "name": "ONE 97 COMMUNICATIONS LTD",
+    "sym": "PAYTM",
+    "pct": 2.68
+   },
+   {
+    "name": "BSE LIMITED",
+    "sym": "BSE",
+    "pct": 2.54
+   },
+   {
+    "name": "DIXON TECHNO (INDIA) LTD",
+    "sym": "DIXON",
+    "pct": 2.46
+   },
+   {
+    "name": "CENTRAL DEPO SER (I) LTD",
+    "sym": "CDSL",
+    "pct": 2.41
+   },
+   {
+    "name": "POWER FIN CORP LTD.",
+    "sym": "PFC",
+    "pct": 2.38
+   },
+   {
+    "name": "MAHINDRA & MAHINDRA LTD",
+    "sym": "M&M",
+    "pct": 2.27
+   },
+   {
+    "name": "HINDUSTAN AERONAUTICS LTD",
+    "sym": "HAL",
+    "pct": 2.27
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 20.87
+   },
+   {
+    "sector": "Industrials",
+    "pct": 11.0
+   },
+   {
+    "sector": "Consumer",
+    "pct": 10.85
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 8.3
+   },
+   {
+    "sector": "Materials",
+    "pct": 6.34
+   },
+   {
+    "sector": "RealtyInfra",
+    "pct": 4.95
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2024-12-31",
+  "nav": 421.7449,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 20.84,
+  "universe_n": 1815,
+  "arm_coverage_pct": 43.7,
+  "n_dead_included": 18,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "DIXON TECHNO (INDIA) LTD",
+    "sym": "DIXON",
+    "pct": 3.16
+   },
+   {
+    "name": "BSE LIMITED",
+    "sym": "BSE",
+    "pct": 3.09
+   },
+   {
+    "name": "ONE 97 COMMUNICATIONS LTD",
+    "sym": "PAYTM",
+    "pct": 2.9
+   },
+   {
+    "name": "CENTRAL DEPO SER (I) LTD",
+    "sym": "CDSL",
+    "pct": 2.87
+   },
+   {
+    "name": "HINDUSTAN AERONAUTICS LTD",
+    "sym": "HAL",
+    "pct": 2.71
+   },
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 2.62
+   },
+   {
+    "name": "SWIGGY LIMITED",
+    "sym": "SWIGGY",
+    "pct": 2.55
+   },
+   {
+    "name": "ANGEL ONE LIMITED",
+    "sym": "ANGELONE",
+    "pct": 2.39
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 22.51
+   },
+   {
+    "sector": "Consumer",
+    "pct": 13.24
+   },
+   {
+    "sector": "Industrials",
+    "pct": 10.21
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 8.77
+   },
+   {
+    "sector": "Materials",
+    "pct": 5.02
+   },
+   {
+    "sector": "RealtyInfra",
+    "pct": 3.79
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2025-01-31",
+  "nav": 384.747,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 37.51,
+  "universe_n": 1744,
+  "arm_coverage_pct": 45.9,
+  "n_dead_included": 15,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "BSE LIMITED",
+    "sym": "BSE",
+    "pct": 2.33
+   },
+   {
+    "name": "DIXON TECHNO (INDIA) LTD",
+    "sym": "DIXON",
+    "pct": 2.33
+   },
+   {
+    "name": "ONE 97 COMMUNICATIONS LTD",
+    "sym": "PAYTM",
+    "pct": 2.33
+   },
+   {
+    "name": "AMBER ENTERPRISES (I) LTD",
+    "sym": "AMBER",
+    "pct": 2.33
+   },
+   {
+    "name": "SWIGGY LIMITED",
+    "sym": "SWIGGY",
+    "pct": 2.31
+   },
+   {
+    "name": "WIPRO LTD",
+    "sym": "WIPRO",
+    "pct": 2.27
+   },
+   {
+    "name": "BHARAT ELECTRONICS LTD",
+    "sym": "BEL",
+    "pct": 2.26
+   },
+   {
+    "name": "COFORGE LIMITED",
+    "sym": "COFORGE",
+    "pct": 2.19
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Consumer",
+    "pct": 16.21
+   },
+   {
+    "sector": "Financials",
+    "pct": 16.15
+   },
+   {
+    "sector": "Technology",
+    "pct": 10.54
+   },
+   {
+    "sector": "Industrials",
+    "pct": 6.73
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 6.09
+   },
+   {
+    "sector": "RealtyInfra",
+    "pct": 4.18
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2025-02-28",
+  "nav": 352.3102,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 24.43,
+  "universe_n": 1726,
+  "arm_coverage_pct": 46.8,
+  "n_dead_included": 15,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "BSE LIMITED",
+    "sym": "BSE",
+    "pct": 2.18
+   },
+   {
+    "name": "DIXON TECHNO (INDIA) LTD",
+    "sym": "DIXON",
+    "pct": 2.18
+   },
+   {
+    "name": "ONE 97 COMMUNICATIONS LTD",
+    "sym": "PAYTM",
+    "pct": 2.16
+   },
+   {
+    "name": "BHARAT ELECTRONICS LTD",
+    "sym": "BEL",
+    "pct": 2.12
+   },
+   {
+    "name": "AMBER ENTERPRISES (I) LTD",
+    "sym": "AMBER",
+    "pct": 2.12
+   },
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 2.11
+   },
+   {
+    "name": "MAHINDRA & MAHINDRA LTD",
+    "sym": "M&M",
+    "pct": 2.07
+   },
+   {
+    "name": "WIPRO LTD",
+    "sym": "WIPRO",
+    "pct": 2.07
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Industrials",
+    "pct": 13.15
+   },
+   {
+    "sector": "Financials",
+    "pct": 12.99
+   },
+   {
+    "sector": "Consumer",
+    "pct": 9.98
+   },
+   {
+    "sector": "Technology",
+    "pct": 8.0
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 7.92
+   },
+   {
+    "sector": "Materials",
+    "pct": 6.54
+   }
+  ],
+  "play_mix": {
+   "tactical": 69.52,
+   "structural": 2.98
+  }
+ },
+ {
+  "date": "2025-03-28",
+  "nav": 374.2942,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 18.55,
+  "universe_n": 1805,
+  "arm_coverage_pct": 44.7,
+  "n_dead_included": 16,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 2.28
+   },
+   {
+    "name": "BHARTI AIRTEL LIMITED",
+    "sym": "BHARTIARTL",
+    "pct": 2.26
+   },
+   {
+    "name": "MAZAGON DOCK SHIPBUIL LTD",
+    "sym": "MAZDOCK",
+    "pct": 2.26
+   },
+   {
+    "name": "ONE 97 COMMUNICATIONS LTD",
+    "sym": "PAYTM",
+    "pct": 2.26
+   },
+   {
+    "name": "DIXON TECHNO (INDIA) LTD",
+    "sym": "DIXON",
+    "pct": 2.26
+   },
+   {
+    "name": "INTERGLOBE AVIATION LTD",
+    "sym": "INDIGO",
+    "pct": 2.26
+   },
+   {
+    "name": "BSE LIMITED",
+    "sym": "BSE",
+    "pct": 2.21
+   },
+   {
+    "name": "AMBER ENTERPRISES (I) LTD",
+    "sym": "AMBER",
+    "pct": 2.17
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Industrials",
+    "pct": 13.52
+   },
+   {
+    "sector": "Financials",
+    "pct": 13.5
+   },
+   {
+    "sector": "Consumer",
+    "pct": 8.98
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 7.74
+   },
+   {
+    "sector": "Technology",
+    "pct": 7.7
+   },
+   {
+    "sector": "Materials",
+    "pct": 6.64
+   }
+  ],
+  "play_mix": {
+   "tactical": 69.8,
+   "structural": 2.7
+  }
+ },
+ {
+  "date": "2025-04-30",
+  "nav": 384.6082,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 33.54,
+  "universe_n": 1743,
+  "arm_coverage_pct": 46.9,
+  "n_dead_included": 15,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "BSE LIMITED",
+    "sym": "BSE",
+    "pct": 1.92
+   },
+   {
+    "name": "DIXON TECHNO (INDIA) LTD",
+    "sym": "DIXON",
+    "pct": 1.92
+   },
+   {
+    "name": "INTERGLOBE AVIATION LTD",
+    "sym": "INDIGO",
+    "pct": 1.92
+   },
+   {
+    "name": "BHARAT PETROLEUM CORP  LT",
+    "sym": "BPCL",
+    "pct": 1.83
+   },
+   {
+    "name": "BHARTI AIRTEL LIMITED",
+    "sym": "BHARTIARTL",
+    "pct": 1.81
+   },
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 1.81
+   },
+   {
+    "name": "DR. REDDY S LABORATORIES",
+    "sym": "DRREDDY",
+    "pct": 1.79
+   },
+   {
+    "name": "MAZAGON DOCK SHIPBUIL LTD",
+    "sym": "MAZDOCK",
+    "pct": 1.77
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 15.75
+   },
+   {
+    "sector": "Industrials",
+    "pct": 13.7
+   },
+   {
+    "sector": "Energy",
+    "pct": 9.71
+   },
+   {
+    "sector": "Consumer",
+    "pct": 8.19
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 7.88
+   },
+   {
+    "sector": "Materials",
+    "pct": 6.37
+   }
+  ],
+  "play_mix": {
+   "tactical": 69.63,
+   "structural": 2.87
+  }
+ },
+ {
+  "date": "2025-05-30",
+  "nav": 402.1688,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 38.09,
+  "universe_n": 1744,
+  "arm_coverage_pct": 47.0,
+  "n_dead_included": 13,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "BSE LIMITED",
+    "sym": "BSE",
+    "pct": 2.61
+   },
+   {
+    "name": "ONE 97 COMMUNICATIONS LTD",
+    "sym": "PAYTM",
+    "pct": 2.53
+   },
+   {
+    "name": "INTERGLOBE AVIATION LTD",
+    "sym": "INDIGO",
+    "pct": 2.53
+   },
+   {
+    "name": "MAHINDRA & MAHINDRA LTD",
+    "sym": "M&M",
+    "pct": 2.27
+   },
+   {
+    "name": "ADANI PORT & SEZ LTD",
+    "sym": "ADANIPORTS",
+    "pct": 2.27
+   },
+   {
+    "name": "GARDEN REACH SHIP&ENG LTD",
+    "sym": "GRSE",
+    "pct": 2.14
+   },
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 2.09
+   },
+   {
+    "name": "COFORGE LIMITED",
+    "sym": "COFORGE",
+    "pct": 2.06
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Industrials",
+    "pct": 20.3
+   },
+   {
+    "sector": "Financials",
+    "pct": 14.0
+   },
+   {
+    "sector": "Materials",
+    "pct": 8.68
+   },
+   {
+    "sector": "Consumer",
+    "pct": 6.54
+   },
+   {
+    "sector": "Energy",
+    "pct": 6.09
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 4.28
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2025-06-30",
+  "nav": 414.9322,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 21.83,
+  "universe_n": 1794,
+  "arm_coverage_pct": 46.1,
+  "n_dead_included": 14,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "INTERGLOBE AVIATION LTD",
+    "sym": "INDIGO",
+    "pct": 2.59
+   },
+   {
+    "name": "MULTI COMMODITY EXCHANGE",
+    "sym": "MCX",
+    "pct": 2.54
+   },
+   {
+    "name": "ONE 97 COMMUNICATIONS LTD",
+    "sym": "PAYTM",
+    "pct": 2.4
+   },
+   {
+    "name": "GARDEN REACH SHIP&ENG LTD",
+    "sym": "GRSE",
+    "pct": 2.24
+   },
+   {
+    "name": "MAHINDRA & MAHINDRA LTD",
+    "sym": "M&M",
+    "pct": 2.24
+   },
+   {
+    "name": "BHARAT DYNAMICS LIMITED",
+    "sym": "BDL",
+    "pct": 2.21
+   },
+   {
+    "name": "TRENT LTD",
+    "sym": "TRENT",
+    "pct": 2.19
+   },
+   {
+    "name": "BSE LIMITED",
+    "sym": "BSE",
+    "pct": 2.16
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Industrials",
+    "pct": 22.07
+   },
+   {
+    "sector": "Financials",
+    "pct": 15.26
+   },
+   {
+    "sector": "Consumer",
+    "pct": 9.18
+   },
+   {
+    "sector": "Materials",
+    "pct": 6.49
+   },
+   {
+    "sector": "Energy",
+    "pct": 5.73
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 4.94
+   }
+  ],
+  "play_mix": {
+   "tactical": 68.33,
+   "structural": 4.17
+  }
+ },
+ {
+  "date": "2025-07-31",
+  "nav": 398.3432,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 37.69,
+  "universe_n": 1744,
+  "arm_coverage_pct": 48.2,
+  "n_dead_included": 11,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "MAHINDRA & MAHINDRA LTD",
+    "sym": "M&M",
+    "pct": 3.23
+   },
+   {
+    "name": "ETERNAL LIMITED",
+    "sym": "ETERNAL",
+    "pct": 3.15
+   },
+   {
+    "name": "DIXON TECHNO (INDIA) LTD",
+    "sym": "DIXON",
+    "pct": 3.08
+   },
+   {
+    "name": "WAAREE ENERGIES LIMITED",
+    "sym": "WAAREEENER",
+    "pct": 3.05
+   },
+   {
+    "name": "ONE 97 COMMUNICATIONS LTD",
+    "sym": "PAYTM",
+    "pct": 3.03
+   },
+   {
+    "name": "ICICI BANK LTD.",
+    "sym": "ICICIBANK",
+    "pct": 2.87
+   },
+   {
+    "name": "BHARTI AIRTEL LIMITED",
+    "sym": "BHARTIARTL",
+    "pct": 2.84
+   },
+   {
+    "name": "BSE LIMITED",
+    "sym": "BSE",
+    "pct": 2.8
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 19.11
+   },
+   {
+    "sector": "Industrials",
+    "pct": 14.27
+   },
+   {
+    "sector": "Consumer",
+    "pct": 11.58
+   },
+   {
+    "sector": "Materials",
+    "pct": 6.65
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 6.62
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 4.26
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2025-08-29",
+  "nav": 391.89,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 41.04,
+  "universe_n": 1715,
+  "arm_coverage_pct": 49.2,
+  "n_dead_included": 10,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "ETERNAL LIMITED",
+    "sym": "ETERNAL",
+    "pct": 4.35
+   },
+   {
+    "name": "BSE LIMITED",
+    "sym": "BSE",
+    "pct": 4.19
+   },
+   {
+    "name": "ONE 97 COMMUNICATIONS LTD",
+    "sym": "PAYTM",
+    "pct": 4.16
+   },
+   {
+    "name": "RELIANCE INDUSTRIES LTD",
+    "sym": "RELIANCE",
+    "pct": 4.02
+   },
+   {
+    "name": "INFOSYS LIMITED",
+    "sym": "INFY",
+    "pct": 3.97
+   },
+   {
+    "name": "DIXON TECHNO (INDIA) LTD",
+    "sym": "DIXON",
+    "pct": 2.36
+   },
+   {
+    "name": "MULTI COMMODITY EXCHANGE",
+    "sym": "MCX",
+    "pct": 2.07
+   },
+   {
+    "name": "TVS MOTOR COMPANY  LTD",
+    "sym": "TVSMOTOR",
+    "pct": 2.04
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 17.93
+   },
+   {
+    "sector": "Consumer",
+    "pct": 14.29
+   },
+   {
+    "sector": "Technology",
+    "pct": 8.16
+   },
+   {
+    "sector": "Industrials",
+    "pct": 8.15
+   },
+   {
+    "sector": "Energy",
+    "pct": 6.79
+   },
+   {
+    "sector": "Materials",
+    "pct": 5.85
+   }
+  ],
+  "play_mix": {
+   "tactical": 51.08,
+   "structural": 21.42
+  }
+ },
+ {
+  "date": "2025-09-30",
+  "nav": 396.3552,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 32.41,
+  "universe_n": 1785,
+  "arm_coverage_pct": 47.3,
+  "n_dead_included": 9,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "WAAREE ENERGIES LIMITED",
+    "sym": "WAAREEENER",
+    "pct": 3.88
+   },
+   {
+    "name": "MARUTI SUZUKI INDIA LTD.",
+    "sym": "MARUTI",
+    "pct": 3.74
+   },
+   {
+    "name": "BSE LIMITED",
+    "sym": "BSE",
+    "pct": 3.18
+   },
+   {
+    "name": "RELIANCE INDUSTRIES LTD",
+    "sym": "RELIANCE",
+    "pct": 2.98
+   },
+   {
+    "name": "NETWEB TECH INDIA LTD",
+    "sym": "NETWEB",
+    "pct": 2.9
+   },
+   {
+    "name": "MAHINDRA & MAHINDRA LTD",
+    "sym": "M&M",
+    "pct": 2.86
+   },
+   {
+    "name": "EICHER MOTORS LTD",
+    "sym": "EICHERMOT",
+    "pct": 2.4
+   },
+   {
+    "name": "ONE 97 COMMUNICATIONS LTD",
+    "sym": "PAYTM",
+    "pct": 2.13
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 16.66
+   },
+   {
+    "sector": "Industrials",
+    "pct": 12.46
+   },
+   {
+    "sector": "Materials",
+    "pct": 10.76
+   },
+   {
+    "sector": "Auto",
+    "pct": 8.81
+   },
+   {
+    "sector": "Technology",
+    "pct": 5.77
+   },
+   {
+    "sector": "Energy",
+    "pct": 5.41
+   }
+  ],
+  "play_mix": {
+   "tactical": 58.54,
+   "structural": 13.96
+  }
+ },
+ {
+  "date": "2025-10-31",
+  "nav": 411.3138,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 31.99,
+  "universe_n": 1823,
+  "arm_coverage_pct": 46.7,
+  "n_dead_included": 8,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "BSE LIMITED",
+    "sym": "BSE",
+    "pct": 2.77
+   },
+   {
+    "name": "MARUTI SUZUKI INDIA LTD.",
+    "sym": "MARUTI",
+    "pct": 2.69
+   },
+   {
+    "name": "MAHINDRA & MAHINDRA LTD",
+    "sym": "M&M",
+    "pct": 2.46
+   },
+   {
+    "name": "INFOSYS LIMITED",
+    "sym": "INFY",
+    "pct": 2.37
+   },
+   {
+    "name": "ONE 97 COMMUNICATIONS LTD",
+    "sym": "PAYTM",
+    "pct": 2.28
+   },
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 2.2
+   },
+   {
+    "name": "TATA CONSULTANCY SERV LT",
+    "sym": "TCS",
+    "pct": 2.2
+   },
+   {
+    "name": "TATA STEEL LIMITED",
+    "sym": "TATASTEEL",
+    "pct": 2.16
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 16.71
+   },
+   {
+    "sector": "Technology",
+    "pct": 10.45
+   },
+   {
+    "sector": "Materials",
+    "pct": 10.09
+   },
+   {
+    "sector": "Industrials",
+    "pct": 8.3
+   },
+   {
+    "sector": "Consumer",
+    "pct": 6.8
+   },
+   {
+    "sector": "Auto",
+    "pct": 5.62
+   }
+  ],
+  "play_mix": {
+   "tactical": 60.79,
+   "structural": 11.71
+  }
+ },
+ {
+  "date": "2025-11-28",
+  "nav": 415.8442,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 35.36,
+  "universe_n": 1841,
+  "arm_coverage_pct": 46.8,
+  "n_dead_included": 5,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "MULTI COMMODITY EXCHANGE",
+    "sym": "MCX",
+    "pct": 2.46
+   },
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 2.3
+   },
+   {
+    "name": "CANARA BANK",
+    "sym": "CANBK",
+    "pct": 2.27
+   },
+   {
+    "name": "BSE LIMITED",
+    "sym": "BSE",
+    "pct": 2.21
+   },
+   {
+    "name": "BHARTI AIRTEL LIMITED",
+    "sym": "BHARTIARTL",
+    "pct": 2.19
+   },
+   {
+    "name": "CHENNAI PETROLEUM CORP LT",
+    "sym": "CHENNPETRO",
+    "pct": 2.15
+   },
+   {
+    "name": "INFOSYS LIMITED",
+    "sym": "INFY",
+    "pct": 2.04
+   },
+   {
+    "name": "SHRIRAM FINANCE LIMITED",
+    "sym": "SHRIRAMFIN",
+    "pct": 2.04
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 20.41
+   },
+   {
+    "sector": "Industrials",
+    "pct": 10.26
+   },
+   {
+    "sector": "Consumer",
+    "pct": 8.59
+   },
+   {
+    "sector": "Auto",
+    "pct": 6.83
+   },
+   {
+    "sector": "Materials",
+    "pct": 6.65
+   },
+   {
+    "sector": "Technology",
+    "pct": 6.31
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2025-12-31",
+  "nav": 419.9979,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 27.46,
+  "universe_n": 1809,
+  "arm_coverage_pct": 48.2,
+  "n_dead_included": 5,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "BSE LIMITED",
+    "sym": "BSE",
+    "pct": 4.9
+   },
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 4.4
+   },
+   {
+    "name": "BHARTI AIRTEL LIMITED",
+    "sym": "BHARTIARTL",
+    "pct": 4.3
+   },
+   {
+    "name": "HINDUSTAN ZINC LIMITED",
+    "sym": "HINDZINC",
+    "pct": 4.14
+   },
+   {
+    "name": "MAHINDRA & MAHINDRA LTD",
+    "sym": "M&M",
+    "pct": 3.3
+   },
+   {
+    "name": "STATE BANK OF INDIA",
+    "sym": "SBIN",
+    "pct": 3.26
+   },
+   {
+    "name": "MULTI COMMODITY EXCHANGE",
+    "sym": "MCX",
+    "pct": 2.74
+   },
+   {
+    "name": "TATA MOTORS LIMITED",
+    "sym": "TMCV",
+    "pct": 2.21
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 20.32
+   },
+   {
+    "sector": "Industrials",
+    "pct": 12.21
+   },
+   {
+    "sector": "Materials",
+    "pct": 10.92
+   },
+   {
+    "sector": "Unclassified",
+    "pct": 6.81
+   },
+   {
+    "sector": "Consumer",
+    "pct": 5.85
+   },
+   {
+    "sector": "TelecomMedia",
+    "pct": 4.3
+   }
+  ],
+  "play_mix": {
+   "tactical": 65.96,
+   "structural": 6.54
+  }
+ },
+ {
+  "date": "2026-01-30",
+  "nav": 418.6158,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 36.87,
+  "universe_n": 1855,
+  "arm_coverage_pct": 47.8,
+  "n_dead_included": 3,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "HINDUSTAN ZINC LIMITED",
+    "sym": "HINDZINC",
+    "pct": 1.92
+   },
+   {
+    "name": "MULTI COMMODITY EXCHANGE",
+    "sym": "MCX",
+    "pct": 1.92
+   },
+   {
+    "name": "TATA MOTORS LIMITED",
+    "sym": "TMCV",
+    "pct": 1.92
+   },
+   {
+    "name": "WAAREE ENERGIES LIMITED",
+    "sym": "WAAREEENER",
+    "pct": 1.92
+   },
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 1.89
+   },
+   {
+    "name": "BSE LIMITED",
+    "sym": "BSE",
+    "pct": 1.89
+   },
+   {
+    "name": "NATIONAL ALUMINIUM CO LTD",
+    "sym": "NATIONALUM",
+    "pct": 1.83
+   },
+   {
+    "name": "AXIS BANK LIMITED",
+    "sym": "AXISBANK",
+    "pct": 1.81
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 24.47
+   },
+   {
+    "sector": "Industrials",
+    "pct": 11.92
+   },
+   {
+    "sector": "Technology",
+    "pct": 8.5
+   },
+   {
+    "sector": "Consumer",
+    "pct": 5.76
+   },
+   {
+    "sector": "Materials",
+    "pct": 5.64
+   },
+   {
+    "sector": "Auto",
+    "pct": 5.02
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2026-02-27",
+  "nav": 427.6395,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 27.82,
+  "universe_n": 1864,
+  "arm_coverage_pct": 48.0,
+  "n_dead_included": 4,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "BSE LIMITED",
+    "sym": "BSE",
+    "pct": 2.42
+   },
+   {
+    "name": "MULTI COMMODITY EXCHANGE",
+    "sym": "MCX",
+    "pct": 2.39
+   },
+   {
+    "name": "HINDUSTAN ZINC LIMITED",
+    "sym": "HINDZINC",
+    "pct": 2.39
+   },
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 2.32
+   },
+   {
+    "name": "HINDUSTAN COPPER LTD",
+    "sym": "HINDCOPPER",
+    "pct": 2.3
+   },
+   {
+    "name": "COFORGE LIMITED",
+    "sym": "COFORGE",
+    "pct": 2.27
+   },
+   {
+    "name": "AXIS BANK LIMITED",
+    "sym": "AXISBANK",
+    "pct": 2.13
+   },
+   {
+    "name": "TATA MOTORS LIMITED",
+    "sym": "TMCV",
+    "pct": 2.11
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 16.49
+   },
+   {
+    "sector": "Materials",
+    "pct": 11.59
+   },
+   {
+    "sector": "Industrials",
+    "pct": 10.75
+   },
+   {
+    "sector": "Auto",
+    "pct": 8.99
+   },
+   {
+    "sector": "Consumer",
+    "pct": 6.6
+   },
+   {
+    "sector": "Energy",
+    "pct": 4.7
+   }
+  ],
+  "play_mix": {
+   "tactical": 72.5
+  }
+ },
+ {
+  "date": "2026-03-30",
+  "nav": 393.4731,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 21.29,
+  "universe_n": 1958,
+  "arm_coverage_pct": 45.9,
+  "n_dead_included": 4,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "MULTI COMMODITY EXCHANGE",
+    "sym": "MCX",
+    "pct": 1.82
+   },
+   {
+    "name": "HINDUSTAN ZINC LIMITED",
+    "sym": "HINDZINC",
+    "pct": 1.82
+   },
+   {
+    "name": "BSE LIMITED",
+    "sym": "BSE",
+    "pct": 1.8
+   },
+   {
+    "name": "OIL AND NATURAL GAS CORP.",
+    "sym": "ONGC",
+    "pct": 1.78
+   },
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 1.78
+   },
+   {
+    "name": "EICHER MOTORS LTD",
+    "sym": "EICHERMOT",
+    "pct": 1.76
+   },
+   {
+    "name": "TATA MOTORS LIMITED",
+    "sym": "TMCV",
+    "pct": 1.74
+   },
+   {
+    "name": "HINDUSTAN COPPER LTD",
+    "sym": "HINDCOPPER",
+    "pct": 1.73
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 14.12
+   },
+   {
+    "sector": "Materials",
+    "pct": 12.28
+   },
+   {
+    "sector": "Industrials",
+    "pct": 9.54
+   },
+   {
+    "sector": "Consumer",
+    "pct": 8.05
+   },
+   {
+    "sector": "Auto",
+    "pct": 6.66
+   },
+   {
+    "sector": "Healthcare",
+    "pct": 5.78
+   }
+  ],
+  "play_mix": {
+   "tactical": 67.65,
+   "structural": 4.85
+  }
+ },
+ {
+  "date": "2026-04-30",
+  "nav": 430.4518,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 30.18,
+  "universe_n": 1973,
+  "arm_coverage_pct": 46.3,
+  "n_dead_included": 2,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "HINDALCO  INDUSTRIES  LTD",
+    "sym": "HINDALCO",
+    "pct": 1.86
+   },
+   {
+    "name": "VEDANTA LIMITED",
+    "sym": "VEDL",
+    "pct": 1.84
+   },
+   {
+    "name": "BILLIONBRAINS GARAGE VN L",
+    "sym": "GROWW",
+    "pct": 1.82
+   },
+   {
+    "name": "MULTI COMMODITY EXCHANGE",
+    "sym": "MCX",
+    "pct": 1.82
+   },
+   {
+    "name": "HINDUSTAN ZINC LIMITED",
+    "sym": "HINDZINC",
+    "pct": 1.8
+   },
+   {
+    "name": "STEEL AUTHORITY OF INDIA",
+    "sym": "SAIL",
+    "pct": 1.8
+   },
+   {
+    "name": "OIL AND NATURAL GAS CORP.",
+    "sym": "ONGC",
+    "pct": 1.78
+   },
+   {
+    "name": "BSE LIMITED",
+    "sym": "BSE",
+    "pct": 1.74
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 16.0
+   },
+   {
+    "sector": "Materials",
+    "pct": 12.45
+   },
+   {
+    "sector": "Industrials",
+    "pct": 9.29
+   },
+   {
+    "sector": "Consumer",
+    "pct": 7.91
+   },
+   {
+    "sector": "Technology",
+    "pct": 7.6
+   },
+   {
+    "sector": "Energy",
+    "pct": 5.46
+   }
+  ],
+  "play_mix": {
+   "tactical": 58.93,
+   "structural": 13.57
+  }
+ },
+ {
+  "date": "2026-05-29",
+  "nav": 441.0449,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 34.01,
+  "universe_n": 1936,
+  "arm_coverage_pct": 47.4,
+  "n_dead_included": 2,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "MULTI COMMODITY EXCHANGE",
+    "sym": "MCX",
+    "pct": 2.36
+   },
+   {
+    "name": "OIL AND NATURAL GAS CORP.",
+    "sym": "ONGC",
+    "pct": 2.25
+   },
+   {
+    "name": "MTAR TECHNOLOGIES LIMITED",
+    "sym": "MTARTECH",
+    "pct": 2.19
+   },
+   {
+    "name": "BAJAJ AUTO LIMITED",
+    "sym": "BAJAJ-AUTO",
+    "pct": 2.12
+   },
+   {
+    "name": "BILLIONBRAINS GARAGE VN L",
+    "sym": "GROWW",
+    "pct": 2.07
+   },
+   {
+    "name": "COFORGE LIMITED",
+    "sym": "COFORGE",
+    "pct": 2.05
+   },
+   {
+    "name": "TATA MOTORS PASS VEH LTD",
+    "sym": "TMPV",
+    "pct": 1.98
+   },
+   {
+    "name": "HIMADRI SPECIALITY CHEM L",
+    "sym": "HSCL",
+    "pct": 1.98
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Financials",
+    "pct": 14.72
+   },
+   {
+    "sector": "Materials",
+    "pct": 12.16
+   },
+   {
+    "sector": "Technology",
+    "pct": 11.12
+   },
+   {
+    "sector": "Industrials",
+    "pct": 8.73
+   },
+   {
+    "sector": "Consumer",
+    "pct": 6.1
+   },
+   {
+    "sector": "Energy",
+    "pct": 6.01
+   }
+  ],
+  "play_mix": {
+   "tactical": 53.5,
+   "structural": 19.0
+  }
+ },
+ {
+  "date": "2026-06-25",
+  "nav": 435.1527,
+  "n_holdings": 60,
+  "equity_pct": 72.5,
+  "cash_pct": 27.5,
+  "oneway_turnover_pct": 20.3,
+  "universe_n": 1933,
+  "arm_coverage_pct": 47.7,
+  "n_dead_included": 0,
+  "deployed_pct": 72.5,
+  "top_holdings": [
+   {
+    "name": "MTAR TECHNOLOGIES LIMITED",
+    "sym": "MTARTECH",
+    "pct": 2.2
+   },
+   {
+    "name": "COFORGE LIMITED",
+    "sym": "COFORGE",
+    "pct": 2.14
+   },
+   {
+    "name": "NATIONAL ALUMINIUM CO LTD",
+    "sym": "NATIONALUM",
+    "pct": 2.08
+   },
+   {
+    "name": "HIMADRI SPECIALITY CHEM L",
+    "sym": "HSCL",
+    "pct": 2.01
+   },
+   {
+    "name": "COAL INDIA LTD",
+    "sym": "COALINDIA",
+    "pct": 2.01
+   },
+   {
+    "name": "BAJAJ AUTO LIMITED",
+    "sym": "BAJAJ-AUTO",
+    "pct": 1.96
+   },
+   {
+    "name": "BILLIONBRAINS GARAGE VN L",
+    "sym": "GROWW",
+    "pct": 1.89
+   },
+   {
+    "name": "OIL AND NATURAL GAS CORP.",
+    "sym": "ONGC",
+    "pct": 1.85
+   }
+  ],
+  "top_sectors": [
+   {
+    "sector": "Materials",
+    "pct": 12.51
+   },
+   {
+    "sector": "Financials",
+    "pct": 11.78
+   },
+   {
+    "sector": "Industrials",
+    "pct": 10.83
+   },
+   {
+    "sector": "Technology",
+    "pct": 9.48
+   },
+   {
+    "sector": "Energy",
+    "pct": 8.4
+   },
+   {
+    "sector": "Consumer",
+    "pct": 7.77
+   }
+  ],
+  "play_mix": {
+   "tactical": 66.33,
+   "structural": 6.17
+  }
+ }
+]

@@ -1,0 +1,56 @@
+{
+ "scheme": "SBI Equity Hybrid Fund (G)",
+ "amc": "SBI Mutual Fund",
+ "category": "Aggressive Hybrid Fund",
+ "diag": {
+  "aum0_cr": 83983.5,
+  "start": "2015-01-30",
+  "end": "2026-06-25",
+  "n_rebalances": 138,
+  "cost_bps": 15.0,
+  "avg_universe": 1169.0,
+  "avg_arm_cov_pct": 64.1,
+  "avg_dead_included": 69.9,
+  "avg_holdings": 60.0,
+  "avg_oneway_turnover_pct": 29.43
+ },
+ "scorecard": {
+  "window": {
+   "start": "2015-01-30",
+   "end": "2026-06-25",
+   "years": 11.4
+  },
+  "book": {
+   "cagr_pct": 13.77,
+   "vol_pct": 14.85,
+   "sharpe": 0.96,
+   "maxdd_pct": -36.46,
+   "final_nav": 435.15
+  },
+  "benchmark_name": "NIFTY 500",
+  "benchmark": {
+   "cagr_pct": 12.03,
+   "vol_pct": 16.21,
+   "maxdd_pct": -38.11,
+   "excess_cagr_pct": 1.73,
+   "tracking_error_pct": 6.87,
+   "info_ratio": 0.25,
+   "beta": 0.83,
+   "up_capture": 0.87,
+   "down_capture": 0.83
+  },
+  "real_scheme": {
+   "matched_name": null,
+   "note": "no AMFI NAV match for this scheme name"
+  },
+  "fundamental_law": {
+   "ic_mean": 0.041,
+   "ic_tstat": 4.73,
+   "transfer_coefficient": 0.556,
+   "breadth_per_year_UPPER": 720.0,
+   "implied_IR_UPPER": 0.61,
+   "realized_IR_vs_bench": 0.25,
+   "note": "IC = mean cross-sectional Spearman(ARM score, next-rebalance return) over the candidate universe; TC = mean corr(actual target weights, unconstrained score-weights); BR is an UPPER bound (monthly holdings are NOT independent \u2014 true breadth is far lower), so implied_IR is an upper bound on what the signal could deliver, to be read against the realized IR."
+  }
+ }
+}
