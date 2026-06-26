@@ -455,6 +455,11 @@ def build_rules_v0(reg_entry, asof, equity_target=0.95, log=print):
     m = reg_entry["mandate"]
     aum = _f(reg_entry["aum_cr"])
     asof = str(asof)
+    # a hybrid / balanced-advantage mandate caps equity (equity_max) — the rest is the debt+cash
+    # sleeve we don't model as stocks, so it shows as cash. Target the middle of the equity band.
+    emax = m.get("equity_max")
+    if emax:
+        equity_target = min(equity_target, round((m["equity_min"] + emax) / 2.0, 4))
 
     uni = []
     n_priced = n_arm = 0
@@ -467,35 +472,54 @@ def build_rules_v0(reg_entry, asof, equity_target=0.95, log=print):
         arm = current_arm(h.get("isin"), asof)
         if arm is not None:
             n_arm += 1
+        sec = (h.get("industry") or h.get("sector") or "").strip()
+        if sec.upper() in ("", "N.A.", "NA", "-", "NONE", "UNCLASSIFIED"):
+            sec = "Unclassified"
         uni.append({"sym": sym, "isin": h.get("isin"), "name": h.get("name") or sym,
-                    "sector": h.get("industry") or h.get("sector") or "Unclassified",
-                    "px": px, "arm": arm, "score": arm if arm is not None else 50.0,
-                    "real_pct": _f(h.get("pct"))})
+                    "sector": sec, "px": px, "arm": arm,
+                    "score": arm if arm is not None else 50.0, "real_pct": _f(h.get("pct"))})
     if not uni:
         raise SystemExit("no priceable holdings — cannot construct a book")
 
     uni.sort(key=lambda u: (-u["score"], -u["real_pct"]))
     sel = uni[:min(m["n_hi"], len(uni))]
-    tot_score = sum(u["score"] for u in sel) or 1.0
+    SECTOR_FREE = "Unclassified"          # unknown-sector names aren't really one sector → no sector cap
+
+    # per-name cap = min(mandate single-name cap, liquidity cap as a fraction of AUM)
     for u in sel:
-        u["w"] = equity_target * u["score"] / tot_score
         cap = m["max_pos"]
         lc = liquidity_cap_cr(u["sym"], aum, asof)
         if lc is not None and aum > 0:
             cap = min(cap, lc / aum)
-        u["cap"] = cap
-        u["w"] = min(u["w"], cap)
+        u["cap"] = max(0.0, cap)
+        u["w"] = 0.0
 
-    # sector-cap pass: scale every name in an over-weight sector down proportionally
-    secw = {}
-    for u in sel:
-        secw[u["sector"]] = secw.get(u["sector"], 0.0) + u["w"]
-    for s, tw in secw.items():
-        if tw > m["max_sector"] and tw > 0:
-            fac = m["max_sector"] / tw
-            for u in sel:
-                if u["sector"] == s:
-                    u["w"] *= fac
+    # iterative water-fill: place equity_target across names ∝ score, honoring per-name caps AND
+    # per-sector caps; leftover from capped names redistributes to those with headroom. Whatever
+    # still can't fit (a genuine capacity limit — e.g. a huge book in illiquid small-caps) stays cash.
+    remaining = equity_target
+    for _ in range(50):
+        if remaining <= 1e-4:
+            break
+        secw = {}
+        for u in sel:
+            secw[u["sector"]] = secw.get(u["sector"], 0.0) + u["w"]
+        active = [u for u in sel if u["w"] < u["cap"] - 1e-9 and
+                  (u["sector"] == SECTOR_FREE or secw.get(u["sector"], 0.0) < m["max_sector"] - 1e-9)]
+        if not active:
+            break
+        tot_score = sum(x["score"] for x in active) or 1.0
+        placed = 0.0
+        for u in active:
+            sec_room = 1e9 if u["sector"] == SECTOR_FREE else m["max_sector"] - secw.get(u["sector"], 0.0)
+            add = min(remaining * u["score"] / tot_score, u["cap"] - u["w"], sec_room)
+            if add > 0:
+                u["w"] += add
+                secw[u["sector"]] = secw.get(u["sector"], 0.0) + add
+                placed += add
+        remaining -= placed
+        if placed <= 1e-7:
+            break
 
     book = new_book(reg_entry)
     book["inception"] = asof
