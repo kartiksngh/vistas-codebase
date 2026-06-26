@@ -234,9 +234,18 @@ def build_benchmark(name, slug=None, mcap=None, by_isin=None, ff_map=None, progr
         ffw_full.loc[ffw.index] = ffw
     ew = pd.Series(1.0 / n, index=df.index)                  # equal weight
     cons = []
+    # #81 — emit sectors on the canonical macro taxonomy so the benchmark side of the fund tilt
+    # matches the fund side bucket-for-bucket (else "Banks" vs "Financial Services" = phantom tilts).
+    try:
+        from . import funds_portfolio_viz as _fpv
+        _lblmap = _fpv.canonical_label_map()
+        _vidmap = _fpv.canonical_vst_sector_map()
+    except Exception:
+        _lblmap, _vidmap = {}, {}
     for i, row in df.iterrows():
+        _sec = _vidmap.get(row["vst_id"]) or _lblmap.get(row["sector"]) or row["sector"]
         cons.append({"symbol": row["symbol"], "isin": row["isin"], "vst_id": row["vst_id"],
-                     "name": row["name"], "sector": row["sector"],
+                     "name": row["name"], "sector": _sec,
                      "ff_factor": (None if pd.isna(row["ff_factor"]) else round(float(row["ff_factor"]), 3)),
                      "w_ew": round(float(ew[i]) * 100, 4),
                      "w_ffmcap": round(float(ffw_full[i]) * 100, 4)})

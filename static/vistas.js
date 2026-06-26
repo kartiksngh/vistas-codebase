@@ -16,6 +16,10 @@ let fetchPoll = null;
 
 // Bloomberg-style views + the measure each one reads.
 let VIEW = "performance";       // "performance" | "valuation"
+// GP/level-chart display mode (#49) — pure display layer, no analytics change:
+//   "rebase"   = rebased to 100 at the window start (the analytics default; like-for-like paths)
+//   "absolute" = the underlying total-return index level (recovered from the raw measure frame)
+let GP_MODE = "rebase";
 let PERF_MEASURE = "TR";        // Performance tab: "TR" (default) | "PR"
 let VAL_MEASURE = "PE";         // Valuation tab: "PE" | "PB" | "DY"
 const MEASURE_KIND = { TR: "level", PR: "level", NTR: "level", PE: "ratio", PB: "ratio", DY: "yield" };
@@ -28,6 +32,10 @@ let FUND_SYM = null;
 // Quant & MI (per-stock cockpit) — data is lazy-fetched per symbol like fundamentals.
 let QUANT_DATA = (typeof window !== "undefined" && window.VISTAS_QUANT) ? window.VISTAS_QUANT : null;
 let QUANT_SYM = null, QUANT_COMBO = null;
+// #51 — flow-decomposition view for the per-stock smart-money panel:
+//   "net_active" = conviction (weight-space, inflow-immune)  [DEFAULT]
+//   "price_adj"  = price stripped only (still has scheme inflows)  ·  "gross" = raw ₹ change
+let SMF_MODE = "net_active";
 let FUNDS_HOLD_DATA = null, FUNDS_SYM = null, FUNDS_COMBO = null;
 let FUNDS_ATTR_DATA = null, FUNDSKILL_SYM = null, FUNDSKILL_COMBO = null, FUNDSKILL_SORT = { key: "t_stat", dir: -1 }, FUNDSKILL_CAT = "";
 let FS_WIN = null;          // {i0,i1} indices into the current scheme's ts[] (null = full history); reset on scheme change
@@ -642,6 +650,8 @@ async function init() {
   initCmdk();
   initScreen();
   initMacro();
+  initGPToggle();       // #49 rebase / absolute level toggle on the GP chart
+  initAllocator();      // Asset Allocator tab (market breadth) + relocate the consensus cockpit here
   initDateStrips();     // compact window strips on the Fundamentals + Macro measurebars
   applyHash();          // restore a shared/bookmarked view+selection before the first compute
   run();
@@ -886,12 +896,44 @@ function lineTrace(name, x, y, opts) {
 }
 
 // GP -----------------------------------------------------------------
+// #49 — "Rebase to 100" vs "Absolute level" toggle (pure DISPLAY layer; analytics.py untouched).
+// BUNDLE.levels[c] is already rebased to 100 at the common-start by the analytics layer. To show the
+// underlying total-return index LEVEL we recover the raw absolute value at the first charted date from
+// the embedded measure frame and SCALE the rebased series by it (a single per-series constant — the
+// shape is identical, only the y-units change). If the raw frame can't be matched we fall back to the
+// rebased series so the panel never breaks.
+function gpAbsoluteSeries(c, x) {
+  const reb = (BUNDLE.levels || {})[c]; if (!reb || !reb.length) return null;
+  try {
+    const md = mergeLevel(PERF_MEASURE, [c]);                 // raw level frame for this one series
+    if (!md || !md.series || !md.series[c] || !md.dates) return null;
+    const idxOf = {}; md.dates.forEach((d, i) => { idxOf[d] = i; });
+    // anchor on the first charted date that has BOTH a rebased value and a raw level
+    let scale = null;
+    for (let i = 0; i < x.length; i++) {
+      const rv = reb[i]; if (rv === null || rv === undefined || !isFinite(rv) || rv === 0) continue;
+      const j = idxOf[x[i]]; if (j === undefined) continue;
+      const raw = md.series[c][j];
+      if (raw === null || raw === undefined || !isFinite(raw)) continue;
+      scale = raw / rv; break;                                 // raw = rebased × scale
+    }
+    if (scale === null) return null;
+    return reb.map((v) => (v === null || v === undefined || !isFinite(v)) ? null : +(v * scale).toFixed(4));
+  } catch (e) { return null; }
+}
 function renderGP() {
   const x = BUNDLE.dates;
   const cols = [...BUNDLE.meta.tickers, ...BUNDLE.meta.benchmarks].filter((c) => shown("gp", c));
-  const traces = cols.map((c) => lineTrace(c, x, BUNDLE.levels[c]));
+  const absMode = (GP_MODE === "absolute");
+  let anyAbs = false;
+  const traces = cols.map((c) => {
+    let y = BUNDLE.levels[c];
+    if (absMode) { const a = gpAbsoluteSeries(c, x); if (a) { y = a; anyAbs = true; } }
+    return lineTrace(c, x, y);
+  });
   const log = $("logscale").checked;
-  const yaxis = { gridcolor: "#dfe3e8", title: "Rebased (=100)", type: log ? "log" : "linear" };
+  const showingAbs = absMode && anyAbs;
+  const yaxis = { gridcolor: "#dfe3e8", title: showingAbs ? "Index level" : "Rebased (=100)", type: log ? "log" : "linear" };
   // clean log ticks at 1/2/5 per decade (100·200·500·1k…) — readable at any range,
   // not the cluttered 1-9 minor labels, and not so sparse it looks unchanged
   if (log) { yaxis.dtick = "D2"; yaxis.tickformat = "~s"; }
@@ -902,13 +944,36 @@ function renderGP() {
   Plotly.react("plot-gp", traces, layout, PCONF);
   attachYAutoscale("plot-gp");          // zoom the x-range -> Y re-fits to the visible window
   const parts = cols.map((c) => { const s = BUNDLE.stats.find((r) => r.name === c); return `${c}: ${pct(s.cagr)} CAGR, ${pct(s.total_return)} total`; });
-  let head = `Window ${BUNDLE.meta.start} → ${BUNDLE.meta.end} · ${BUNDLE.meta.n_obs} ${BUNDLE.meta.freq} obs`;
-  if (BUNDLE.meta.truncated)
+  let head = `Window ${BUNDLE.meta.start} → ${BUNDLE.meta.end} · ${BUNDLE.meta.n_obs} ${BUNDLE.meta.freq} obs`
+    + (showingAbs ? "\nShowing the underlying total-return index LEVEL (not rebased). Toggle “Rebase to 100” for like-for-like paths." : "");
+  if (absMode && !anyAbs)
+    head += `\nℹ Absolute level isn’t available for these series in this deck — showing the rebased view.`;
+  if (!absMode && BUNDLE.meta.truncated)
     head += `\n⚠ All series rebased to 100 at ${BUNDLE.meta.common_start} — the latest date EVERY selected series has data (you requested ${BUNDLE.meta.requested_start}; earlier history is excluded so the comparison is like-for-like). Per-series start dates are in the COMP table.`;
   const excl = BUNDLE.meta.excluded_noncontinuous || [];
   if (excl.length)
     head += `\n⚠ Excluded (non-continuous over this window — a multi-month trading gap would fabricate a return): ${excl.join(", ")}. Pick a shorter, continuous window to chart them.`;
   $("stat-gp").textContent = head + "\n" + parts.join("  |  ");
+}
+
+// #49 — inject the "Rebase to 100 / Absolute level" segmented toggle into the GP panel's .tools bar.
+// Done once at init (idempotent); flips GP_MODE and re-renders only the GP chart.
+function initGPToggle() {
+  const panel = $("p-gp"); if (!panel) return;
+  const tools = panel.querySelector(".tools"); if (!tools || $("gp-mode-seg")) return;
+  const seg = document.createElement("span");
+  seg.className = "gp-mode-seg fs-lvl-seg";
+  seg.id = "gp-mode-seg";
+  seg.title = "Switch between rebased-to-100-at-window-start and the underlying index level";
+  seg.innerHTML =
+    `<button type="button" class="fs-lvl${GP_MODE === "rebase" ? " on" : ""}" data-mode="rebase">Rebase to 100</button>`
+    + `<button type="button" class="fs-lvl${GP_MODE === "absolute" ? " on" : ""}" data-mode="absolute">Absolute level</button>`;
+  tools.insertBefore(seg, tools.firstChild);
+  seg.querySelectorAll(".fs-lvl").forEach((b) => b.addEventListener("click", () => {
+    GP_MODE = b.dataset.mode;
+    seg.querySelectorAll(".fs-lvl").forEach((x) => x.classList.toggle("on", x.dataset.mode === GP_MODE));
+    if (BUNDLE) renderGP();
+  }));
 }
 
 // COMP ---------------------------------------------------------------
@@ -1260,9 +1325,10 @@ function setView(v) {
   if ($("view-funds")) $("view-funds").hidden = (v !== "funds");
   if ($("view-fundskill")) $("view-fundskill").hidden = (v !== "fundskill");
   if ($("view-macro")) $("view-macro").hidden = (v !== "macro");
+  if ($("view-allocator")) $("view-allocator").hidden = (v !== "allocator");
   // the Universe/Benchmark/range control bar only applies to Performance + Valuation; hide it on
-  // the self-contained Fundamentals + Quant + Macro tabs (they have their own pickers / fixed windows).
-  const ctl = $("ctl"); if (ctl) ctl.style.display = (v === "fundamentals" || v === "quant" || v === "screen" || v === "funds" || v === "fundskill" || v === "macro") ? "none" : "";
+  // the self-contained Fundamentals + Quant + Macro + Allocator tabs (they have their own pickers / fixed windows).
+  const ctl = $("ctl"); if (ctl) ctl.style.display = (v === "fundamentals" || v === "quant" || v === "screen" || v === "funds" || v === "fundskill" || v === "macro" || v === "allocator") ? "none" : "";
   $("tabs").querySelectorAll(".tab[data-view]").forEach((b) => b.classList.toggle("active", b.dataset.view === v));
   if (!linked() && TAB_WIN[v]) { $("start").value = TAB_WIN[v][0]; $("end").value = TAB_WIN[v][1]; }   // restore this tab's own window
   syncDateStrips();
@@ -1298,6 +1364,7 @@ function setView(v) {
     else if (v === "funds") renderFunds();
     else if (v === "fundskill") renderFundSkill();
     else if (v === "macro") renderMacro();
+    else if (v === "allocator") renderAllocator();
     else if (BUNDLE) renderAll();
   }
   afterPaint(() => viewPlotsResize(v));     // re-measure now-visible plots once layout settles
@@ -1569,27 +1636,70 @@ async function renderQuant() {
   html += `</section>`;
 
   // ---- Smart-money flow (cross-AMC active mutual-fund manager flows; MoneyBall Layer D#1) ----
+  // #51 — 3-way flow decomposition. The panel can plot any of three history arrays (all aligned to
+  // smf.months[]) and headline the matching decomp scalar:
+  //   Net-active  = conviction, weight-space, inflow-immune  [DEFAULT]
+  //   Price-adj   = price stripped only (== the legacy `flow`; still carries scheme inflows)
+  //   Gross       = raw ₹ change (price + inflow + conviction)
+  // If the new keys are absent (older deck), we fall back to the legacy `flow`/`rank` behaviour.
   const smf = q.smart_money_flow || null;
   if (smf && smf.months && smf.months.length) {
     const n = smf.months.length, i = n - 1;
-    const lf = smf.flow[i], lb = smf.breadth[i], lr = smf.rank[i], nc = smf.nclean[i], lca = smf.ca[i];
+    const hasDecomp = !!(smf.net_active || smf.price_adj || smf.gross || smf.decomp);
+    // which history array + headline scalar the current mode resolves to (graceful fallbacks)
+    const SMF_MODES = [
+      { key: "net_active", label: "Net-active (conviction)", hist: smf.net_active,
+        tip: "Net-active = weight-space conviction, inflow-immune (the rupees managers re-weighted toward the stock independent of price and fresh scheme inflows)." },
+      { key: "price_adj", label: "Price-adjusted", hist: smf.price_adj || smf.flow,
+        tip: "Price-adjusted = strips price drift only; still includes new money the scheme received and had to deploy (inflow-contaminated)." },
+      { key: "gross", label: "Gross", hist: smf.gross,
+        tip: "Gross = the raw ₹ change in the position (price move + scheme inflows + active conviction, undecomposed)." },
+    ];
+    let modes = hasDecomp ? SMF_MODES.filter((mo) => Array.isArray(mo.hist) && mo.hist.length) : [];
+    let curMode = modes.find((mo) => mo.key === SMF_MODE) || modes[0] || null;
+    if (curMode) SMF_MODE = curMode.key;
+    // history series + the headline ₹cr scalar for the current month, by mode (legacy fallback uses smf.flow)
+    const histSeries = curMode ? curMode.hist : (smf.flow || []);
+    const dcomp = smf.decomp || {};
+    const scalarFor = (mo) => {
+      if (!mo) return (smf.flow ? smf.flow[i] : null);
+      if (mo.key === "net_active") return (dcomp.net_active_cr != null ? dcomp.net_active_cr : (mo.hist ? mo.hist[i] : null));
+      if (mo.key === "price_adj") return (dcomp.price_adj_cr != null ? dcomp.price_adj_cr : (mo.hist ? mo.hist[i] : null));
+      return (dcomp.gross_cr != null ? dcomp.gross_cr : (mo.hist ? mo.hist[i] : null));
+    };
+    const lf = scalarFor(curMode);
+    const lb = smf.breadth[i], lr = smf.rank[i], nc = smf.nclean[i], lca = smf.ca[i];
     const buy = smf.buyers[i], sel = smf.sellers[i];
     const dB = (n >= 2 && lb != null && smf.breadth[i - 1] != null) ? lb - smf.breadth[i - 1] : null;
-    const li = (smf.intensity && smf.intensity[i] != null) ? smf.intensity[i] : null;
+    // rank/intensity headline prefers the net-active conviction context when present
+    const li = (curMode && curMode.key === "net_active" && dcomp.na_intensity != null) ? dcomp.na_intensity
+             : (smf.intensity && smf.intensity[i] != null) ? smf.intensity[i] : null;
+    const rk = (curMode && curMode.key === "net_active" && dcomp.na_rank != null) ? dcomp.na_rank : lr;
+    const ncc = (curMode && curMode.key === "net_active" && dcomp.na_nclean != null) ? dcomp.na_nclean : nc;
     const flowTxt = (lf == null) ? "—" : `<span class="${lf >= 0 ? 'pos' : 'neg'}">${lf >= 0 ? '+' : ''}₹${Math.round(lf).toLocaleString('en-IN')} cr</span>`;
-    const rankTxt = (lr && nc) ? (lf >= 0 ? `#${lr} most accumulated` : `#${nc - lr + 1} most reduced`) + ` <span class="q-sub">of ${nc}${li != null ? `, ${li >= 0 ? '+' : ''}${li}% of position` : ''}</span>` : "—";
+    const rankTxt = (rk && ncc) ? (lf >= 0 ? `#${rk} most accumulated` : `#${ncc - rk + 1} most reduced`) + ` <span class="q-sub">of ${ncc}${li != null ? `, ${li >= 0 ? '+' : ''}${li}% of position` : ''}</span>` : "—";
+    const flowLbl = curMode ? curMode.label : "Net flow";
     html += `<section class="panel"><h2><span class="tag-sec">FLOW</span>Smart-money flow — net active mutual-fund buying</h2>`;
     if (lca) html += `<div class="q-warn">A structural corporate action (merger/demerger) affected this stock in ${fEsc(smf.months[i])}; that month's flow is quarantined, not a clean discretionary signal.</div>`;
+    if (modes.length > 1) {
+      html += `<div class="smf-modeseg fs-lvl-seg" title="How the flow is decomposed — Gross (raw ₹) → Price-adjusted (price stripped) → Net-active (inflow-immune conviction)">`
+        + modes.map((mo) => `<button type="button" class="fs-lvl smf-modebtn${mo.key === SMF_MODE ? " on" : ""}" data-smf="${mo.key}" title="${attEsc(mo.tip)}">${fEsc(mo.label)}</button>`).join("")
+        + `</div>`;
+    }
     html += `<div class="q-stats">`
-      + qStat(`Net flow (${fEsc(smf.months[i])})`, flowTxt)
+      + qStat(`${flowLbl} (${fEsc(smf.months[i])})`, flowTxt)
       + qStat("Conviction rank", rankTxt)
       + qStat("Active funds holding", lb != null ? lb : "—")
       + qStat("Funds added / trimmed", `${buy} / ${sel}`)
       + qStat("Breadth Δ (1m)", dB != null ? `${dB >= 0 ? '+' : ''}${dB} funds` : "—")
       + `</div>`;
-    html += `<div class="qcell"><div class="q-cap">Net active-manager flow (₹ cr, bars) &amp; breadth (# funds, line) — last ${n} months</div><div class="plot" id="plot-quant-flow" style="height:300px"></div></div>`;
-    html += `<details><summary>Definition · Method · Why</summary><p><b>Net active flow</b> = Σ over active equity mutual-fund schemes of [ end-value − start-value×(1 + the stock's total return that month) ] — the rupees managers actually <i>moved</i> into/out of the stock, with price drift AND corporate actions (splits/bonuses/mergers) removed (total return absorbs them; merger share-swaps are bridged; demergers are quarantined). <b>Breadth</b> = number of active funds holding it; <b>added/trimmed</b> = funds that raised vs cut the position net of drift. <b>Conviction rank</b> orders the stock by net flow as a % of the average mutual-fund position that month — <b>size-neutral</b>, so it reflects conviction rather than just market cap — within the clean cross-section (the old raw-rupee rank mechanically favoured mega-caps). <b>Why:</b> price tells you what happened; this tells you what professional managers <i>decided</i> — broad-breadth accumulation has tended to lead returns on our panel (a diagnostic, not a guaranteed signal), and extreme crowding warns. Source: all-AMC monthly holdings × our NSE total-return panel. Coverage control: only schemes reporting in both months are counted.</p></details>`;
+    const capLbl = curMode ? curMode.label.toLowerCase() : "net active-manager";
+    html += `<div class="qcell"><div class="q-cap">${fEsc(capLbl)} flow (₹ cr, bars) &amp; breadth (# funds, line) — last ${n} months</div><div class="plot" id="plot-quant-flow" style="height:300px"></div></div>`;
+    html += `<details><summary>Definition · Method · Why</summary><p><b>Three views of the same flow</b> (the decomposition, switchable above): <b>Gross</b> = the raw rupee change in the position (price move + scheme inflows + conviction, undecomposed); <b>Price-adjusted</b> = strips the price drift only [ end-value − start-value×(1 + the stock's total return that month) ] — but still carries the fresh money a scheme received and had to deploy; <b>Net-active</b> = the inflow-immune <i>conviction</i> figure, measured in weight-space [ AUM×(1+R) × Δ(active weight) ], so a fund merely parking new inflows pro-rata shows ~zero. Corporate actions (splits/bonuses/mergers) are absorbed (total return) / bridged (merger swaps) / quarantined (demergers). <b>Breadth</b> = number of active funds holding it; <b>added/trimmed</b> = funds that raised vs cut net of drift. <b>Conviction rank</b> orders the stock by flow as a % of the average position that month — size-neutral. <b>Why:</b> price tells you what happened; this tells you what professional managers <i>decided</i> — and only the Net-active view isolates real conviction from money they were simply handed. Source: all-AMC monthly holdings × our NSE total-return panel. Coverage control: only schemes reporting in both months are counted. Diagnostic, not a guaranteed signal.</p></details>`;
     html += `</section>`;
+    // stash the resolved history for the chart render below (avoids recomputing)
+    smf._activeHist = histSeries;
+    smf._activeLabel = flowLbl;
   }
 
   // ---- Mutual-fund ownership (who owns this stock) — links the Funds intelligence into the stock cockpit ----
@@ -1634,12 +1744,20 @@ async function renderQuant() {
       if (otr.length) { Plotly.react("plot-quant-own", otr, baseLayout({ yaxis: { title: "%", gridcolor: "#dfe3e8" } }), PCONF); attachYAutoscale("plot-quant-own"); }
     }
     if (smf && smf.months && smf.months.length && $("plot-quant-flow")) {
-      const fcol = smf.flow.map((v, idx) => smf.ca[idx] ? "#c9ccd1" : (v >= 0 ? "#2ca02c" : "#d62728"));
-      const fbar = { type: "bar", x: smf.months, y: smf.flow, name: "net flow ₹cr", marker: { color: fcol }, hovertemplate: "%{x}: ₹%{y} cr<extra></extra>" };
+      const hist = (smf._activeHist && smf._activeHist.length) ? smf._activeHist : smf.flow;   // #51 active decomposition view
+      const fcol = (hist || []).map((v, idx) => (smf.ca && smf.ca[idx]) ? "#c9ccd1" : (v >= 0 ? "#2ca02c" : "#d62728"));
+      const fbar = { type: "bar", x: smf.months, y: hist, name: (smf._activeLabel || "net flow") + " ₹cr", marker: { color: fcol }, hovertemplate: "%{x}: ₹%{y} cr<extra></extra>" };
       const bln = { type: "scatter", mode: "lines", name: "breadth (# funds)", x: smf.months, y: smf.breadth, yaxis: "y2", line: { color: "#1f77b4", width: 2 }, hovertemplate: "%{x}: %{y} funds<extra></extra>" };
       Plotly.react("plot-quant-flow", [fbar, bln], baseLayout({ yaxis: { title: "₹ cr", gridcolor: "#dfe3e8", zeroline: true, zerolinecolor: "#bbb" }, yaxis2: { title: "# funds", overlaying: "y", side: "right", showgrid: false } }), PCONF);
     }
   } catch (e) { console.error("renderQuant charts:", e); }
+
+  // #51 — wire the flow-decomposition mode switch (re-renders the whole quant cockpit with the new view)
+  host.querySelectorAll(".smf-modebtn").forEach((b) => b.addEventListener("click", () => {
+    if (b.dataset.smf === SMF_MODE) return;
+    SMF_MODE = b.dataset.smf;
+    renderQuant();
+  }));
 }
 async function initQuant() {
   const tab = $("tabs") && $("tabs").querySelector('[data-view="quant"]');
@@ -1821,6 +1939,45 @@ let SCREEN_SORT = { key: "mcap_cr", dir: -1 };
 let SCREEN_DATA = null;                // lazy-fetched full screen object (rows are ~1.5MB, not inlined)
 const SCREEN_QCOL = { 1: "#2ca02c", 2: "#1f77b4", 3: "#9467bd", 4: "#8a8f98" };
 const SCREEN_DET = { "operating": { c: "#d62728", t: "operating" }, "headline-only": { c: "#ff7f0e", t: "headline-only" }, "mixed": { c: "#e0a000", t: "mixed" } };
+// --- Quadrant-rotation (A3) state ---
+let ROT_VIEW = "stock";                // rotation sub-view: "stock" (per-stock trail) | "centroid" (portfolio)
+let ROT_STOCK = null;                  // selected stock symbol for the stock-trail panel
+let ROT_STOCK_MON = null;              // null = show full trail; else the month index the slider is on
+let ROT_CENTROIDS = null;             // lazy-fetched centroids.json ({meta, entities:[...]})
+let ROT_CENT_FETCHED = false;          // guard so we fetch the 6.35MB file at most once
+let ROT_ENTITY = null;                 // selected entity_id for the centroid trail
+let ROT_CENT_MON = null;               // month index for the centroid slider (null = full)
+const ROT_QCOL = { 1: "#2ca02c", 2: "#1f77b4", 3: "#9467bd", 4: "#8a8f98" };   // Q1 rec+buy · Q2 rec+notbuy · Q3 notrec+buy · Q4 notrec+sell
+const ROT_QLBL = { 1: "Q1 · recommending & buying", 2: "Q2 · recommending, not buying", 3: "Q3 · not recommending, buying", 4: "Q4 · not recommending, selling" };
+function rotSlog(f) { const v = +f || 0; return Math.sign(v) * Math.log10(1 + Math.abs(v)); }   // signed-log ₹cr (keeps x=0 exact)
+// the shared 4-quadrant backdrop (zero-flow vertical + ARM=50 horizontal dividers + corner labels)
+function rotQuadLayout(xsAll, extra) {
+  const fin = (xsAll || []).filter((v) => isFinite(v));
+  const xlo = Math.min(0, ...(fin.length ? fin : [0])), xhi = Math.max(0, ...(fin.length ? fin : [0]));
+  const xpad = Math.max(0.4, (xhi - xlo) * 0.14);
+  const ticks = [-5000, -1000, -200, 0, 200, 1000, 5000];
+  const fmtCr = (t) => { if (t === 0) return "0"; const a = Math.abs(t); return (t < 0 ? "−" : "+") + (a >= 1000 ? (a / 1000) + "k" : a); };
+  const x0 = xlo - xpad, x1 = xhi + xpad;
+  const ann = (x, y, txt, ax) => ({ x, y, xref: "x", yref: "y", text: txt, showarrow: false, font: { size: 10, color: "#9aa6b2" }, xanchor: ax, yanchor: (y > 50 ? "top" : "bottom") });
+  return baseLayout(Object.assign({
+    hovermode: "closest",
+    xaxis: { title: "←  net selling      net active flow (₹cr, signed-log)      net buying  →", tickvals: ticks.map(rotSlog), ticktext: ticks.map(fmtCr), range: [x0, x1], gridcolor: "#eef1f4", zeroline: false },
+    yaxis: { title: "LSEG StarMine ARM (analyst, 0–100; ≥50 recommending)", range: [-6, 106], gridcolor: "#eef1f4", zeroline: false },
+    shapes: [
+      { type: "rect", x0: 0, x1: x1, y0: 50, y1: 106, fillcolor: "rgba(44,160,44,0.05)", line: { width: 0 }, layer: "below" },
+      { type: "rect", x0: x0, x1: 0, y0: 50, y1: 106, fillcolor: "rgba(31,119,180,0.05)", line: { width: 0 }, layer: "below" },
+      { type: "rect", x0: 0, x1: x1, y0: -6, y1: 50, fillcolor: "rgba(148,103,189,0.05)", line: { width: 0 }, layer: "below" },
+      { type: "rect", x0: x0, x1: 0, y0: -6, y1: 50, fillcolor: "rgba(138,143,152,0.06)", line: { width: 0 }, layer: "below" },
+      { type: "line", x0: 0, x1: 0, y0: -6, y1: 106, line: { color: "#9aa6b2", width: 1.2, dash: "dot" } },
+      { type: "line", x0: x0, x1: x1, y0: 50, y1: 50, line: { color: "#9aa6b2", width: 1.2, dash: "dot" } },
+    ],
+    annotations: [
+      ann(x1, 104, "Q1 · rec & buying", "right"), ann(x0, 104, "Q2 · rec, not buying", "left"),
+      ann(x1, -4, "Q3 · not rec, buying", "right"), ann(x0, -4, "Q4 · not rec, selling", "left"),
+    ],
+    margin: { l: 58, r: 18, t: 10, b: 70 },
+  }, extra || {}));
+}
 
 function screenMarker() { return (typeof window !== "undefined" && window.VISTAS_SCREEN_SVS) || null; }
 function screenData() {   // full object with rows: the lazy-fetched cache, else an inlined full object (small decks)
@@ -2075,6 +2232,9 @@ async function renderScreen() {
     + `<p>We make <b>NO claim that fund managers lead analysts</b> — on our data fund flow does not predict forward returns; each quadrant is a positioning disagreement to investigate, not a signal. The analyst (ARM) axis is forward-validated on our panel; the fund-flow axis is a diagnostic only. <b>Diagnostics only — not buy/sell advice.</b></p>`
     + `</div></details></section>`;
 
+  // ---- ROTATION sub-view (A3): how positions move through the ARM × flow quadrant over time ----
+  html += rotationSectionHTML(rows);
+
   host.innerHTML = html;
 
   // wire controls
@@ -2096,6 +2256,289 @@ async function renderScreen() {
   }; });
 
   try { screenScatter(rows.filter((r) => r.arm != null), win, qlab); } catch (e) { console.error("screen scatter:", e); }
+  try { wireRotation(rows); } catch (e) { console.error("wireRotation:", e); }
+}
+
+// ============================== QUADRANT ROTATION (A3) — stock trail + portfolio centroids =============
+// Two surfaces, both on the ARM (Y, analyst) × net-active-flow (X, FM conviction) quadrant:
+//   1) STOCK TRAIL  — the selected stock's own (arm,flow) path over <=36 months, from row.traj[].
+//   2) CENTROIDS    — a fund/AMC/category's holding-weighted centroid trail (lazy-fetched centroids.json),
+//                     with peer trails faint in the background + own-history percentile readout.
+// All guarded; markers fade oldest→newest; latest = solid/largest. No Plotly key ever set to undefined.
+
+function rotationSectionHTML(rows) {
+  const withTraj = (rows || []).filter((r) => Array.isArray(r.traj) && r.traj.length);
+  let h = `<section class="panel rot-wrap"><h2><span class="tag-sec">ROTATION</span>Quadrant rotation — how positioning moves over time</h2>`;
+  h += `<details><summary>Definition · Method · Why</summary>`
+    + `<p><b>Axes:</b> Y = LSEG StarMine <b>ARM</b> (analyst-revision score, 0–100; ≥50 = "recommending"). X = <b>net active flow</b> (fund-manager conviction, ₹cr, signed-log; &gt;0 = net buying). The four quadrants: <b>Q1</b> rec &amp; buying (top-right), <b>Q2</b> rec, not buying (top-left), <b>Q3</b> not rec, buying (bottom-right), <b>Q4</b> not rec, selling (bottom-left).</p>`
+    + `<p><b>Stock trail</b> = the chosen stock's (ARM, flow) plotted month by month (markers fade oldest→newest; the newest is solid/largest). <b>Centroid</b> = a fund/AMC/category's <i>holding-weighted</i> mean (ARM, flow) of its equity book each month; <b>own-percentile</b> = where this month's value ranks within that entity's own trail (is it unusually constructive/aggressive <i>for itself</i> right now). Peers sharing the same peer-group are drawn faint behind it.</p>`
+    + `<p><b>Why:</b> a static dot says where you stand; the trail says which way you're <i>rotating</i> — into or out of the street's favour, and into or out of fund-manager conviction. Coincident positioning, not a forward signal.</p></details>`;
+
+  // sub-tab toggle
+  h += `<div class="rot-ctlrow"><span class="ab-ctllbl">View</span>`
+    + `<span class="rot-subseg fs-lvl-seg" id="rot-subseg">`
+    + `<button type="button" class="fs-lvl${ROT_VIEW === "stock" ? " on" : ""}" data-rv="stock">Stock trail</button>`
+    + `<button type="button" class="fs-lvl${ROT_VIEW === "centroid" ? " on" : ""}" data-rv="centroid">Portfolio centroids</button>`
+    + `</span></div>`;
+
+  // STOCK panel
+  h += `<div id="rot-stock-pane"${ROT_VIEW === "stock" ? "" : " hidden"}>`;
+  if (!withTraj.length) {
+    h += `<div class="empty-note">No per-stock trajectory in this deck (the screen rows carry no <code>traj</code> yet).</div>`;
+  } else {
+    if (!ROT_STOCK || !withTraj.some((r) => (r.symbol || r.name) === ROT_STOCK)) ROT_STOCK = withTraj[0].symbol || withTraj[0].name;
+    const opts = withTraj.map((r) => { const id = r.symbol || r.name; return `<option value="${attEsc(id)}"${id === ROT_STOCK ? " selected" : ""}>${fEsc(r.name || r.symbol)} ${fEsc(r.symbol || "")}</option>`; }).join("");
+    h += `<div class="rot-ctlrow"><span class="ab-ctllbl">Stock</span><select id="rot-stock-sel" class="rot-sel">${opts}</select>`
+      + `<button type="button" class="rot-play" id="rot-stock-play">▶ play</button>`
+      + `<input type="range" id="rot-stock-slider" class="rot-slider" min="0" max="0" value="0" step="1">`
+      + `<span class="rot-monthlbl" id="rot-stock-mon">full</span></div>`;
+    h += `<div id="rot-stock-warn"></div>`;
+    h += `<div class="plot" id="plot-rot-stock" style="height:440px"></div>`;
+  }
+  h += `</div>`;
+
+  // CENTROID panel (lazy)
+  h += `<div id="rot-cent-pane"${ROT_VIEW === "centroid" ? "" : " hidden"}>`;
+  h += `<div id="rot-cent-host"><div class="empty-note">Loading portfolio centroids…</div></div>`;
+  h += `</div>`;
+
+  h += `</section>`;
+  return h;
+}
+
+function wireRotation(rows) {
+  const seg = $("rot-subseg");
+  if (seg) seg.querySelectorAll(".fs-lvl").forEach((b) => b.addEventListener("click", () => {
+    ROT_VIEW = b.dataset.rv;
+    seg.querySelectorAll(".fs-lvl").forEach((x) => x.classList.toggle("on", x.dataset.rv === ROT_VIEW));
+    const sp = $("rot-stock-pane"), cp = $("rot-cent-pane");
+    if (sp) sp.hidden = (ROT_VIEW !== "stock");
+    if (cp) cp.hidden = (ROT_VIEW !== "centroid");
+    if (ROT_VIEW === "centroid") ensureRotCentroids().then(renderRotCentroid);
+    else afterPaint(() => viewPlotsResize("screen"));
+  }));
+
+  // stock-trail controls
+  const ssel = $("rot-stock-sel");
+  if (ssel) {
+    ssel.addEventListener("change", () => { ROT_STOCK = ssel.value; ROT_STOCK_MON = null; syncStockSlider(rows); drawRotStock(rows); });
+    syncStockSlider(rows);
+    drawRotStock(rows);
+    const sl = $("rot-stock-slider");
+    if (sl) sl.addEventListener("input", () => { const v = +sl.value; ROT_STOCK_MON = (v >= +sl.max) ? null : v; drawRotStock(rows); });
+    const pb = $("rot-stock-play"); if (pb) pb.addEventListener("click", () => playRotStock(rows));
+  }
+
+  // centroid view: if it's the active sub-tab on (re)render, kick the lazy fetch
+  if (ROT_VIEW === "centroid") ensureRotCentroids().then(renderRotCentroid);
+}
+
+function rotStockRow(rows) { return (rows || []).find((r) => (r.symbol || r.name) === ROT_STOCK) || null; }
+function syncStockSlider(rows) {
+  const r = rotStockRow(rows); const sl = $("rot-stock-slider"); const lbl = $("rot-stock-mon");
+  if (!r || !sl) return;
+  const n = (r.traj || []).length;
+  sl.max = String(Math.max(0, n - 1)); sl.value = sl.max; ROT_STOCK_MON = null;
+  if (lbl) lbl.textContent = "full";
+}
+
+// fade oldest→newest: opacities ramp 0.18→1; sizes 6→16; latest marker is solid + ringed.
+function rotFadeMarkers(pts, colorByQuad) {
+  const n = pts.length;
+  const op = pts.map((_, i) => 0.18 + 0.82 * (n <= 1 ? 1 : i / (n - 1)));
+  const sz = pts.map((_, i) => 6 + 10 * (n <= 1 ? 1 : i / (n - 1)));
+  const col = pts.map((p) => colorByQuad ? (ROT_QCOL[p.quad] || "#8a8f98") : "#1f77b4");
+  // last marker bigger + ringed
+  if (n) { sz[n - 1] = 18; op[n - 1] = 1; }
+  return { op, sz, col };
+}
+
+function drawRotStock(rows) {
+  const el = $("plot-rot-stock"); if (!el) return;
+  try {
+    const r = rotStockRow(rows);
+    const warn = $("rot-stock-warn"); if (warn) warn.innerHTML = "";
+    if (!r || !Array.isArray(r.traj) || !r.traj.length) { Plotly.purge("plot-rot-stock"); el.innerHTML = `<div class="empty-note">No trajectory for this stock.</div>`; return; }
+    el.innerHTML = "";
+    const mode = r.arm_history_mode || "ffill";
+    if (warn && mode !== "ffill") warn.innerHTML = `<div class="rot-warn">ARM = last-known (no history); only flow moves on the chart.</div>`;
+    let pts = r.traj.slice();
+    if (ROT_STOCK_MON != null) pts = pts.slice(0, Math.min(pts.length, ROT_STOCK_MON + 1));
+    if (!pts.length) pts = r.traj.slice(0, 1);
+    const xs = pts.map((p) => rotSlog(p.flow));
+    const ys = pts.map((p) => (p.arm == null ? null : p.arm));
+    const { op, sz, col } = rotFadeMarkers(pts, true);
+    // a single path line + per-point markers (color by quadrant). Build with a marker.color array.
+    const pathTr = {
+      type: "scatter", mode: "lines+markers", name: r.name || r.symbol,
+      x: xs, y: ys, connectgaps: true,
+      line: { color: "#9aa6b2", width: 1.4 },
+      marker: { size: sz, color: col, opacity: op, line: { width: 1, color: "#ffffff" } },
+      customdata: pts.map((p) => [p.date, (p.arm == null ? "n/a" : p.arm), p.flow, (ROT_QLBL[p.quad] || "")]),
+      hovertemplate: "<b>%{customdata[0]}</b><br>ARM %{customdata[1]}<br>flow ₹%{customdata[2]:,.0f} cr<br>%{customdata[3]}<extra></extra>",
+    };
+    const layout = rotQuadLayout(xs, { showlegend: false });
+    Plotly.react("plot-rot-stock", [pathTr], layout, PCONF);
+  } catch (e) { console.error("drawRotStock:", e); Plotly.purge("plot-rot-stock"); el.innerHTML = `<div class="empty-note">Stock trail unavailable.</div>`; }
+}
+
+let _rotPlayTimer = null;
+function playRotStock(rows) {
+  const r = rotStockRow(rows); const sl = $("rot-stock-slider"); const lbl = $("rot-stock-mon");
+  if (!r || !sl || !Array.isArray(r.traj) || !r.traj.length) return;
+  if (_rotPlayTimer) { clearInterval(_rotPlayTimer); _rotPlayTimer = null; }
+  let i = 0; const n = r.traj.length;
+  _rotPlayTimer = setInterval(() => {
+    ROT_STOCK_MON = i; sl.value = String(i);
+    if (lbl) lbl.textContent = (r.traj[i] && r.traj[i].date) || String(i);
+    drawRotStock(rows);
+    i++;
+    if (i >= n) { clearInterval(_rotPlayTimer); _rotPlayTimer = null; ROT_STOCK_MON = null; sl.value = sl.max; if (lbl) lbl.textContent = "full"; drawRotStock(rows); }
+  }, 420);
+}
+
+// lazy-fetch the 6.35MB centroids.json at most once (mirrors ensureScreen's lazy pattern)
+async function ensureRotCentroids() {
+  if (ROT_CENTROIDS) return ROT_CENTROIDS;
+  // an inlined small build may bake it
+  if (typeof window !== "undefined" && window.VISTAS_ROTATION && window.VISTAS_ROTATION.entities) { ROT_CENTROIDS = window.VISTAS_ROTATION; return ROT_CENTROIDS; }
+  if (ROT_CENT_FETCHED) return ROT_CENTROIDS;
+  ROT_CENT_FETCHED = true;
+  try {
+    const base = (typeof LAZY !== "undefined" && LAZY && LAZY.base) || "data/";
+    const d = await fetchJSON(base + "_rotation/centroids.json");
+    if (d && d.entities) ROT_CENTROIDS = d;
+  } catch (e) { console.error("ensureRotCentroids:", e); }
+  return ROT_CENTROIDS;
+}
+
+function renderRotCentroid() {
+  const host = $("rot-cent-host"); if (!host) return;
+  try {
+    const C = ROT_CENTROIDS;
+    if (!C || !Array.isArray(C.entities) || !C.entities.length) {
+      host.innerHTML = `<div class="empty-note">Portfolio-centroid data isn’t available in this deck (data/_rotation/centroids.json not found).</div>`;
+      return;
+    }
+    const ents = C.entities;
+    const types = Array.from(new Set(ents.map((e) => e.entity_type))).filter(Boolean);
+    if (!ROT_ENTITY || !ents.some((e) => e.entity_id === ROT_ENTITY)) ROT_ENTITY = (ents[0] || {}).entity_id;
+    // build the scaffold once
+    if (!host.dataset.built) {
+      const typeOpts = types.map((t) => `<option value="${attEsc(t)}">${fEsc(t)}</option>`).join("");
+      host.innerHTML =
+        `<div class="rot-ctlrow">
+           <span class="ab-ctllbl">Type</span><select id="rot-cent-type" class="rot-sel" style="min-width:130px">${typeOpts}</select>
+           <span class="ab-ctllbl">Entity</span><select id="rot-cent-ent" class="rot-sel"></select>
+           <button type="button" class="rot-play" id="rot-cent-play">▶ play</button>
+           <input type="range" id="rot-cent-slider" class="rot-slider" min="0" max="0" value="0" step="1">
+           <span class="rot-monthlbl" id="rot-cent-mon">full</span>
+         </div>
+         <div class="rot-pctile" id="rot-cent-pctile"></div>
+         <div id="rot-cent-warn"></div>
+         <div class="plot" id="plot-rot-cent" style="height:460px"></div>
+         <div class="rot-note">Faint trails = peers in the same peer-group (relative-to-peers view). Markers fade oldest→newest; latest = solid/largest. Months where the equity book is &lt;50% covered are dimmed.</div>`;
+      host.dataset.built = "1";
+      const tsel = $("rot-cent-type");
+      if (tsel) tsel.addEventListener("change", () => { fillRotEntitySel(tsel.value); });
+      // entity select + slider + play wired after fill
+    }
+    // (re)fill type→entity selects
+    const tsel = $("rot-cent-type");
+    const curType = (ents.find((e) => e.entity_id === ROT_ENTITY) || {}).entity_type || types[0];
+    if (tsel && tsel.value !== curType) tsel.value = curType;
+    fillRotEntitySel(curType);
+  } catch (e) { console.error("renderRotCentroid:", e); host.innerHTML = `<div class="empty-note">Portfolio centroids unavailable.</div>`; }
+}
+
+function rotEntsOfType(t) { return (ROT_CENTROIDS.entities || []).filter((e) => e.entity_type === t); }
+function fillRotEntitySel(type) {
+  const esel = $("rot-cent-ent"); if (!esel) return;
+  const list = rotEntsOfType(type);
+  if (!list.some((e) => e.entity_id === ROT_ENTITY)) { ROT_ENTITY = (list[0] || {}).entity_id; ROT_CENT_MON = null; }
+  esel.innerHTML = list.map((e) => `<option value="${attEsc(e.entity_id)}"${e.entity_id === ROT_ENTITY ? " selected" : ""}>${fEsc(e.name || e.entity_id)}</option>`).join("");
+  if (!esel.dataset.wired) {
+    esel.addEventListener("change", () => { ROT_ENTITY = esel.value; ROT_CENT_MON = null; syncCentSlider(); drawRotCentroid(); });
+    const sl = $("rot-cent-slider"); if (sl) sl.addEventListener("input", () => { const v = +sl.value; ROT_CENT_MON = (v >= +sl.max) ? null : v; drawRotCentroid(); });
+    const pb = $("rot-cent-play"); if (pb) pb.addEventListener("click", playRotCentroid);
+    esel.dataset.wired = "1";
+  }
+  syncCentSlider();
+  drawRotCentroid();
+}
+
+function rotCurEntity() { return (ROT_CENTROIDS.entities || []).find((e) => e.entity_id === ROT_ENTITY) || null; }
+function syncCentSlider() {
+  const e = rotCurEntity(); const sl = $("rot-cent-slider"); const lbl = $("rot-cent-mon");
+  if (!e || !sl) return;
+  const n = (e.points || []).length;
+  sl.max = String(Math.max(0, n - 1)); sl.value = sl.max; ROT_CENT_MON = null;
+  if (lbl) lbl.textContent = "full";
+}
+
+function drawRotCentroid() {
+  const el = $("plot-rot-cent"); if (!el) return;
+  try {
+    const e = rotCurEntity();
+    if (!e || !Array.isArray(e.points) || !e.points.length) { Plotly.purge("plot-rot-cent"); el.innerHTML = `<div class="empty-note">No centroid trail for this entity.</div>`; return; }
+    el.innerHTML = "";
+    const traces = [];
+    // peer background trails (same peer_group, excluding self) — faint, no markers
+    const peers = (ROT_CENTROIDS.entities || []).filter((p) => p.entity_id !== e.entity_id && p.peer_group && p.peer_group === e.peer_group && p.entity_type === e.entity_type).slice(0, 12);
+    peers.forEach((p) => {
+      const pts = p.points || []; if (!pts.length) return;
+      traces.push({ type: "scatter", mode: "lines", name: p.name || p.entity_id, x: pts.map((q) => rotSlog(q.flow)), y: pts.map((q) => (q.arm == null ? null : q.arm)), connectgaps: true, line: { color: "rgba(150,160,170,0.30)", width: 1 }, hoverinfo: "skip", showlegend: false });
+    });
+    // the focal entity's trail
+    let pts = e.points.slice();
+    if (ROT_CENT_MON != null) pts = pts.slice(0, Math.min(pts.length, ROT_CENT_MON + 1));
+    if (!pts.length) pts = e.points.slice(0, 1);
+    const xs = pts.map((p) => rotSlog(p.flow));
+    const ys = pts.map((p) => (p.arm == null ? null : p.arm));
+    const { op, sz, col } = rotFadeMarkers(pts, true);
+    // dim months with low equity coverage (mark with a thin ring instead of solid)
+    const ringCol = pts.map((p) => ((p.equity_wt_covered != null && p.equity_wt_covered < 0.5) ? "#b3402f" : "#ffffff"));
+    const ringW = pts.map((p) => ((p.equity_wt_covered != null && p.equity_wt_covered < 0.5) ? 2 : 1));
+    traces.push({
+      type: "scatter", mode: "lines+markers", name: e.name || e.entity_id,
+      x: xs, y: ys, connectgaps: true,
+      line: { color: "#1f3a55", width: 1.8 },
+      marker: { size: sz, color: col, opacity: op, line: { width: ringW, color: ringCol } },
+      customdata: pts.map((p) => [p.date, (p.arm == null ? "n/a" : p.arm), p.flow, (ROT_QLBL[p.quad] || ""), (p.n_holdings == null ? "?" : p.n_holdings), (p.equity_wt_covered == null ? "?" : (p.equity_wt_covered * 100).toFixed(0) + "%")]),
+      hovertemplate: "<b>%{customdata[0]}</b><br>ARM %{customdata[1]} · flow ₹%{customdata[2]:,.0f} cr<br>%{customdata[3]}<br>%{customdata[4]} holdings · equity covered %{customdata[5]}<extra></extra>",
+      showlegend: false,
+    });
+    Plotly.react("plot-rot-cent", traces, rotQuadLayout(xs, { showlegend: false }), PCONF);
+
+    // own-percentile readout (latest value vs the entity's own trail)
+    const pc = $("rot-cent-pctile");
+    if (pc) {
+      const op2 = e.own_pctile || {};
+      const lat = e.latest || (e.points[e.points.length - 1] || {});
+      const fmtp = (v) => (v == null || isNaN(v)) ? "—" : Math.round(v) + "%ile";
+      pc.innerHTML = `<span class="rp">As of <b>${fEsc(lat.date || "—")}</b></span>`
+        + `<span class="rp">ARM now <b>${lat.arm == null ? "—" : Number(lat.arm).toFixed(0)}</b> · vs own history <b>${fmtp(op2.arm)}</b></span>`
+        + `<span class="rp">Flow now <b>${lat.flow == null ? "—" : (lat.flow >= 0 ? "+" : "") + Math.round(lat.flow).toLocaleString("en-IN") + " cr"}</b> · vs own history <b>${fmtp(op2.flow)}</b></span>`
+        + `<span class="rp" title="100 = most constructive/aggressive this entity has ever been for itself">${(op2.arm != null && op2.arm >= 70) ? "unusually constructive for itself" : (op2.arm != null && op2.arm <= 30) ? "unusually cautious for itself" : ""}</span>`;
+    }
+    const warn = $("rot-cent-warn");
+    if (warn) { const low = (e.points || []).some((p) => p.equity_wt_covered != null && p.equity_wt_covered < 0.5); warn.innerHTML = low ? `<div class="rot-warn">Some months have &lt;50% of the equity book covered (red-ringed markers) — read those positions with care.</div>` : ""; }
+  } catch (err) { console.error("drawRotCentroid:", err); Plotly.purge("plot-rot-cent"); el.innerHTML = `<div class="empty-note">Centroid trail unavailable.</div>`; }
+}
+
+let _rotCentTimer = null;
+function playRotCentroid() {
+  const e = rotCurEntity(); const sl = $("rot-cent-slider"); const lbl = $("rot-cent-mon");
+  if (!e || !sl || !Array.isArray(e.points) || !e.points.length) return;
+  if (_rotCentTimer) { clearInterval(_rotCentTimer); _rotCentTimer = null; }
+  let i = 0; const n = e.points.length;
+  _rotCentTimer = setInterval(() => {
+    ROT_CENT_MON = i; sl.value = String(i);
+    if (lbl) lbl.textContent = (e.points[i] && e.points[i].date) || String(i);
+    drawRotCentroid();
+    i++;
+    if (i >= n) { clearInterval(_rotCentTimer); _rotCentTimer = null; ROT_CENT_MON = null; sl.value = sl.max; if (lbl) lbl.textContent = "full"; drawRotCentroid(); }
+  }, 420);
 }
 
 // ============================== FUNDS tab — mutual-fund portfolio holdings (look-through) ==============================
@@ -4059,8 +4502,402 @@ function renderConsensus() {
     { yaxis: { title: "₹ cr (3M net)", gridcolor: "#dfe3e8" }, xaxis: { type: "category", gridcolor: "#dfe3e8" } });
 }
 
+// ===================================================================================================
+// ASSET ALLOCATOR TAB (market breadth) — reads the baked window.VISTAS_BREADTH (display-plane only,
+// no client recompute → no analytics/parity port). Also HOSTS the relocated Analyst Consensus Flow.
+// The whole tab is created in the DOM at init time (initAllocator) so only vistas.js is touched.
+// Discipline: breadth is a COINCIDENT participation gauge, NOT a forward signal (meta.caveat) — said
+// on the panel. Every data access is guarded; on any failure a "—" placeholder shows, never a throw.
+// ===================================================================================================
+let ALLOC_W = "1";          // breadth window key for new-high/low/nh-nl (1/3/5 years, see _abW)
+let ALLOC_SEC = null;       // selected sector for the per-sector panel
+let ALLOC_M = 50;           // the m% breakout/golden-cross screen threshold
+let ALLOC_SCREEN_RULE = "breakout";   // "breakout" | "golden_cross"
+let _allocBuilt = false;
+
+function _breadth() { return (typeof window !== "undefined") ? window.VISTAS_BREADTH : null; }
+// the market{} new-high/low/nh-nl objects may be keyed by year ("1"/"3"/"5") OR by trading-day window
+// ("252"/"756"/"1260"); accept either so the UI survives whichever the engine baked.
+const _AB_YR2WIN = { "1": "252", "3": "756", "5": "1260" };
+function _abPick(obj, ykey) {
+  if (!obj || typeof obj !== "object") return null;
+  if (Array.isArray(obj)) return obj;                          // already a flat series
+  if (obj[ykey] != null) return obj[ykey];                     // keyed "1"/"3"/"5"
+  const w = _AB_YR2WIN[ykey]; if (w != null && obj[w] != null) return obj[w];   // keyed "252"/"756"/"1260"
+  // last resort: first available key
+  const k = Object.keys(obj)[0]; return k ? obj[k] : null;
+}
+function _abWindows(m) {                                        // which year-keys actually exist in this deck
+  const src = (m && (m.pct_new_high || m.nh_minus_nl)) || {};
+  const out = [];
+  ["1", "3", "5"].forEach((y) => {
+    if (Array.isArray(src)) { if (y === "1") out.push(y); return; }
+    if (src[y] != null || (_AB_YR2WIN[y] != null && src[_AB_YR2WIN[y]] != null)) out.push(y);
+  });
+  return out.length ? out : ["1"];
+}
+const _AB_WLBL = { "1": "52-week", "3": "3-year", "5": "5-year" };
+function _abFmt(v, d) { return (v === null || v === undefined || Number.isNaN(v)) ? "—" : Number(v).toFixed(d == null ? 1 : d) + "%"; }
+// #47 cycle-position: where the latest value sits within its OWN history (0–100 %ile). Pure JS, display-only.
+function _cyclePctile(arr) {
+  if (!Array.isArray(arr) || arr.length < 8) return null;
+  const clean = arr.filter((v) => v !== null && v !== undefined && !Number.isNaN(v));
+  if (clean.length < 8) return null;
+  const last = clean[clean.length - 1];
+  const below = clean.filter((v) => v < last).length, eq = clean.filter((v) => v === last).length;
+  return Math.round(100 * (below + 0.5 * eq) / clean.length);   // mid-rank %ile
+}
+function _abWLen(m) { const a = m && m.pct_above_200dma; const n = Array.isArray(a) ? a.filter((v) => v != null).length : 0; return n ? `${n}-point history` : "history"; }
+
+// build the Asset Allocator tab + view in the DOM (idempotent). Relocates the consensus cockpit here.
+function initAllocator() {
+  if (typeof document === "undefined") return;
+  const tabs = $("tabs");
+  // 1) the tab button — placed right after the Macro tab (or appended if Macro isn't present)
+  if (tabs && !tabs.querySelector('[data-view="allocator"]')) {
+    const btn = document.createElement("button");
+    btn.className = "tab"; btn.setAttribute("data-view", "allocator"); btn.textContent = "Asset Allocator";
+    btn.addEventListener("click", () => { if (!btn.disabled) setView("allocator"); });
+    const macroTab = tabs.querySelector('[data-view="macro"]');
+    const note = $("tabnote");
+    if (macroTab && macroTab.nextSibling) tabs.insertBefore(btn, macroTab.nextSibling);
+    else if (note) tabs.insertBefore(btn, note);
+    else tabs.appendChild(btn);
+  }
+  // 2) the view pane — appended into <main> after the Macro view (or at the end of <main>)
+  if (!$("view-allocator")) {
+    const main = document.querySelector("main");
+    if (main) {
+      const view = document.createElement("div");
+      view.className = "view"; view.id = "view-allocator"; view.hidden = true;
+      view.innerHTML =
+        `<div class="measurebar">
+           <span class="mlbl">Asset Allocator</span>
+           <span class="measurenote">Market breadth — how broadly individual stocks are participating (new highs/lows, % above their 200/50-DMA, golden-cross). A <b>coincident participation gauge</b>, validated on our own total-return data: it tells you how broad the move you are <i>already in</i> is — <b>not</b> a forward buy/sell signal.</span>
+         </div>
+         <div id="alloc-body"></div>`;
+      const macroView = $("view-macro");
+      if (macroView && macroView.nextSibling) main.insertBefore(view, macroView.nextSibling);
+      else main.appendChild(view);
+      // relocate the existing Analyst Consensus Flow cockpit div from Macro into the allocator pane
+      const cons = $("consensus-cockpit");
+      if (cons) $("alloc-body").appendChild(cons);   // moved (not cloned) — Macro keeps no empty shell
+    }
+  }
+  // 3) enable/disable the tab by data presence (breadth OR the relocated consensus)
+  const btn = tabs && tabs.querySelector('[data-view="allocator"]');
+  const cons = (typeof window !== "undefined") ? window.VISTAS_CONSENSUS : null;
+  const has = !!(_breadth() || (cons && cons.sectors));
+  if (btn) { btn.disabled = !has; btn.style.opacity = has ? "" : ".45"; btn.title = has ? "" : "No breadth / consensus data in this deck yet"; }
+}
+
+function renderAllocator() {
+  const host = $("alloc-body"); if (!host) return;
+  const B = _breadth();
+  // ensure a stable scaffold (built once): breadth panels ABOVE the relocated consensus cockpit.
+  if (!_allocBuilt) {
+    const consEl = $("consensus-cockpit");
+    const scaffold = document.createElement("div");
+    scaffold.id = "alloc-breadth";
+    if (consEl) host.insertBefore(scaffold, consEl); else host.appendChild(scaffold);
+    _allocBuilt = true;
+  }
+  const wrap = $("alloc-breadth");
+  if (wrap) {
+    try { renderBreadth(B, wrap); }
+    catch (e) { console.error("renderBreadth:", e); wrap.innerHTML = `<section class="panel"><div class="empty-note">Market-breadth panel unavailable in this deck.</div></section>`; }
+  }
+  // the relocated consensus cockpit (its own try/catch inside)
+  try { renderConsensus(); } catch (e) { console.error("renderConsensus (allocator):", e); }
+  afterPaint(() => viewPlotsResize("allocator"));
+}
+
+// build the whole breadth scaffold + draw every panel. Guarded; no Plotly key ever set to undefined.
+function renderBreadth(B, wrap) {
+  if (!B || !B.market || !B.dates) {
+    wrap.innerHTML = `<section class="panel"><h2><span class="tag-sec">BREADTH</span>Market breadth</h2>`
+      + `<div class="empty-note">No market-breadth data baked into this deck yet.</div></section>`;
+    return;
+  }
+  const meta = B.market_meta || B.meta || {};
+  const caveat = meta.caveat || "Descriptive / coincident participation gauge — not a forward signal.";
+  const uni = meta.universe || "NSE-500", nsym = meta.n_symbols != null ? meta.n_symbols : "";
+  const wins = _abWindows(B.market);
+  if (!wins.includes(ALLOC_W)) ALLOC_W = wins[0];
+  const winBtns = wins.map((y) => `<button type="button" class="ab-wbtn fs-lvl${y === ALLOC_W ? " on" : ""}" data-w="${y}">${_AB_WLBL[y]}</button>`).join("");
+
+  // only build the static scaffold once (so toggles/inputs keep their state across re-renders)
+  if (!wrap.dataset.built) {
+    wrap.innerHTML =
+      `<section class="panel">
+         <h2><span class="tag-sec">BREADTH</span>Market breadth — participation under the index</h2>
+         <details><summary>Definition · Method · Why</summary>
+           <p><b>What:</b> instead of the index level, breadth counts <i>how many individual stocks</i> are doing a thing. <b>New-high %</b> = share of eligible stocks whose close is the highest over the trailing window (52-week / 3-year / 5-year). <b>New-low %</b> = the mirror. <b>NH−NL</b> = new-high% minus new-low% (the net new-high line). <b>%&gt;200-DMA / %&gt;50-DMA</b> = share above their 200/50-day moving average. <b>%golden-cross</b> = share whose 50-DMA ≥ 200-DMA.</p>
+           <p><b>Method:</b> price-derived from our NSE total-return panel (universe = ${fEsc(String(uni))}${nsym ? `, ~${fEsc(String(nsym))} names` : ""}); a stock only counts toward a window once it has enough history (so a new listing can't "make a 5-year high"); the denominator shown ("X% of N") is the eligible count that day.</p>
+           <p><b>Why:</b> a rising index carried by a few mega-caps while most stocks bleed is a classic late-cycle tell. <b>Headline = % above 200-DMA</b> (the smoothest participation gauge). ${fEsc(caveat)}</p>
+         </details>
+         <div class="ab-ctlrow">
+           <span class="ab-ctllbl">New-high / low window</span>
+           <span class="ab-wseg fs-lvl-seg" id="ab-wseg">${winBtns}</span>
+           <span class="ab-linechk" id="ab-linechk"></span>
+         </div>
+         <div class="plot" id="plot-ab-market" style="height:430px"></div>
+         <div class="statline" id="ab-market-stat"></div>
+       </section>
+
+       <section class="panel">
+         <h2><span class="tag-sec">SECTORS</span>Per-sector breadth</h2>
+         <div class="ab-ctlrow">
+           <span class="ab-ctllbl">Sector</span>
+           <select id="ab-sec-sel" class="ab-sel"></select>
+           <span class="ab-ctllbl" style="margin-left:10px">Metric</span>
+           <select id="ab-sec-metric" class="ab-sel">
+             <option value="pct_above_200dma">% above 200-DMA</option>
+             <option value="pct_above_50dma">% above 50-DMA</option>
+             <option value="pct_golden_cross">% golden-cross</option>
+             <option value="nh">% new-high (window)</option>
+             <option value="nl">% new-low (window)</option>
+             <option value="nhnl">NH − NL (window)</option>
+           </select>
+         </div>
+         <div class="plot" id="plot-ab-sector" style="height:340px"></div>
+         <div class="statline" id="ab-sector-stat"></div>
+       </section>
+
+       <section class="panel">
+         <h2><span class="tag-sec">SCREEN</span>Sectors with ≥ m% of stocks broken out / golden-crossed (now)</h2>
+         <details><summary>Definition · Method · Why</summary>
+           <p><b>What:</b> the literal allocator question — which sectors have at least <b>m%</b> of their eligible stocks currently at a new high (breakout) or in a golden-cross. <b>Why:</b> a high-breadth sector is one that is <i>already</i> participating broadly (coincident, not a forecast). Drill into a sector to see exactly which stocks qualify (where the deck carries the name lists).</p>
+         </details>
+         <div class="ab-ctlrow">
+           <span class="ab-ctllbl">Rule</span>
+           <span class="ab-ruleseg fs-lvl-seg" id="ab-ruleseg">
+             <button type="button" class="fs-lvl on" data-rule="breakout">Broke out (52w high)</button>
+             <button type="button" class="fs-lvl" data-rule="golden_cross">Golden-crossed</button>
+           </span>
+           <span class="ab-ctllbl" style="margin-left:10px">m ≥</span>
+           <input type="number" id="ab-m" class="ab-minput" min="0" max="100" step="5" value="${ALLOC_M}"> %
+         </div>
+         <div id="ab-screen-body"></div>
+       </section>
+
+       <section class="panel">
+         <h2><span class="tag-sec">GLOBAL</span>Global breadth</h2>
+         <div id="ab-global-body"></div>
+       </section>`;
+    wrap.dataset.built = "1";
+    // wire the static controls ONCE
+    const wseg = $("ab-wseg");
+    if (wseg) wseg.querySelectorAll(".ab-wbtn").forEach((b) => b.addEventListener("click", () => {
+      ALLOC_W = b.dataset.w; wseg.querySelectorAll(".ab-wbtn").forEach((x) => x.classList.toggle("on", x.dataset.w === ALLOC_W));
+      _abDrawMarket(B); _abDrawSector(B);
+    }));
+    const ssel = $("ab-sec-sel"); if (ssel) ssel.addEventListener("change", () => { ALLOC_SEC = ssel.value; _abDrawSector(B); });
+    const smet = $("ab-sec-metric"); if (smet) smet.addEventListener("change", () => _abDrawSector(B));
+    const ruleseg = $("ab-ruleseg");
+    if (ruleseg) ruleseg.querySelectorAll(".fs-lvl").forEach((b) => b.addEventListener("click", () => {
+      ALLOC_SCREEN_RULE = b.dataset.rule; ruleseg.querySelectorAll(".fs-lvl").forEach((x) => x.classList.toggle("on", x.dataset.rule === ALLOC_SCREEN_RULE));
+      _abDrawScreen(B);
+    }));
+    const minp = $("ab-m"); if (minp) minp.addEventListener("input", () => { const v = parseFloat(minp.value); ALLOC_M = isNaN(v) ? 0 : v; _abDrawScreen(B); });
+  }
+
+  // line-toggle checkboxes for the market chart (rebuilt each render so labels reflect the window)
+  const lineHost = $("ab-linechk");
+  if (lineHost && !lineHost.dataset.built) {
+    const opts = [
+      ["nh", "New-high %", true], ["nl", "New-low %", false], ["nhnl", "NH − NL", false],
+      ["a200", "% > 200-DMA", true], ["a50", "% > 50-DMA", false], ["gc", "% golden-cross", false],
+    ];
+    lineHost.innerHTML = `<span class="ab-ctllbl">Lines</span>` + opts.map(([k, lbl, on]) =>
+      `<label class="ab-chk"><input type="checkbox" data-line="${k}"${on ? " checked" : ""}>${lbl}</label>`).join("");
+    lineHost.querySelectorAll("input[type=checkbox]").forEach((cb) => cb.addEventListener("change", () => _abDrawMarket(B)));
+    lineHost.dataset.built = "1";
+  }
+
+  // populate the sector selector (once), default to the first sector
+  const ssel = $("ab-sec-sel");
+  if (ssel && !ssel.dataset.filled) {
+    const secs = B.sectors ? Object.keys(B.sectors).sort() : [];
+    ssel.innerHTML = secs.map((s) => `<option value="${attEsc(s)}">${fEsc(s)}</option>`).join("");
+    if (!ALLOC_SEC || !secs.includes(ALLOC_SEC)) ALLOC_SEC = secs[0] || null;
+    if (ALLOC_SEC) ssel.value = ALLOC_SEC;
+    ssel.dataset.filled = secs.length ? "1" : "";
+  }
+
+  _abDrawMarket(B);
+  _abDrawSector(B);
+  _abDrawScreen(B);
+  _abDrawGlobal(B);
+}
+
+// build the set of line traces for a given breadth bundle `m` (market or a single sector) honouring
+// the line-checkbox state and the chosen window. Returns {traces, stat}.
+function _abTraces(m, dates, opts) {
+  opts = opts || {};
+  const wantNH = opts.nh, wantNL = opts.nl, wantNHNL = opts.nhnl, wantA200 = opts.a200, wantA50 = opts.a50, wantGC = opts.gc;
+  const traces = [];
+  const y = ALLOC_W;
+  const lastDef = (arr) => { if (!Array.isArray(arr)) return null; for (let i = arr.length - 1; i >= 0; i--) { const v = arr[i]; if (v !== null && v !== undefined && !Number.isNaN(v)) return v; } return null; };
+  const add = (arr, name, color, dash) => {
+    if (!Array.isArray(arr) || !arr.length) return null;
+    const tr = { type: "scatter", mode: "lines", name, x: dates, y: arr, connectgaps: true, line: { color, width: 1.9 } };
+    if (dash) tr.line.dash = dash;
+    traces.push(tr); return lastDef(arr);
+  };
+  const wlbl = _AB_WLBL[y] || "";
+  const nhLast = wantNH ? add(_abPick(m.pct_new_high, y), `New-high % (${wlbl})`, "#2e7d32") : null;
+  const nlLast = wantNL ? add(_abPick(m.pct_new_low, y), `New-low % (${wlbl})`, "#b3402f") : null;
+  const nhnlLast = wantNHNL ? add(_abPick(m.nh_minus_nl, y), `NH − NL (${wlbl})`, "#7b1fa2") : null;
+  const a200Last = wantA200 ? add(m.pct_above_200dma, "% > 200-DMA", "#1f77b4") : null;
+  const a50Last = wantA50 ? add(m.pct_above_50dma, "% > 50-DMA", "#17a2b8", "dot") : null;
+  const gcLast = wantGC ? add(m.pct_golden_cross, "% golden-cross", "#d99a2b", "dash") : null;
+  const nEl = lastDef(m.eligible_n);
+  const bits = [];
+  if (a200Last != null) bits.push(`% > 200-DMA: ${_abFmt(a200Last)}`);
+  if (nhLast != null) bits.push(`new-high ${wlbl}: ${_abFmt(nhLast)}`);
+  if (nlLast != null) bits.push(`new-low ${wlbl}: ${_abFmt(nlLast)}`);
+  if (nhnlLast != null) bits.push(`NH−NL: ${_abFmt(nhnlLast)}`);
+  if (gcLast != null) bits.push(`golden-cross: ${_abFmt(gcLast)}`);
+  const stat = bits.join("  ·  ") + (nEl != null ? `   (of ${Math.round(nEl)} eligible names)` : "");
+  return { traces, stat };
+}
+
+function _abDrawMarket(B) {
+  const el = $("plot-ab-market"); if (!el) return;
+  try {
+    const m = B.market, dates = B.dates;
+    const chk = (k) => { const cb = document.querySelector(`#ab-linechk input[data-line="${k}"]`); return cb ? cb.checked : false; };
+    const { traces, stat } = _abTraces(m, dates, { nh: chk("nh"), nl: chk("nl"), nhnl: chk("nhnl"), a200: chk("a200"), a50: chk("a50"), gc: chk("gc") });
+    if (!traces.length) { Plotly.purge("plot-ab-market"); el.innerHTML = `<div class="empty-note">Pick at least one line to plot.</div>`; const s = $("ab-market-stat"); if (s) s.textContent = ""; return; }
+    el.innerHTML = "";
+    Plotly.react("plot-ab-market", traces, baseLayout({
+      yaxis: { title: "% of eligible stocks", gridcolor: "#dfe3e8", rangemode: "tozero" },
+      xaxis: { gridcolor: "#dfe3e8", rangeslider: { thickness: 0.07 }, type: "date" },
+    }), PCONF);
+    attachYAutoscale("plot-ab-market");
+    // #47 cycle-position readout for the headline % > 200-DMA, where its own history exists
+    const cyc = _cyclePctile(m.pct_above_200dma);
+    const cycTxt = (cyc != null) ? `  Cycle position: % > 200-DMA is at the ${cyc}ᵗʰ percentile of its own ${_abWLen(m)}.` : "";
+    const s = $("ab-market-stat"); if (s) s.textContent = `Latest readings — ${stat}.${cycTxt}  Coincident participation gauge, not a forward signal.`;
+  } catch (e) { console.error("_abDrawMarket:", e); Plotly.purge("plot-ab-market"); el.innerHTML = `<div class="empty-note">Market breadth chart unavailable.</div>`; }
+}
+
+function _abDrawSector(B) {
+  const el = $("plot-ab-sector"); if (!el) return;
+  try {
+    const sec = ALLOC_SEC, m = B.sectors && sec ? B.sectors[sec] : null;
+    const metSel = $("ab-sec-metric"); const metric = metSel ? metSel.value : "pct_above_200dma";
+    if (!m) { Plotly.purge("plot-ab-sector"); el.innerHTML = `<div class="empty-note">No breadth for this sector.</div>`; const s = $("ab-sector-stat"); if (s) s.textContent = ""; return; }
+    const y = ALLOC_W, wlbl = _AB_WLBL[y] || "";
+    let arr = null, title = "", color = "#1f77b4";
+    if (metric === "nh") { arr = _abPick(m.pct_new_high, y); title = `New-high % (${wlbl})`; color = "#2e7d32"; }
+    else if (metric === "nl") { arr = _abPick(m.pct_new_low, y); title = `New-low % (${wlbl})`; color = "#b3402f"; }
+    else if (metric === "nhnl") { arr = _abPick(m.nh_minus_nl, y); title = `NH − NL (${wlbl})`; color = "#7b1fa2"; }
+    else if (metric === "pct_above_50dma") { arr = m.pct_above_50dma; title = "% > 50-DMA"; color = "#17a2b8"; }
+    else if (metric === "pct_golden_cross") { arr = m.pct_golden_cross; title = "% golden-cross"; color = "#d99a2b"; }
+    else { arr = m.pct_above_200dma; title = "% > 200-DMA"; color = "#1f77b4"; }
+    if (!Array.isArray(arr) || !arr.length) { Plotly.purge("plot-ab-sector"); el.innerHTML = `<div class="empty-note">No “${fEsc(title)}” series for ${fEsc(sec)}.</div>`; const s = $("ab-sector-stat"); if (s) s.textContent = ""; return; }
+    el.innerHTML = "";
+    const tr = { type: "scatter", mode: "lines", name: `${sec} — ${title}`, x: B.dates, y: arr, connectgaps: true, line: { color, width: 2 } };
+    Plotly.react("plot-ab-sector", [tr], baseLayout({
+      yaxis: { title: "% of eligible stocks", gridcolor: "#dfe3e8", rangemode: (metric === "nhnl" ? "normal" : "tozero") },
+      xaxis: { gridcolor: "#dfe3e8", type: "date" },
+    }), PCONF);
+    attachYAutoscale("plot-ab-sector");
+    const lastDef = (a) => { for (let i = a.length - 1; i >= 0; i--) { const v = a[i]; if (v != null && !Number.isNaN(v)) return v; } return null; };
+    const nEl = Array.isArray(m.eligible_n) ? lastDef(m.eligible_n) : null;
+    const s = $("ab-sector-stat"); if (s) s.textContent = `${sec} · ${title}: latest ${_abFmt(lastDef(arr))}${nEl != null ? ` (of ${Math.round(nEl)} eligible)` : ""}.`;
+  } catch (e) { console.error("_abDrawSector:", e); Plotly.purge("plot-ab-sector"); el.innerHTML = `<div class="empty-note">Sector breadth chart unavailable.</div>`; }
+}
+
+function _abDrawScreen(B) {
+  const host = $("ab-screen-body"); if (!host) return;
+  try {
+    const rule = ALLOC_SCREEN_RULE, m = Math.max(0, Math.min(100, ALLOC_M));
+    // prefer screen_current (rich, per-sector pcts); fall back to snapshot.sectors
+    const sc = B.screen_current || null;
+    const snapSecs = (B.snapshot && B.snapshot.sectors) ? B.snapshot.sectors : null;
+    const snapBy = {}; if (snapSecs) snapSecs.forEach((r) => { if (r && r.sector != null) snapBy[r.sector] = r; });
+    // pick the breakout pct for the active window from screen_current keys, else from snapshot
+    const breakoutPct = (sec, row) => {
+      if (row) {
+        if (ALLOC_W === "5" && row.pct_breakout_5y != null) return row.pct_breakout_5y;
+        if (ALLOC_W === "3" && row.pct_breakout_3y != null) return row.pct_breakout_3y;
+        if (row.pct_breakout != null) return row.pct_breakout;
+      }
+      const s = snapBy[sec];
+      if (s) { if (ALLOC_W === "5" && s.pct_new_high_5y != null) return s.pct_new_high_5y; if (ALLOC_W === "3" && s.pct_new_high_3y != null) return s.pct_new_high_3y; return s.pct_new_high_1y; }
+      return null;
+    };
+    const gcPct = (sec, row) => (row && row.pct_golden_cross != null) ? row.pct_golden_cross : (snapBy[sec] ? snapBy[sec].pct_golden_cross : null);
+    const a200Pct = (sec, row) => (row && row.pct_above_200dma != null) ? row.pct_above_200dma : (snapBy[sec] ? snapBy[sec].pct_above_200dma : null);
+    const nOf = (sec, row) => (row && row.n != null) ? row.n : (snapBy[sec] ? snapBy[sec].n : null);
+    const thinOf = (sec, row) => (row && row.thin != null) ? !!row.thin : (snapBy[sec] ? !!snapBy[sec].thin : false);
+
+    const secNames = sc ? Object.keys(sc) : (snapSecs ? snapSecs.map((r) => r.sector) : []);
+    if (!secNames.length) { host.innerHTML = `<div class="empty-note">No per-sector snapshot in this deck.</div>`; return; }
+    const rows = secNames.map((sec) => {
+      const row = sc ? sc[sec] : null;
+      const pct = rule === "golden_cross" ? gcPct(sec, row) : breakoutPct(sec, row);
+      return { sec, pct, n: nOf(sec, row), thin: thinOf(sec, row), bk: breakoutPct(sec, row), gc: gcPct(sec, row), a200: a200Pct(sec, row), snap: snapBy[sec] || null };
+    }).filter((r) => r.pct != null && !r.thin);
+    rows.sort((a, b) => (b.pct || 0) - (a.pct || 0));
+    const hit = rows.filter((r) => r.pct >= m);
+    const wlbl = _AB_WLBL[ALLOC_W] || "";
+    const ruleLbl = rule === "golden_cross" ? "golden-crossed" : `at a ${wlbl} high`;
+
+    let h = `<div class="ab-screen-head">${hit.length} of ${rows.length} sectors have ≥ <b>${m}%</b> of stocks ${ruleLbl}.</div>`;
+    h += `<table class="gauge-tbl ab-screen-tbl"><thead><tr><th>Sector</th><th class="num">n</th>`
+       + `<th class="num">% ${rule === "golden_cross" ? "golden-cross" : "breakout (" + wlbl + ")"}</th>`
+       + `<th class="num">% golden-cross</th><th class="num">% &gt; 200-DMA</th><th></th></tr></thead><tbody>`;
+    rows.forEach((r, ri) => {
+      const on = r.pct >= m;
+      const names = r.snap ? (rule === "golden_cross" ? r.snap.names_golden_cross : (r.snap.names_new_high_1y || r.snap.names_new_high)) : null;
+      const drill = (Array.isArray(names) && names.length)
+        ? `<button type="button" class="ab-drill" data-ri="${ri}">${names.length} names ▾</button>` : "";   // index-based id (escaping-safe)
+      h += `<tr class="${on ? "ab-hit" : ""}">`
+        + `<td>${fEsc(r.sec)}</td>`
+        + `<td class="num">${r.n != null ? r.n : "—"}</td>`
+        + `<td class="num ${on ? "pos" : ""}"><b>${_abFmt(r.pct)}</b></td>`
+        + `<td class="num">${_abFmt(r.gc)}</td>`
+        + `<td class="num">${_abFmt(r.a200)}</td>`
+        + `<td>${drill}</td></tr>`;
+      if (Array.isArray(names) && names.length) {
+        h += `<tr class="ab-names" id="ab-names-${ri}" hidden><td colspan="6"><div class="ab-namelist">${names.map((nm) => `<span class="ab-name">${fEsc(nm)}</span>`).join("")}</div></td></tr>`;
+      }
+    });
+    h += `</tbody></table>`;
+    h += `<div class="q-note" style="font-size:12px;margin-top:6px">“% of n eligible” — a sector with too few eligible names is hidden (no breadth number). High breadth = the sector is <i>already</i> participating broadly; this is coincident, not a forecast.</div>`;
+    host.innerHTML = h;
+    host.querySelectorAll(".ab-drill").forEach((b) => b.addEventListener("click", () => {
+      const row = document.getElementById("ab-names-" + b.dataset.ri);
+      if (row) { row.hidden = !row.hidden; b.classList.toggle("on", !row.hidden); }
+    }));
+  } catch (e) { console.error("_abDrawScreen:", e); host.innerHTML = `<div class="empty-note">Sector screen unavailable.</div>`; }
+}
+
+function _abDrawGlobal(B) {
+  const host = $("ab-global-body"); if (!host) return;
+  try {
+    const g = B.global || B.global_proxy || null;
+    let lead = "";
+    if (g && (g.n_above_200dma != null || g.above_200dma != null)) {
+      const nA = (g.n_above_200dma != null) ? g.n_above_200dma : g.above_200dma;
+      const nT = (g.n_total != null) ? g.n_total : g.total;
+      const nH = (g.n_new_high != null) ? g.n_new_high : g.new_high;
+      const parts = [];
+      if (nA != null && nT != null) parts.push(`<b>${nA} of ${nT}</b> global equity indices are above their 200-DMA`);
+      if (nH != null && nT != null) parts.push(`<b>${nH} of ${nT}</b> are at a 52-week high`);
+      if (parts.length) lead = `<div class="ab-global-read">${parts.join(" · ")}.</div>`;
+    }
+    host.innerHTML = lead
+      + `<div class="ab-note-box">True breadth of a global index/ETF = the % of its <i>members</i> at highs / above their 200-DMA. We don’t yet hold constituent / membership data — the world panel is index-<b>level</b> only — so ${lead ? "the figure above is a <b>level-proxy diffusion</b> across regional indices, not member breadth" : "member-level global breadth isn’t computable yet"}. Coming once constituent data lands (see SHOPPING_LIST items 1–4).</div>`;
+  } catch (e) { console.error("_abDrawGlobal:", e); host.innerHTML = `<div class="ab-note-box">Global breadth: coming once constituent data lands.</div>`; }
+}
+
 async function renderMacro() {
-  renderConsensus();                          // analyst-consensus cockpit (top of the Macro tab)
+  // (Analyst Consensus Flow moved to the Asset Allocator tab — it's an allocation lens; see renderAllocator.)
   buildMacroDom();
   if (LAZY && LAZY.world) {                 // hosted: fetch the world series the panels/snapshot need
     const need = new Set();
@@ -4241,6 +5078,7 @@ function applyHash() {
       if (known) { FUND_SYM = sym; if (FUND_COMBO) FUND_COMBO.setValue(sym); }
       setView("fundamentals");
     } else if (raw.indexOf("valuation") === 0) { setView("valuation"); }
+    else if (raw.indexOf("allocator") === 0) { setView("allocator"); }
     else if (raw.indexOf("macro") === 0) { setView("macro"); }
     else if (raw.indexOf("screen") === 0) { setView("screen"); }
     else if (raw.indexOf("performance") === 0) {

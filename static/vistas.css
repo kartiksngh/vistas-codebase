@@ -853,3 +853,37 @@ details.fs-market > summary { cursor:pointer; font-size:13px; padding:4px 0; }
 .peers-tbl td { white-space: nowrap; }
 .peers-tbl tr.peer-self { background: #fff5e6; font-weight: 600; }
 .peers-tbl tr.peer-self td.name { color: #b06a00; }
+
+/* ============================ Asset Allocator tab + breadth + #49/#51 toggles + Rotation ============= */
+/* generic segmented toggle reuse (matches the .fs-lvl-seg used by the Funds tab) */
+.gp-mode-seg, .smf-modeseg, .ab-wseg, .ab-ruleseg { display: inline-flex; vertical-align: middle; }
+.smf-modeseg { margin: 2px 0 8px; }
+.ab-ctlrow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 6px 0 10px; }
+.ab-ctllbl { font-size: 10.5px; text-transform: uppercase; letter-spacing: .3px; color: var(--muted); font-weight: 600; }
+.ab-sel, .ab-minput { font-size: 12.5px; padding: 4px 8px; border: 1px solid #c2d3e4; border-radius: 6px; background: #fff; color: var(--navy); }
+.ab-minput { width: 64px; }
+.ab-linechk { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+.ab-chk { font-size: 12px; color: #44505c; display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
+.ab-screen-head { font-size: 13px; margin: 2px 0 8px; color: var(--navy); }
+.ab-screen-tbl tr.ab-hit { background: #eef7ee; }
+.ab-screen-tbl tr.ab-hit td.pos b { color: var(--green); }
+.ab-drill { font-size: 11.5px; color: var(--navy); background: #eef3f8; border: 1px solid #d4dde6; border-radius: 5px; padding: 2px 7px; cursor: pointer; }
+.ab-drill:hover, .ab-drill.on { background: var(--navy); color: #fff; }
+.ab-namelist { display: flex; flex-wrap: wrap; gap: 5px; padding: 4px 2px; }
+.ab-name { font-size: 11px; color: #44505c; background: #f2f6fa; border: 1px solid #e2e7ec; border-radius: 4px; padding: 1px 6px; }
+.ab-note-box { font-size: 12px; color: #5b6b7a; background: var(--blue-2); border-left: 3px solid #8aa9c4; border-radius: 0 5px 5px 0; padding: 9px 12px; margin-top: 8px; }
+.ab-global-read { font-size: 13.5px; color: var(--navy); margin: 2px 0 4px; }
+
+/* Rotation (quadrant) sub-view in the Screens tab */
+.rot-wrap { margin-top: 14px; }
+.rot-ctlrow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 6px 0 8px; }
+.rot-sel { font-size: 12.5px; padding: 4px 8px; border: 1px solid #c2d3e4; border-radius: 6px; background: #fff; color: var(--navy); min-width: 220px; }
+.rot-slider { vertical-align: middle; }
+.rot-monthlbl { font-size: 12px; font-weight: 700; color: var(--navy); min-width: 64px; display: inline-block; }
+.rot-play { font-size: 12px; color: var(--navy); background: #eef3f8; border: 1px solid #d4dde6; border-radius: 6px; padding: 3px 10px; cursor: pointer; }
+.rot-play:hover { background: var(--navy); color: #fff; }
+.rot-note { font-size: 12px; color: #5b6b7a; margin-top: 4px; }
+.rot-warn { font-size: 12px; color: #8a5a00; background: #fff6e6; border-left: 3px solid var(--accent); border-radius: 0 5px 5px 0; padding: 6px 10px; margin: 6px 0; }
+.rot-pctile { display: inline-flex; gap: 14px; flex-wrap: wrap; margin: 4px 0 2px; }
+.rot-pctile .rp { font-size: 12px; color: #44505c; }
+.rot-pctile .rp b { color: var(--navy); }

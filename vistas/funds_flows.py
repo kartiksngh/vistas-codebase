@@ -169,6 +169,140 @@ def _pair_flows(ym_to, h, ret, active_only=True):
     return m, a, b, common, float(excl_val), float(tot_val)
 
 
+def _pair_flows_active(ym_to, h, ret, active_only=True):
+    """★ FLOW DECOMPOSITION (spec FLOW_DECOMPOSITION.md §2). Per-(fund, stock) the THREE flow
+    figures for the month ending ym_to, computed over each fund's FULL equity book (NOT the
+    common-stock intersection — so fresh BUYS and full EXITS, the largest active decisions, are
+    INCLUDED). Returns (m, a, b, common, excl_val, tot_val); `m` has navindia_code, vst_id, mv_s,
+    mv_e, r, plus:
+
+        gross      = mv_e - mv_s                              # (1) raw rupee change: price+inflow+active
+        price_adj  = mv_e - mv_s*(1+r)                        # (2) strips PRICE only (= existing _pair_flows)
+        net_active = AUM_eq(t)*(1+R_p) * dw_active            # (3) the CONVICTION flow, weight-space
+
+    where, per fund f:
+        AUM_eq(t)  = Σ_i mv_s_i             (start equity book size; the full-book denominator)
+        R_p        = Σ_i w_i(t)·r_i         (do-nothing book drift; w_i(t)=mv_s_i/AUM_eq, over priced names)
+        w_i(t+1)   = mv_e_i / AUM_eq(t+1)   (end weight, over the END book)
+        w_drift_i  = w_i(t)·(1+r_i)/(1+R_p) (weight if the manager did NOTHING but let prices drift)
+        dw_active_i= w_i(t+1) − w_drift_i   (genuine reweighting; Σ_i dw_active ≈ 0, the zero-sum audit)
+
+    net_active is INFLOW-IMMUNE by construction: a pro-rata inflow deployment leaves every weight
+    unchanged ⇒ dw_active = 0 (price_adj would show a phantom F·w_i in every name). Entries register as
+    w_i(t)=0 ⇒ dw_active = w_i(t+1) (full add); exits as w_i(t+1)=0 ⇒ dw_active = −w_drift (full cut).
+
+    Only holdings whose stock return r is known enter the active figure (so price is cleanly removed);
+    the book aggregates AUM_eq/R_p use the priced subset of each fund's book. Units: Rs crore.
+    """
+    ym_from = _prev_ym(ym_to)
+    src = h[~h["is_passive"]] if active_only else h
+    a = src[src["ym"] == ym_from]; b = src[src["ym"] == ym_to]
+    if not len(a) or not len(b):
+        raise ValueError(f"no data for {ym_from} or {ym_to}")
+    common = set(a["navindia_code"]) & set(b["navindia_code"])
+    a = a[a["navindia_code"].isin(common)]; b = b[b["navindia_code"].isin(common)]
+    # FULL per-fund book on BOTH ends (outer join: keeps entries mv_s=0 and exits mv_e=0).
+    A = a.groupby(["navindia_code", "vst_id"])["market_value"].sum().rename("mv_s")
+    B = b.groupby(["navindia_code", "vst_id"])["market_value"].sum().rename("mv_e")
+    m = pd.concat([A, B], axis=1).fillna(0.0).reset_index()
+    m["r"] = m["vst_id"].map(lambda v: ret.get((v, ym_to)))
+    excl_val = m.loc[m["r"].isna(), ["mv_s", "mv_e"]].max(axis=1).sum()
+    tot_val  = m[["mv_s", "mv_e"]].max(axis=1).sum()
+    m["gross"]     = m["mv_e"] - m["mv_s"]
+    m["price_adj"] = m["mv_e"] - m["mv_s"] * (1.0 + m["r"])      # NaN where r unknown (kept for gross)
+
+    # ---- per-fund book aggregates over the PRICED subset of each fund's full book ----
+    priced = m[m["r"].notna()].copy()
+    aum_s = priced.groupby("navindia_code")["mv_s"].sum().rename("aum_s")     # AUM_eq(t)
+    aum_e = priced.groupby("navindia_code")["mv_e"].sum().rename("aum_e")     # AUM_eq(t+1)
+    # R_p = Σ w_i(t)·r_i = (Σ mv_s_i·r_i) / Σ mv_s_i  over the priced book
+    priced = priced.join(aum_s, on="navindia_code")
+    rp = (priced.assign(_x=priced["mv_s"] * priced["r"]).groupby("navindia_code")["_x"].sum()
+          / aum_s.replace(0.0, np.nan)).rename("rp")
+    agg = pd.concat([aum_s, aum_e, rp], axis=1)
+    pj = priced.join(agg[["aum_e", "rp"]], on="navindia_code")
+    pj["w_s"]     = pj["mv_s"] / pj["aum_s"].replace(0.0, np.nan)
+    pj["w_e"]     = pj["mv_e"] / pj["aum_e"].replace(0.0, np.nan)
+    pj["w_drift"] = pj["w_s"] * (1.0 + pj["r"]) / (1.0 + pj["rp"])
+    pj["dw_active"] = pj["w_e"].fillna(0.0) - pj["w_drift"].fillna(0.0)
+    # value the reweighting at the post-drift book size  AUM_eq(t)·(1+R_p)
+    pj["net_active"] = pj["aum_s"] * (1.0 + pj["rp"]) * pj["dw_active"]
+    m = m.merge(pj[["navindia_code", "vst_id", "dw_active", "net_active"]],
+                on=["navindia_code", "vst_id"], how="left")
+    return m, a, b, common, float(excl_val), float(tot_val)
+
+
+def stock_active_flows(ym_to, h=None, ret=None, active_only=True, apply_bridge=True, ca=None):
+    """★ Cross-AMC stock-level flow with ALL THREE figures (FLOW_DECOMPOSITION §3). Like
+    `stock_flows` but returns, per vst_id, the market-wide sum of each fund's gross / price-adjusted
+    / net-active rupee trade — `net_active` is the conviction signal (inflow-immune). Reuses the same
+    merger-bridge + corporate-action quarantine as `stock_flows` (net-active inherits CA immunity).
+
+    Returns a DataFrame indexed by vst_id with: name, sym, gross_cr, price_adj_cr, net_active_cr,
+    mv_start_cr, mv_end_cr, breadth_start, breadth_end, dbreadth, buyers, sellers (by net_active),
+    ret_1m, merged_from, ca_flag, plus a `coverage` dict in .attrs."""
+    if h is None or ret is None:
+        h, ret = _load()
+    ym_from = _prev_ym(ym_to)
+    m, a, b, common, excl_val, tot_val = _pair_flows_active(ym_to, h, ret, active_only)
+
+    g = m.groupby("vst_id").agg(
+        gross_cr=("gross", "sum"),
+        price_adj_cr=("price_adj", "sum"),
+        net_active_cr=("net_active", "sum"),
+        mv_start_cr=("mv_s", "sum"),
+        mv_end_cr=("mv_e", "sum"),
+        breadth_start=("mv_s", lambda x: (x > 0).sum()),
+        breadth_end=("mv_e", lambda x: (x > 0).sum()),
+        buyers=("net_active", lambda x: (x > _TOL).sum()),
+        sellers=("net_active", lambda x: (x < -_TOL).sum()),
+    )
+    g["dbreadth"] = (g["breadth_end"] - g["breadth_start"]).astype(int)
+    g["ret_1m"] = g.index.map(lambda v: ret.get((v, ym_to)))
+    lab = b.groupby("vst_id").agg(name=("vid_name", "first"), sym=("nse_symbol", "first"))
+    g = g.join(lab, how="left")
+    g["merged_from"] = None
+    g["ca_flag"] = False
+
+    n_pairs = 0
+    n_ca = 0
+    if apply_bridge:
+        # Reuse the SAME merger-pair detector + structural-CA quarantine as stock_flows so the three
+        # figures inherit corp-action immunity. The merger SWAP nets out by combining A->B; the
+        # price-drift basis r_B reprices the combined start for both price_adj and net_active.
+        pairs = _detect_merger_pairs(a, b)
+        for p in pairs:
+            A, B = p["A"], p["B"]
+            if B not in g.index:
+                continue
+            r_b = g.at[B, "ret_1m"]
+            r_b = 0.0 if pd.isna(r_b) else r_b
+            comb_start = p["A_mv_start"] + g.at[B, "mv_start_cr"]
+            comb_end   = p["B_mv_end"]
+            g.at[B, "gross_cr"]      = comb_end - comb_start
+            g.at[B, "price_adj_cr"]  = comb_end - comb_start * (1.0 + r_b)
+            # net_active for the merged entity falls back to the price-adjusted combine (we lack the
+            # per-fund post-swap weights for A); keeps the swap from faking a giant active trade.
+            g.at[B, "net_active_cr"] = comb_end - comb_start * (1.0 + r_b)
+            g.at[B, "mv_start_cr"]   = comb_start
+            g.at[B, "merged_from"]   = p["A_name"]
+            if A in g.index:
+                g = g.drop(index=A)
+            n_pairs += 1
+        if ca is None:
+            ca = _load_ca_events(h)
+        flagged = {v for v in g.index if ym_to in ca.get(v, ())}
+        flagged -= {p["B"] for p in pairs}
+        g.loc[g.index.isin(flagged), "ca_flag"] = True
+        n_ca = int(g["ca_flag"].sum())
+
+    g.attrs["coverage"] = {"ym_to": ym_to, "ym_from": ym_from, "common_funds": len(common),
+                           "excluded_value_cr": round(float(excl_val), 1),
+                           "excluded_pct": round(100.0 * excl_val / max(tot_val, 1e-9), 2),
+                           "merger_pairs": n_pairs, "ca_flagged": n_ca}
+    return g.sort_values("net_active_cr", ascending=False)
+
+
 def stock_flows(ym_to, h=None, ret=None, active_only=True, apply_bridge=True, ca=None):
     """Net active flow per stock for the month ENDING ym_to (vs the prior month).
 
@@ -250,7 +384,13 @@ def build_stock_series(months_back=36, end_ym=None):
     or None...], nclean:[# ranked stocks...], name, vst_id}}. Rank is by INTENSITY (net flow as
     a % of the average MF position), SIZE-NEUTRAL -- not raw rupees (audit 2026-06-26: a raw-rupee
     rank tilts mechanically to mega-caps). Over the CLEAN (CA-quarantined-out) cross-section;
-    1 = strongest net accumulation."""
+    1 = strongest net accumulation.
+
+    ★ FLOW DECOMPOSITION (FLOW_DECOMPOSITION.md): three switchable flow figures are ALSO emitted —
+    `gross` (raw ₹ change), `price_adj` (= the legacy `flow`, strips price only), and `net_active`
+    (the CONVICTION flow, weight-space, also strips scheme inflows). Each carries a history array
+    aligned to `months` plus a `decomp` block with the current-month snapshot scalars. The legacy
+    `flow`/`intensity`/`rank` keys are UNCHANGED so existing panels are bit-for-bit identical."""
     h, ret = _load()
     ca = _load_ca_events(h)
     months = sorted(h["ym"].unique())
@@ -264,6 +404,11 @@ def build_stock_series(months_back=36, end_ym=None):
             g = stock_flows(ym, h=h, ret=ret, ca=ca)
         except ValueError:
             continue
+        # the three-figure decomposition for the SAME month (full-book, so entries/exits included)
+        try:
+            ga = stock_active_flows(ym, h=h, ret=ret, ca=ca)
+        except ValueError:
+            ga = None
         clean = g[~g["ca_flag"]].copy()
         # SIZE-NEUTRAL conviction (audit 2026-06-26): rank by net flow as a fraction of the average
         # MF position that month, NOT by raw rupees (raw ₹ tilts mechanically to mega-caps). The
@@ -274,9 +419,20 @@ def build_stock_series(months_back=36, end_ym=None):
         rank = clean["intensity"].rank(ascending=False, method="min")   # 1 = strongest net accumulation
         nclean = int(clean["intensity"].notna().sum())
         intens = clean["intensity"]
+        # NET-ACTIVE size-neutral intensity + rank over the clean cross-section (for the conviction view)
+        rank_na, intens_na, nclean_na = None, None, 0
+        if ga is not None:
+            cln = ga[~ga["ca_flag"]].copy()
+            base_na = 0.5 * (cln["mv_start_cr"].abs() + cln["mv_end_cr"].abs())
+            cln["int_na"] = np.where(base_na >= 1.0, cln["net_active_cr"] / base_na, np.nan)
+            rank_na = cln["int_na"].rank(ascending=False, method="min")
+            intens_na = cln["int_na"]
+            nclean_na = int(cln["int_na"].notna().sum())
         for vid, row in g.iterrows():
             d = series.setdefault(vid, {"months": [], "flow": [], "intensity": [], "breadth": [],
-                                        "buyers": [], "sellers": [], "ca": [], "rank": [], "nclean": []})
+                                        "buyers": [], "sellers": [], "ca": [], "rank": [], "nclean": [],
+                                        "gross": [], "price_adj": [], "net_active": [],
+                                        "na_intensity": [], "na_rank": [], "na_nclean": []})
             d["months"].append(ym)
             d["flow"].append(round(float(row["net_flow_cr"]), 1))
             iv = intens.get(vid)
@@ -288,6 +444,19 @@ def build_stock_series(months_back=36, end_ym=None):
             rv = rank.get(vid)
             d["rank"].append(int(rv) if (rv is not None and not pd.isna(rv)) else None)
             d["nclean"].append(nclean)
+            # --- three-figure decomposition (aligned to the same months axis) ---
+            ar = ga.loc[vid] if (ga is not None and vid in ga.index) else None
+            d["gross"].append(None if ar is None else round(float(ar["gross_cr"]), 1))
+            # price_adj over the FULL book; equals legacy `flow` up to entries/exits the legacy
+            # intersection dropped — keep it as its own series so the toggle is self-consistent.
+            d["price_adj"].append(None if ar is None else round(float(ar["price_adj_cr"]), 1))
+            d["net_active"].append(None if (ar is None or pd.isna(ar["net_active_cr"]))
+                                   else round(float(ar["net_active_cr"]), 1))
+            ivn = None if intens_na is None else intens_na.get(vid)
+            d["na_intensity"].append(None if (ivn is None or pd.isna(ivn)) else round(float(ivn) * 100, 1))
+            rvn = None if rank_na is None else rank_na.get(vid)
+            d["na_rank"].append(int(rvn) if (rvn is not None and not pd.isna(rvn)) else None)
+            d["na_nclean"].append(nclean_na)
             meta.setdefault(vid, {"name": row.get("name"), "sym": row.get("sym")})
 
     out = {}
@@ -295,7 +464,17 @@ def build_stock_series(months_back=36, end_ym=None):
         sym = meta[vid]["sym"]
         if not sym:
             continue
-        out[str(sym)] = {**d, "name": meta[vid]["name"], "vst_id": vid}
+        # current-month snapshot scalars for the three figures (last non-empty month)
+        decomp = {
+            "ym": (d["months"][-1] if d["months"] else None),
+            "gross_cr": (d["gross"][-1] if d["gross"] else None),
+            "price_adj_cr": (d["price_adj"][-1] if d["price_adj"] else None),
+            "net_active_cr": (d["net_active"][-1] if d["net_active"] else None),
+            "na_intensity": (d["na_intensity"][-1] if d["na_intensity"] else None),
+            "na_rank": (d["na_rank"][-1] if d["na_rank"] else None),
+            "na_nclean": (d["na_nclean"][-1] if d["na_nclean"] else None),
+        }
+        out[str(sym)] = {**d, "name": meta[vid]["name"], "vst_id": vid, "decomp": decomp}
     return out
 
 

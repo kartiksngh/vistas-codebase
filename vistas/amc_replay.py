@@ -304,12 +304,17 @@ def point_in_time_universe(asof_ts):
 
 
 # ───────────────────────────────────────────────────────── target construction (rules-FM, no LLM)
-def construct_targets(reg_entry, universe, asof_ts, aum_now):
-    """Deploy `aum_now` (₹cr, the book's current value) into mandate+liquidity-constrained,
-    ARM-scored target WEIGHTS as-of asof. Returns (targets {sym: {w, px, sector, isin, name, arm}},
-    cand [the ranked candidate set, for IC/TC measurement], info)."""
+def construct_targets(reg_entry, universe, asof_ts, aum_now, brain_id=None):
+    """Deploy `aum_now` (₹cr, the book's current value) into mandate+liquidity-constrained target
+    WEIGHTS as-of asof, scored by the desk's MULTI-FORCE FM brain (NOT a single ARM clone). Returns
+    (targets {sym: {w, px, sector, isin, name, arm}}, cand [the ranked candidate set, for IC/TC
+    measurement], info). No look-ahead: the brain reads only prices/ARM/EPS ≤ asof.
+
+    LICENSING: raw per-stock ARM is used IN MEMORY by the brain to score; only derived weights /
+    play-types / brain-id / aggregate IC·TC are persisted downstream (save_replay is unchanged)."""
     m = reg_entry["mandate"]
     asof_str = asof_ts.strftime("%Y-%m-%d")
+    bid = brain_id or reg_entry.get("brain") or af.brain_for_mandate(reg_entry.get("category"), m)
     equity_target = 0.95
     emax = m.get("equity_max")
     if emax:                                       # hybrid/DAA: target the middle of the equity band
@@ -319,6 +324,11 @@ def construct_targets(reg_entry, universe, asof_ts, aum_now):
     cand = [u for u in universe if u["bucket"] in buckets]
     if not cand:                                   # mandate bucket empty as-of → don't starve the book
         cand = list(universe)
+
+    # ── SCORE the candidate set with the desk's FM brain (overwrites the neutral 50 default with a
+    # multi-force score: ARM + momentum + value, combined per the brain). Mutates u["score"] in place.
+    bid, _bdiag = af.score_universe(cand, asof_str, bid)
+
     cand.sort(key=lambda u: (-u["score"], -(u["turn"] or 0.0)))
     sel = cand[:min(m["n_hi"], len(cand))]
 
@@ -337,7 +347,7 @@ def construct_targets(reg_entry, universe, asof_ts, aum_now):
             targets[u["sym"]] = {"w": u["w"], "px": u["px"], "sector": u["sector"],
                                  "isin": u["isin"], "name": u["name"], "arm": u["arm"]}
     info = {"n_cand": len(cand), "n_sel": len(sel), "n_held": len(targets),
-            "equity_target": equity_target,
+            "equity_target": equity_target, "brain": bid,
             "deployed": round(sum(t["w"] for t in targets.values()), 4)}
     return targets, cand, info
 
@@ -361,9 +371,12 @@ def _month_end_trading_days(cal):
     return list(s.groupby([cal.year, cal.month]).last().values)
 
 
-def replay(reg_entry, start=DEFAULT_START, end=None, cost_bps=COST_BPS, log=print):
+def replay(reg_entry, start=DEFAULT_START, end=None, cost_bps=COST_BPS, brain_id=None, log=print):
     """Walk the virtual book forward; return (nav, monthly, scorecard, diag). `nav` is a daily NAV
     Series (base 100 at inception). `monthly` is a compact per-rebalance summary list (NO raw ARM).
+
+    `brain_id` selects the desk's MULTI-FORCE FM brain (default = brain_for_mandate by the scheme's
+    SEBI category — so each pilot scheme runs a DISTINCT philosophy, not one ARM clone).
 
     RETURN-SPACE marking: the book is a set of WEIGHTS that compound by each name's winsorized daily
     return (±RET_CLIP). This never divides by a price level, so a persistent bad-adjustment level step
@@ -374,6 +387,7 @@ def replay(reg_entry, start=DEFAULT_START, end=None, cost_bps=COST_BPS, log=prin
     aum0 = af._f(reg_entry["aum_cr"])
     if aum0 <= 0:
         raise ValueError("scheme AUM is zero — cannot seed a book")
+    brain_id = brain_id or reg_entry.get("brain") or af.brain_for_mandate(reg_entry.get("category"), reg_entry.get("mandate"))
     cal = panel.index
     cal = cal[(cal >= pd.Timestamp(start)) & (cal <= pd.Timestamp(end))] if end else cal[cal >= pd.Timestamp(start)]
     if len(cal) < 60:
@@ -422,7 +436,7 @@ def replay(reg_entry, start=DEFAULT_START, end=None, cost_bps=COST_BPS, log=prin
                 monthly.append({"date": t.strftime("%Y-%m-%d"), "nav": round(nav, 4),
                                 "n_holdings": len(w), "note": "no investable universe"})
             else:
-                targets, cand, info = construct_targets(reg_entry, uni, t, pv_cr)
+                targets, cand, info = construct_targets(reg_entry, uni, t, pv_cr, brain_id=brain_id)
                 tc_samples.append(_tc_sample(cand, targets, info["equity_target"]))
                 cov_arm.append(umeta["arm_cov"]); cov_dead.append(umeta["n_dead_included"]); cov_uni.append(umeta["n"])
                 w_new = {sym: tt["w"] for sym, tt in targets.items()}
@@ -444,7 +458,8 @@ def replay(reg_entry, start=DEFAULT_START, end=None, cost_bps=COST_BPS, log=prin
     nav = nav[~nav.index.duplicated(keep="last")]
 
     diag = {"aum0_cr": round(aum0, 1), "start": str(nav.index[0].date()), "end": str(nav.index[-1].date()),
-            "n_rebalances": len(rebset), "cost_bps": cost_bps,
+            "n_rebalances": len(rebset), "cost_bps": cost_bps, "brain": brain_id,
+            "brain_thesis": af.BRAINS.get(brain_id, {}).get("thesis"),
             "avg_universe": round(float(np.nanmean(cov_uni)), 0) if cov_uni else None,
             "avg_arm_cov_pct": round(float(np.nanmean(cov_arm)), 1) if cov_arm else None,
             "avg_dead_included": round(float(np.nanmean(cov_dead)), 1) if cov_dead else None,
@@ -475,6 +490,43 @@ def _monthly_summary(rd, nav, w, pos_meta, umeta, info, turn_oneway):
         "top_sectors": [{"sector": s, "pct": round(100.0 * wt, 2)} for s, wt in sectors[:6]],
         "play_mix": {k: round(100.0 * v, 2) for k, v in plays.items()},
     }
+
+
+# ───────────────────────────────────────────────────────── benchmark NAV (a full series, for the chart)
+def benchmark_nav_series(nav, reg_entry):
+    """Build the scheme's benchmark as a NAV *series* on the BOOK's own date axis, rebased to 100 at
+    the book's start — so the site can overlay a benchmark LINE on the NAV chart (today only bench
+    SCALARS — CAGR/IR — exist). Returns a pandas Series (date-indexed) or None if no benchmark resolves.
+
+    Conventions (reproducible — KV reporting rule), identical to the scorecard's benchmark leg so the
+    line and the scalars agree:
+      • SOURCE   the SAME real NSE TR index the scorecard scores against (`_bench_for(reg_entry)` →
+                 data.get_level_frame([name], measure='TR')). A total-return index → dividends reinvested.
+      • AXIS     intersect the benchmark's trading days with the book's NAV index, so both series share
+                 one date axis (the chart overlays cleanly; no forward-filling a non-trading day).
+      • REBASE   level → 100 · level(t)/level(t0), where t0 = the FIRST common date (the book's
+                 inception). The book NAV is base-100 at the same t0, so the two lines start together.
+      • SURVIVORSHIP / LOOK-AHEAD  an NSE published index has no survivor bias of its own, and rebasing
+                 to the book's start uses only the index's own past levels — no forward data enters.
+    """
+    bname = _bench_for(reg_entry)
+    if not bname:
+        return None
+    try:
+        bf = _data.get_level_frame([bname], measure="TR")
+        bser = bf[bname].dropna() if (bf is not None and bname in bf.columns) else None
+    except Exception:
+        bser = None
+    if bser is None or len(bser) < 10:
+        return None
+    bser.index = pd.to_datetime(bser.index)
+    common = nav.index.intersection(bser.index)
+    if len(common) < 2:
+        return None
+    b2 = bser.reindex(common).dropna()
+    if len(b2) < 2 or b2.iloc[0] <= 0:
+        return None
+    return (100.0 * b2 / float(b2.iloc[0])).rename("nav")
 
 
 # ───────────────────────────────────────────────────────── scorecard (vs benchmark + real scheme)
@@ -599,6 +651,11 @@ def save_replay(reg_entry, nav, monthly, score, diag):
     d = os.path.join(af.scheme_dir(reg_entry["amc"], reg_entry["scheme"]), "replay")
     os.makedirs(d, exist_ok=True)
     nav.to_frame("nav").to_csv(os.path.join(d, "nav.csv"), index_label="date")
+    # benchmark NAV series on the book's date axis (rebased to 100 at the book start) — lets the site
+    # overlay a benchmark line on the NAV chart. Survivorship-clean (NSE TR index) + look-ahead-free.
+    bnav = benchmark_nav_series(nav, reg_entry)
+    if bnav is not None and len(bnav):
+        bnav.to_frame("nav").to_csv(os.path.join(d, "benchmark_nav.csv"), index_label="date")
     with open(os.path.join(d, "scorecard.json"), "w", encoding="utf-8") as f:
         json.dump({"scheme": reg_entry["scheme"], "amc": reg_entry["amc"],
                    "category": reg_entry["category"], "diag": diag, "scorecard": score},
@@ -609,19 +666,21 @@ def save_replay(reg_entry, nav, monthly, score, diag):
 
 
 # ───────────────────────────────────────────────────────── driver
-def run(amc_sub, category, start=DEFAULT_START, end=None, min_aum_cr=500.0, save=True, log=print):
+def run(amc_sub, category, start=DEFAULT_START, end=None, min_aum_cr=500.0, brain_id=None, save=True, log=print):
     """Build the registry, pick the flagship (largest-AUM) scheme of `category` whose AMC contains
-    `amc_sub`, replay it, and (optionally) save the audit trail. Returns (reg_entry, nav, monthly,
-    score, diag)."""
+    `amc_sub`, replay it (with the desk's multi-force FM brain, default by mandate), and (optionally)
+    save the audit trail. Returns (reg_entry, nav, monthly, score, diag)."""
     reg = af.registry(amcs=[amc_sub], min_aum_cr=min_aum_cr)
     cands = [s for schemes in reg.values() for s in schemes.values()
              if s["category"] == category and amc_sub.lower() in (s["amc"] or "").lower()]
     if not cands:
         raise SystemExit(f"no {category} scheme for {amc_sub} (≥₹{min_aum_cr}cr)")
     reg_entry = max(cands, key=lambda s: af._f(s["aum_cr"]))
+    bid = brain_id or af.brain_for_mandate(reg_entry.get("category"), reg_entry.get("mandate"))
     log(f"[replay] {reg_entry['amc']} — {reg_entry['scheme']}  "
-        f"(AUM ₹{af._f(reg_entry['aum_cr']):,.0f} cr, {reg_entry['category']}, bench {reg_entry['benchmark']})")
-    nav, monthly, score, diag = replay(reg_entry, start=start, end=end, log=log)
+        f"(AUM ₹{af._f(reg_entry['aum_cr']):,.0f} cr, {reg_entry['category']}, bench {reg_entry['benchmark']}, "
+        f"brain={bid})")
+    nav, monthly, score, diag = replay(reg_entry, start=start, end=end, brain_id=bid, log=log)
     if save:
         d = save_replay(reg_entry, nav, monthly, score, diag)
         log(f"[replay] saved → {d}")

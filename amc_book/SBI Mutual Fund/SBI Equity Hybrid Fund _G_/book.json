@@ -5,53 +5,69 @@
  "category": "Aggressive Hybrid Fund",
  "benchmark": "NIFTY 500",
  "aum0_cr": 83983.5,
- "cash_cr": 23095.4566,
+ "cash_cr": 23095.4603,
  "inception": "2026-06-25",
  "asof": "2026-06-25",
  "positions": {
-  "ASIANPAINT": {
-   "isin": "INE021A01026",
-   "name": "Asian Paints Ltd.",
-   "sector": "Consumer Durables",
-   "qty": 11638773,
-   "avg_cost": 2645.2,
-   "play_type": "tactical",
-   "entry_date": "2026-06-25",
-   "thesis_ref": null,
-   "sel_rank": 1
-  },
-  "LENSKART": {
-   "isin": "INE956O01016",
-   "name": "Lenskart Solutions Ltd.",
+  "MEESHO": {
+   "isin": "INE0VDM01015",
+   "name": "Meesho Ltd.",
    "sector": "Retailing",
-   "qty": 60496918,
-   "avg_cost": 508.9,
+   "qty": 157572215,
+   "avg_cost": 186.45,
+   "play_type": "structural",
+   "entry_date": "2026-06-25",
+   "thesis_ref": null,
+   "sel_rank": 1,
+   "brain": "regime_switch"
+  },
+  "COALINDIA": {
+   "isin": "INE522F01014",
+   "name": "Coal India Ltd.",
+   "sector": "Consumable Fuels",
+   "qty": 62909282,
+   "avg_cost": 435.4,
    "play_type": "tactical",
    "entry_date": "2026-06-25",
    "thesis_ref": null,
-   "sel_rank": 2
+   "sel_rank": 2,
+   "brain": "regime_switch"
+  },
+  "HINDALCO": {
+   "isin": "INE038A01020",
+   "name": "Hindalco Industries Ltd.",
+   "sector": "Non - Ferrous Metals",
+   "qty": 28217630,
+   "avg_cost": 953.2,
+   "play_type": "tactical",
+   "entry_date": "2026-06-25",
+   "thesis_ref": null,
+   "sel_rank": 3,
+   "brain": "regime_switch"
   },
   "MUTHOOTFIN": {
    "isin": "INE414G01012",
    "name": "Muthoot Finance Ltd.",
    "sector": "Finance",
-   "qty": 10071632,
+   "qty": 8691151,
    "avg_cost": 3025.6,
    "play_type": "tactical",
    "entry_date": "2026-06-25",
    "thesis_ref": null,
-   "sel_rank": 3
+   "sel_rank": 4,
+   "brain": "regime_switch"
   },
-  "SOLARINDS": {
-   "isin": "INE343H01029",
-   "name": "Solar Industries India Ltd.",
-   "sector": "Chemicals & Petrochemicals",
-   "qty": 1730467,
-   "avg_cost": 17428.0,
-   "play_type": "tactical",
+  "NTPC": {
+   "isin": "INE733E01010",
+   "name": "NTPC Ltd.",
+   "sector": "Power",
+   "qty": 66828928,
+   "avg_cost": 352.05,
+   "play_type": "structural",
    "entry_date": "2026-06-25",
    "thesis_ref": null,
-   "sel_rank": 4
+   "sel_rank": 5,
+   "brain": "regime_switch"
   },
   "AIAENG": {
    "isin": "INE212H01026",
@@ -62,62 +78,116 @@
    "play_type": "tactical",
    "entry_date": "2026-06-25",
    "thesis_ref": null,
-   "sel_rank": 5
+   "sel_rank": 6,
+   "brain": "regime_switch"
   },
-  "COALINDIA": {
-   "isin": "INE522F01014",
-   "name": "Coal India Ltd.",
-   "sector": "Consumable Fuels",
-   "qty": 61329599,
-   "avg_cost": 435.4,
+  "LENSKART": {
+   "isin": "INE956O01016",
+   "name": "Lenskart Solutions Ltd.",
+   "sector": "Retailing",
+   "qty": 42694550,
+   "avg_cost": 508.9,
    "play_type": "tactical",
    "entry_date": "2026-06-25",
    "thesis_ref": null,
-   "sel_rank": 6
+   "sel_rank": 7,
+   "brain": "regime_switch"
   },
-  "ASTRAL": {
-   "isin": "INE006I01046",
-   "name": "Astral Ltd.",
-   "sector": "Industrial Products",
-   "qty": 9624103,
-   "avg_cost": 1486.9,
+  "ASIANPAINT": {
+   "isin": "INE021A01026",
+   "name": "Asian Paints Ltd.",
+   "sector": "Consumer Durables",
+   "qty": 8148052,
+   "avg_cost": 2645.2,
    "play_type": "tactical",
    "entry_date": "2026-06-25",
    "thesis_ref": null,
-   "sel_rank": 7
+   "sel_rank": 8,
+   "brain": "regime_switch"
   },
   "TCS": {
    "isin": "INE467B01029",
    "name": "Tata Consultancy Services Ltd.",
    "sector": "IT - Software",
-   "qty": 11398072,
+   "qty": 10004912,
    "avg_cost": 2094.7,
    "play_type": "tactical",
    "entry_date": "2026-06-25",
    "thesis_ref": null,
-   "sel_rank": 8
+   "sel_rank": 9,
+   "brain": "regime_switch"
   },
-  "HINDALCO": {
-   "isin": "INE038A01020",
-   "name": "Hindalco Industries Ltd.",
-   "sector": "Non - Ferrous Metals",
-   "qty": 24718201,
-   "avg_cost": 953.2,
+  "SOLARINDS": {
+   "isin": "INE343H01029",
+   "name": "Solar Industries India Ltd.",
+   "sector": "Chemicals & Petrochemicals",
+   "qty": 1162731,
+   "avg_cost": 17428.0,
    "play_type": "tactical",
    "entry_date": "2026-06-25",
    "thesis_ref": null,
-   "sel_rank": 9
+   "sel_rank": 10,
+   "brain": "regime_switch"
   },
-  "VBL": {
-   "isin": "INE200M01039",
-   "name": "Varun Beverages Ltd.",
-   "sector": "Beverages",
-   "qty": 46412664,
-   "avg_cost": 507.65,
-   "play_type": "tactical",
+  "SBIN": {
+   "isin": "INE062A01020",
+   "name": "State Bank of India",
+   "sector": "Banks",
+   "qty": 18844802,
+   "avg_cost": 1045.4,
+   "play_type": "structural",
    "entry_date": "2026-06-25",
    "thesis_ref": null,
-   "sel_rank": 10
+   "sel_rank": 11,
+   "brain": "regime_switch"
+  },
+  "ICICIBANK": {
+   "isin": "INE090A01021",
+   "name": "ICICI Bank Ltd.",
+   "sector": "Banks",
+   "qty": 13616083,
+   "avg_cost": 1387.5,
+   "play_type": "structural",
+   "entry_date": "2026-06-25",
+   "thesis_ref": null,
+   "sel_rank": 12,
+   "brain": "regime_switch"
+  },
+  "INFY": {
+   "isin": "INE009A01021",
+   "name": "Infosys Ltd.",
+   "sector": "IT - Software",
+   "qty": 18091051,
+   "avg_cost": 1041.2,
+   "play_type": "structural",
+   "entry_date": "2026-06-25",
+   "thesis_ref": null,
+   "sel_rank": 13,
+   "brain": "regime_switch"
+  },
+  "KOTAKBANK": {
+   "isin": "INE237A01036",
+   "name": "Kotak Mahindra Bank Ltd.",
+   "sector": "Banks",
+   "qty": 45913877,
+   "avg_cost": 409.0,
+   "play_type": "structural",
+   "entry_date": "2026-06-25",
+   "thesis_ref": null,
+   "sel_rank": 14,
+   "brain": "regime_switch"
+  },
+  "JINDALSTEL": {
+   "isin": "INE749A01030",
+   "name": "Jindal Steel Ltd.",
+   "sector": "Ferrous Metals",
+   "qty": 17672084,
+   "avg_cost": 1059.5,
+   "play_type": "structural",
+   "entry_date": "2026-06-25",
+   "thesis_ref": null,
+   "sel_rank": 15,
+   "brain": "regime_switch"
   },
   "MANYAVAR": {
    "isin": "INE825V01034",
@@ -128,84 +198,56 @@
    "play_type": "structural",
    "entry_date": "2026-06-25",
    "thesis_ref": null,
-   "sel_rank": 11
+   "sel_rank": 16,
+   "brain": "regime_switch"
   },
-  "DMART": {
-   "isin": "INE192R01011",
-   "name": "Avenue Supermarts Ltd.",
-   "sector": "Retailing",
-   "qty": 4754778,
-   "avg_cost": 4294.6,
-   "play_type": "structural",
+  "ASTRAL": {
+   "isin": "INE006I01046",
+   "name": "Astral Ltd.",
+   "sector": "Industrial Products",
+   "qty": 9624103,
+   "avg_cost": 1486.9,
+   "play_type": "tactical",
    "entry_date": "2026-06-25",
    "thesis_ref": null,
-   "sel_rank": 12
+   "sel_rank": 17,
+   "brain": "regime_switch"
   },
-  "NTPC": {
-   "isin": "INE733E01010",
-   "name": "NTPC Ltd.",
-   "sector": "Power",
-   "qty": 58002756,
-   "avg_cost": 352.05,
-   "play_type": "structural",
+  "VBL": {
+   "isin": "INE200M01039",
+   "name": "Varun Beverages Ltd.",
+   "sector": "Beverages",
+   "qty": 35197896,
+   "avg_cost": 507.65,
+   "play_type": "tactical",
    "entry_date": "2026-06-25",
    "thesis_ref": null,
-   "sel_rank": 13
+   "sel_rank": 18,
+   "brain": "regime_switch"
   },
-  "ICICIBANK": {
-   "isin": "INE090A01021",
-   "name": "ICICI Bank Ltd.",
+  "HDFCBANK": {
+   "isin": "INE040A01034",
+   "name": "HDFC Bank Ltd.",
    "sector": "Banks",
-   "qty": 13811361,
-   "avg_cost": 1387.5,
+   "qty": 22368924,
+   "avg_cost": 796.3,
    "play_type": "structural",
    "entry_date": "2026-06-25",
    "thesis_ref": null,
-   "sel_rank": 14
+   "sel_rank": 19,
+   "brain": "regime_switch"
   },
-  "BHARTIARTL": {
-   "isin": "INE397D01024",
-   "name": "Bharti Airtel Ltd.",
-   "sector": "Telecom - Services",
-   "qty": 10184855,
-   "avg_cost": 1850.7,
+  "RELIANCE": {
+   "isin": "INE002A01018",
+   "name": "Reliance Industries Ltd.",
+   "sector": "Petroleum Products",
+   "qty": 13456130,
+   "avg_cost": 1318.1,
    "play_type": "structural",
    "entry_date": "2026-06-25",
    "thesis_ref": null,
-   "sel_rank": 15
-  },
-  "BAJFINANCE": {
-   "isin": "INE296A01032",
-   "name": "Bajaj Finance Ltd.",
-   "sector": "Finance",
-   "qty": 18905507,
-   "avg_cost": 980.4,
-   "play_type": "structural",
-   "entry_date": "2026-06-25",
-   "thesis_ref": null,
-   "sel_rank": 16
-  },
-  "KOTAKBANK": {
-   "isin": "INE237A01036",
-   "name": "Kotak Mahindra Bank Ltd.",
-   "sector": "Banks",
-   "qty": 44549651,
-   "avg_cost": 409.0,
-   "play_type": "structural",
-   "entry_date": "2026-06-25",
-   "thesis_ref": null,
-   "sel_rank": 17
-  },
-  "INFY": {
-   "isin": "INE009A01021",
-   "name": "Infosys Ltd.",
-   "sector": "IT - Software",
-   "qty": 17499815,
-   "avg_cost": 1041.2,
-   "play_type": "structural",
-   "entry_date": "2026-06-25",
-   "thesis_ref": null,
-   "sel_rank": 18
+   "sel_rank": 20,
+   "brain": "regime_switch"
   },
   "PAGEIND": {
    "isin": "INE761H01022",
@@ -216,62 +258,80 @@
    "play_type": "structural",
    "entry_date": "2026-06-25",
    "thesis_ref": null,
-   "sel_rank": 19
-  },
-  "VMM": {
-   "isin": "INE01EA01019",
-   "name": "Vishal Mega Mart Ltd.",
-   "sector": "Retailing",
-   "qty": 153850465,
-   "avg_cost": 116.39,
-   "play_type": "structural",
-   "entry_date": "2026-06-25",
-   "thesis_ref": null,
-   "sel_rank": 20
-  },
-  "JINDALSTEL": {
-   "isin": "INE749A01030",
-   "name": "Jindal Steel Ltd.",
-   "sector": "Ferrous Metals",
-   "qty": 16308024,
-   "avg_cost": 1059.5,
-   "play_type": "structural",
-   "entry_date": "2026-06-25",
-   "thesis_ref": null,
-   "sel_rank": 21
+   "sel_rank": 21,
+   "brain": "regime_switch"
   },
   "ITC": {
    "isin": "INE154A01025",
    "name": "ITC Ltd.",
    "sector": "Diversified FMCG",
-   "qty": 56330677,
+   "qty": 57027144,
    "avg_cost": 290.0,
    "play_type": "structural",
    "entry_date": "2026-06-25",
    "thesis_ref": null,
-   "sel_rank": 22
+   "sel_rank": 22,
+   "brain": "regime_switch"
   },
-  "MEESHO": {
-   "isin": "INE0VDM01015",
-   "name": "Meesho Ltd.",
-   "sector": "Retailing",
-   "qty": 87615427,
-   "avg_cost": 186.45,
+  "BAJFINANCE": {
+   "isin": "INE296A01032",
+   "name": "Bajaj Finance Ltd.",
+   "sector": "Finance",
+   "qty": 16367225,
+   "avg_cost": 980.4,
    "play_type": "structural",
    "entry_date": "2026-06-25",
    "thesis_ref": null,
-   "sel_rank": 23
+   "sel_rank": 23,
+   "brain": "regime_switch"
+  },
+  "DMART": {
+   "isin": "INE192R01011",
+   "name": "Avenue Supermarts Ltd.",
+   "sector": "Retailing",
+   "qty": 3619667,
+   "avg_cost": 4294.6,
+   "play_type": "structural",
+   "entry_date": "2026-06-25",
+   "thesis_ref": null,
+   "sel_rank": 24,
+   "brain": "regime_switch"
+  },
+  "BHARTIARTL": {
+   "isin": "INE397D01024",
+   "name": "Bharti Airtel Ltd.",
+   "sector": "Telecom - Services",
+   "qty": 8342609,
+   "avg_cost": 1850.7,
+   "play_type": "structural",
+   "entry_date": "2026-06-25",
+   "thesis_ref": null,
+   "sel_rank": 25,
+   "brain": "regime_switch"
   },
   "DLF": {
    "isin": "INE271C01023",
    "name": "DLF Ltd.",
    "sector": "Realty",
-   "qty": 25785378,
+   "qty": 24807807,
    "avg_cost": 621.35,
    "play_type": "structural",
    "entry_date": "2026-06-25",
    "thesis_ref": null,
-   "sel_rank": 24
+   "sel_rank": 26,
+   "brain": "regime_switch"
+  },
+  "VMM": {
+   "isin": "INE01EA01019",
+   "name": "Vishal Mega Mart Ltd.",
+   "sector": "Retailing",
+   "qty": 126546423,
+   "avg_cost": 116.39,
+   "play_type": "structural",
+   "entry_date": "2026-06-25",
+   "thesis_ref": null,
+   "sel_rank": 27,
+   "brain": "regime_switch"
   },
   "SHREECEM": {
    "isin": "INE070A01015",
@@ -282,40 +342,8 @@
    "play_type": "structural",
    "entry_date": "2026-06-25",
    "thesis_ref": null,
-   "sel_rank": 25
-  },
-  "RELIANCE": {
-   "isin": "INE002A01018",
-   "name": "Reliance Industries Ltd.",
-   "sector": "Petroleum Products",
-   "qty": 11678508,
-   "avg_cost": 1318.1,
-   "play_type": "structural",
-   "entry_date": "2026-06-25",
-   "thesis_ref": null,
-   "sel_rank": 26
-  },
-  "HDFCBANK": {
-   "isin": "INE040A01034",
-   "name": "HDFC Bank Ltd.",
-   "sector": "Banks",
-   "qty": 18147664,
-   "avg_cost": 796.3,
-   "play_type": "structural",
-   "entry_date": "2026-06-25",
-   "thesis_ref": null,
-   "sel_rank": 27
-  },
-  "SBIN": {
-   "isin": "INE062A01020",
-   "name": "State Bank of India",
-   "sector": "Banks",
-   "qty": 12921876,
-   "avg_cost": 1045.4,
-   "play_type": "structural",
-   "entry_date": "2026-06-25",
-   "thesis_ref": null,
-   "sel_rank": 28
+   "sel_rank": 28,
+   "brain": "regime_switch"
   },
   "OBEROIRLTY": {
    "isin": "INE093I01010",
@@ -326,40 +354,8 @@
    "play_type": "structural",
    "entry_date": "2026-06-25",
    "thesis_ref": null,
-   "sel_rank": 29
-  },
-  "SWIGGY": {
-   "isin": "INE00H001014",
-   "name": "Swiggy Ltd.",
-   "sector": "Retailing",
-   "qty": 48280866,
-   "avg_cost": 240.75,
-   "play_type": "cyclical",
-   "entry_date": "2026-06-25",
-   "thesis_ref": null,
-   "sel_rank": 30
-  },
-  "ADANIPOWER": {
-   "isin": "INE814H01029",
-   "name": "Adani Power Ltd.",
-   "sector": "Power",
-   "qty": 49328158,
-   "avg_cost": 229.27,
-   "play_type": "cyclical",
-   "entry_date": "2026-06-25",
-   "thesis_ref": null,
-   "sel_rank": 31
-  },
-  "MAXHEALTH": {
-   "isin": "INE027H01010",
-   "name": "Max Healthcare Institute Ltd.",
-   "sector": "Healthcare Services",
-   "qty": 8110031,
-   "avg_cost": 1123.35,
-   "play_type": "cyclical",
-   "entry_date": "2026-06-25",
-   "thesis_ref": null,
-   "sel_rank": 32
+   "sel_rank": 29,
+   "brain": "regime_switch"
   },
   "PGHH": {
    "isin": "INE179A01014",
@@ -370,51 +366,56 @@
    "play_type": "cyclical",
    "entry_date": "2026-06-25",
    "thesis_ref": null,
-   "sel_rank": 33
+   "sel_rank": 30,
+   "brain": "regime_switch"
+  },
+  "ADANIPOWER": {
+   "isin": "INE814H01029",
+   "name": "Adani Power Ltd.",
+   "sector": "Power",
+   "qty": 50731155,
+   "avg_cost": 229.27,
+   "play_type": "cyclical",
+   "entry_date": "2026-06-25",
+   "thesis_ref": null,
+   "sel_rank": 31,
+   "brain": "regime_switch"
+  },
+  "MRF": {
+   "isin": "INE883A01011",
+   "name": "MRF Ltd.",
+   "sector": "Auto Components",
+   "qty": 73323,
+   "avg_cost": 129550.0,
+   "play_type": "cyclical",
+   "entry_date": "2026-06-25",
+   "thesis_ref": null,
+   "sel_rank": 32,
+   "brain": "regime_switch"
+  },
+  "MAXHEALTH": {
+   "isin": "INE027H01010",
+   "name": "Max Healthcare Institute Ltd.",
+   "sector": "Healthcare Services",
+   "qty": 8143041,
+   "avg_cost": 1123.35,
+   "play_type": "cyclical",
+   "entry_date": "2026-06-25",
+   "thesis_ref": null,
+   "sel_rank": 33,
+   "brain": "regime_switch"
   },
   "DIVISLAB": {
    "isin": "INE361B01024",
    "name": "Divi's Laboratories Ltd.",
    "sector": "Pharmaceuticals & Biotechnology",
-   "qty": 1310233,
+   "qty": 1338681,
    "avg_cost": 6713.5,
    "play_type": "cyclical",
    "entry_date": "2026-06-25",
    "thesis_ref": null,
-   "sel_rank": 34
-  },
-  "WESTLIFE": {
-   "isin": "INE274F01020",
-   "name": "Westlife Foodworld Ltd.",
-   "sector": "Leisure Services",
-   "qty": 1001308,
-   "avg_cost": 486.3,
-   "play_type": "cyclical",
-   "entry_date": "2026-06-25",
-   "thesis_ref": null,
-   "sel_rank": 35
-  },
-  "ADANIENSOL": {
-   "isin": "INE931S01010",
-   "name": "Adani Energy Solutions Ltd.",
-   "sector": "Power",
-   "qty": 4167023,
-   "avg_cost": 1507.8,
-   "play_type": "cyclical",
-   "entry_date": "2026-06-25",
-   "thesis_ref": null,
-   "sel_rank": 36
-  },
-  "INDIGO": {
-   "isin": "INE646L01027",
-   "name": "Interglobe Aviation Ltd.",
-   "sector": "Transport Services",
-   "qty": 1152851,
-   "avg_cost": 5450.0,
-   "play_type": "cyclical",
-   "entry_date": "2026-06-25",
-   "thesis_ref": null,
-   "sel_rank": 37
+   "sel_rank": 34,
+   "brain": "regime_switch"
   },
   "FIRSTCRY": {
    "isin": "INE02RE01045",
@@ -425,52 +426,95 @@
    "play_type": "cyclical",
    "entry_date": "2026-06-25",
    "thesis_ref": null,
-   "sel_rank": 38
+   "sel_rank": 35,
+   "brain": "regime_switch"
+  },
+  "SWIGGY": {
+   "isin": "INE00H001014",
+   "name": "Swiggy Ltd.",
+   "sector": "Retailing",
+   "qty": 33998196,
+   "avg_cost": 240.75,
+   "play_type": "cyclical",
+   "entry_date": "2026-06-25",
+   "thesis_ref": null,
+   "sel_rank": 36,
+   "brain": "regime_switch"
+  },
+  "ADANIENSOL": {
+   "isin": "INE931S01010",
+   "name": "Adani Energy Solutions Ltd.",
+   "sector": "Power",
+   "qty": 5401997,
+   "avg_cost": 1507.8,
+   "play_type": "cyclical",
+   "entry_date": "2026-06-25",
+   "thesis_ref": null,
+   "sel_rank": 37,
+   "brain": "regime_switch"
+  },
+  "WESTLIFE": {
+   "isin": "INE274F01020",
+   "name": "Westlife Foodworld Ltd.",
+   "sector": "Leisure Services",
+   "qty": 1001308,
+   "avg_cost": 486.3,
+   "play_type": "cyclical",
+   "entry_date": "2026-06-25",
+   "thesis_ref": null,
+   "sel_rank": 38,
+   "brain": "regime_switch"
   },
   "LT": {
    "isin": "INE018A01030",
    "name": "Larsen & Toubro Ltd.",
    "sector": "Construction",
-   "qty": 447043,
+   "qty": 1800259,
    "avg_cost": 4216.4,
    "play_type": "cyclical",
    "entry_date": "2026-06-25",
    "thesis_ref": null,
-   "sel_rank": 39
+   "sel_rank": 39,
+   "brain": "regime_switch"
   },
-  "MRF": {
-   "isin": "INE883A01011",
-   "name": "MRF Ltd.",
-   "sector": "Auto Components",
-   "qty": 12125,
-   "avg_cost": 129550.0,
+  "INDIGO": {
+   "isin": "INE646L01027",
+   "name": "Interglobe Aviation Ltd.",
+   "sector": "Transport Services",
+   "qty": 1260724,
+   "avg_cost": 5450.0,
    "play_type": "cyclical",
    "entry_date": "2026-06-25",
    "thesis_ref": null,
-   "sel_rank": 40
+   "sel_rank": 40,
+   "brain": "regime_switch"
   },
   "JSWENERGY": {
    "isin": "INE121E01018",
    "name": "JSW Energy Ltd.",
    "sector": "Power",
-   "qty": 1095560,
+   "qty": 11443887,
    "avg_cost": 573.5,
    "play_type": "cyclical",
    "entry_date": "2026-06-25",
    "thesis_ref": null,
-   "sel_rank": 41
+   "sel_rank": 41,
+   "brain": "regime_switch"
   },
   "UBL": {
    "isin": "INE686F01025",
    "name": "United Breweries Ltd.",
    "sector": "Beverages",
-   "qty": 236418,
+   "qty": 1578988,
    "avg_cost": 1328.8,
    "play_type": "cyclical",
    "entry_date": "2026-06-25",
    "thesis_ref": null,
-   "sel_rank": 42
+   "sel_rank": 42,
+   "brain": "regime_switch"
   }
  },
- "nav0": 100.0
+ "nav0": 100.0,
+ "brain": "regime_switch",
+ "brain_thesis": "Tilt between momentum (risk-on) and value-revision (risk-off) by a simple breadth-of-momentum market read; the core blend when the state is unclear."
 }

@@ -443,6 +443,478 @@ def _play_type(arm):
     return "structural"
 
 
+# ════════════════════════════════════════════════════════════════════════════════════════════════
+# FM BRAIN LIBRARY — distinct multi-force scoring philosophies (Task #85, W2-d/e)
+# ════════════════════════════════════════════════════════════════════════════════════════════════
+# Problem this solves: previously every virtual FM was the SAME ARM water-fill clone — only the
+# mandate caps differed (`score = arm if arm is not None else 50.0`). A real FM's edge is NOVELTY:
+# combining MULTIPLE forces and their interaction, not vanilla ARM/momentum. The Mesh research
+# (MESH_RESEARCH_FINDINGS.md) VALIDATED that a multi-force combo beats ARM-alone walk-forward
+# (OOS IC@6m: ARM 0.071 → ~0.11-0.12), and pinned the edge SOURCE: 6-month price momentum (IC@6m
+# ~0.098, already > ARM by itself) + value being near-ORTHOGONAL to ARM. The defensible, non-fragile
+# construction is the simple ORTHOGONALIZED ARM+momentum+value z-stack (the Σ⁻¹ optimizer and the
+# regime-switch tricks add little and are unstable — decoration, dropped here).
+#
+# Each brain is a SCORING FUNCTION over the candidate universe (a list of {sym, isin, arm, sector,...}
+# dicts). It writes u["score"] (and u["_brain_signals"] = the in-memory force z's, for play-type +
+# diagnostics) IN PLACE, then the SAME waterfill() places weights under name/sector/liquidity caps —
+# so ONLY the scoring changes between desks, never the construction. Signals are computed per-stock
+# AS-OF the rebalance date with NO look-ahead (prices/EPS/statements ≤ asof only), reusing existing
+# loaders (the price panel for momentum; data/screener bundles for value; arm.py for ARM).
+#
+# ── FUNDAMENTAL LAW intent (IR = IC·√BR·TC) — how each brain is DESIGNED to earn, so we can score it:
+#    • IC  = where the per-bet forecast skill comes from (which force supplies the edge).
+#    • √BR = how independent breadth is gained (de-correlated forces / clocks widen effective breadth).
+#    • TC  = the long-only transfer leak the brain bites — turnover (momentum), capacity (deep value),
+#            or spread-vs-mid-rank (quality nudge). Stated per-brain in BRAINS[...]["law"].
+#
+# ── LICENSING (HARD): raw per-stock LSEG StarMine ARM is used IN MEMORY ONLY for scoring. It is NEVER
+#    written to a committed book/blotter/replay artifact — only DERIVED weights, the coarse play-type
+#    tag, the brain-id, and AGGREGATE IC/TC ship. The existing guard (build_rules_v0 / amc_replay) is
+#    untouched; these brains add no new persisted ARM column.
+
+def _zscore(vals):
+    """Cross-sectional z-score of a list (mean 0, std 1), NaN-robust: NaNs map to 0.0 (neutral).
+    A list of floats in, a list of floats out (same length, same order)."""
+    import math as _m
+    xs = [v for v in vals if v is not None and v == v]
+    if len(xs) < 2:
+        return [0.0 for _ in vals]
+    mu = sum(xs) / len(xs)
+    var = sum((x - mu) ** 2 for x in xs) / len(xs)
+    sd = _m.sqrt(var)
+    if sd <= 1e-12:
+        return [0.0 for _ in vals]
+    return [((v - mu) / sd) if (v is not None and v == v) else 0.0 for v in vals]
+
+
+def _orthogonalize(target_z, base_z):
+    """Residual of `target_z` after regressing OUT `base_z` (both already z-scored, same order). Returns
+    the part of target uncorrelated with base — so adding it to base supplies INDEPENDENT breadth, not a
+    re-weighting of the same bet. resid = target − β·base, β = cov/var (OLS through origin on z's)."""
+    n = len(target_z)
+    if n < 3:
+        return list(target_z)
+    sxx = sum(b * b for b in base_z)
+    if sxx <= 1e-12:
+        return list(target_z)
+    sxy = sum(t * b for t, b in zip(target_z, base_z))
+    beta = sxy / sxx
+    return [t - beta * b for t, b in zip(target_z, base_z)]
+
+
+def momentum_6m1m(sym, asof=None):
+    """Trailing 6-month price total return, SKIPPING the most recent month (classic price momentum,
+    the validated edge source). = price[asof − 1m] / price[asof − 7m] − 1, read from the adjusted
+    total-return panel (so it's a true TR momentum). No look-ahead: only prices ≤ asof. None if the
+    7-month-ago anchor price is missing. Plain words: 'how much did this stock run over the half-year
+    ending a month ago' — skipping the last month avoids the well-known 1-month reversal."""
+    import pandas as pd
+    df = _prices()
+    if df is None or sym not in df.columns:
+        return None
+    s = df[sym].dropna()
+    if asof:
+        s = s[s.index <= str(asof)]
+    if len(s) < 30:
+        return None
+    end = s.index[-1]
+    p_recent = _asof_level(s, end - pd.DateOffset(months=1))
+    p_old = _asof_level(s, end - pd.DateOffset(months=7))
+    if p_recent is None or p_old is None or p_old <= 0:
+        return None
+    return p_recent / p_old - 1.0
+
+
+def _asof_level(s, ts):
+    """Last value of a price Series on/before timestamp `ts`, or None."""
+    seg = s[s.index <= ts]
+    return float(seg.iloc[-1]) if len(seg) else None
+
+
+_SCR = {"dir": None}
+
+
+def _screener_dir():
+    if _SCR["dir"] is None:
+        _SCR["dir"] = os.path.join(_ROOT, "data", "screener")
+    return _SCR["dir"]
+
+
+_VAL_CACHE = {}
+
+
+def value_yields(sym, asof=None):
+    """Point-in-time cheapness yields for `sym` as-of `asof`: (E/P, B/P, S/P), each higher = cheaper,
+    or (None,None,None). Reads data/screener/<SYM>.json:
+      • E/P = TTM-EPS-as-known-on-date / price[asof]   (EPS is an as-of-dated step series — PIT clean)
+      • B/P = book-value-per-share (networth/shares, annual, lagged +3m for the results-release) / price
+      • S/P = sales-per-share (annual, lagged) / price
+    NO look-ahead: every fundamental carries its own report date; price is ≤ asof. Cached per (sym).
+    This mirrors mesh_research._valuation_wide's conventions so the brain's value leg matches the
+    validated panel. Coverage is honestly partial (not every name has a clean bundle)."""
+    px = price_asof(sym, asof)
+    if px is None or px <= 0:
+        return (None, None, None)
+    key = sym
+    if key not in _VAL_CACHE:
+        path = os.path.join(_screener_dir(), f"{sym}.json")
+        if not os.path.exists(path):
+            _VAL_CACHE[key] = None
+        else:
+            try:
+                b = json.load(open(path, encoding="utf-8"))
+            except Exception:
+                b = None
+            _VAL_CACHE[key] = _value_series_from_bundle(b) if b else None
+    ser = _VAL_CACHE[key]
+    if not ser:
+        return (None, None, None)
+    eps = _asof_pair(ser.get("eps"), asof)
+    bvps = _asof_pair(ser.get("bvps"), asof)
+    sps = _asof_pair(ser.get("sps"), asof)
+    ep = (eps / px) if eps is not None else None
+    bp = (bvps / px) if bvps is not None else None
+    sp = (sps / px) if sps is not None else None
+    return (ep, bp, sp)
+
+
+def _asof_pair(pairs, asof):
+    """Last value of a [(date,val),...] step series on/before `asof`, or None. (Pairs pre-sorted.)"""
+    if not pairs:
+        return None
+    cut = str(asof) if asof else None
+    last = None
+    for d, v in pairs:
+        if cut is None or str(d)[:10] <= cut:
+            last = v
+        else:
+            break
+    return last
+
+
+def _value_series_from_bundle(b):
+    """Extract per-share step series {eps, bvps, sps} from a Screener bundle — each a date-sorted
+    [(asof_date, value)] list. EPS from valuation.EPS (as-of dated); BVPS/SPS from annual statements
+    lagged +3m (results-release; no look-ahead). Returns {} if unextractable. Reproduces the
+    mesh_research extraction so the brain's value leg == the validated panel's value leg."""
+    out = {}
+    val = b.get("valuation") or {}
+    eps_pairs = val.get("EPS")
+    if eps_pairs:
+        rows = sorted((str(d), _f(v, None)) for d, v in eps_pairs if d and _f(v, None) is not None)
+        if rows:
+            out["eps"] = rows
+    bvps, sps = _annual_bvps_sps(b)
+    if bvps:
+        out["bvps"] = bvps
+    if sps:
+        out["sps"] = sps
+    return out
+
+
+def _annual_bvps_sps(b):
+    """Annual book-value-per-share + sales-per-share as date-sorted (asof,val) pairs from the bundle's
+    profit_loss + balance_sheet statements. shares = PAT/EPS (cr); BVPS = networth/shares;
+    SPS = sales/shares. as-of = fiscal-end + 3 months (results-release lag → no look-ahead)."""
+    try:
+        st = b.get("statements") or {}
+        pl = st.get("profit_loss") if isinstance(st.get("profit_loss"), list) else None
+        bs = st.get("balance_sheet") if isinstance(st.get("balance_sheet"), list) else None
+        if not pl or not bs:
+            return None, None
+        pat = _stmt_row(pl, ["net profit"])
+        eps = _stmt_row(pl, ["eps"])
+        sales = _stmt_row(pl, ["sales", "revenue"])
+        eqcap = _stmt_row(bs, ["equity capital"])
+        reserves = _stmt_row(bs, ["reserves"])
+        bvps_pairs, sps_pairs = [], []
+        for c in pat:
+            asof = _fiscal_asof(c)
+            if asof is None:
+                continue
+            p, e, sa = pat.get(c), eps.get(c), sales.get(c)
+            shares = (p / e) if (p is not None and e not in (None, 0)) else None
+            if shares in (None, 0):
+                continue
+            ec, rv = eqcap.get(c), reserves.get(c)
+            nw = ((ec or 0.0) + (rv or 0.0)) if (ec is not None or rv is not None) else None
+            if nw is not None:
+                bvps_pairs.append((asof, nw / shares))
+            if sa is not None:
+                sps_pairs.append((asof, sa / shares))
+        bvps_pairs.sort(); sps_pairs.sort()
+        return (bvps_pairs or None, sps_pairs or None)
+    except Exception:
+        return None, None
+
+
+def _stmt_row(table, aliases):
+    """{period_col: float} for the first statement row whose label matches any alias."""
+    al = [a.lower() for a in aliases]
+    for row in table:
+        lk = "Unnamed: 0" if "Unnamed: 0" in row else next(iter(row), None)
+        if lk and any(a in str(row.get(lk, "")).lower() for a in al):
+            out = {}
+            for c, v in row.items():
+                if c == lk:
+                    continue
+                fv = _f(v, None)
+                out[c] = fv
+            return out
+    return {}
+
+
+def _fiscal_asof(label):
+    """'Mar 2023'/'2023-03'/'Mar-23' → 'YYYY-MM-DD' string = fiscal-end + 3 months (results lag), or
+    None. Conservative (a year's figure is only 'known' a quarter after year-end → no look-ahead)."""
+    import pandas as pd
+    ts = pd.to_datetime(str(label).strip(), errors="coerce")
+    if pd.isna(ts):
+        for fmt in ("%b %Y", "%b-%y", "%b-%Y", "%Y-%m", "%Y"):
+            try:
+                ts = pd.Timestamp(pd.to_datetime(str(label).strip(), format=fmt))
+                break
+            except Exception:
+                continue
+    if pd.isna(ts):
+        return None
+    return ((ts + pd.offsets.MonthEnd(0) + pd.DateOffset(months=3)) + pd.offsets.MonthEnd(0)).strftime("%Y-%m-%d")
+
+
+# ── the brains ────────────────────────────────────────────────────────────────────────────────────
+# Each takes (uni, asof) where uni = list of candidate dicts (mutated in place: u["score"] set, and
+# u["arm"] expected present). Returns a small diag dict (force coverage, the brain id). After a brain
+# runs, the SAME waterfill places weights — only the score changed.
+
+def _attach_forces(uni, asof):
+    """Compute the cross-sectional force z-scores ONCE for the candidate set as-of `asof`, and attach
+    them to each u: u["z_arm"], u["z_mom"], u["z_val"] (each 0.0 where the raw force is missing — a
+    neutral nudge, never a penalty). Returns coverage counts. Shared by every brain so the signals are
+    computed identically across desks (the only difference is how a brain WEIGHTS these three z's)."""
+    arm_raw = [u.get("arm") for u in uni]
+    mom_raw = [momentum_6m1m(u["sym"], asof) for u in uni]
+    val_raw = []
+    for u in uni:
+        ep, bp, sp = value_yields(u["sym"], asof)
+        legs = [_zsafe(x) for x in (ep, bp, sp)]
+        # combine the three cheapness yields cross-sectionally below; store the raw triple for now
+        u["_val_legs"] = (ep, bp, sp)
+    z_arm = _zscore(arm_raw)
+    z_mom = _zscore(mom_raw)
+    # value_z = mean of the cross-sectional z of E/P, B/P, S/P (matches mesh_research._combined_value_z)
+    z_ep = _zscore([u["_val_legs"][0] for u in uni])
+    z_bp = _zscore([u["_val_legs"][1] for u in uni])
+    z_sp = _zscore([u["_val_legs"][2] for u in uni])
+    z_val = []
+    for i, u in enumerate(uni):
+        legs = [z for z, raw in zip((z_ep[i], z_bp[i], z_sp[i]), u["_val_legs"]) if raw is not None and raw == raw]
+        z_val.append(sum(legs) / len(legs) if legs else 0.0)
+    for i, u in enumerate(uni):
+        u["z_arm"], u["z_mom"], u["z_val"] = z_arm[i], z_mom[i], z_val[i]
+        u.pop("_val_legs", None)
+    return {
+        "n": len(uni),
+        "cov_arm": sum(1 for r in arm_raw if r is not None),
+        "cov_mom": sum(1 for r in mom_raw if r is not None and r == r),
+        "cov_val": sum(1 for u in uni if u["z_val"] != 0.0),
+    }
+
+
+def _zsafe(x):
+    return x if (x is not None and x == x) else None
+
+
+def brain_core_multifactor(uni, asof):
+    """LENS 1 — CORE-MULTIFACTOR (the validated default workhorse).
+    score = z(ARM) + z(resid_mom⊥ARM) + 0.5·z(resid_val⊥ARM). Momentum and value are ORTHOGONALIZED
+    against ARM so each adds INDEPENDENT breadth (not a re-weighting of revisions). This is the one
+    construction the research stress-tested to destruction (OOS IC@6m ~0.11, 100% all-starts beat-rate).
+    LAW: IC from two replicated, imperfectly-correlated factors (analyst-revision + price momentum);
+    BR widened by adding near-orthogonal value; TC leak = momentum TURNOVER (the binding constraint —
+    its deployable IR must be turnover-validated)."""
+    cov = _attach_forces(uni, asof)
+    z_arm = [u["z_arm"] for u in uni]
+    r_mom = _orthogonalize([u["z_mom"] for u in uni], z_arm)
+    r_val = _orthogonalize([u["z_val"] for u in uni], z_arm)
+    for i, u in enumerate(uni):
+        u["score_raw"] = z_arm[i] + r_mom[i] + 0.5 * r_val[i]
+    _rescale_positive(uni)
+    cov["brain"] = "core_multifactor"
+    return cov
+
+
+def brain_momentum_led(uni, asof):
+    """LENS 2 — MOMENTUM-LED (price momentum primary, ARM/value as confirmation/filter).
+    score = z(mom) + 0.5·z(resid_arm⊥mom) + 0.25·z(resid_val⊥mom). Momentum leads (it's the single
+    strongest standalone force, IC@6m ~0.098); ARM confirms the trend has analyst support; value is a
+    light contrarian brake on chasing the most expensive winners.
+    LAW: IC primarily from price momentum; BR from the ARM-confirmation overlay (de-correlated wins);
+    TC leak = HIGH TURNOVER (fastest clock of the four brains) — the hardest transfer, best where
+    liquidity is deep (large/mid)."""
+    cov = _attach_forces(uni, asof)
+    z_mom = [u["z_mom"] for u in uni]
+    r_arm = _orthogonalize([u["z_arm"] for u in uni], z_mom)
+    r_val = _orthogonalize([u["z_val"] for u in uni], z_mom)
+    for i, u in enumerate(uni):
+        u["score_raw"] = z_mom[i] + 0.5 * r_arm[i] + 0.25 * r_val[i]
+    _rescale_positive(uni)
+    cov["brain"] = "momentum_led"
+    return cov
+
+
+def brain_value_revision(uni, asof):
+    """LENS 3 — VALUE-REVISION CONTRARIAN (cheap AND being upgraded).
+    score = z(val) + z(ARM) (additive rank-sum — the validated form; the multiplicative 'corner' is
+    DEAD). Long names that are both cheap and seeing rising analyst estimates — a revision turning up
+    ON a cheap name is the catalyst that prevents a value trap.
+    LAW: IC from value DIVERSIFYING ARM (margin +0.019, but explicitly regime-conditional — value
+    HURTS in growth-led 2017-20-type regimes; that's its identity, not a bug); BR from value⊥revision
+    near-orthogonality (two real independent legs); TC leak = CAPACITY (deep-value names are often less
+    liquid → a long-only book can't always size the cheapest names). Lowest turnover, best price-TC,
+    but a capacity/liquidity leak instead."""
+    cov = _attach_forces(uni, asof)
+    for u in uni:
+        u["score_raw"] = u["z_val"] + u["z_arm"]
+    _rescale_positive(uni)
+    cov["brain"] = "value_revision"
+    return cov
+
+
+def brain_regime_switch(uni, asof, regime=None):
+    """LENS 4 — REGIME-SWITCH (tilt the blend by a simple market read).
+    A single breadth/trend regime read decides the mix between the other brains:
+      • RISK-ON  (broad market uptrend, breadth strong) → momentum-led tilt (ride the trend).
+      • RISK-OFF (market below trend, breadth weak)      → value-revision tilt (defensive/cheap).
+      • NEUTRAL                                          → the core multi-factor blend.
+    The regime is read from the candidate set's OWN cross-section as-of date (no external macro call,
+    no look-ahead): fraction of names with positive 6m momentum (breadth-of-momentum) — a cheap, robust
+    market-state proxy. > 0.55 = risk-on, < 0.45 = risk-off, else neutral.
+    LAW: IC engine ROTATES with the state (momentum's IC dominates in trends, value's in
+    mean-reversion) — this is a TC/BR management lens more than a new IC source: it buys the right
+    transfer leak for the regime (turnover when trends pay, capacity-patience when they don't). The
+    research flagged a HARD regime-switch as fragile, so this is a SOFT 3-state tilt over the SAME
+    validated forces, not a hand-tuned weight vector."""
+    cov = _attach_forces(uni, asof)
+    if regime is None:
+        regime = _read_regime(uni)
+    z_arm = [u["z_arm"] for u in uni]
+    z_mom = [u["z_mom"] for u in uni]
+    z_val = [u["z_val"] for u in uni]
+    if regime == "risk_on":           # momentum-led
+        r_arm = _orthogonalize(z_arm, z_mom)
+        r_val = _orthogonalize(z_val, z_mom)
+        sc = [z_mom[i] + 0.5 * r_arm[i] + 0.25 * r_val[i] for i in range(len(uni))]
+    elif regime == "risk_off":        # value-revision
+        sc = [z_val[i] + z_arm[i] for i in range(len(uni))]
+    else:                             # neutral → core multifactor
+        r_mom = _orthogonalize(z_mom, z_arm)
+        r_val = _orthogonalize(z_val, z_arm)
+        sc = [z_arm[i] + r_mom[i] + 0.5 * r_val[i] for i in range(len(uni))]
+    for i, u in enumerate(uni):
+        u["score_raw"] = sc[i]
+    _rescale_positive(uni)
+    cov["brain"] = "regime_switch"
+    cov["regime"] = regime
+    return cov
+
+
+def _read_regime(uni):
+    """Cheap, no-look-ahead market-state read = breadth of 6-month momentum across the candidate set
+    (fraction with z_mom > 0). > 0.55 risk_on, < 0.45 risk_off, else neutral. (z_mom is mean-zero by
+    construction, so 'fraction > 0' is a clean breadth proxy of which way the cross-section is tilted.)"""
+    z = [u.get("z_mom", 0.0) for u in uni]
+    if not z:
+        return "neutral"
+    frac_up = sum(1 for v in z if v > 0) / len(z)
+    return "risk_on" if frac_up > 0.55 else ("risk_off" if frac_up < 0.45 else "neutral")
+
+
+def _rescale_positive(uni):
+    """The waterfill places weight ∝ score, so scores must be POSITIVE. Map each brain's signed
+    score_raw onto a strictly-positive scale by SHIFTING above the minimum (preserves the full ranking
+    AND the relative spacing). score = score_raw − min + 1 (so the worst name still gets a small
+    positive base weight, the best gets the largest)."""
+    raws = [u.get("score_raw", 0.0) for u in uni]
+    if not raws:
+        return
+    lo = min(raws)
+    for u in uni:
+        u["score"] = (u.get("score_raw", 0.0) - lo) + 1.0
+
+
+# ── brain registry + mandate→brain assignment ──────────────────────────────────────────────────────
+# Each entry: fn = the scoring function; play = default play-type horizon the brain trades on;
+# thesis = one-line plain-English brain; law = the IC·√BR·TC design intent (how we'll SCORE the desk).
+BRAINS = {
+    "core_multifactor": {
+        "fn": brain_core_multifactor, "play": "structural",
+        "thesis": "Analyst upgrades + price momentum + a cheapness lean, combined as orthogonalized "
+                  "residuals — the validated default that captures the one real multi-force edge.",
+        "law": "IC: two replicated imperfectly-correlated factors (ARM + 6m momentum). "
+               "BR: widened by near-orthogonal value. TC leak: momentum turnover (the binding cost).",
+    },
+    "momentum_led": {
+        "fn": brain_momentum_led, "play": "tactical",
+        "thesis": "Ride the strongest trends (6m price momentum) but only where analysts confirm and "
+                  "the name isn't egregiously expensive — a fast, trend-following desk.",
+        "law": "IC: price momentum (strongest standalone force). BR: ARM-confirmation overlay. "
+               "TC leak: HIGH turnover (fastest clock) — needs deep liquidity (large/mid).",
+    },
+    "value_revision": {
+        "fn": brain_value_revision, "play": "cyclical",
+        "thesis": "Buy cheap names whose analyst estimates have started turning UP — cheapness plus a "
+                  "revision catalyst, the contrarian's edge against the value trap.",
+        "law": "IC: value diversifying ARM (regime-conditional — loses in growth-led regimes by "
+               "design). BR: value⊥revision orthogonality. TC leak: capacity (deep-value illiquidity).",
+    },
+    "regime_switch": {
+        "fn": brain_regime_switch, "play": "structural",
+        "thesis": "Tilt between momentum (risk-on) and value-revision (risk-off) by a simple "
+                  "breadth-of-momentum market read; the core blend when the state is unclear.",
+        "law": "IC: rotates with the regime (momentum in trends, value in reversals). "
+               "BR/TC: a transfer-management lens — buys the right leak for the state, soft 3-state.",
+    },
+}
+_DEFAULT_BRAIN = "core_multifactor"
+
+
+def brain_for_mandate(category, mandate=None):
+    """Assign a DISTINCT FM brain to a scheme by its SEBI mandate, so different desks run different
+    philosophies (not one ARM clone):
+      • value / contra / dividend tilt  → value_revision  (cheap + upgrading — the stated style)
+      • hybrid / balanced-adv / DAA / multi-asset (an `equity_max` band = actively FLEXES equity)
+                                        → regime_switch   (the mandate IS a market-state allocator)
+      • small / mid / sectoral-thematic → momentum_led    (trend persistence strongest + tradable)
+      • everything else (large / flexi / multi / focused / ELSS) → core_multifactor (the default)
+    Returns a brain-id present in BRAINS."""
+    m = mandate or {}
+    cat = str(category or "").lower()
+    if m.get("tilt") in ("value", "yield") or "value" in cat or "contra" in cat:
+        return "value_revision"
+    # any mandate with an equity band it must flex (hybrid / balanced-advantage / DAA / multi-asset /
+    # equity-savings) is, by design, a market-state allocator → the regime-switch desk.
+    if m.get("daa") or m.get("equity_max") or "balanced advantage" in cat or "dynamic asset" in cat:
+        return "regime_switch"
+    buckets = set(m.get("buckets", []))
+    if m.get("thematic") or "sectoral" in cat or "thematic" in cat:
+        return "momentum_led"
+    if buckets == {"small"} or buckets == {"mid"}:
+        return "momentum_led"
+    return _DEFAULT_BRAIN
+
+
+def score_universe(uni, asof, brain_id=None):
+    """Run the chosen FM brain over the candidate universe `uni` (list of dicts), writing u["score"]
+    in place. Returns (brain_id, diag). Falls back to the default brain on an unknown id. THE single
+    entry point both build_rules_v0 (live book) and amc_replay.construct_targets (walk-forward) call —
+    so the scoring philosophy is shared and only the brain-id differs between desks."""
+    bid = brain_id if brain_id in BRAINS else _DEFAULT_BRAIN
+    diag = BRAINS[bid]["fn"](uni, asof)
+    diag["brain"] = bid
+    return bid, diag
+
+
 def waterfill(sel, equity_target, max_sector, sector_free="Unclassified", iters=50):
     """Place `equity_target` (fraction of NAV) across the names in `sel` ∝ each name's `score`,
     honoring per-name caps (`u['cap']`) AND a per-sector ceiling `max_sector` (the `sector_free`
@@ -479,18 +951,23 @@ def waterfill(sel, equity_target, max_sector, sector_free="Unclassified", iters=
     return equity_target - remaining
 
 
-def build_rules_v0(reg_entry, asof, equity_target=0.95, log=print):
-    """Deploy a fresh 100%-cash book into a mandate+liquidity-constrained, ARM-scored portfolio
-    as-of `asof`. Returns (book, trades, diag). No look-ahead: only prices/ARM ≤ asof are read.
+def build_rules_v0(reg_entry, asof, equity_target=0.95, brain_id=None, log=print):
+    """Deploy a fresh 100%-cash book into a mandate+liquidity-constrained, MULTI-FORCE-scored
+    portfolio as-of `asof`. Returns (book, trades, diag). No look-ahead: only prices/ARM/EPS ≤ asof.
 
     Method (reproducible): universe = the scheme's disclosed equity holdings that we can price on
-    `asof`; score = ARM percentile (else neutral 50); pick the top min(n_hi, |U|) by score; raw
-    weight ∝ score scaled to `equity_target` of NAV; clip each to min(max_pos, LIQ_DAYS×median
-    turnover / AUM); then scale any over-cap sector down to max_sector. Whatever isn't deployed
-    stays as cash (honest — a real book builds over days within liquidity)."""
+    `asof`; the chosen FM BRAIN (brain_for_mandate, or `brain_id` override) scores the set by a
+    DISTINCT multi-force philosophy (ARM + momentum + value, combined per the brain — NOT a single
+    ARM clone); pick the top min(n_hi, |U|) by that score; water-fill weights ∝ score under the
+    mandate single-name + sector caps and the liquidity cap; whatever isn't deployed stays cash.
+
+    The book/trades are tagged with the brain-id + its play-type so the desk's philosophy is legible.
+    LICENSING: raw per-stock ARM is used only IN MEMORY to score — only derived weights / play-type /
+    brain-id / aggregate coverage are persisted (the guard below is unchanged)."""
     m = reg_entry["mandate"]
     aum = _f(reg_entry["aum_cr"])
     asof = str(asof)
+    bid = brain_id or brain_for_mandate(reg_entry.get("category"), m)
     # a hybrid / balanced-advantage mandate caps equity (equity_max) — the rest is the debt+cash
     # sleeve we don't model as stocks, so it shows as cash. Target the middle of the equity band.
     emax = m.get("equity_max")
@@ -512,10 +989,12 @@ def build_rules_v0(reg_entry, asof, equity_target=0.95, log=print):
         if sec.upper() in ("", "N.A.", "NA", "-", "NONE", "UNCLASSIFIED"):
             sec = "Unclassified"
         uni.append({"sym": sym, "isin": h.get("isin"), "name": h.get("name") or sym,
-                    "sector": sec, "px": px, "arm": arm,
-                    "score": arm if arm is not None else 50.0, "real_pct": _f(h.get("pct"))})
+                    "sector": sec, "px": px, "arm": arm, "real_pct": _f(h.get("pct"))})
     if not uni:
         raise SystemExit("no priceable holdings — cannot construct a book")
+
+    # ── SCORE with the desk's FM brain (multi-force: ARM + momentum + value, combined per the brain)
+    bid, brain_diag = score_universe(uni, asof, bid)
 
     uni.sort(key=lambda u: (-u["score"], -u["real_pct"]))
     sel = uni[:min(m["n_hi"], len(uni))]
@@ -538,11 +1017,15 @@ def build_rules_v0(reg_entry, asof, equity_target=0.95, log=print):
     book = new_book(reg_entry)
     book["inception"] = asof
     book["asof"] = asof
+    book["brain"] = bid                              # the desk's FM philosophy (derived tag, not ARM)
+    book["brain_thesis"] = BRAINS[bid]["thesis"]
     # NOTE on what gets PERSISTED: the raw per-stock ARM value is LICENSED LSEG IP and must NEVER
     # be written to a committed file — so the book/blotter store only OUR derived decision (weight,
-    # within-book selection rank, the coarse play-type horizon tag) and a qualitative rationale. The
-    # exact ARM score stays in-memory (diag) and is reproducible locally from arm_repo.
+    # within-book selection rank, the coarse play-type horizon tag, the brain-id) and a qualitative
+    # rationale. The exact ARM score (and the per-stock force z's) stay in-memory (diag) and are
+    # reproducible locally from arm_repo + the price/screener panels.
     trades, deployed = [], 0.0
+    play_default = BRAINS[bid]["play"]
     for rank, u in enumerate([x for x in sel if x["w"] > 0], 1):
         qty = round(u["w"] * aum * 1e7 / u["px"])
         if qty <= 0:
@@ -551,22 +1034,26 @@ def build_rules_v0(reg_entry, asof, equity_target=0.95, log=print):
         book["positions"][u["sym"]] = {
             "isin": u["isin"], "name": u["name"], "sector": u["sector"],
             "qty": qty, "avg_cost": round(u["px"], 4), "play_type": play,
-            "entry_date": asof, "thesis_ref": None, "sel_rank": rank,
+            "entry_date": asof, "thesis_ref": None, "sel_rank": rank, "brain": bid,
         }
         val = qty * u["px"] / 1e7
         deployed += val
         trades.append({"date": asof, "sym": u["sym"], "isin": u["isin"], "name": u["name"],
                        "side": "BUY", "qty": qty, "price": round(u["px"], 4), "value_cr": round(val, 4),
-                       "play_type": play, "rationale": f"quant rank #{rank} (analyst-revision led); "
-                       f"deploy {round(u['w']*100,2)}% as {play} under {m['max_pos']*100:.0f}% name / "
-                       f"{m['max_sector']*100:.0f}% sector / liquidity caps"})
+                       "play_type": play, "brain": bid,
+                       "rationale": f"quant rank #{rank} ({bid}); deploy {round(u['w']*100,2)}% as "
+                       f"{play} under {m['max_pos']*100:.0f}% name / {m['max_sector']*100:.0f}% sector "
+                       f"/ liquidity caps"})
     book["cash_cr"] = round(aum - deployed, 4)
     diag = {"universe": len(uni), "n_priced": n_priced, "n_arm_scored": n_arm,
+            "brain": bid, "brain_coverage": {k: brain_diag.get(k) for k in ("cov_arm", "cov_mom", "cov_val")},
+            "regime": brain_diag.get("regime"),
             "selected": len(book["positions"]), "deployed_cr": round(deployed, 1),
             "deployed_pct": round(100 * deployed / aum, 2) if aum else None}
-    log(f"  built book: {diag['selected']} names, deployed {diag['deployed_pct']}% "
-        f"(₹{diag['deployed_cr']:,} cr), cash {round(100-diag['deployed_pct'],2)}%; "
-        f"ARM-scored {n_arm}/{n_priced} priced names")
+    log(f"  built book [{bid}]: {diag['selected']} names, deployed {diag['deployed_pct']}% "
+        f"(₹{diag['deployed_cr']:,} cr), cash {round(100-diag['deployed_pct'],2)}%; forces "
+        f"ARM {brain_diag.get('cov_arm')}/mom {brain_diag.get('cov_mom')}/val {brain_diag.get('cov_val')}"
+        f" of {n_priced} priced names")
     return book, trades, diag
 
 

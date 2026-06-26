@@ -4,13 +4,37 @@
 > don't get lost behind in-the-moment side-quests. `[x]` done · `[~]` in progress · `[ ]` to do.
 > Mirrors the task widget (task #s in brackets). KV asked for this 2026-06-26.
 
-## ⛔ CURRENT BLOCKERS / IN-FLIGHT
-- **A full terminal build is RUNNING** (PID 35268, started 20:56). Holds `data/_refresh/.build.lock`.
-  - It will regenerate the shell → **surfaces the new valuation charts (EV/EBITDA·P/S·EV/Sales·P/B·DY·FCFy)** when it completes+publishes. Wiring already correct; was just a stale shell.
-  - **RULE: no second build, no edits to `static/vistas.js` / `vistas/*.py` build-inputs until this lock releases.**
-  - As of ~21:47 still running (~50 min in, 2.7 GB; shell not yet rebuilt). Re-check `.build.lock` before any edit/build.
-- **W2 Mesh research workflow RUNNING** (`mesh-multiforce-research`, read-only — safe alongside the build).
-- **W7 breadth DESIGN workflow DONE** → `ASSET_ALLOCATOR_BREADTH_SPEC.md` + shopping list (global-ETF breadth needs constituents we lack).
+## ✅ UNBLOCKED — 2026-06-26 ~22:20
+- **The in-flight build FINISHED + PUBLISHED CLEAN** (commit `a93e9cbeb` 22:15, tree clean). Lock released.
+  - **Valuation charts are LIVE** (EV/EBITDA·P/S·EV/Sales·P/B·DY·FCFy in Fundamentals — `valMultiChart` ×7 in the published shell). #77/#78 ✅ R6 closed.
+- All four research/spec docs on disk: `FLOW_DECOMPOSITION.md`, `ASSET_ALLOCATOR_BREADTH_SPEC.md`, `MESH_RESEARCH_FINDINGS.md`, `FUNDAMENTAL_LAW.md`.
+
+## 🧭 EXECUTION PLAN (post-unblock — easy first, complex last, batched into builds)
+**Two independent publish paths:** (1) TERMINAL (`publish_terminal.py` → vistas.js + engines + baked globals) and (2) DIGITAL-AMC (`amc_site.py` → /digital-amc/). They don't share a build, so run them as two batches.
+
+- **WAVE 1 (parallel agents, DISTINCT files, engines+data only — NO builds, NO lock, NO JS):**
+  - A1 flow-decomp engine → `vistas/funds_flows.py` (+ data output) per `FLOW_DECOMPOSITION.md`  [#51]
+  - A2 tilt-taxonomy unify → `vistas/funds_portfolio_viz.py`  [#81]
+  - A3 rotation data → `vistas/screens.py` traj + NEW centroid engine (+ data output)  [#44/#86/#87/#88]
+  - A4 breadth engine → NEW `vistas/breadth.py` (+ data output) per `ASSET_ALLOCATOR_BREADTH_SPEC.md`  [#W7b]
+  - A5 FM multi-force lenses → `vistas/amc_firm.py` + `vistas/amc_replay.py` per `MESH_RESEARCH_FINDINGS.md`  [#85/W2]
+  - A6 digital-AMC surfacing → `vistas/amc_site.py` (books/NAV/blotter/scorecards)  [#69/W3]
+- **WAVE 2 (single integration pass — shared files `static/vistas.js` + the bake-wiring):** wire all new baked globals + all UI (rebase toggle #49, cycle-position #47, flow-decomp UI #51, NEW Asset-Allocator tab + breadth charts + MOVE Consensus panel W7d, rotation trail UI W1a).
+- **WAVE 3 builds:** (1) `publish_terminal.py` full rebuild → validate → publish; (2) digital-AMC site build → validate → publish.
+- **LAST / complex:** W5 deep equity-analyst engine (`vistas/equity_research.py`); #39 actionable aggregation (verify-or-fold).
+
+## ▶▶▶ LIVE STATE — 2026-06-26 (post all engine agents)  ·  full detail in `INTEGRATION_CONTRACTS.md`
+**ALL 7 ENGINE AGENTS DONE:** A1 flow-decomp ✓ · A2 tilt ✓ · A3 rotation ✓ · A4 breadth ✓ · A5 FM-brains ✓ · A6 amc-site-UI ✓ · W5 deep-analyst engine ✓.
+**MY deck/engine edits DONE:** deck.py = breadth bake (`window.VISTAS_BREADTH`, fresh-build) + rotation centroids wiring + tilt hook 1 (canonical fund equity book). benchmarks.py = tilt hook 2a (future-proof; benchmark side already macro — re-tag no-op). 
+**TWO AGENTS STILL RUNNING:**
+  - `aa0430a0dfefaa25f` = JS front-end (sole vistas.js owner): Asset-Allocator tab + breadth charts + m% screen + MOVE Consensus + flow-decomp 3-way toggle + rebase toggle + **rotation UI (sent via SendMessage)**. Will run `node --check`.
+  - `a4609b3897de06489` = digital-AMC: re-run replay w/ 4 brains + add benchmark-NAV series to amc_replay + rebuild amc_site (output/_amc/site). NOT publishing.
+**ALL 8 AGENTS DONE** (incl. digital-AMC replay re-run). FINISH SEQUENCE (one push ships BOTH sites — publish_site() does `git add -A` on _pages, so staging digital-amc/ before --no-rebuild publishes terminal+digital-amc together):
+  1. ✅ **TERMINAL BUILD RUNNING (bkdf5nehc, background):** `python publish_terminal.py --no-push --no-fetch` (FULL rebuild — re-inlines vistas.js, bakes VISTAS_BREADTH, builds rotation centroids + breadth fresh, runs Node validation; NO publish yet). --no-fetch is the sanctioned feature-publish path (today's 20:00 pipeline already fetched; the 4 degraded feeds would only hang). Full REBUILD still happens (not the banned bake-only shortcut).
+  2. On build done → `node _pup_allocator.js` (verify Asset-Allocator tab + rotation render in real Chromium, 0 errors — the stub can't see the new tab). Also _deck_runtime_test/_parity already PASS (JS agent ran them).
+  3. `cp output/_amc/site/index.html _pages/digital-amc/index.html` (stage the new digital-AMC site — new brains + NAV-vs-benchmark + blotter + scorecards). NOTE the honest IR finding: brains raised IC on 3/4 desks but realized IR FELL where TC leaked (ABSL 0.79→0.37 [old was β-tilt], Quant −0.35→−0.47); SBI improved all axes. Licensing grep = 0 raw ARM.
+  4. If probe green → `python publish_terminal.py --no-rebuild` → robocopy terminal_site→_pages/terminal/, `git add -A` (picks up terminal/ + digital-amc/), commit, push BOTH live; then backup_codebase() (step 5/5) → vistas-codebase + arm encrypted mirror. If probe RED → fix the JS via the JS agent (SendMessage aa0430a0dfefaa25f), rebuild, re-probe.
+**DEFERRED (clean follow-ups, NOT blockers):** W5 dossier panel surfacing (bake data/research/<SYM>.json + JS panel) · #81 hook 3 (Funds-tab granular path, needs funds regen) · #39 actionable aggregation (verify-or-fold vs #45) · digital-AMC: TC-aware brain implementation (turnover/constraint control — the IC-up-IR-down finding).
 
 ## ★ THE 5 WORKSTREAMS (this session — finish all)
 

@@ -24,6 +24,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 AMC  = ROOT / "output" / "_amc"
 SITE = AMC / "site"
+BOOKS = ROOT / "amc_book"          # the per-AMC / per-scheme paper-trading books (replay artifacts)
 SITE.mkdir(parents=True, exist_ok=True)
 
 DIVISION_ORDER = ["Core Equity", "Strategy", "Thematic", "Hybrid & Asset Allocation", "Quant"]
@@ -335,6 +336,54 @@ table{width:100%;border-collapse:collapse;font-size:12.5px} td{padding:5px 6px;b
 .trace:hover{background:#16294a}
 .foot{color:var(--mut);font-size:11.5px;margin-top:26px;border-top:1px solid var(--bd);padding-top:13px}
 @media(max-width:1000px){.kan{grid-template-columns:1fr}.cmd{grid-template-columns:1fr}}
+/* ── top tabs (Trading Floor | Schemes & Books) ── */
+.tabs{display:flex;gap:6px;margin:4px 0 18px;border-bottom:2px solid var(--bd);flex-wrap:wrap}
+.tabbtn{background:none;border:none;color:var(--mut);font:600 13.5px/1 inherit;padding:10px 16px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px}
+.tabbtn:hover{color:var(--fg)}
+.tabbtn.on{color:var(--acc);border-bottom-color:var(--acc)}
+.tabview{display:none} .tabview.on{display:block}
+/* ── books table (schemes overview) ── */
+.bktbl,.bltbl,.holdtbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.bktbl th,.bltbl th{text-align:left;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--mut);padding:7px 8px;border-bottom:1px solid var(--bd2)}
+.bktbl td{padding:9px 8px;border-bottom:1px solid var(--bd);vertical-align:middle}
+.bktbl tbody tr:hover{background:#141c2c}
+.num{text-align:right;font-variant-numeric:tabular-nums}
+th.num{text-align:right}
+.spark{display:block}
+/* ── scheme panel ── */
+.schhead h2{font-size:19px;margin:0;color:#f1f5f9}
+.scbacklist{margin-bottom:8px}
+/* ── scorecard cards ── */
+.scwin{font-size:11.5px;margin:2px 0 10px}
+.sccards{display:grid;grid-template-columns:repeat(auto-fill,minmax(186px,1fr));gap:10px}
+.sccard{background:var(--pnl);border:1px solid var(--bd);border-radius:10px;padding:11px 13px}
+.sck{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--mut)}
+.scv{font-size:21px;font-weight:800;margin:3px 0}
+.scs{font-size:10.5px;color:var(--mut)}
+.screads{font-size:12.5px;padding-left:18px} .screads li{margin:5px 0;color:#cbd5e1}
+.scnote{font-size:11px;border-top:1px dashed var(--bd);padding-top:9px;margin-top:9px;line-height:1.6}
+/* ── fact sheet ── */
+.fs-asof{font-size:12px;color:var(--mut);margin-bottom:8px}
+.fstats{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.fstat{background:var(--pnl);border:1px solid var(--bd);border-radius:9px;padding:8px 13px;min-width:96px}
+.fstat .k{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var(--mut)}
+.fstat b{font-size:15px}
+.fs-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:18px}
+.holdtbl td{padding:5px 7px;border-bottom:1px solid var(--bd);font-size:12px}
+.ptag{font-size:9px;font-weight:700;text-transform:uppercase;padding:1px 6px;border-radius:4px;border:1px solid}
+.pt-structural{color:#38bdf8;border-color:#38bdf855;background:#38bdf814}
+.pt-tactical{color:#fbbf24;border-color:#fbbf2455;background:#fbbf2414}
+.pt-cyclical{color:#a78bfa;border-color:#a78bfa55;background:#a78bfa14}
+.secrow{display:flex;align-items:center;gap:8px;margin:4px 0;font-size:12px}
+.secn{min-width:118px;color:#cbd5e1} .secv{min-width:42px;text-align:right;color:var(--mut)}
+.secbar{flex:1;height:8px;background:#1b2433;border-radius:6px;border:1px solid #232f44;overflow:hidden}
+.secfill{display:block;height:100%;background:linear-gradient(90deg,#1d4ed8,#38bdf8);border-radius:6px}
+/* ── blotter ── */
+.blwrap{max-height:560px;overflow:auto;border:1px solid var(--bd);border-radius:10px}
+.bltbl th{position:sticky;top:0;background:var(--pnl2);z-index:1}
+.bltbl td{padding:7px 8px;border-bottom:1px solid var(--bd);font-size:12px;vertical-align:top}
+.bl-why{color:var(--mut);font-size:11.5px;max-width:340px}
+@media(max-width:1000px){.fs-grid{grid-template-columns:1fr}}
 """
 
 SCRIPT = """
@@ -376,11 +425,424 @@ function flowSearch(){
   note.style.display='';
   document.querySelectorAll('.kc').forEach(function(k){ k.classList.toggle('dim', norm(k.getAttribute('data-stock')).indexOf(q)<0); });
 }
+// ── top tabs: Trading Floor | Schemes & Books ──
+function showTab(id){
+  document.querySelectorAll('.tabview').forEach(function(v){v.classList.toggle('on', v.id==='tab-'+id);});
+  document.querySelectorAll('.tabbtn').forEach(function(b){b.classList.toggle('on', b.getAttribute('data-tab')===id);});
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+// ── schemes sub-nav: open one scheme panel, hide the overview ──
+function openScheme(key){
+  document.getElementById('schemes-overview').style.display='none';
+  document.querySelectorAll('.schpanel').forEach(function(p){p.style.display = (p.id==='sch-'+key)?'block':'none';});
+  document.getElementById('schemes-back').style.display='';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function schemesHome(){
+  document.querySelectorAll('.schpanel').forEach(function(p){p.style.display='none';});
+  document.getElementById('schemes-overview').style.display='block';
+  document.getElementById('schemes-back').style.display='none';
+}
 """
+
+# ══════════════════════════════════════════════════════════════════════════════════════════════
+#  BOOKS — surface the per-scheme paper-trading replay artifacts (NAV / fact-sheet / blotter / scorecard)
+#  These read amc_book/<amc>/<scheme>/{book.json, replay/scorecard.json, replay/monthly_summary.json,
+#  daily/*.json, blotter.jsonl}. Everything degrades to "—" if a file is missing — never raises.
+#  LICENCE: the books carry NO raw per-stock ARM by design; we surface only derived weights, play-types,
+#  NAV, and the aggregate IC/TC/IR that the replay already reduced. We never compute or show raw ARM.
+# ══════════════════════════════════════════════════════════════════════════════════════════════
+def _read_json(p):
+    try:
+        return json.loads(Path(p).read_text(encoding="utf-8"))
+    except Exception:
+        return None
+
+def _read_jsonl(p, limit=None):
+    out = []
+    try:
+        with open(p, encoding="utf-8") as fh:
+            for ln in fh:
+                ln = ln.strip()
+                if not ln:
+                    continue
+                try:
+                    out.append(json.loads(ln))
+                except Exception:
+                    pass
+                if limit and len(out) >= limit:
+                    break
+    except Exception:
+        pass
+    return out
+
+def load_books():
+    """Walk amc_book/ data-driven. Returns a list of scheme dicts (no hard-coding of names)."""
+    books = []
+    if not BOOKS.exists():
+        return books
+    for amc_dir in sorted(p for p in BOOKS.iterdir() if p.is_dir()):
+        for sch_dir in sorted(p for p in amc_dir.iterdir() if p.is_dir()):
+            book = _read_json(sch_dir / "book.json") or {}
+            scorecard = _read_json(sch_dir / "replay" / "scorecard.json") or {}
+            monthly = _read_json(sch_dir / "replay" / "monthly_summary.json") or []
+            # newest daily fact-sheet: the daily/ folder holds one file per month, each a {date: sheet} map
+            daily_sheet, daily_date = None, None
+            ddir = sch_dir / "daily"
+            if ddir.exists():
+                for dfile in sorted(p for p in ddir.iterdir() if p.suffix == ".json"):
+                    dd = _read_json(dfile) or {}
+                    for dt in sorted(dd.keys()):
+                        if dd[dt]:
+                            daily_sheet, daily_date = dd[dt], dt
+            # fall back to the committed FACT_SHEET_*.json if no daily/ rollup
+            if daily_sheet is None:
+                fs = sorted(sch_dir.glob("FACT_SHEET_*.json"))
+                if fs:
+                    daily_sheet = _read_json(fs[-1]) or None
+                    if daily_sheet:
+                        daily_date = daily_sheet.get("header", {}).get("asof")
+            blotter = _read_jsonl(sch_dir / "blotter.jsonl")
+            nav_series = []                      # [(date, nav)] — prefer monthly (light); nav.csv is daily (heavy)
+            for m in (monthly or []):
+                if isinstance(m, dict) and m.get("date") is not None and m.get("nav") is not None:
+                    nav_series.append((m["date"], m["nav"]))
+            # benchmark NAV line (rebased to 100 at the book start by the replay) — daily CSV, sampled
+            # at the book's month-end NAV dates so the two lines share one x-axis for the overlay.
+            bench_daily = _read_nav_csv(sch_dir / "replay" / "benchmark_nav.csv")
+            bench_series = _align_bench(nav_series, bench_daily) if bench_daily else []
+            books.append({
+                "amc": book.get("amc") or amc_dir.name,
+                "scheme": book.get("scheme") or sch_dir.name,
+                "key": _bk(amc_dir.name + "-" + sch_dir.name),
+                "category": book.get("category"),
+                "benchmark": book.get("benchmark") or scorecard.get("scorecard", {}).get("benchmark_name"),
+                "aum0_cr": book.get("aum0_cr"),
+                "code": book.get("code"),
+                "n_positions": len(book.get("positions", {}) or {}),
+                "book": book,
+                "scorecard": scorecard,
+                "monthly": monthly or [],
+                "daily_sheet": daily_sheet,
+                "daily_date": daily_date,
+                "blotter": blotter,
+                "nav_series": nav_series,
+                "bench_series": bench_series,   # [(date, bench_nav)] aligned to nav_series dates (or [])
+            })
+    return books
+
+def _read_nav_csv(p):
+    """Read a replay nav.csv / benchmark_nav.csv into {date_str: float}. Returns {} if absent/bad.
+    No raw ARM anywhere — these are NAV levels only."""
+    out = {}
+    try:
+        with open(p, encoding="utf-8") as fh:
+            head = fh.readline()                 # 'date,nav'
+            for ln in fh:
+                parts = ln.strip().split(",")
+                if len(parts) >= 2:
+                    try:
+                        out[parts[0][:10]] = float(parts[1])
+                    except Exception:
+                        pass
+    except Exception:
+        return {}
+    return out
+
+def _align_bench(nav_series, bench_daily):
+    """Sample the daily benchmark NAV at each of the book's month-end NAV dates (exact date, else the
+    nearest earlier benchmark observation) → [(date, bench_nav)] sharing the book's x-axis. Both are
+    already rebased to 100 at inception by the replay, so the lines start together."""
+    if not nav_series or not bench_daily:
+        return []
+    bdates = sorted(bench_daily.keys())
+    out = []
+    import bisect
+    for d, _ in nav_series:
+        ds = str(d)[:10]
+        if ds in bench_daily:
+            out.append((d, bench_daily[ds])); continue
+        i = bisect.bisect_right(bdates, ds) - 1   # nearest benchmark obs on/before this book date
+        if i >= 0:
+            out.append((d, bench_daily[bdates[i]]))
+    return out
+
+def _bk(s):
+    """slugify a string into a safe DOM id fragment"""
+    return "".join(c if (c.isalnum()) else "-" for c in str(s)).strip("-").lower()
+
+def _fmt(v, nd=2, pct=False, plus=False):
+    try:
+        v = float(v)
+    except Exception:
+        return "—"
+    s = f"{v:+.{nd}f}" if plus else f"{v:.{nd}f}"
+    return s + ("%" if pct else "")
+
+def sparkline(series, w=150, h=34, up="#16a34a", dn="#dc2626", bench=None, bench_color="#64748b"):
+    """Inline SVG NAV sparkline from [(date,nav),…] — fully offline, no Plotly. Colour by net direction.
+    If `bench` ([(date,nav),…], same rebase) is given, overlay it as a thin dashed reference line on a
+    SHARED y-scale (so book-vs-benchmark separation is visible at a glance)."""
+    ys = [float(n) for _, n in series if n is not None]
+    if len(ys) < 2:
+        return '<span class="muted">—</span>'
+    bys = [float(n) for _, n in (bench or []) if n is not None]
+    lo = min(ys + bys); hi = max(ys + bys)        # shared scale across both lines
+    rng = (hi - lo) or 1.0
+
+    def _poly(vals):
+        m = len(vals); pts = []
+        for i, y in enumerate(vals):
+            px = (i / (m - 1)) * (w - 2) + 1 if m > 1 else 1
+            py = h - 2 - ((y - lo) / rng) * (h - 4)
+            pts.append(f"{px:.1f},{py:.1f}")
+        return " ".join(pts)
+
+    color = up if ys[-1] >= ys[0] else dn
+    poly = _poly(ys)
+    area = f"1,{h-1} " + poly + f" {w-1},{h-1}"
+    bench_poly = (f'<polyline points="{_poly(bys)}" fill="none" stroke="{bench_color}" stroke-width="1.1" '
+                  f'stroke-dasharray="3,2" stroke-linejoin="round" opacity="0.85"/>') if len(bys) >= 2 else ""
+    return (f'<svg class="spark" width="{w}" height="{h}" viewBox="0 0 {w} {h}" preserveAspectRatio="none">'
+            f'<polygon points="{area}" fill="{color}" opacity="0.10"/>'
+            f'{bench_poly}'
+            f'<polyline points="{poly}" fill="none" stroke="{color}" stroke-width="1.6" '
+            f'stroke-linejoin="round" stroke-linecap="round"/></svg>')
+
+def nav_vs_bench_chart(b, w=620, h=190):
+    """A labelled NAV-vs-benchmark line chart for the scheme panel — book NAV (solid) overlaid with the
+    benchmark NAV line (dashed), both rebased to 100 at inception by the replay, on a shared y-scale and
+    one date x-axis. Pure inline SVG (offline). Returns '' if there's no NAV path."""
+    ns = b.get("nav_series") or []
+    bs = b.get("bench_series") or []
+    ys = [float(n) for _, n in ns if n is not None]
+    if len(ys) < 2:
+        return ""
+    bys = [float(n) for _, n in bs if n is not None]
+    dates = [str(d)[:10] for d, n in ns if n is not None]
+    lo = min(ys + bys); hi = max(ys + bys); rng = (hi - lo) or 1.0
+    padL, padB = 38, 18
+    iw, ih = w - padL - 8, h - padB - 10
+
+    def _x(i, m): return padL + (i / (m - 1)) * iw if m > 1 else padL
+    def _y(v): return 10 + ih - ((v - lo) / rng) * ih
+    def _poly(vals): return " ".join(f"{_x(i,len(vals)):.1f},{_y(v):.1f}" for i, v in enumerate(vals))
+
+    # y gridlines at 100 (the inception base) and the max
+    base_y = _y(100.0)
+    grid = (f'<line x1="{padL}" y1="{base_y:.1f}" x2="{padL+iw}" y2="{base_y:.1f}" stroke="#2a3548" '
+            f'stroke-width="1" stroke-dasharray="2,3"/><text x="4" y="{base_y+3:.1f}" fill="#7c8aa0" font-size="9">100</text>'
+            f'<text x="4" y="{_y(hi)+8:.1f}" fill="#7c8aa0" font-size="9">{hi:.0f}</text>')
+    nlab = len(dates)
+    xlab = ""
+    for i in (0, nlab // 2, nlab - 1):
+        if 0 <= i < nlab:
+            xlab += f'<text x="{_x(i,nlab):.1f}" y="{h-4}" fill="#7c8aa0" font-size="9" text-anchor="middle">{esc(dates[i])}</text>'
+    book_poly = f'<polyline points="{_poly(ys)}" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linejoin="round"/>'
+    bench_poly = (f'<polyline points="{_poly(bys)}" fill="none" stroke="#94a3b8" stroke-width="1.5" '
+                  f'stroke-dasharray="5,3" stroke-linejoin="round"/>') if len(bys) >= 2 else ""
+    end_book = ys[-1]; end_bench = bys[-1] if bys else None
+    legend = (f'<span style="color:#38bdf8;font-weight:700">— Book NAV {end_book:.0f}</span>'
+              + (f' &nbsp; <span style="color:#94a3b8">- - {esc(b.get("benchmark") or "benchmark")} {end_bench:.0f}</span>'
+                 if end_bench is not None else ' &nbsp; <span class="muted">(no benchmark series)</span>'))
+    return (f'<div class="navchart-legend" style="font-size:11.5px;margin:2px 0 4px">{legend} '
+            f'<span class="muted">· rebased to 100 at inception</span></div>'
+            f'<svg class="navchart" width="100%" viewBox="0 0 {w} {h}" preserveAspectRatio="xMidYMid meet" '
+            f'style="background:#0e1320;border:1px solid #1f2937;border-radius:10px">'
+            f'{grid}{xlab}{bench_poly}{book_poly}</svg>')
+
+# ── (1) SCHEMES OVERVIEW — one row per scheme: mandate, bench, NAV (latest + since-inception), sparkline ──
+def schemes_overview(books):
+    rows = ""
+    for b in books:
+        ns = b["nav_series"]
+        nav0 = ns[0][1] if ns else None
+        nav1 = ns[-1][1] if ns else None
+        since = None
+        if nav0 and nav1:
+            try:
+                since = (float(nav1) / float(nav0) - 1.0) * 100.0
+            except Exception:
+                since = None
+        sc = b["scorecard"].get("scorecard", {}) if b["scorecard"] else {}
+        cagr = sc.get("book", {}).get("cagr_pct")
+        bench_cagr = sc.get("benchmark", {}).get("cagr_pct")
+        excess = sc.get("benchmark", {}).get("excess_cagr_pct")
+        excol = "#16a34a" if (isinstance(excess, (int, float)) and excess > 0) else ("#dc2626" if isinstance(excess, (int, float)) else "var(--mut)")
+        rows += (
+            f'<tr onclick="openScheme(\'{b["key"]}\')" style="cursor:pointer">'
+            f'<td><b>{esc(b["scheme"])}</b><div class="t-sub">{esc(b["amc"])}</div></td>'
+            f'<td>{esc(b["category"]) or "—"}</td>'
+            f'<td>{esc(b["benchmark"]) or "—"}</td>'
+            f'<td class="num">{_fmt(nav1)}</td>'
+            f'<td class="num" style="color:{"#16a34a" if (isinstance(since,(int,float)) and since>=0) else "#dc2626"}">{_fmt(since,1,True,True) if since is not None else "—"}</td>'
+            f'<td class="num">{_fmt(cagr,2,True)}<span class="muted"> / {_fmt(bench_cagr,2,True)} bm</span></td>'
+            f'<td class="num" style="color:{excol}">{_fmt(excess,2,True,True)}</td>'
+            f'<td>{sparkline(ns, bench=b.get("bench_series"))}</td></tr>')
+    if not rows:
+        return '<div class="muted pad">No scheme books found under amc_book/.</div>'
+    return (
+        '<table class="bktbl"><thead><tr>'
+        '<th>Scheme</th><th>Mandate</th><th>Benchmark</th><th class="num">NAV</th>'
+        '<th class="num">Since incep.</th><th class="num">CAGR / bench</th><th class="num">Excess</th>'
+        '<th>NAV path</th></tr></thead><tbody>' + rows + '</tbody></table>'
+        '<div class="muted" style="font-size:11px;margin-top:6px">NAV rebased to 100 at inception (2015-01-30). '
+        'Click a row to open the scheme. "Since incep." = NAV/100 − 1 over the replay window; CAGR vs its benchmark TR; '
+        'Excess = book CAGR − benchmark CAGR. Sparkline = month-end book NAV path (solid) vs its benchmark TR '
+        '(dashed grey), shared scale.</div>')
+
+# ── (2) FACT SHEET — newest daily sheet: key stats, top holdings, sector mix ──
+def factsheet_block(b):
+    fs = b["daily_sheet"]
+    if not fs:
+        return '<div class="muted">No fact sheet on file for this scheme.</div>'
+    hdr = fs.get("header", {}) if isinstance(fs, dict) else {}
+    rows = fs.get("rows", []) or []
+    sectors = fs.get("sectors", []) or []
+    footer = fs.get("footer", {}) or {}
+    asof = hdr.get("asof") or b["daily_date"] or "—"
+    # licence guard: never surface a raw ARM field even if a stray one appears
+    SAFE_DROP = {"arm", "arm_score", "arm_raw", "arm_ew", "arm_ff"}
+    top = sorted(rows, key=lambda r: r.get("pct_assets", 0) or 0, reverse=True)[:12]
+    hold = "".join(
+        f'<tr><td>{esc(r.get("name"))}<span class="muted"> · {esc(r.get("sym"))}</span></td>'
+        f'<td>{esc(r.get("sector"))}</td>'
+        f'<td><span class="ptag pt-{esc(r.get("play_type"))}">{esc(r.get("play_type") or "")}</span></td>'
+        f'<td class="num">{_fmt(r.get("pct_assets"))}%</td></tr>'
+        for r in top if not (SAFE_DROP & set(r.keys())))
+    secbars = ""
+    smax = max((s.get("pct_assets", 0) or 0 for s in sectors), default=1) or 1
+    for s in sectors[:12]:
+        pa = s.get("pct_assets", 0) or 0
+        secbars += (f'<div class="secrow"><span class="secn">{esc(s.get("sector"))}</span>'
+                    f'<span class="secbar"><span class="secfill" style="width:{(pa/smax)*100:.0f}%"></span></span>'
+                    f'<span class="secv">{_fmt(pa,1)}%</span></div>')
+    stats = (
+        f'<div class="fstat"><span class="k">AUM</span><b>₹{_fmt(hdr.get("aum_cr"),0)} cr</b></div>'
+        f'<div class="fstat"><span class="k">Holdings</span><b>{esc(footer.get("n_holdings"))}</b></div>'
+        f'<div class="fstat"><span class="k">Equity</span><b>{_fmt(100-(footer.get("cash_pct") or 0),1)}%</b></div>'
+        f'<div class="fstat"><span class="k">Cash</span><b>{_fmt(footer.get("cash_pct"),1)}%</b></div>'
+        f'<div class="fstat"><span class="k">Day</span><b style="color:{"#16a34a" if (footer.get("day_return_pct") or 0)>=0 else "#dc2626"}">{_fmt(footer.get("day_return_pct"),2,True,True)}%</b></div>')
+    return (
+        f'<div class="fs-asof">Fact sheet as of <b>{esc(asof)}</b></div>'
+        f'<div class="fstats">{stats}</div>'
+        f'<div class="fs-grid">'
+        f'<div><div class="sub">Top holdings</div><table class="holdtbl"><tbody>{hold or "<tr><td class=muted>—</td></tr>"}</tbody></table></div>'
+        f'<div><div class="sub">Sector mix</div>{secbars or "<div class=muted>—</div>"}</div>'
+        f'</div>')
+
+# ── (3) TRADE REGISTER — blotter.jsonl as a paginated audit trail ──
+def trade_register(b):
+    bl = b["blotter"]
+    if not bl:
+        return '<div class="muted">No trades on the blotter yet for this scheme.</div>'
+    rows = ""
+    for t in bl:
+        side = str(t.get("side", "")).upper()
+        sc = "#16a34a" if side == "BUY" else ("#dc2626" if side in ("SELL", "TRIM") else "#94a3b8")
+        rows += (
+            f'<tr>'
+            f'<td>{esc(t.get("date"))}</td>'
+            f'<td style="color:{sc};font-weight:700">{esc(side)}</td>'
+            f'<td><b>{esc(t.get("sym"))}</b><span class="muted"> {trunc(t.get("name"),28)}</span></td>'
+            f'<td class="num">{_fmt(t.get("value_cr"),1)}</td>'
+            f'<td><span class="ptag pt-{esc(t.get("play_type"))}">{esc(t.get("play_type") or "")}</span></td>'
+            f'<td class="bl-why">{trunc(t.get("rationale"),120)}</td>'
+            f'</tr>')
+    return (
+        f'<div class="muted" style="font-size:11px;margin-bottom:6px">{len(bl)} trade record(s) · value in ₹cr · '
+        'play-type = the FM\'s structural / cyclical / tactical tag · rationale = the brain\'s note (no raw analyst scores shown).</div>'
+        '<div class="blwrap"><table class="bltbl"><thead><tr>'
+        '<th>Date</th><th>Side</th><th>Name</th><th class="num">₹cr</th><th>Play</th><th>Rationale</th>'
+        f'</tr></thead><tbody>{rows}</tbody></table></div>')
+
+# ── (4) SCORECARD — IC·√BR·TC / IR vs benchmark TR + real scheme NAV, with plain-English reads ──
+def scorecard_block(b):
+    raw = b["scorecard"].get("scorecard", {}) if b["scorecard"] else {}
+    if not raw:
+        return '<div class="muted">No scorecard yet — run the replay engine to populate it.</div>'
+    bk = raw.get("book", {}) or {}
+    bm = raw.get("benchmark", {}) or {}
+    rs = raw.get("real_scheme", {}) or {}
+    fl = raw.get("fundamental_law", {}) or {}
+    win = raw.get("window", {}) or {}
+    ir = bm.get("info_ratio")
+    excess = bm.get("excess_cagr_pct")
+    ic = fl.get("ic_mean"); ic_t = fl.get("ic_tstat"); tc = fl.get("transfer_coefficient")
+    irc = "#16a34a" if (isinstance(ir, (int, float)) and ir > 0.05) else ("#dc2626" if (isinstance(ir, (int, float)) and ir < -0.05) else "var(--mut)")
+
+    def card(lbl, val, sub, color="var(--fg)"):
+        return f'<div class="sccard"><div class="sck">{lbl}</div><div class="scv" style="color:{color}">{val}</div><div class="scs">{sub}</div></div>'
+
+    cards = (
+        card("Book CAGR", _fmt(bk.get("cagr_pct"), 2, True), f'vol {_fmt(bk.get("vol_pct"),1,True)} · Sharpe {_fmt(bk.get("sharpe"),2)} · MaxDD {_fmt(bk.get("maxdd_pct"),0,True)}')
+        + card(f'vs {esc(raw.get("benchmark_name") or "bench")}', _fmt(excess, 2, True, True), 'excess CAGR over benchmark TR',
+               "#16a34a" if (isinstance(excess, (int, float)) and excess > 0) else "#dc2626")
+        + card("Information Ratio", _fmt(ir, 2, plus=True), f'TE {_fmt(bm.get("tracking_error_pct"),1,True)} · β {_fmt(bm.get("beta"),2)}', irc)
+        + card("IC (skill)", _fmt(ic, 3, plus=True), f't-stat {_fmt(ic_t,1)} · per-bet forecast↔outcome corr',
+               "#16a34a" if (isinstance(ic, (int, float)) and ic > 0) else "var(--mut)")
+        + card("Transfer coeff.", _fmt(tc, 2), 'how much skill survives the long-only / cap constraints')
+        + card("vs REAL scheme", _fmt(rs.get("book_minus_real_cagr_pct"), 2, True, True),
+               f'book − real CAGR · real {_fmt(rs.get("real_cagr_pct"),1,True)} over {_fmt(rs.get("overlap_years"),1)}y',
+               "#16a34a" if (isinstance(rs.get("book_minus_real_cagr_pct"), (int, float)) and rs.get("book_minus_real_cagr_pct", 0) > 0) else "#dc2626")
+    )
+
+    # plain-English one-liners
+    reads = []
+    if isinstance(ir, (int, float)):
+        verdict = ("adds value over its benchmark" if ir > 0.3 else
+                   "edges its benchmark" if ir > 0.05 else
+                   "tracks its benchmark" if ir > -0.05 else "lags its benchmark")
+        reads.append(f'<b>IR {_fmt(ir,2,plus=True)}</b> — the book {verdict}: it earned {_fmt(excess,2,True,True)} excess CAGR '
+                     f'per {_fmt(bm.get("tracking_error_pct"),1,True)} of tracking error.')
+    if isinstance(ic, (int, float)):
+        reads.append(f'<b>IC {_fmt(ic,3,plus=True)}</b> (t {_fmt(ic_t,1)}) — the selection signal is '
+                     f'{"genuinely informative" if (ic_t or 0) > 2 else "weak"}; ~0.05 is a good single-name forecast correlation.')
+    if isinstance(tc, (int, float)):
+        reads.append(f'<b>TC {_fmt(tc,2)}</b> — about {_fmt((tc or 0)*100,0)}% of the raw signal survives the '
+                     'long-only / position-cap constraints (the rest is the implementation leak).')
+    if isinstance(rs.get("book_minus_real_cagr_pct"), (int, float)):
+        d = rs["book_minus_real_cagr_pct"]
+        reads.append(f'<b>vs real {esc(rs.get("matched_name") or "scheme")}</b> — the paper book ran '
+                     f'{_fmt(abs(d),2,True)} {"ahead of" if d>0 else "behind"} the actual fund over {_fmt(rs.get("overlap_years"),1)} years.')
+    note = fl.get("note")
+    reads_html = "".join(f'<li>{r}</li>' for r in reads)
+    return (
+        f'<div class="scwin muted">Window {esc(win.get("start"))} → {esc(win.get("end"))} · {_fmt(win.get("years"),1)} years</div>'
+        f'<div class="sccards">{cards}</div>'
+        '<div class="sub">Plain-English read <span class="muted">— Fundamental Law of Active Management: IR = IC · √breadth · TC</span></div>'
+        f'<ul class="screads">{reads_html or "<li class=muted>—</li>"}</ul>'
+        + (f'<div class="scnote muted">{esc(note)}</div>' if note else '')
+        + '<div class="scnote muted" style="margin-top:8px"><b>Definitions.</b> '
+          '<b>IC</b> (information coefficient) = the rank correlation between the signal\'s forecast and the realised next-period '
+          'return, per bet — how often the call is right. <b>Breadth (BR)</b> = the number of independent bets per year — more, '
+          'de-correlated bets compound skill. <b>TC</b> (transfer coefficient) = the fraction of that skill that actually reaches '
+          'the live portfolio after long-only and position-size constraints. <b>IR</b> (information ratio) = excess return ÷ '
+          'tracking error — the realised skill the law predicts as IC·√BR·TC. Breadth here is an UPPER bound (monthly holdings '
+          'are not independent), so implied IR is a ceiling, not a forecast.</div>')
+
+# ── per-scheme panel (hidden; revealed by the Schemes tab nav) ──
+def scheme_panel(b):
+    return (
+        f'<div class="schpanel" id="sch-{b["key"]}" style="display:none">'
+        f'<div class="schhead"><div><h2>{esc(b["scheme"])}</h2>'
+        f'<div class="sub-title">{esc(b["amc"])} · {esc(b["category"]) or "—"} · benchmark {esc(b["benchmark"]) or "—"} · '
+        f'{b["n_positions"]} holdings</div></div></div>'
+        f'<div class="section-h">NAV vs benchmark <span class="hint">paper-trade book NAV overlaid on its benchmark TR, '
+        'rebased to 100 at inception</span></div>'
+        f'{nav_vs_bench_chart(b) or "<div class=muted>No NAV path yet.</div>"}'
+        f'<div class="section-h">Scorecard <span class="hint">paper-trade skill vs benchmark TR &amp; the real fund</span></div>'
+        f'{scorecard_block(b)}'
+        f'<div class="section-h">Fact sheet <span class="hint">latest daily snapshot</span></div>'
+        f'{factsheet_block(b)}'
+        f'<div class="section-h">Trade register <span class="hint">the blotter — every paper trade, audit-grade</span></div>'
+        f'{trade_register(b)}'
+        f'</div>')
 
 def build():
     org = json.loads((AMC / "org.json").read_text(encoding="utf-8"))
     ctx = json.loads((AMC / "context.json").read_text(encoding="utf-8"))
+    books = load_books()          # the per-scheme paper-trading books (NAV / fact-sheet / blotter / scorecard)
     cio = org.get("cio", {}) or {}
     mp = cio.get("market_pulse", {}) or {}
     asof = org.get("data_asof") or ctx.get("data_asof")
@@ -450,6 +912,18 @@ def build():
         f'<div class="kcol c3"><div class="kcol-h">③ CIO rulings <span class="num">{n_esc+n_rule}</span></div>'
         f'<div class="kbody">{kanban_rulings(org)}</div></div>')
 
+    # ── schemes & books tab: overview table + one hidden panel per scheme ──
+    n_books = len(books)
+    schemes_panels = "".join(scheme_panel(b) for b in books)
+    schemes_tab = (
+        '<div id="schemes-back" class="scbacklist" style="display:none">'
+        '<span class="clr" onclick="schemesHome()">← all schemes</span></div>'
+        '<div id="schemes-overview">'
+        '<div class="section-h">Schemes &amp; Books <span class="hint">paper-trading books — click a scheme for its '
+        'scorecard, fact sheet &amp; blotter</span></div>'
+        f'{schemes_overview(books)}</div>'
+        f'{schemes_panels}')
+
     gen = datetime.date(2026, 6, 26).isoformat()
     html_doc = (
         '<!doctype html><html lang="en"><head><meta charset="utf-8">'
@@ -461,6 +935,13 @@ def build():
         f'{len(fms)} fund managers across {len([d for d in divisions if any(cf.get(k,{}).get("division")==d for k in fm_by_key)])} divisions · 1 CIO</div></div>'
         f'<div style="text-align:right"><span class="tag">PAPER · {esc(asof)}</span>'
         f'<div class="sub-title">data as of {esc(asof)}</div></div></div>'
+        # top tabs
+        '<div class="tabs">'
+        '<button class="tabbtn on" data-tab="floor" onclick="showTab(\'floor\')">Trading Floor</button>'
+        f'<button class="tabbtn" data-tab="schemes" onclick="showTab(\'schemes\')">Schemes &amp; Books · {n_books}</button>'
+        '</div>'
+        # ════ TAB 1: the floor ════
+        '<div class="tabview on" id="tab-floor">'
         # command bar: conclusion + tape
         '<div class="cmd">'
         f'<div class="concl" onclick="openModal(\'d-cio\')"><div class="lbl">CIO — firm conclusion</div>'
@@ -479,6 +960,9 @@ def build():
         '<span class="focusnote" id="focusnote" style="display:none">showing focused cards · '
         '<span class="clr" onclick="clearFocus()">clear</span></span></div>'
         f'<div class="kan">{kan}</div>'
+        '</div>'   # /tab-floor
+        # ════ TAB 2: schemes & books ════
+        f'<div class="tabview" id="tab-schemes">{schemes_tab}</div>'
         # footer
         '<div class="foot"><b>How to read this.</b> An <b>experimental, paper-money</b> research firm: agents — '
         'sector analysts, fund managers, a CIO — read the terminal\'s real data and produce grounded views. '
@@ -495,7 +979,8 @@ def build():
 
     (SITE / "index.html").write_text(html_doc, encoding="utf-8")
     print(f"[amc_site] wrote {SITE/'index.html'}  ({len(html_doc)//1024} KB; "
-          f"{len(analysts)} analysts, {len(fms)} FMs, {n_pitch} pitches / {n_take+n_pass} decisions / {n_rule} rulings)")
+          f"{len(analysts)} analysts, {len(fms)} FMs, {n_pitch} pitches / {n_take+n_pass} decisions / {n_rule} rulings; "
+          f"{len(books)} scheme book{'s' if len(books)!=1 else ''})")
 
 if __name__ == "__main__":
     build()

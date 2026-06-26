@@ -547,6 +547,7 @@ def build_deck_html(built_str: str, reason: str = "manual", terminal: bool = Fal
         screen_svs_line = (f"window.VISTAS_SCREEN_SVS={_json_for_script(_ss_marker)};\n" if (lazy and _ss) else "")
         market_flows_line = (f"window.VISTAS_MARKET_FLOWS={_json_for_script(site_embed.get('market_flows', {}))};\n" if (lazy and site_embed.get('market_flows')) else "")
         consensus_line = (f"window.VISTAS_CONSENSUS={_json_for_script(site_embed.get('consensus', {}))};\n" if (lazy and site_embed.get('consensus')) else "")
+        breadth_line = (f"window.VISTAS_BREADTH={_json_for_script(site_embed.get('breadth', {}))};\n" if (lazy and site_embed.get('breadth')) else "")
         survivorship_line = (f"window.VISTAS_SURVIVORSHIP={_json_for_script(site_embed.get('survivorship', {}))};\n" if (lazy and site_embed.get('survivorship')) else "")
         lazy_cfg = {"base": "data/", "stocks": True, "fundamentals": True, "quant": True,
                     "funds_holdings": True, "funds_attribution": True, "benchmarks": True,
@@ -570,6 +571,7 @@ def build_deck_html(built_str: str, reason: str = "manual", terminal: bool = Fal
             f"{screen_svs_line}"
             f"{market_flows_line}"
             f"{consensus_line}"
+            f"{breadth_line}"
             f"{survivorship_line}"
             f"{lazy_line}"
             f"window.VISTAS_CATALOG={_json_for_script(cat)};\n"
@@ -846,6 +848,18 @@ def save_terminal_site(reason: str = "manual", watchlist=None) -> dict:
                             _secmap.setdefault(_c["vst_id"], _c["sector"])
                 except Exception:
                     pass
+            # #81 — unify onto the canonical macro taxonomy so the fund equity book and the benchmark
+            # speak the SAME sector buckets (else "Banks" vs "Financial Services" = phantom tilts).
+            try:
+                from . import funds_portfolio_viz as _fpv
+                _canonmap = _fpv.canonical_vst_sector_map()      # vst_id -> macro (authoritative)
+                _lblmap = _fpv.canonical_label_map()             # raw label -> macro
+                for _vid, _sec in list(_secmap.items()):
+                    _secmap[_vid] = _canonmap.get(_vid) or _lblmap.get(_sec) or _sec
+                for _vid, _sec in _canonmap.items():             # add names the benchmark didn't cover
+                    _secmap.setdefault(_vid, _sec)
+            except Exception as _ce:
+                print(f"[deck] canonical sector unify skipped: {_ce}")
             _books = _ff2.build_equity_books(sector_map=_secmap)
             n_bk = 0
             for _code, _bk in _books.items():
@@ -917,6 +931,16 @@ def save_terminal_site(reason: str = "manual", watchlist=None) -> dict:
     except Exception as e:
         print(f"[deck] smart-vs-street screen skipped: {e}")
 
+    # 2e-rotation) QUADRANT ROTATION over time (#44) — portfolio centroid (holding-weighted ARM x
+    # net-active flow) per month for every fund / AMC / category, written lazy as
+    # data/_rotation/centroids.json (6MB, fetched on demand by the Screen rotation view). The
+    # per-stock monthly trail rides inside smart_vs_street.json (the `traj` field). Graceful-degrade.
+    try:
+        from . import rotation as _rot
+        _rot.build_centroids(os.path.join(site, "data"), _root, progress=lambda m: print(m, flush=True))
+    except Exception as e:
+        print(f"[deck] quadrant rotation centroids skipped: {e}")
+
     # 2f-consensus) ANALYST CONSENSUS FLOW (#46) — roll per-stock ARM up to the 11 analyst-desk
     # sectors as a TIME SERIES (EW history + FF snapshot + 4 components) + sector net-active fund
     # flow. Reuses the already-built per-stock flow series + the just-built screen rows (sector,
@@ -929,6 +953,27 @@ def save_terminal_site(reason: str = "manual", watchlist=None) -> dict:
                                                     log=lambda m: print(m, flush=True))
     except Exception as e:
         print(f"[deck] analyst consensus flow skipped: {e}")
+
+    # 2f-breadth) MARKET BREADTH (Asset-Allocator tab) — % at new multi-year high/low, %>200DMA,
+    # NH-NL net, %golden-cross for the market + each sector, plus a current per-sector breakout
+    # screen (for the m% slider). Price-derived only (no licensed data) -> public-safe; a
+    # COINCIDENT participation gauge, not a forward signal (caveat baked in meta). Prefer the
+    # pipeline-refreshed JSON; build fresh if absent. Graceful-degrade.
+    breadth = {}
+    try:
+        from . import breadth as _breadth
+        # build FRESH from the current stock panel so a manual publish_terminal rebuild (which does
+        # not re-run feed refreshes) never ships a stale breadth; fall back to the last good file.
+        try:
+            breadth = _breadth.build_breadth_panel(log=lambda m: print(m, flush=True))
+        except Exception as _be:
+            print(f"[deck] breadth fresh-build failed ({_be}); trying cached file")
+            _bpath = getattr(_breadth, "OUT_FILE", None)
+            if _bpath and os.path.exists(_bpath):
+                with open(_bpath, "r", encoding="utf-8") as _bf:
+                    breadth = json.load(_bf)
+    except Exception as e:
+        print(f"[deck] market breadth skipped: {e}")
 
     # 2g) BRIDGE live-AMC holdings -> store by HOLDINGS FINGERPRINT so the cockpit lists ALL funds
     # without duplicates: matched live funds collapse to their store scheme; unmatched (passive
@@ -957,6 +1002,7 @@ def save_terminal_site(reason: str = "manual", watchlist=None) -> dict:
         "benchmark_manifest": benchmark_manifest,
         "screen_svs": screen_svs,
         "consensus": consensus,
+        "breadth": breadth,
         "all_stocks": all_stocks,
     }
     html = build_deck_html(built_str, reason, terminal=True, site_embed=site_embed)

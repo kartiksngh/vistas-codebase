@@ -33,6 +33,7 @@ DD_OFF_HIGH = -10.0      # at least 10% below the 52-week high
 ARM_REC = 50.0           # ARM >= 50 = analysts net-recommending
 ONEOFF_EPS = 0.80        # |TTM EPS YoY| > 80% -> flag as one-off / corporate-action distorted
 ARM_STALE_DAYS = 90      # ARM is a ~1-month signal; a score not revised in >90d is stale (NOT "recommending")
+TRAJ_MAX_MONTHS = 60     # quadrant trail (task #44): cap each stock's monthly trail at the last 60 months
 
 
 def _arm_is_stale(asof, ref, days=ARM_STALE_DAYS):
@@ -103,6 +104,12 @@ def build_smart_vs_street(site_data_dir, root, nse500=None, progress=None):
         arm_ref = (_armmod.compiled_meta() or {}).get("date_max")
     except Exception:
         arm_ref = None
+    try:                                          # full per-stock ARM HISTORY (for the quadrant trail)
+        from . import rotation as _rot
+        arm_hist_by_vid = _rot._build_arm_by_vid(log=log)   # {vst_id -> sorted [(date, arm)]}
+    except Exception as e:
+        log(f"[screens] ARM history unavailable for trails ({e}) — trail ARM will be last-known/flat")
+        _rot, arm_hist_by_vid = None, {}
 
     # universe = NSE-500 constituents UNION every stock any MF holds this month (the names with an FM axis).
     universe = sorted(set(cons.keys()) | set(held_syms))
@@ -168,6 +175,26 @@ def build_smart_vs_street(site_data_dir, root, nse500=None, progress=None):
             if rec and not buy: return 2
             if (not rec) and buy: return 3
             return 4
+        # ── QUADRANT TRAIL (task #44): monthly points {date, arm, flow, quad} over the available
+        # history, so the JS can animate how THIS stock moved through the Analyst×FM quadrant.
+        # FLOW = the existing per-month net-active-flow series (smf['flow'], parallel to smf['months']).
+        # ARM  = the stock's ARM headline forward-filled to each month-end from its FULL change-point
+        # history (rotation._build_arm_by_vid). If no per-stock ARM history exists, the trail's ARM is
+        # the flat last-known current score (arm_history='flat') — flow is then the only moving axis.
+        smf_months = smf.get("months") or []
+        smf_flow = smf.get("flow") or []
+        arm_ser = arm_hist_by_vid.get(vid) or []
+        traj = []
+        for mym, mfl in list(zip(smf_months, smf_flow))[-TRAJ_MAX_MONTHS:]:
+            if not isinstance(mfl, (int, float)):
+                continue
+            a = _rot._arm_on_month(arm_ser, mym) if (arm_ser and _rot) else arm   # ffill ARM; else flat current
+            tq = (1 if (a is not None and a >= ARM_REC and mfl > 0) else
+                  2 if (a is not None and a >= ARM_REC) else
+                  3 if mfl > 0 else 4)
+            traj.append({"date": mym, "arm": (round(a, 1) if a is not None else None),
+                         "flow": round(float(mfl), 1), "quad": tq})
+        arm_history_mode = "ffill" if arm_ser else ("flat" if arm is not None else "none")
         rows.append({
             "symbol": sym, "name": c.get("name"), "sector": c.get("sector"), "vst_id": vid,
             "ret_6m": ret6, "dd_52w": dd,
@@ -181,6 +208,7 @@ def build_smart_vs_street(site_data_dir, root, nse500=None, progress=None):
             "buying_3m": bool(buy3), "buying_1m": bool(buy1),
             "flow_agreement": ("confirmed" if buy3 == buy1 else "inflecting"),
             "quadrant_3m": quad(buy3), "quadrant_1m": quad(buy1),
+            "traj": traj, "arm_history_mode": arm_history_mode,   # monthly quadrant trail (task #44)
             # ownership %, MF holdings & MF-%-of-mcap, market cap, key growth (3y/5y CAGR, decimals)
             "own_promoter": own_prom, "own_fii": own_fii, "own_dii": own_dii, "own_public": own_pub, "pledge": pledge,
             "mf_cr": (round(mf_cr, 1) if mf_cr else None), "mf_nfunds": mf_nfunds,
@@ -205,6 +233,12 @@ def build_smart_vs_street(site_data_dir, root, nse500=None, progress=None):
         "amc_aum": amc_aum,                     # AMC -> total disclosed AUM (₹cr) for the % -of-AMC-AUM filter
         "quadrant_labels": {"1": "Recommending + Buying", "2": "Recommending + Not buying",
                             "3": "Not recommending + Buying (FM ahead of street)", "4": "Neither"},
+        "traj_schema": ("Each row carries traj=[{date 'YYYY-MM', arm (0-100 ARM headline ffilled to "
+                        "month-end, null if none), flow (₹cr net active flow that month), quad 1-4}] over "
+                        "the last %d months, + arm_history_mode ('ffill'=real ARM history moves the Y axis; "
+                        "'flat'=only the current ARM is known so the trail's ARM is constant and flow is the "
+                        "only moving axis; 'none'=no ARM at all). Quad uses ARM>=%g & flow>0." %
+                        (TRAJ_MAX_MONTHS, ARM_REC)),
         "note": ("Universe = every stock an MF holds this month (the names with an FM/flow axis) ∪ the NSE-500; "
                  "NO pre-filter — slice it with the AMC-holding and per-column filters. Analyst = LSEG StarMine ARM "
                  "(0-100, >=50 recommending; stale >90d not counted). FM = corp-action-immune net active flow "
