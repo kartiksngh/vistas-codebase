@@ -386,6 +386,237 @@ def save_daily(amc, scheme, sheet):
         json.dump(book, f, default=str)
 
 
+# ───────────────────────────────────────────────────────── rules-FM constructor (v0; seed of #68)
+# The DETERMINISTIC FM that deploys a 100%-cash book into a real, constrained portfolio — no LLM,
+# no look-ahead, reproducible. v0 deploys into the scheme's own disclosed-holdings universe (the
+# investable set we can price), scored by our VALIDATED edge (ARM = analyst-revision momentum, the
+# 0-100 percentile; IC ~0.03-0.045 on our data), then water-fills weights under the mandate's
+# single-name + sector caps AND a hard liquidity cap, tagging each name by revision-cycle play-type.
+# This is the engine the historical REPLAY (#68) will walk forward; the LLM agents refine it live.
+_ARM = {"raw": None}
+
+
+def _arm_raw():
+    if _ARM["raw"] is None:
+        try:
+            from . import arm as _a
+            _ARM["raw"] = _a.load_raw()
+        except Exception:
+            _ARM["raw"] = {}
+    return _ARM["raw"]
+
+
+def current_arm(isin, asof=None, stale_days=400):
+    """Latest ARM_100_REG (0-100 analyst-revision percentile) for `isin` on/before `asof`, or None
+    if absent or STALE (last revision > stale_days before asof — a dead/uncovered name we won't tilt
+    on). Licensed input used only to SCORE selection; the book stores aggregates, not per-stock ARM."""
+    rec = _arm_raw().get(isin)
+    if not rec:
+        return None
+    series = (rec.get("mnem") or {}).get("ARM_100_REG")
+    if not series:
+        return None
+    pts = [(d, v) for d, v in series if (asof is None or str(d) <= str(asof)) and v == v]
+    if not pts:
+        return None
+    last_d, last_v = pts[-1]
+    if asof:
+        try:
+            gap = (_dt.date.fromisoformat(str(asof)) - _dt.date.fromisoformat(str(last_d)[:10])).days
+            if gap > stale_days:
+                return None
+        except Exception:
+            pass
+    return float(last_v)
+
+
+def _play_type(arm):
+    """Revision-cycle play-type (v0 heuristic, to be refined with mcap buckets + agent judgment):
+    strong upward revisions = a live catalyst (tactical); out-of-favour = mean-reversion (cyclical);
+    the neutral-to-positive core = long-term compounders (structural)."""
+    if arm is None:
+        return "structural"
+    if arm >= 75:
+        return "tactical"
+    if arm < 40:
+        return "cyclical"
+    return "structural"
+
+
+def build_rules_v0(reg_entry, asof, equity_target=0.95, log=print):
+    """Deploy a fresh 100%-cash book into a mandate+liquidity-constrained, ARM-scored portfolio
+    as-of `asof`. Returns (book, trades, diag). No look-ahead: only prices/ARM ≤ asof are read.
+
+    Method (reproducible): universe = the scheme's disclosed equity holdings that we can price on
+    `asof`; score = ARM percentile (else neutral 50); pick the top min(n_hi, |U|) by score; raw
+    weight ∝ score scaled to `equity_target` of NAV; clip each to min(max_pos, LIQ_DAYS×median
+    turnover / AUM); then scale any over-cap sector down to max_sector. Whatever isn't deployed
+    stays as cash (honest — a real book builds over days within liquidity)."""
+    m = reg_entry["mandate"]
+    aum = _f(reg_entry["aum_cr"])
+    asof = str(asof)
+
+    uni = []
+    n_priced = n_arm = 0
+    for h in reg_entry.get("real_holdings", []):
+        sym = h.get("symbol")
+        px = price_asof(sym, asof) if sym else None
+        if not sym or px is None or px <= 0:
+            continue
+        n_priced += 1
+        arm = current_arm(h.get("isin"), asof)
+        if arm is not None:
+            n_arm += 1
+        uni.append({"sym": sym, "isin": h.get("isin"), "name": h.get("name") or sym,
+                    "sector": h.get("industry") or h.get("sector") or "Unclassified",
+                    "px": px, "arm": arm, "score": arm if arm is not None else 50.0,
+                    "real_pct": _f(h.get("pct"))})
+    if not uni:
+        raise SystemExit("no priceable holdings — cannot construct a book")
+
+    uni.sort(key=lambda u: (-u["score"], -u["real_pct"]))
+    sel = uni[:min(m["n_hi"], len(uni))]
+    tot_score = sum(u["score"] for u in sel) or 1.0
+    for u in sel:
+        u["w"] = equity_target * u["score"] / tot_score
+        cap = m["max_pos"]
+        lc = liquidity_cap_cr(u["sym"], aum, asof)
+        if lc is not None and aum > 0:
+            cap = min(cap, lc / aum)
+        u["cap"] = cap
+        u["w"] = min(u["w"], cap)
+
+    # sector-cap pass: scale every name in an over-weight sector down proportionally
+    secw = {}
+    for u in sel:
+        secw[u["sector"]] = secw.get(u["sector"], 0.0) + u["w"]
+    for s, tw in secw.items():
+        if tw > m["max_sector"] and tw > 0:
+            fac = m["max_sector"] / tw
+            for u in sel:
+                if u["sector"] == s:
+                    u["w"] *= fac
+
+    book = new_book(reg_entry)
+    book["inception"] = asof
+    book["asof"] = asof
+    # NOTE on what gets PERSISTED: the raw per-stock ARM value is LICENSED LSEG IP and must NEVER
+    # be written to a committed file — so the book/blotter store only OUR derived decision (weight,
+    # within-book selection rank, the coarse play-type horizon tag) and a qualitative rationale. The
+    # exact ARM score stays in-memory (diag) and is reproducible locally from arm_repo.
+    trades, deployed = [], 0.0
+    for rank, u in enumerate([x for x in sel if x["w"] > 0], 1):
+        qty = round(u["w"] * aum * 1e7 / u["px"])
+        if qty <= 0:
+            continue
+        play = _play_type(u["arm"])
+        book["positions"][u["sym"]] = {
+            "isin": u["isin"], "name": u["name"], "sector": u["sector"],
+            "qty": qty, "avg_cost": round(u["px"], 4), "play_type": play,
+            "entry_date": asof, "thesis_ref": None, "sel_rank": rank,
+        }
+        val = qty * u["px"] / 1e7
+        deployed += val
+        trades.append({"date": asof, "sym": u["sym"], "isin": u["isin"], "name": u["name"],
+                       "side": "BUY", "qty": qty, "price": round(u["px"], 4), "value_cr": round(val, 4),
+                       "play_type": play, "rationale": f"quant rank #{rank} (analyst-revision led); "
+                       f"deploy {round(u['w']*100,2)}% as {play} under {m['max_pos']*100:.0f}% name / "
+                       f"{m['max_sector']*100:.0f}% sector / liquidity caps"})
+    book["cash_cr"] = round(aum - deployed, 4)
+    diag = {"universe": len(uni), "n_priced": n_priced, "n_arm_scored": n_arm,
+            "selected": len(book["positions"]), "deployed_cr": round(deployed, 1),
+            "deployed_pct": round(100 * deployed / aum, 2) if aum else None}
+    log(f"  built book: {diag['selected']} names, deployed {diag['deployed_pct']}% "
+        f"(₹{diag['deployed_cr']:,} cr), cash {round(100-diag['deployed_pct'],2)}%; "
+        f"ARM-scored {n_arm}/{n_priced} priced names")
+    return book, trades, diag
+
+
+# ───────────────────────────────────────────────────────── .xlsx render (ABSL CITI layout)
+def to_xlsx(sheet, path):
+    """Render a fact_sheet() dict to an .xlsx mirroring ABSL's CITI_BIRLA_DAILY_EQUITY_FACT_SHEET:
+    header block, sector-grouped holdings with subtotals, and a footer (equity/cash/NAV/day-return)."""
+    from openpyxl import Workbook
+    from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
+
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Daily Equity Fact Sheet"
+    bold = Font(bold=True)
+    white = Font(bold=True, color="FFFFFF")
+    hdr_fill = PatternFill("solid", fgColor="1F3864")
+    sub_fill = PatternFill("solid", fgColor="D9E1F2")
+    foot_fill = PatternFill("solid", fgColor="FCE4D6")
+    thin = Side(style="thin", color="BFBFBF")
+    box = Border(left=thin, right=thin, top=thin, bottom=thin)
+    right = Alignment(horizontal="right")
+
+    h = sheet["header"]
+    ws["A1"] = "VIRTUAL DAILY EQUITY FACT SHEET"; ws["A1"].font = Font(bold=True, size=13)
+    ws["A2"] = f"{h.get('amc')}  —  {h.get('scheme')}"; ws["A2"].font = bold
+    ws["A3"] = f"As of {h.get('asof')}    AUM (mark-to-market): ₹{h.get('aum_cr'):,.2f} cr"
+    cols = ["SR", "ISIN", "NAME", "SECTOR", "PLAY", "QTY", "AVG COST ₹", "BOOK COST ₹cr",
+            "MKT PRICE ₹", "MKT VALUE ₹cr", "PREV PRICE ₹", "PREV VALUE ₹cr",
+            "% CHG", "WTD CONTRIB", "% ASSETS"]
+    r0 = 5
+    for j, c in enumerate(cols, 1):
+        cell = ws.cell(row=r0, column=j, value=c)
+        cell.font = white; cell.fill = hdr_fill; cell.border = box; cell.alignment = right
+    ws.cell(row=r0, column=1).alignment = Alignment(horizontal="left")
+
+    # group rows by sector (rows already sorted by sector then value in fact_sheet)
+    sub = {s["sector"]: s for s in sheet["sectors"]}
+    r = r0 + 1
+    last_sec = None
+    num = {6: "#,##0", 7: "#,##0.00", 8: "#,##0.000", 9: "#,##0.00", 10: "#,##0.000",
+           11: "#,##0.00", 12: "#,##0.000", 13: "0.00", 14: "0.000", 15: "0.00"}
+    for row in sheet["rows"]:
+        if row["sector"] != last_sec:
+            if last_sec is not None:
+                _xlsx_subtotal(ws, r, last_sec, sub.get(last_sec), sub_fill, bold, box); r += 1
+            last_sec = row["sector"]
+        vals = [row["sr"], row["isin"], row["name"], row["sector"], row.get("play_type"),
+                row["qty"], row["avg_cost"], row["book_cost"], row["mkt_price"], row["mkt_value"],
+                row["prev_price"], row["prev_value"], row["pct_change"], row["wtd_contribution"],
+                row["pct_assets"]]
+        for j, v in enumerate(vals, 1):
+            cell = ws.cell(row=r, column=j, value=v)
+            cell.border = box
+            if j in num and v is not None:
+                cell.number_format = num[j]
+        r += 1
+    if last_sec is not None:
+        _xlsx_subtotal(ws, r, last_sec, sub.get(last_sec), sub_fill, bold, box); r += 1
+
+    f = sheet["footer"]
+    r += 1
+    foot = [("EQUITY", f["equity_cr"], "₹cr"), ("CASH", f["cash_cr"], f"₹cr ({f.get('cash_pct')}%)"),
+            ("TOTAL (NAV base)", f["total_cr"], "₹cr"), ("HOLDINGS", f["n_holdings"], "names"),
+            ("DAY RETURN", f.get("day_return_pct"), "%")]
+    for label, v, unit in foot:
+        ws.cell(row=r, column=2, value=label).font = bold
+        c = ws.cell(row=r, column=3, value=v); c.fill = foot_fill; c.font = bold
+        ws.cell(row=r, column=4, value=unit)
+        r += 1
+
+    widths = [5, 15, 30, 22, 11, 12, 12, 13, 12, 13, 12, 13, 8, 11, 9]
+    for j, w in enumerate(widths, 1):
+        ws.column_dimensions[ws.cell(row=r0, column=j).column_letter].width = w
+    ws.freeze_panes = "A6"
+    os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)
+    wb.save(path)
+    return path
+
+
+def _xlsx_subtotal(ws, r, sector, s, fill, bold, box):
+    ws.cell(row=r, column=3, value=f"{sector} — subtotal").font = bold
+    if s:
+        ws.cell(row=r, column=10, value=round(s["mkt_value"], 3)).number_format = "#,##0.000"
+        ws.cell(row=r, column=15, value=round(s["pct_assets"], 2)).number_format = "0.00"
+    for j in range(1, 16):
+        cell = ws.cell(row=r, column=j); cell.fill = fill; cell.border = box
+
+
 if __name__ == "__main__":
     import sys
     args = sys.argv[1:]
