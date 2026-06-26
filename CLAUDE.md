@@ -177,13 +177,21 @@ verification use the real headless-browser probe `_pup_fund.js` (puppeteer). **N
   never tracks it) — kept self-contained. Default = `<app>/_pages` (env-overridable via
   **`VISTAS_PUBLISH_DIR`**; remote via **`VISTAS_REMOTE`**). Moved out of the FFT tree on 2026-06-22.
 - Pages source must be **Deploy from a branch → main / root** (not GitHub Actions).
-- **★ SOURCE BACKUP on every publish (`publish_terminal.py` step [5/5] `backup_codebase()`):** after the
-  live site is pushed, the publisher also commits + pushes **this folder's source — code + the project
-  `.md` docs** — to the private **`vistas-codebase`** repo (this dev folder's own `origin`), so a local
-  disk crash can lose neither the live site nor its source. **Best-effort + non-fatal** (the site is
-  already live, so a backup hiccup only warns) and **size-guarded** (refuses any staged file >95 MB —
-  names it instead of pushing a doomed commit; the `.gitignore` already excludes heavy/licensed data).
-  Skip with `--no-backup`. This is a standing cross-project practice (global `CLAUDE.md` repo hygiene).
+- **★ OFF-MACHINE BACKUP on every publish (`publish_terminal.py` step [5/5]; also on daily `pipeline.py`):**
+  after the live site is pushed, two crash-safety mirrors run (best-effort, non-fatal — the site is
+  already live, so a hiccup only warns; skip both with `--no-backup`):
+  - `backup_codebase()` → commits + pushes **this folder's source (code + project `.md` docs)** to the
+    private **`vistas-codebase`** repo (this dev folder's own `origin`). Size-guarded (refuses any staged
+    file >95 MB, names it instead of pushing a doomed commit; the `.gitignore` already excludes heavy/licensed).
+  - `backup_arm()` (engine `vistas/arm_backup.py`) → the **LICENSED `arm_repo/` (LSEG StarMine ARM, can't
+    go to GitHub)** is encrypted LOCALLY with **AES-256-GCM** and mirrored as ciphertext to a cloud drive
+    (`<OneDrive>/VistasBackups/arm_repo`, or `VISTAS_ARM_BACKUP_DIR`) — the cloud only ever sees ciphertext.
+    Incremental (only new weekly drops re-encrypt). **Key** = `VISTAS_ARM_BACKUP_PASSPHRASE` (scrypt) or an
+    auto-created `~/.vistas/arm_backup.key` that you MUST copy off-machine, else a disk crash loses the only
+    key. Verify/restore: `python -m vistas.arm_backup --verify | --restore <DEST>` (then `arm.compile_india()`).
+    One-click: `Backup ARM (encrypted).bat`.
+  This is a standing cross-project practice (global `CLAUDE.md` repo hygiene): source → git backup, licensed
+  data → encrypted cloud mirror.
 - KV does not use git directly — keep publishing to **one double-click**.
 - **★ DAILY REFRESH (`vistas/pipeline.py`, folder `pipeline/`):** one job refreshes EVERY source →
   reload → rebuild → validate → **auto-publish if the shell is valid**. Policy: **nothing but a

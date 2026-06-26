@@ -370,7 +370,7 @@ def run_daily(publish=True, skip=(), only=(), light=False, dry_run=False, force_
     say = say or pt.pp.say
     pt.pp.hr(); say(f"VISTAS DAILY REFRESH — {run_iso}"); pt.pp.hr()
 
-    say("[1/4] refreshing every data source (graceful-degrade; one failure never aborts)…")
+    say("[1/5] refreshing every data source (graceful-degrade; one failure never aborts)…")
     results = run_sources(skip=skip, only=only, light=light, force_all=force_all, say=say)
     summary = audit(results)
     say(f"  sources: fresh {summary['n_fresh']} · no-op {summary['n_noop']} · "
@@ -389,7 +389,7 @@ def run_daily(publish=True, skip=(), only=(), light=False, dry_run=False, force_
                             {"ok": None, "detail": "aborted — another build/publish is running"},
                             False, "aborted: another build/publish holds the lock")
     try:
-        say("[2/4] reloading data + rebuilding the hosted site…")
+        say("[2/5] reloading data + rebuilding the hosted site…")
         from vistas import data
         data.reload()
         build_info = {}
@@ -401,7 +401,7 @@ def run_daily(publish=True, skip=(), only=(), light=False, dry_run=False, force_
             return write_report(run_iso, results, summary, {}, {"ok": False, "detail": f"build crashed: {e}"},
                                 False, "build crashed — last good site stays live")
 
-        say("[3/4] validating the shell…")
+        say("[3/5] validating the shell…")
         ok, detail = pt.pp.validate(pt.SHELL)
         say("  " + detail.replace("\n", "\n  "))
         validation = {"ok": bool(ok), "detail": detail.replace("\n", " ")[:500]}
@@ -409,12 +409,12 @@ def run_daily(publish=True, skip=(), only=(), light=False, dry_run=False, force_
         published, publish_note = False, ""
         if not ok:
             publish_note = "FAULTY SHELL — not published (last good stays live)"
-            say("[4/4] " + publish_note)
+            say("[4/5] " + publish_note)
         elif not publish:
             publish_note = "built + validated; --no-push (use pipeline/Publish Last Build.bat to push)"
-            say("[4/4] " + publish_note)
+            say("[4/5] " + publish_note)
         else:
-            say("[4/4] publishing terminal/ to GitHub…")
+            say("[4/5] publishing terminal/ to GitHub…")
             try:
                 published = pt.publish_site()
                 publish_note = ("published OK" if published else
@@ -422,6 +422,20 @@ def run_daily(publish=True, skip=(), only=(), light=False, dry_run=False, force_
             except Exception as e:
                 publish_note = f"push crashed ({e}) — run pipeline/Publish Last Build.bat (build is on disk)"
                 say("  " + publish_note)
+
+        # [5/5] off-machine backups — only after a real publish; best-effort, never gates the run.
+        if published:
+            say("[5/5] backing up off-machine (source -> vistas-codebase; licensed ARM -> encrypted cloud)…")
+            try:
+                pt.backup_codebase()
+            except Exception as e:
+                say(f"  codebase backup skipped (non-fatal): {e}")
+            try:
+                pt.backup_arm()
+            except Exception as e:
+                say(f"  ARM backup skipped (non-fatal): {e}")
+        else:
+            say("[5/5] no publish this run — skipping off-machine backups")
 
         report = write_report(run_iso, results, summary, build_info, validation, published, publish_note)
         pt.pp.hr()

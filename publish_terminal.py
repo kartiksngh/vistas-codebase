@@ -15,13 +15,14 @@ both fits Pages and loads fast. The single-file deck stays for offline/email use
 One run: (1) optional incremental NSE refresh, (2) rebuild the hosted site
 (output/terminal_site/), (3) VALIDATE the shell via the Node runtime smoke-test (a
 faulty shell is NEVER published), (4) mirror the site into terminal/ and push, (5)
-back up the SOURCE (code + project .md docs) to the private vistas-codebase repo so a
-local disk crash can't lose either the live site or its source.
+back up off-machine so a local disk crash can't lose anything: the SOURCE (code +
+project .md docs) -> the private vistas-codebase git repo, and the LICENSED ARM dump
+(arm_repo/, which can't go to GitHub) -> an AES-256-GCM encrypted cloud mirror.
 
 Flags:  --no-fetch    rebuild from current data, no NSE pull
         --no-rebuild  publish the site already on disk (skip the rebuild; fastest)
         --no-push     build + validate only
-        --no-backup   skip the source backup to vistas-codebase (step 5)
+        --no-backup   skip the off-machine backups in step 5 (source + ARM)
         --email       also build + email the single-file offline deck (needs VISTAS_SMTP_*)
 """
 from __future__ import annotations
@@ -200,6 +201,30 @@ def backup_codebase():
     return True
 
 
+def backup_arm():
+    """Best-effort encrypted, off-machine backup of arm_repo/ (the LICENSED LSEG StarMine ARM
+    dump — the one piece that can NEVER go to GitHub). Incremental, so after the first ~1.1 GB
+    run each call only re-encrypts the new weekly drop; near-instant when nothing changed.
+
+    NON-FATAL and OPT-IN-by-environment: runs only when a backup target is configured (OneDrive
+    signed in, or VISTAS_ARM_BACKUP_DIR set) and arm_repo/ exists locally — otherwise it quietly
+    skips. The cloud only ever receives ciphertext (AES-256-GCM). See vistas/arm_backup.py."""
+    try:
+        from vistas import arm_backup
+    except Exception as e:
+        pp.say(f"  (ARM backup module unavailable: {e}) — skipping"); return False
+    if not arm_backup._target_dir():
+        pp.say("  (no ARM backup target — sign in to OneDrive or set VISTAS_ARM_BACKUP_DIR; skipping)")
+        return False
+    if not os.path.isdir(arm_backup.ARM_DIR):
+        pp.say("  (no arm_repo/ on disk — skipping ARM backup)"); return False
+    try:
+        return arm_backup.backup() == 0
+    except Exception as e:
+        pp.say(f"  ARM BACKUP FAILED (non-fatal; the live site IS published): {e}")
+        return False
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--no-fetch", action="store_true")
@@ -251,10 +276,11 @@ def _run(args):
     pushed = publish_site()
 
     if args.no_backup:
-        pp.say("[5/5] skipping source backup (--no-backup)")
+        pp.say("[5/5] skipping off-machine backups (--no-backup)")
     else:
-        pp.say("[5/5] backing up source (code + .md docs) to vistas-codebase…")
+        pp.say("[5/5] backing up off-machine (source -> vistas-codebase; licensed ARM -> encrypted cloud)…")
         backup_codebase()
+        backup_arm()
 
     pp.hr(); pp.say("DONE." if pushed else "Built & validated, NOT published (see above)."); pp.hr()
     return 0 if pushed else 1
