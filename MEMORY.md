@@ -7,6 +7,35 @@
 
 ## ▶ RESUME (one-paragraph current state + next step)
 
+**▶▶▶ RESUME — 2026-06-27 LATE (FM-SHORTLIST #39 + LIVE-FORWARD AMC #52/#95/#96 session, KV-authorized):**
+KV greenlit **#39 (FM Action Shortlist)** then **#52/#95/#96 (live-forward Agentic AMC)** — "long tasks, do it if pipelines ready." STATE:
+- **#39 CODE-COMPLETE + logic-validated, PENDING BUILD.** A per-fund **evidence shortlist** in the Funds cockpit (`renderFundSkill`):
+  TRIM candidates (held names in the WEAK Smart-vs-Street quadrant 4 = not-recommending ∧ net-selling, weakest-ARM first) +
+  ADD candidates (in-mandate un-held names in STRONG quadrant 1 = recommending ∧ buying, best-ARM first). **Decision-SUPPORT, not
+  instructions** — the FM (human/agent) decides+sizes; sizes nothing, forecasts no return, no blended score. **Deck-only JS** over the
+  already-baked `smart_vs_street.json` + the fund's `crowd_flow.equity_holdings` (no new file, no new raw-ARM surface, no parity port).
+  Ranked by **ARM ONLY** (flow = sign-flag; the EW blend failed its gate). Files: `static/vistas.js` (`renderFMShortlist`/`fmShortlistHTML`/
+  `fmShortlistTable`/`fmRow`/`fmBenchWeights`/`FM_SHORTLIST_CAVEAT` + 2 wiring edits in `renderFundSkill`), `static/vistas.css` (2 rules),
+  `vistas/fm_shortlist.py` (reference twin for the FM-agent path; writes nothing; self-test PASSES — LT flagged trim, GUJGASLTD top add),
+  `_pup_fundskill.js` (FM-shortlist probe block + `fmOK` gate). All `node --check`/`py` clean. Design+discipline via workflow `wf_c20ce992`
+  (spec → scratchpad `fm39_spec.md`). **NEXT for #39: build (publish_terminal.py --no-rebuild won't work — JS change needs a rebuild) →
+  `node _pup_fundskill.js` must PASS → publish.** BLOCKED until the nightly releases the build lock.
+- **LIVE-FORWARD readiness = READY-WITH-GAPS** (full report by agent a52864). Engines DONE+clean: `amc_firm.py` (registry/mandates/book/
+  `build_rules_v0`/`score_universe`), `amc_replay.py` (walk-forward+scorecard IC·√BR·TC), `amc_live.py` (`prepare_desk`/`enforce_guardrails`/
+  `apply_decision`/`prepare_round`/`apply_round`/`compare_to_quant`). **The FM+CIO Workflow `_amc_rebalance.js` IS ALREADY WRITTEN**, schema
+  matches `apply_round` exactly. **GAPS to fill (ordered):** (1) round-driver glue = run `prepare_round` → `_amc_rebalance.js` workflow →
+  feed `{decisions,cio}` to `apply_round` (the one true blocker; mirror `_amc_org.js`→org.json pattern); (2) surface live round in `amc_site.py`
+  (reads `round_latest.json`/`prereg.jsonl` — absent now); (3) build `vistas/amc_daily_mark.py` (no-LLM daily mark) + `Run AMC Rebalance.bat`;
+  (4) **HARDEN `scrub_arm`** (regex only catches literal "ARM 78"; "StarMine 82" leaks raw revision to a git-tracked file) BEFORE first committed
+  round; (5) **commit seam books first** (restorable baseline). Token cost ≈**60-120k tokens/round** (4 FM ∥ + 1 CIO, NO analysts). Cadence:
+  **monthly LLM rebalance** (CronCreate) + daily Python mark (zero tokens). Discipline OK (paper-only, no-look-ahead, pre-reg falsifier required);
+  watch: LEARN/grading loop is capture-only (not wired), frozen-LLM world-knowledge>asof. **NEXT for live-forward: fill gaps 4→5→1, run first
+  round (workflow), surface (2/3), publish digital-amc, CronCreate monthly.**
+- **OPS STATE:** the 8pm Task-Scheduler nightly `vistas.pipeline` (PID 14204) HOLDS the build lock (acquired 21:02, doing a big one-off 600-stock
+  screener backfill then rebuild+auto-publish). My #39 JS edits are on disk → the nightly MAY publish them unverified; regardless, do a controlled
+  `publish_terminal.py` rebuild → `_pup_fundskill.js` PASS → publish as the authoritative #39 verification once the lock frees. **NEVER 2 builds at
+  once** (I hit + fixed this earlier: killed a redundant manual build, $pid is PS-reserved). Ownership&Flow #102 P0-P4b ALREADY LIVE (commit b26e054).
+
 **▶▶▶ RESUME — 2026-06-27 (FLOW-DECOMPOSITION + OWNERSHIP-FLOW + BUILD-SPEED session · all PUBLISHED LIVE):**
 Three things shipped to <https://kartiksngh.github.io/vistas/terminal/> this session, all on the flow/ownership theme:
 - **Smart-money "net-active" FIX (commit `6323213`):** the Asset-Allocator → Analyst-Consensus flow chart summed
@@ -35,15 +64,20 @@ Three things shipped to <https://kartiksngh.github.io/vistas/terminal/> this ses
   a committed `{vst_id:[themes]}` map `data/themes/theme_constituents.json` (`build_theme_map()`; `-m vistas.flow_waterfall
   --themes` to refresh) = **9 cross-sector themes** (Consumption/Energy/Commodities/Infra/CPSE/PSU/Healthcare/MNC/
   Services). OVERLAPPING → labeled NOT additive; macro-sector kept. ⚠️ Manufacturing/Digital/EV/Defence NOT on NSE's
-  public endpoint → absent. Probe WF-PIVOT(→stock)+WF-THEME PASS, 0 errors. **REMAINING: P4b cross-AMC crowding · P5 agent hook.**
+  public endpoint → absent. Probe WF-PIVOT(→stock)+WF-THEME PASS, 0 errors.
+  **★ P4b CROSS-AMC CROWDING now LIVE too (src backup `18f47a2`):** a "Cross-AMC crowding" panel (By sector / By
+  stock) → the AMCs ranked by net-active tilt into/out of a chosen sector/stock (Ownership + 3-way split + "N buying/
+  M selling" headline + aggregate chart). Sector = inline AMC×sector cube (free); stock = lazy `data/ownership_stock/
+  <vst_id>.json` (794 stocks ≥₹300cr; engine aggregates per-scheme stock cells → AMC, groups by stock; `crowd_index`
+  ~72 KB inline). Probe WF-CROWD PASS, 0 errors. **OWNERSHIP & FLOW now P0→P4b ALL LIVE; only P5 (agent hook) left.**
 - **BUILD SPEED (#98):** fixed an O(N²) liquidity lookup in `stock_intel._market_behaviour` (re-scanned the 9.4M-row
   turnover panel per stock) by pre-indexing `turnover_by_sym` once in `build_context` → **build 41min → ~17min**,
   output byte-identical. (This MOOTED the planned multi-core parallelize — algorithmic fix was strictly better.)
 
 **NEXT STEP / OPEN FORKS (all need KV direction or carry risk — surfaced, not auto-launched):**
-- **#102 P3 + P4 DONE+LIVE (2026-06-27)** — full pivot AMC→scheme→sector→**stock** (top-15 ∪ >₹100cr) + **NSE
-  thematic theme lens** (9 themes, overlapping). REMAINING **P4b** = cross-AMC crowding (stock/sector → which AMCs
-  tilting) · **P5** = agent hook (net-active tilt → analyst/FM/CIO desks). Marquee themes (Mfg/Digital/EV) blocked
+- **#102 P3 + P4 + P4b DONE+LIVE (2026-06-27)** — full pivot AMC→scheme→sector→**stock** (top-15 ∪ >₹100cr) + **NSE
+  thematic theme lens** (9 themes, overlapping) + **cross-AMC crowding** (by sector/stock → which AMCs tilting).
+  REMAINING **P5** = agent hook (net-active tilt → analyst/FM/CIO desks). Marquee themes (Mfg/Digital/EV) blocked
   on NSE not publishing their constituents.
 - **#99 cadence-partitioned build** (designed `BUILD_CADENCE.md`): compute fingerprint-gate + COMPUTE/ASSEMBLE split —
   RISK-FLAGGED (silent-stale, bounded ≤1wk + self-healing); best done with KV able to eyeball the first gated-vs-full

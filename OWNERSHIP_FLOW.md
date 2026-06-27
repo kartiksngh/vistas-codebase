@@ -109,8 +109,15 @@ Cross-tabs the UI needs: **AMC × sector** (how an AMC's money split across sect
     **Macro-sector backbone unchanged.** ⚠️ Manufacturing/Digital/EV/Defence are NOT on NSE's public constituent
     endpoint (CSVs return empty) → absent; add later if a constituent source appears (engine is data-driven).
   - Probe `_pup_allocator.js` WF-PIVOT (drills to a stock, refocuses chart) + WF-THEME blocks PASS, 0 errors.
-- **P4b (REMAINING) — cross-AMC crowding** ("who is buying this stock/sector", conviction vs inflow): a
-  stock/sector → which AMCs are tilting view. Derivable from the same cube; deferred to its own ship.
+- **P4b (DONE ✓, LIVE 2026-06-27, src backup `18f47a2`) — cross-AMC crowding.** A "Cross-AMC crowding" panel
+  with a **By sector / By stock** toggle: pick a sector or stock → the AMCs ranked by **net-active** tilt into/out
+  of it (Ownership + 3-way split), a headline ("N buying · M selling · aggregate net-active ₹X cr"), and the
+  aggregate flow chart over time; date-slider time-nav. **Sector mode** reads the inline AMC×sector cube (free);
+  **stock mode** uses a lazy per-stock file `data/ownership_stock/<vst_id>.json` (794 stocks with ≥₹300 cr total MF
+  ownership; biggest ~19 KB, fetched on demand) + a small `crowd_index` inline (~72 KB) for the stock selector.
+  Engine: aggregate the per-scheme stock cells up to AMC level, group by stock (same loop). Reconciles. Probe
+  `_pup_allocator.js` WF-CROWD block PASS (sector: 47 AMCs + chart; stock: lazy 32 AMCs + chart; 0 errors).
+  Read e.g. HDFC Bank: ICICI accumulating +₹2,526 cr, SBI trimming −₹1,491 cr, 22 buying / 22 selling.
 - **P5 — agent hook:** expose "net-active tilt by sector/AMC/theme, last N months" to the analyst/FM/CIO desks.
 
 ## Open questions for KV (don't block P1)

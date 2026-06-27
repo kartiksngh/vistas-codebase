@@ -176,6 +176,38 @@ const server = http.createServer((req, res) => {
   await new Promise((r) => setTimeout(r, 300));
   console.log("Multi-fund compare:", JSON.stringify(cmp));
 
+  // exercise the FM ACTION SHORTLIST (#39): evidence-ranked trim/add candidates (decision-support). Structure
+  // + discipline guards are the HARD gate (a given fund may legitimately have 0 candidates); also try a few
+  // skill funds to find one with >=1 candidate so the table path is exercised on real data.
+  const fmsl = await page.evaluate(async () => {
+    const man = window.VISTAS_FUNDS_ATTR_MANIFEST || {}; const ks = Object.keys(man);
+    let best = null;
+    for (const k of ks.slice(0, 8)) {
+      FUNDSKILL_SYM = k; if (typeof FS_WIN !== "undefined") FS_WIN = null;
+      try { await renderFundSkill(); } catch (e) { return { threw: e.message, sym: k }; }
+      await new Promise((r) => setTimeout(r, 450));
+      const host = document.getElementById("fm-shortlist-host");
+      const grid = host && host.querySelector(".fm-shortlist-grid");
+      const cols = host ? host.querySelectorAll(".fm-col-h").length : 0;
+      const rows = host ? host.querySelectorAll(".fm-shortlist-grid table.gauge-tbl tbody tr").length : 0;
+      const txt = (host && host.textContent) || "";
+      const r = {
+        sym: k, present: !!host, hasGrid: !!grid, cols, rows,
+        notLoading: !/Loading…/.test(txt),
+        notBlankDash: txt.replace(/\s+/g, "") !== "—",
+        // discipline guards: no decisive action verbs / no return-forecast language in the panel
+        noActionVerbs: !/\b(buy now|sell now|target price|price target|expected return|upside)\b/i.test(txt),
+        hasCaveat: /decision-support/i.test(txt) && /does not size/i.test(txt),
+        hasFlowCaveat: /mildly contrarian/i.test(txt),
+      };
+      if (!best || r.rows > best.rows) best = r;
+      if (r.rows > 0) break;   // found a fund with candidates — enough to exercise the table path
+    }
+    return best || { present: false };
+  });
+  await new Promise((r) => setTimeout(r, 300));
+  console.log("FM action shortlist (#39):", JSON.stringify(fmsl));
+
   // exercise a HOLDINGS-ONLY fund (passive/debt — no skill): must render its book + "holdings only" banner, 0 throws
   const ho = await page.evaluate(async () => {
     const man = window.VISTAS_FUNDS_HOLDONLY_MANIFEST || {};
@@ -220,11 +252,15 @@ const server = http.createServer((req, res) => {
   // >=2 bar traces, and the disagreement table (2 cmp-tbl tables). Skipped only if <2 skill funds exist.
   const cmpOK = !cmp.tested || (!cmp.threw && cmp.hasHost && cmp.hasTitle && cmp.rows >= 2 && cmp.chips >= 2 && cmp.nTables >= 2 && cmp.tiltIsPlotly && cmp.tiltTraces >= 2);
   console.log("multi-fund compare gate:", cmpOK ? "OK" : ("FAILED " + (cmp.threw || JSON.stringify(cmp))));
+  // FM action shortlist (#39): panel present, 2 columns, not loading/blank, no action-verb/return language, caveats on-surface
+  const fmOK = !!fmsl.present && !fmsl.threw && fmsl.hasGrid && fmsl.cols === 2 && fmsl.notLoading &&
+               fmsl.notBlankDash && fmsl.noActionVerbs && fmsl.hasCaveat && fmsl.hasFlowCaveat;
+  console.log("FM shortlist gate:", fmOK ? ("OK (best fund " + fmsl.sym + ", " + fmsl.rows + " candidate rows)") : ("FAILED " + JSON.stringify(fmsl)));
   const ok = errs.length === 0 && probe.viewHidden === false && probe.bodyChars > 400 &&
              probe.lbRows > 0 && probe.hasScorecard && probe.cumTraces > 0 && portfolioOK &&
-             vantageOK && windowOK && parityOK && bandOK && holdOK && holdonlyOK && crowdOK && survOK && benchCmpOK && cmpOK;
+             vantageOK && windowOK && parityOK && bandOK && holdOK && holdonlyOK && crowdOK && survOK && benchCmpOK && cmpOK && fmOK;
   console.log("\n" + (ok ? "PASS: Funds cockpit visible; scorecard + leaderboard + growth + PORTFOLIO + VANTAGE plots render; month-dropdown holdings table re-renders; holdings-only funds render their book; multi-fund side-by-side compare renders; window recompute & portfolio metrics match baked Python; fund line inside peer band; 0 throws."
-                          : `FAIL: see above (portfolioOK=${portfolioOK} vantageOK=${vantageOK} windowOK=${windowOK} parityOK=${parityOK} bandOK=${bandOK} holdOK=${holdOK} holdonlyOK=${holdonlyOK} crowdOK=${crowdOK} survOK=${survOK} benchCmpOK=${benchCmpOK} cmpOK=${cmpOK}).`));
+                          : `FAIL: see above (portfolioOK=${portfolioOK} vantageOK=${vantageOK} windowOK=${windowOK} parityOK=${parityOK} bandOK=${bandOK} holdOK=${holdOK} holdonlyOK=${holdonlyOK} crowdOK=${crowdOK} survOK=${survOK} benchCmpOK=${benchCmpOK} cmpOK=${cmpOK} fmOK=${fmOK}).`));
   await browser.close(); server.close();
   process.exit(ok ? 0 : 1);
 })().catch((e) => { console.log("PROBE THREW:", e.message); try { server.close(); } catch (x) {} process.exit(1); });
