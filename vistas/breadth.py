@@ -320,6 +320,70 @@ def build_breadth_panel(extended: bool = True, log=print) -> dict:
             continue
         sectors[sec] = _build_group(gcols, MIN_BREADTH_N_SECTOR)
 
+    # --- relative performance vs NIFTY 500 TR (EW + FF) — reconstructed from CURRENT membership +
+    #     fixed 31-Dec-2025 free-float weights → carries composition/weight bias: a CONTEXT view of
+    #     sector leadership / market breadth, NOT a backtest. Graceful: skipped if inputs missing.
+    def _rel_perf():
+        import numpy as _np, json as _json
+        try:
+            from vistas import data as _data
+            idx = _data.load()
+            if idx is None or "NIFTY 500" not in getattr(idx, "columns", []):
+                log("[breadth] rel-perf skipped (NIFTY 500 TR not in index panel)"); return {}, None
+            n500 = idx["NIFTY 500"].reindex(panel.index).ffill()
+        except Exception as e:
+            log(f"[breadth] rel-perf skipped (index load: {e})"); return {}, None
+        ff_w, n5_syms = {}, set()
+        try:
+            bf = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data", "benchmarks", "ind_nifty500list.json")
+            for c in _json.load(open(bf, encoding="utf-8")).get("constituents", []):
+                s = c.get("symbol")
+                if not s:
+                    continue
+                n5_syms.add(s)
+                w = c.get("w_ffmcap")
+                if w is not None:
+                    ff_w[s] = float(w)
+        except Exception as e:
+            log(f"[breadth] rel-perf FF weights unavailable ({e}) — FF lines skipped")
+        rets_all = panel.pct_change(fill_method=None).clip(-0.5, 1.0)   # gaps→NaN (no fabricated returns); clip glitch spikes
+        def _ratio(lvl):
+            r = (lvl / n500).replace([_np.inf, -_np.inf], _np.nan)
+            f = r.first_valid_index()
+            return (r / r.loc[f] * 100.0) if f is not None else r
+        def _grp(gcols):
+            cols = [c for c in gcols if c in panel.columns]
+            if len(cols) < MIN_BREADTH_N_SECTOR:
+                return None
+            rets = rets_all[cols]
+            ew_lvl = (1.0 + rets.mean(axis=1).fillna(0.0)).cumprod()       # equal-weight TR index
+            ewr = _ratio(ew_lvl)
+            d = {"rel_ew": [_clean(ewr.iloc[i]) for i in me_pos]}
+            wc = {c: ff_w[c] for c in cols if c in ff_w}                   # FF-mcap (snapshot) over the 500-members
+            if wc:
+                w = pd.Series(wc); rw = rets[list(wc)]
+                mask = rw.notna(); wmat = mask.mul(w, axis=1); wsum = wmat.sum(axis=1)
+                ff = (rw.fillna(0.0) * wmat).sum(axis=1) / wsum.replace(0.0, _np.nan)
+                ff_lvl = (1.0 + ff.fillna(0.0)).cumprod()
+                d["rel_ff"] = [_clean(_ratio(ff_lvl).iloc[i]) for i in me_pos]
+            return d
+        res = {}
+        m = _grp(list(groups["__market__"]))
+        if m:
+            res["__market__"] = m
+        for _sec in sectors:
+            g = _grp(list(groups.get(_sec, set())))
+            if g:
+                res[_sec] = g
+        n5 = _grp([s for s in n5_syms if s in panel.columns]) if n5_syms else None
+        log(f"[breadth] rel-perf: {len(res)} groups vs NIFTY 500 TR (EW + FF snapshot weights)")
+        return res, (n5["rel_ew"] if n5 else None)
+    _relp, nifty500_ew_rel = _rel_perf()
+    market.update(_relp.get("__market__", {}))
+    for _sec in list(sectors):
+        if _sec in _relp:
+            sectors[_sec].update(_relp[_sec])
+
     # --- CURRENT-DAY snapshot (daily resolution) for the m%-threshold screen --------
     t = len(panel) - 1
     asof = panel.index[t].strftime("%Y-%m-%d")
@@ -405,10 +469,17 @@ def build_breadth_panel(extended: bool = True, log=print) -> dict:
                        "their 200-day average."),
             "source": ("adjusted total-return price panel (bhavcopy-reconstructed) + NSE-500 industry "
                        "map (+ AMC-disclosed crosswalk). Price-derived only — NO ARM / licensed data."),
+            "rel_perf_note": ("rel_ew / rel_ff = a group's equal-weight / free-float-mcap total-return index "
+                              "divided by NIFTY 500 TR, rebased to 100 at the group's first date (rising = "
+                              "outperforming the market). RECONSTRUCTED from CURRENT index membership + fixed "
+                              "31-Dec-2025 free-float weights, so it carries composition/weight bias — read it "
+                              "as a leadership/breadth CONTEXT view, not a backtest. nifty500_ew_rel = the EW "
+                              "of the NIFTY 500 vs the cap-weighted NIFTY 500 (broad-vs-megacap breadth)."),
         },
         "dates": me_dates,
         "market": market,
         "sectors": sectors,
+        "nifty500_ew_rel": nifty500_ew_rel,
         "screen_current": screen_current,
         "snapshot": {"asof": asof, "market": snapshot_market, "sectors": snapshot_sectors},
     }

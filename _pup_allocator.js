@@ -108,6 +108,19 @@ const server = http.createServer((req, res) => {
     return { before, afterA, afterB, sector: sel ? sel.value : null };
   });
 
+  // ---- 1c) SECTOR REL-PERF chart (EW/FF vs NIFTY 500 + 500 EW-vs-cap): >=2 line traces, and a horizon
+  //          toggle must keep it populated (rebased redraw).
+  const relPerf = await page.evaluate(async () => {
+    const rp = document.getElementById("plot-ab-relperf");
+    const tr = () => rp ? rp.querySelectorAll(".scatterlayer .trace, .scatterlayer .lines").length : 0;
+    const before = tr();
+    const btn = document.querySelector("#ab-rp-hz .fs-lvl[data-hz='0']");   // MAX
+    if (btn) { btn.click(); }
+    await new Promise((r) => setTimeout(r, 450));
+    const afterMax = tr();
+    return { before, afterMax, hasSeg: !!document.getElementById("ab-rp-hz") };
+  });
+
   // ---- 2) SCREEN tab: Rotation section (stock trail plot + centroid controls) ----
   await page.evaluate(async () => {
     try { if (typeof setView === "function") setView("screen"); } catch (e) {}
@@ -128,6 +141,7 @@ const server = http.createServer((req, res) => {
 
   console.log("ALLOCATOR:", JSON.stringify(alloc));
   console.log("CONS-FLOW:", JSON.stringify(consFlow), "(decomposition: >=2 bar traces before/after sector switch + 'decomposition' title)");
+  console.log("REL-PERF :", JSON.stringify(relPerf), "(>=2 line traces, survives horizon switch to MAX)");
   console.log("DATE-NAV :", JSON.stringify(dateNav), "(screen+consensus sliders + screen shows historical on drag)");
   console.log("SEC-CHANGE:", JSON.stringify(secChange), "(afterA/afterB must stay >=1 — the re-plot bug)");
   console.log("ROTATION :", JSON.stringify(rot));
@@ -140,6 +154,7 @@ const server = http.createServer((req, res) => {
     && alloc.consInAlloc && !alloc.consInMacro
     && secChange.afterA >= 1 && secChange.afterB >= 1
     && consFlow.before >= 2 && consFlow.after >= 2 && consFlow.decompTitle
+    && relPerf.before >= 2 && relPerf.afterMax >= 2 && relPerf.hasSeg
     && dateNav.screenDn && dateNav.consDn && dateNav.screenDateChanged
     && rot.hasRotWord && rot.hasStockSel && rot.hasSubseg && rot.trailTraces >= 1;
   console.log("\n" + (ok

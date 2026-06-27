@@ -4594,6 +4594,7 @@ let ALLOC_W = "1";          // breadth window key for new-high/low/nh-nl (1/3/5 
 let ALLOC_SEC = null;       // selected sector for the per-sector panel
 let ALLOC_M = 50;           // the m% breakout/golden-cross screen threshold
 let ALLOC_SCREEN_RULE = "breakout";   // "breakout" | "golden_cross"
+let ALLOC_RP_HZ = "3";                // sector relative-performance horizon (years; "0" = MAX)
 let _allocBuilt = false;
 
 function _breadth() { return (typeof window !== "undefined") ? window.VISTAS_BREADTH : null; }
@@ -4743,6 +4744,17 @@ function renderBreadth(B, wrap) {
          </div>
          <div class="plot" id="plot-ab-sector" style="height:340px"></div>
          <div class="statline" id="ab-sector-stat"></div>
+         <div class="ab-ctlrow" style="margin-top:12px">
+           <span class="ab-ctllbl">Relative strength vs NIFTY 500</span>
+           <span class="ab-rpseg fs-lvl-seg" id="ab-rp-hz">
+             <button type="button" class="fs-lvl" data-hz="1">1Y</button>
+             <button type="button" class="fs-lvl on" data-hz="3">3Y</button>
+             <button type="button" class="fs-lvl" data-hz="5">5Y</button>
+             <button type="button" class="fs-lvl" data-hz="0">MAX</button>
+           </span>
+         </div>
+         <div class="plot" id="plot-ab-relperf" style="height:300px"></div>
+         <div class="q-note" style="font-size:12px;margin-top:4px">Sector <b>EW</b> / <b>FF-mcap</b> total-return index ÷ NIFTY 500 TR, rebased to 100 at the window start (rising = leading the market); the dotted line is the <b>NIFTY 500 equal-weight vs cap-weight</b> (broad-vs-megacap breadth). Reconstructed from <i>current</i> index membership + fixed free-float weights — a leadership/breadth <b>context</b> view, increasingly biased over long horizons (read recent windows). Tick/untick lines in the legend.</div>
        </section>
 
        <section class="panel">
@@ -4774,8 +4786,13 @@ function renderBreadth(B, wrap) {
       ALLOC_W = b.dataset.w; wseg.querySelectorAll(".ab-wbtn").forEach((x) => x.classList.toggle("on", x.dataset.w === ALLOC_W));
       _abDrawMarket(B); _abDrawSector(B); _abDrawScreen(B);
     }));
-    const ssel = $("ab-sec-sel"); if (ssel) ssel.addEventListener("change", () => { ALLOC_SEC = ssel.value; _abDrawSector(B); });
+    const ssel = $("ab-sec-sel"); if (ssel) ssel.addEventListener("change", () => { ALLOC_SEC = ssel.value; _abDrawSector(B); _abDrawRelPerf(B); });
     const smet = $("ab-sec-metric"); if (smet) smet.addEventListener("change", () => _abDrawSector(B));
+    const rphz = $("ab-rp-hz");
+    if (rphz) rphz.querySelectorAll(".fs-lvl").forEach((b) => b.addEventListener("click", () => {
+      ALLOC_RP_HZ = b.dataset.hz; rphz.querySelectorAll(".fs-lvl").forEach((x) => x.classList.toggle("on", x.dataset.hz === ALLOC_RP_HZ));
+      _abDrawRelPerf(B);
+    }));
     const ruleseg = $("ab-ruleseg");
     if (ruleseg) ruleseg.querySelectorAll(".fs-lvl").forEach((b) => b.addEventListener("click", () => {
       ALLOC_SCREEN_RULE = b.dataset.rule; ruleseg.querySelectorAll(".fs-lvl").forEach((x) => x.classList.toggle("on", x.dataset.rule === ALLOC_SCREEN_RULE));
@@ -4810,8 +4827,47 @@ function renderBreadth(B, wrap) {
 
   _abDrawMarket(B);
   _abDrawSector(B);
+  _abDrawRelPerf(B);
   _abDrawScreen(B);
   _abDrawGlobal(B);
+}
+
+// Sector relative strength vs NIFTY 500: EW + FF-mcap sector TR index ÷ NIFTY 500 TR (baked rel_ew/rel_ff,
+// already rebased to 100 at 2000), here RE-REBASED to 100 at the chosen horizon's start so recent leadership
+// is readable (the reconstruction's composition bias is small over recent windows, large over long ones).
+// Plus the NIFTY 500 EW-vs-cap breadth line. Lines tick/untickable via the Plotly legend.
+function _abDrawRelPerf(B) {
+  const id = "plot-ab-relperf";
+  const el = document.getElementById(id); if (!el) return;
+  try {
+    const dates = B.dates || [];
+    const n = dates.length;
+    const sec = ALLOC_SEC, sd = (B.sectors && B.sectors[sec]) || {};
+    const hzYears = parseInt(ALLOC_RP_HZ, 10) || 0;
+    const start = (hzYears <= 0) ? 0 : Math.max(0, n - hzYears * 12 - 1);
+    const rebased = (arr) => {
+      if (!Array.isArray(arr)) return null;
+      let base = null;
+      for (let i = start; i < n; i++) { if (arr[i] !== null && arr[i] !== undefined) { base = arr[i]; break; } }
+      if (base === null || base === 0) return null;
+      return arr.slice(start).map((v) => (v === null || v === undefined) ? null : Math.round(v / base * 1000) / 10);
+    };
+    const x = dates.slice(start);
+    const ew = rebased(sd.rel_ew), ff = rebased(sd.rel_ff), mk = rebased(B.nifty500_ew_rel);
+    const traces = [];
+    if (ew) traces.push({ type: "scatter", mode: "lines", name: (sec || "Sector") + " — EW", x: x, y: ew, line: { color: "#1f77b4", width: 1.8 }, connectgaps: true });
+    if (ff) traces.push({ type: "scatter", mode: "lines", name: (sec || "Sector") + " — FF-mcap", x: x, y: ff, line: { color: "#d62728", width: 1.8 }, connectgaps: true });
+    if (mk) traces.push({ type: "scatter", mode: "lines", name: "NIFTY 500 EW vs cap", x: x, y: mk, line: { color: "#7f7f7f", width: 1.4, dash: "dot" }, connectgaps: true });
+    if (!traces.length) { Plotly.purge(id); el.innerHTML = `<div class="empty-note">No relative-performance series for ${fEsc(String(sec || ""))}.</div>`; return; }
+    Plotly.purge(id);
+    Plotly.react(id, traces, baseLayout({
+      yaxis: { title: "rel. to NIFTY 500 (=100 at start)", gridcolor: "#dfe3e8" },
+      xaxis: { type: "date", gridcolor: "#dfe3e8" },
+      legend: { orientation: "h", y: -0.2, font: { size: 10 } },
+      shapes: [{ type: "line", xref: "paper", x0: 0, x1: 1, y0: 100, y1: 100, line: { color: "#aab2bd", width: 1, dash: "dot" } }],
+    }), PCONF);
+    attachYAutoscale(id);
+  } catch (e) { console.error("_abDrawRelPerf:", e); Plotly.purge(id); el.innerHTML = `<div class="empty-note">Relative strength unavailable.</div>`; }
 }
 
 // build the set of line traces for a given breadth bundle `m` (market or a single sector) honouring
