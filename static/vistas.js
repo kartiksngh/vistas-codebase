@@ -4705,6 +4705,7 @@ let _wfAmc = "__ALL__", _wfSector = "__ALL__", _wfHz = "0", _wfSnapIdx = null, _
 // the "chosen cell" the header + time-series plot follow, climbing the lattice when a field is null:
 //   {amc:null,code:null,sector:null} = market · {amc} = an AMC · {amc,code} = a scheme · +sector = a leaf
 let _wfFocus = { amc: null, code: null, sector: null };
+let _wfTheme = null;    // selected NSE thematic index for the theme-lens chart
 const _wfPivExp = {};   // pivot rowKey -> true (expanded), for the Excel-style drill-down
 const _wfDrill = {};    // amc-slug -> drill payload | null (lazy-loaded per-AMC scheme×sector file)
 const _WF_COL = { na: "#1f9e89", inflow: "#d99a2b", price: "#9aa6b2" };
@@ -4743,6 +4744,10 @@ function _wfSeriesFor(f) {
   if (!f.amc) return _wfNode(W, "__ALL__", f.sector || "__ALL__");
   if (!f.code) return _wfNode(W, f.amc, f.sector || "__ALL__");
   const sch = _wfScheme(f.amc, f.code); if (!sch) return null;
+  if (f.vst) {                                              // a stock leaf under scheme×sector (P4)
+    const secNode = (sch.sectors || {})[f.sector]; if (!secNode) return null;
+    return (secNode.stocks || []).find((s) => s.vst_id === f.vst) || null;
+  }
   return f.sector ? ((sch.sectors || {})[f.sector] || null) : sch.total;
 }
 function _wfPlot(id, traces, layout) {
@@ -4757,6 +4762,11 @@ function _wfScopeName() {
   let nm = f.amc;
   if (f.code) { const sch = _wfScheme(f.amc, f.code); nm += " · " + (sch ? sch.name : f.code); }
   if (f.sector) nm += " · " + f.sector;
+  if (f.vst) {
+    const sch = _wfScheme(f.amc, f.code), sec = sch && (sch.sectors || {})[f.sector];
+    const st = sec && (sec.stocks || []).find((s) => s.vst_id === f.vst);
+    nm += " · " + (st ? st.name : f.vst);
+  }
   return nm;
 }
 
@@ -4833,21 +4843,23 @@ function renderOwnership() {
          <div id="plot-wf-decomp"></div>
          <div class="ab-ctlrow" id="wf-snap-dn" style="margin-top:10px"></div>
          <div id="wf-snap"></div>
-       </section>`;
+       </section>` + _wfThemePanelHTML(W);
     $("wf-amc").addEventListener("change", (e) => { _wfAmc = e.target.value; _wfOnScopeChange(); });
     $("wf-sec").addEventListener("change", (e) => { _wfSector = e.target.value; _wfOnScopeChange(); });
     const hz = $("wf-hz");
     if (hz) hz.querySelectorAll(".fs-lvl").forEach((b) => b.addEventListener("click", () => {
       hz.querySelectorAll(".fs-lvl").forEach((x) => x.classList.remove("on")); b.classList.add("on");
-      _wfHz = b.dataset.hz; _wfDrawPlot();
+      _wfHz = b.dataset.hz; _wfDrawPlot(); _wfThemeChart();
     }));
+    const tsel = $("wf-theme-sel");
+    if (tsel) tsel.addEventListener("change", (e) => { _wfTheme = e.target.value; _wfThemeDraw(); });
     _wfBuilt = true;
   }
   _wfDraw();
   afterPaint(() => viewPlotsResize("ownership"));
 }
 
-function _wfDraw() { _wfDrawHead(); _wfDrawPlot(); _wfDrawSnap(); }
+function _wfDraw() { _wfDrawHead(); _wfDrawPlot(); _wfDrawSnap(); _wfThemeDraw(); }
 
 function _wfDrawHead() {
   const W = _wf(), node = _wfSeriesFor(_wfFocus), host = $("wf-head"); if (!host) return;
@@ -4896,7 +4908,7 @@ function _wfOnScopeChange() {
 function _wfDrawSnap() {
   const W = _wf();
   const dnHost = $("wf-snap-dn");
-  if (dnHost) dateNavControl(dnHost, W.months, _wfSnapIdx, (k) => { _wfSnapIdx = k; _wfPivotRender(); });
+  if (dnHost) dateNavControl(dnHost, W.months, _wfSnapIdx, (k) => { _wfSnapIdx = k; _wfPivotRender(); _wfThemeTable(); });
   _wfPivotRender();
 }
 
@@ -4905,7 +4917,7 @@ function _wfFocusKey() {
   const f = _wfFocus || {};
   if (!f.amc) return null;
   if (!f.code) return "amc::" + f.amc;
-  return "sch::" + f.amc + "::" + f.code + (f.sector ? "::" + f.sector : "");
+  return "sch::" + f.amc + "::" + f.code + (f.sector ? "::" + f.sector : "") + (f.vst ? "::vst::" + f.vst : "");
 }
 
 // build the flat list of VISIBLE pivot rows from the expansion state, at the snapshot month `i`.
@@ -4947,7 +4959,16 @@ function _wfPushSchemes(out, amc, depth, i, at) {
       const secs = Object.keys(s.sectors || {}).map((sec) => ({ sec, v: at(s.sectors[sec]) })).filter((r) => r.v);
       secs.sort((p, q) => (q.v.na || 0) - (p.v.na || 0));
       for (const { sec, v: sv } of secs) {
-        out.push({ key: key + "::" + sec, depth: depth + 1, label: sec, vals: sv, expandable: false, focus: { amc, code: s.code, sector: sec } });
+        const secKey = key + "::" + sec;
+        const stocks = (s.sectors[sec] || {}).stocks || [];
+        out.push({ key: secKey, depth: depth + 1, label: sec, vals: sv, expandable: stocks.length > 0, expanded: !!_wfPivExp[secKey], focus: { amc, code: s.code, sector: sec } });
+        if (_wfPivExp[secKey] && stocks.length) {              // P4 stock leaves (top holdings; may not sum to sector)
+          const srows = stocks.map((st) => ({ st, v: at(st) })).filter((r) => r.v);
+          srows.sort((p, q) => (q.v.na || 0) - (p.v.na || 0));
+          for (const { st, v: sv2 } of srows) {
+            out.push({ key: secKey + "::vst::" + st.vst_id, depth: depth + 2, label: st.name + (st.sym ? " (" + st.sym + ")" : ""), vals: sv2, expandable: false, focus: { amc, code: s.code, sector: sec, vst: st.vst_id } });
+          }
+        }
       }
     }
   }
@@ -4988,6 +5009,99 @@ function _wfPivotRender() {
         if (slug) ensureWfDrill(slug).then(() => { _wfDrawHead(); _wfDrawPlot(); _wfPivotRender(); });
       }
       _wfDrawHead(); _wfDrawPlot(); _wfPivotRender();
+    });
+    host.dataset.wfwired = "1";
+  }
+}
+
+// ===== P4 theme lens: flow into NSE thematic indices (a PARALLEL, OVERLAPPING view — themes share
+// stocks, so theme rows are NOT additive to the market total). Market-level decomposition + snapshot. =====
+function _wfThemePanelHTML(W) {
+  const themes = (W && W.themes) || [];
+  if (!themes.length) return "";
+  if (_wfTheme == null || themes.indexOf(_wfTheme) < 0) _wfTheme = themes[0];
+  const opts = themes.map((t) => `<option value="${attEsc(t)}"${t === _wfTheme ? " selected" : ""}>${fEsc(t)}</option>`).join("");
+  return `<section class="panel cpanel">
+    <h2><span class="tag-sec">THEMES</span>Flow by NSE thematic index — a parallel lens</h2>
+    <details><summary>Definition · Method · Why</summary>
+      <p><b>What:</b> the same three-way flow decomposition (price action · implied inflow · net-active) summed over the funds' holdings of each <b>NSE thematic index</b>'s constituents — where the market's conviction is tilting across cross-sector themes (Consumption, Energy, PSU, Commodities, Infrastructure …).</p>
+      <p><b>Method:</b> for each theme, Σ over the priced holdings of its constituent stocks, per month; constituent membership from niftyindices.com (committed locally). <b>Why:</b> themes cut across the macro-sector backbone and surface narratives (PSU, consumption, commodities) a pure sector view can miss.</p>
+      <p class="q-note" style="color:#b3402f"><b>Caveat — NOT additive:</b> themes OVERLAP (a stock belongs to several), so theme rows do <i>not</i> sum to the market total — read each on its own. Coverage = NSE thematic indices whose constituents are publicly published (manufacturing/digital/EV are not, so they're absent).</p>
+    </details>
+    <div class="ab-ctlrow"><span class="ab-ctllbl">Theme</span><select id="wf-theme-sel" class="ab-sel" style="min-width:200px">${opts}</select></div>
+    <div id="wf-theme-head" style="display:flex;flex-wrap:wrap;gap:16px;margin:10px 0"></div>
+    <div id="plot-wf-theme"></div>
+    <div id="wf-theme-tbl" style="margin-top:10px"></div>
+  </section>`;
+}
+
+function _wfThemeNode() {
+  const W = _wf(); if (!W || !W.theme_total || !_wfTheme) return null;
+  return W.theme_total[_wfTheme] || null;
+}
+
+function _wfThemeDraw() { _wfThemeHead(); _wfThemeChart(); _wfThemeTable(); }
+
+function _wfThemeHead() {
+  const W = _wf(), host = $("wf-theme-head"); if (!host) return;
+  const node = _wfThemeNode();
+  if (!node || !node.gross || !node.gross.length) { host.innerHTML = ""; return; }
+  const i = node.gross.length - 1;
+  const stat = (lbl, val, col) => `<div class="cstat"><span class="ck">${lbl}</span><span class="cv" style="color:${col || ''}">${_wfFmt(val)}</span></div>`;
+  host.innerHTML =
+    `<div class="cstat"><span class="ck">${fEsc(_wfTheme)} · latest ${fEsc(W.months[i])}</span><span class="cv">gross ${_wfFmt(node.gross[i])}</span></div>`
+    + (node.mv ? `<div class="cstat"><span class="ck">Ownership (priced)</span><span class="cv">${_wfFmt(node.mv[i])}</span></div>` : "")
+    + stat("Price action", node.price[i], _WF_COL.price)
+    + stat("Implied inflow", node.inflow[i], _WF_COL.inflow)
+    + stat("Net-active (conviction)", node.net_active[i], node.net_active[i] >= 0 ? _WF_COL.na : "#b3402f");
+}
+
+function _wfThemeChart() {
+  const W = _wf(), node = _wfThemeNode(); if (!W) return;
+  if (!node || !node.gross) { _wfPlot("plot-wf-theme", [], {}); return; }
+  const n = W.months.length, back = parseInt(_wfHz, 10) || 0;
+  const h0 = back > 0 ? Math.max(0, n - back) : 0;
+  const x = W.months.slice(h0), sl = (arr) => arr.slice(h0);
+  const traces = [
+    { type: "bar", x, y: sl(node.net_active), name: "Net-active", marker: { color: _WF_COL.na } },
+    { type: "bar", x, y: sl(node.inflow), name: "Implied inflow", marker: { color: _WF_COL.inflow } },
+    { type: "bar", x, y: sl(node.price), name: "Price action", marker: { color: _WF_COL.price } },
+  ];
+  _wfPlot("plot-wf-theme", traces, {
+    barmode: "relative", height: 320,
+    title: { text: `Flow into ${_wfTheme} (₹ cr/month)`, font: { size: 13 } },
+    legend: { orientation: "h" }, yaxis: { title: "₹ cr", zeroline: true }, margin: { t: 40 },
+  });
+}
+
+function _wfThemeTable() {
+  const W = _wf(), host = $("wf-theme-tbl"); if (!host) return;
+  const TT = (W && W.theme_total) || {}, themes = (W && W.themes) || [];
+  if (!themes.length) { host.innerHTML = ""; return; }
+  const i = (_wfSnapIdx == null) ? W.months.length - 1 : _wfSnapIdx;
+  const ym = W.months[i];
+  const naCol = (v) => (v >= 0 ? _WF_COL.na : "#b3402f");
+  const rows = themes.map((t) => ({ t, n: TT[t] })).filter((r) => r.n);
+  rows.sort((p, q) => (q.n.net_active[i] || 0) - (p.n.net_active[i] || 0));
+  const tr = rows.map((r) => {
+    const n = r.n;
+    return `<tr class="wf-row${r.t === _wfTheme ? " wf-row-on" : ""}" data-theme="${attEsc(r.t)}">`
+      + `<td>${fEsc(r.t)}</td>`
+      + `<td class="num">${n.mv ? _wfFmt(n.mv[i]) : "—"}</td>`
+      + `<td class="num" style="color:${naCol(n.net_active[i])}">${_wfFmt(n.net_active[i])}</td>`
+      + `<td class="num" style="color:${_WF_COL.inflow}">${_wfFmt(n.inflow[i])}</td>`
+      + `<td class="num" style="color:${_WF_COL.price}">${_wfFmt(n.price[i])}</td>`
+      + `<td class="num">${_wfFmt(n.gross[i])}</td></tr>`;
+  }).join("");
+  host.innerHTML =
+    `<div class="ab-screen-head"><b>NSE themes</b> · as of ${fEsc(ym)} — sorted by net-active. <span style="color:#b3402f">Overlapping — not additive.</span></div>`
+    + `<table class="gauge-tbl wf-pivot"><thead><tr><th>Theme</th><th class="num">Ownership</th><th class="num">Net-active</th><th class="num">Implied inflow</th><th class="num">Price action</th><th class="num">Gross</th></tr></thead><tbody>${tr}</tbody></table>`;
+  if (!host.dataset.wfwired) {
+    host.addEventListener("click", (e) => {
+      const trEl = e.target.closest("tr.wf-row"); if (!trEl || !trEl.dataset.theme) return;
+      _wfTheme = trEl.dataset.theme;
+      const sel = $("wf-theme-sel"); if (sel) sel.value = _wfTheme;
+      _wfThemeDraw();
     });
     host.dataset.wfwired = "1";
   }

@@ -171,17 +171,48 @@ const server = http.createServer((req, res) => {
     await new Promise((r) => setTimeout(r, 500));
     const secRows = q('#wf-snap tr.wf-row').filter((tr) => seg(tr.dataset.key) === 3);
     const nSec = secRows.length;
-    let headHasSector = false, bars = 0;
+    let headHasSector = false, bars = 0, nStk = 0, headHasStock = false;
     if (secRows[0]) {
-      const secName = ((secRows[0].querySelector("td") || {}).textContent || "").trim();
-      secRows[0].click();                               // focus a scheme×sector leaf
+      const secName = ((secRows[0].querySelector("td") || {}).textContent || "").replace(/^[\s▸▾]+/, "").trim();
+      secRows[0].click();                               // focus (+maybe expand) a scheme×sector leaf
       await new Promise((r) => setTimeout(r, 450));
       const head = (document.getElementById("wf-head") || {}).textContent || "";
       headHasSector = secName.length > 0 && head.indexOf(secName) >= 0;
       const decomp = document.getElementById("plot-wf-decomp");
       bars = decomp ? decomp.querySelectorAll(".barlayer .trace").length : 0;
+      // P4 stock leaf: stocks may already be present (if that sector expanded); else expand an expandable one
+      let stkRows = q('#wf-snap tr.wf-row').filter((tr) => seg(tr.dataset.key) === 5);
+      if (!stkRows.length) {
+        const expSec = q('#wf-snap tr.wf-row').filter((tr) => seg(tr.dataset.key) === 3).find((tr) => tr.dataset.exp === "1");
+        if (expSec) { expSec.click(); await new Promise((r) => setTimeout(r, 450)); stkRows = q('#wf-snap tr.wf-row').filter((tr) => seg(tr.dataset.key) === 5); }
+      }
+      nStk = stkRows.length;
+      if (stkRows[0]) {
+        const stName = ((stkRows[0].querySelector("td") || {}).textContent || "").trim().split(" (")[0];
+        stkRows[0].click();                             // focus a stock leaf
+        await new Promise((r) => setTimeout(r, 350));
+        const head2 = (document.getElementById("wf-head") || {}).textContent || "";
+        headHasStock = stName.length > 2 && head2.indexOf(stName) >= 0;
+      }
     }
-    return { nAmcRows, nSch, nSec, headHasSector, bars };
+    return { nAmcRows, nSch, nSec, headHasSector, bars, nStk, headHasStock };
+  });
+
+  // ---- 1d3) THEME LENS (#102 P4): flow-by-NSE-thematic-index panel — selector, decomposition chart
+  //           (>=2 bar traces), a theme table, and the chart stays populated on a theme switch.
+  const theme = await page.evaluate(async () => {
+    const sel = document.getElementById("wf-theme-sel");
+    const hasSel = !!(sel && sel.options.length >= 1);
+    const plot = document.getElementById("plot-wf-theme");
+    const bars0 = plot ? plot.querySelectorAll(".barlayer .trace").length : 0;
+    const rows0 = document.querySelectorAll("#wf-theme-tbl table tbody tr").length;
+    let bars1 = bars0;
+    if (sel && sel.options.length > 1) {
+      sel.selectedIndex = 1; sel.dispatchEvent(new Event("change", { bubbles: true }));
+      await new Promise((r) => setTimeout(r, 450));
+      bars1 = plot ? plot.querySelectorAll(".barlayer .trace").length : 0;
+    }
+    return { hasSel, bars0, rows0, bars1 };
   });
 
   // ---- 2) SCREEN tab: Rotation section (stock trail plot + centroid controls) ----
@@ -206,7 +237,8 @@ const server = http.createServer((req, res) => {
   console.log("CONS-FLOW:", JSON.stringify(consFlow), "(decomposition: >=2 bar traces before/after sector switch + 'decomposition' title)");
   console.log("REL-PERF :", JSON.stringify(relPerf), "(>=2 line traces, survives horizon switch to MAX)");
   console.log("OWNERSHIP:", JSON.stringify(own), "(>=2 bar traces decomp + snapshot table rows + AMC-switch redraw + date-slider)");
-  console.log("WF-PIVOT :", JSON.stringify(pivot), "(AMC rows -> expand -> schemes (lazy) -> sectors -> click sector refocuses chart)");
+  console.log("WF-PIVOT :", JSON.stringify(pivot), "(AMC -> schemes (lazy) -> sectors -> STOCKS -> click refocuses chart)");
+  console.log("WF-THEME :", JSON.stringify(theme), "(NSE thematic-index lens: selector + >=2 bar traces + table rows + survives theme switch)");
   console.log("DATE-NAV :", JSON.stringify(dateNav), "(screen+consensus sliders + screen shows historical on drag)");
   console.log("SEC-CHANGE:", JSON.stringify(secChange), "(afterA/afterB must stay >=1 — the re-plot bug)");
   console.log("ROTATION :", JSON.stringify(rot));
@@ -223,6 +255,8 @@ const server = http.createServer((req, res) => {
     && own.hasTab && own.hasPane && own.hasData && own.bars0 >= 2 && own.bars1 >= 2
     && own.snapRows0 >= 1 && own.hasSlider && own.snapChanged
     && pivot.nAmcRows >= 1 && pivot.nSch >= 1 && pivot.nSec >= 1 && pivot.headHasSector && pivot.bars >= 2
+    && pivot.nStk >= 1 && pivot.headHasStock
+    && theme.hasSel && theme.bars0 >= 2 && theme.rows0 >= 1 && theme.bars1 >= 2
     && dateNav.screenDn && dateNav.consDn && dateNav.screenDateChanged
     && rot.hasRotWord && rot.hasStockSel && rot.hasSubseg && rot.trailTraces >= 1;
   console.log("\n" + (ok

@@ -83,8 +83,21 @@ Cross-tabs the UI needs: **AMC × sector** (how an AMC's money split across sect
   **date slider** (time-nav). Defaults chosen per the open-Qs: macro-sector taxonomy · AMC-first ·
   "implied inflow" labeled as the deployment proxy. Engine `renderOwnership` in `static/vistas.js` (reads
   the baked cube — no JS↔Python parity port). Probe: `_pup_allocator.js` OWNERSHIP block.
-- **P3 — pivot drill-down:** AMC → schemes → sector/stock expandable table at the selected month (Excel-style).
+- **P3 (DONE ✓, LIVE 2026-06-27, src backup `b3baf62`):** the Excel-style **pivot drill-down** — root = the
+  AMC dropdown (All AMCs → AMC → scheme → sector; or one AMC → scheme → sector). Each row shows **Ownership**
+  (priced MV held) + the 3-way flow split (net-active / implied-inflow / price-action) + gross, sorted by
+  net-active. Click a row to expand (Excel-style) AND refocus the time-series chart above onto that exact cell
+  (market / sector / AMC / AMC×sector from the inline cube; scheme / scheme×sector from the lazy file). Date
+  slider time-navigates the whole pivot. **Engine:** `flow_waterfall.build_waterfall(with_drilldown=True)` now
+  also emits, per AMC, every scheme × sector (+ MV) over all months — reconciles (scheme total = Σ its sectors;
+  price+inflow+net-active = gross), prunes debt/no-equity schemes (peak |gross| < ₹5cr). **Deck** writes one
+  lazy file per AMC → `data/ownership/<slug>.json` (47 files, 12 MB total, fetched on first expand) + keeps
+  only a tiny `{amc: slug}` index inline (shell stays light). FE: `renderOwnership`/`_wfPivotRender` in
+  `static/vistas.js` (+ `.wf-pivot` CSS). Probe `_pup_allocator.js` WF-PIVOT block PASS (47 AMC rows → expand →
+  11 schemes lazy-load → 22 sectors → click sector refocuses chart; 0 errors). Aggregates only (bake-safe).
 - **P4 — stock & theme level + cross-AMC crowding** (who is buying this stock/sector, conviction vs inflow).
+  NOTE: stock = the deepest leaf; needs its own payload-bounded design (per-scheme × stock), so it's a separate
+  ship from P3's AMC→scheme→sector. Theme taxonomy still open (macro-sector used today).
 - **P5 — agent hook:** expose "net-active tilt by sector/AMC, last N months" to the analyst/FM/CIO desks.
 
 ## Open questions for KV (don't block P1)

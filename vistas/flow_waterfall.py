@@ -46,6 +46,10 @@ _RECON_TOL_CR = 0.5            # reconciliation must hold to well under a crore
 # the per-AMC drill-down (P3): a SCHEME is kept in its AMC file only if its peak monthly |gross| clears
 # this — drops debt/liquid/no-equity schemes so each lazy-loaded AMC file stays lean.
 _DRILL_MIN_CR = 5.0
+# the stock-leaf (P4): under each scheme, keep the top-N holdings by peak ownership UNION any holding whose
+# peak ownership (MV held) exceeds the floor — bounds the per-AMC file while covering every big position.
+_STOCK_TOPN = 15
+_STOCK_MIN_CR = 100.0
 
 
 def _amc_of(h: pd.DataFrame) -> dict:
@@ -60,10 +64,107 @@ def _scheme_name_of(h: pd.DataFrame) -> dict:
     return dict(zip(sub["navindia_code"].astype(str), sub["scheme_name"].astype(str)))
 
 
+def _stock_meta_of(h: pd.DataFrame) -> dict:
+    """vst_id -> (display_name, nse_symbol) for the stock-leaf labels (last non-null wins)."""
+    sub = h[["vst_id", "vid_name", "nse_symbol"]].copy()
+    sub["vst_id"] = sub["vst_id"].astype(str)
+    sub = sub[sub["vst_id"].str.strip() != ""].drop_duplicates(subset=["vst_id"], keep="last")
+    out = {}
+    for _, r in sub.iterrows():
+        vid = r["vst_id"]
+        nm = str(r["vid_name"]) if pd.notna(r["vid_name"]) else vid
+        sym = str(r["nse_symbol"]) if pd.notna(r["nse_symbol"]) else ""
+        out[vid] = (nm, sym)
+    return out
+
+
 def amc_slug(name: str) -> str:
     """AMC name -> a stable, filesystem/URL-safe slug for its lazy drill-down file."""
     s = re.sub(r"[^a-z0-9]+", "-", str(name).lower()).strip("-")
     return s or "amc"
+
+
+# ---- P4 THEME lens: NSE thematic-index membership (vst_id -> [themes]) ------------------------------
+# Cross-sector NSE thematic indices (a PARALLEL lens to the macro-sector backbone). A stock can belong to
+# several themes, so theme flows OVERLAP and are NOT additive to the market total (labeled in the UI).
+# Membership is fetched ONCE (niftyindices.com via benchmarks.fetch_constituents) into a small committed
+# data file, so the deck build needs no network. Refresh with `python -m vistas.flow_waterfall --themes`.
+_THEME_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data", "themes")
+_THEME_FILE = os.path.join(_THEME_DIR, "theme_constituents.json")
+_THEME_SLUGS = {
+    "Nifty Energy": "ind_niftyenergylist",
+    "Nifty Infrastructure": "ind_niftyinfralist",
+    "Nifty Consumption": "ind_niftyconsumptionlist",
+    "Nifty Commodities": "ind_niftycommoditieslist",
+    "Nifty CPSE": "ind_niftycpselist",
+    "Nifty PSU (PSE)": "ind_niftypselist",
+    "Nifty Healthcare": "ind_niftyhealthcarelist",
+    "Nifty MNC": "ind_niftymnclist",
+    "Nifty Services": "ind_niftyservicelist",
+    "Nifty India Manufacturing": "ind_niftyindiamanufacturinglist",
+    "Nifty India Digital": "ind_niftyindiadigitallist",
+    "Nifty India Defence": "ind_niftyindiadefencelist",
+    "Nifty EV & New Age Auto": "ind_niftyevnewageautomotivelist",
+    "Nifty Capital Markets": "ind_niftycapitalmarketslist",
+    "Nifty Housing": "ind_niftyhousinglist",
+}
+
+
+def build_theme_map(out_path: str = _THEME_FILE, slugs: dict | None = None, log=print) -> dict:
+    """Fetch NSE thematic-index constituents and write {vst_id: [theme names]} to a local file.
+    Best-effort: a slug that fails to fetch (or maps to no held vst_id) is skipped + logged. Returns
+    the written dict {themes, counts, vst2themes}."""
+    from . import benchmarks
+    slugs = slugs or _THEME_SLUGS
+    by_isin, by_sym = benchmarks._load_identity()
+    vst2themes, counts = defaultdict(list), {}
+    for name, slug in slugs.items():
+        try:
+            df = benchmarks.fetch_constituents(slug)
+        except Exception as e:
+            if log:
+                log(f"[themes] {name}: fetch error {str(e)[:80]}")
+            continue
+        if df is None or not len(df):
+            if log:
+                log(f"[themes] {name}: no constituents (skip)")
+            continue
+        vids = set()
+        for _, r in df.iterrows():
+            vid = by_isin.get(str(r.get("isin"))) or by_sym.get(str(r.get("symbol")))
+            if vid:
+                vids.add(vid)
+        if not vids:
+            continue
+        counts[name] = len(vids)
+        for vid in sorted(vids):
+            vst2themes[vid].append(name)
+        if log:
+            log(f"[themes] {name}: {len(vids)} vst_ids")
+    out = {"themes": sorted(counts.keys()), "counts": counts, "vst2themes": dict(vst2themes)}
+    os.makedirs(os.path.dirname(out_path), exist_ok=True)
+    with open(out_path, "w", encoding="utf-8") as f:
+        json.dump(out, f, separators=(",", ":"))
+    if log:
+        log(f"[themes] wrote {len(counts)} themes covering {len(vst2themes)} stocks -> {out_path}")
+    return out
+
+
+def _load_theme_map(path: str = _THEME_FILE) -> dict:
+    """vst_id -> [theme names], from the committed theme file. {} if absent (graceful-degrade)."""
+    try:
+        with open(path, encoding="utf-8") as f:
+            return json.load(f).get("vst2themes", {}) or {}
+    except Exception:
+        return {}
+
+
+def _theme_counts(path: str = _THEME_FILE) -> dict:
+    try:
+        with open(path, encoding="utf-8") as f:
+            return json.load(f).get("counts", {}) or {}
+    except Exception:
+        return {}
 
 
 def _sector_map(explicit=None) -> dict:
@@ -77,7 +178,7 @@ def _sector_map(explicit=None) -> dict:
 
 
 def build_waterfall(months_back: int = 36, end_ym=None, sector_map=None, with_drilldown: bool = False,
-                    log=print) -> dict:
+                    theme_map=None, log=print) -> dict:
     """Build the AMC x sector money-flow waterfall cube over the trailing `months_back` months.
 
     Returns a baked-ready dict:
@@ -94,6 +195,8 @@ def build_waterfall(months_back: int = 36, end_ym=None, sector_map=None, with_dr
     h, ret = _load()
     code2amc = _amc_of(h)
     code2name = _scheme_name_of(h)
+    vst_meta = _stock_meta_of(h) if with_drilldown else {}
+    tmap = theme_map if theme_map is not None else (_load_theme_map() if with_drilldown else {})
     smap = _sector_map(sector_map)
 
     all_months = sorted(h["ym"].unique())
@@ -106,6 +209,12 @@ def build_waterfall(months_back: int = 36, end_ym=None, sector_map=None, with_dr
     cells = defaultdict(lambda: {"gross": {}, "price": {}, "inflow": {}, "net_active": {}, "mv": {}})
     # P3 drill-down: key=(navindia_code, sector) -> component -> {ym: value} (per-SCHEME, same loop)
     scheme_cells = defaultdict(lambda: {"gross": {}, "price": {}, "inflow": {}, "net_active": {}, "mv": {}})
+    # P4 stock leaf: key=(navindia_code, vst_id) -> component -> {ym: value} (per-SCHEME x stock, same loop)
+    stock_cells = defaultdict(lambda: {"gross": {}, "price": {}, "inflow": {}, "net_active": {}, "mv": {}})
+    # P4 theme lens: theme -> component -> {ym: running sum} (OVERLAPPING; NOT additive to the market)
+    theme_cells = defaultdict(lambda: {"gross": defaultdict(float), "price": defaultdict(float),
+                                       "inflow": defaultdict(float), "net_active": defaultdict(float),
+                                       "mv": defaultdict(float)})
     # per-month coverage: priced MV that entered the decomposition vs total MV touched
     cov_rows = []
 
@@ -143,6 +252,33 @@ def build_waterfall(months_back: int = 36, end_ym=None, sector_map=None, with_dr
                 sc["inflow"][ym] = round(float(r["inflow"]), 1)
                 sc["net_active"][ym] = round(float(r["na"]), 1)
                 sc["mv"][ym] = round(float(r["mv"]), 1)
+            tgrp = priced.groupby(["navindia_code", "vst_id"]).agg(   # per-SCHEME x STOCK (the P4 leaf)
+                gross=("gross", "sum"), price=("price_action", "sum"),
+                inflow=("implied_inflow", "sum"), na=("net_active", "sum"), mv=("mv_e", "sum")).reset_index()
+            for _, r in tgrp.iterrows():
+                tc = stock_cells[(str(r["navindia_code"]), str(r["vst_id"]))]
+                tc["gross"][ym] = round(float(r["gross"]), 1)
+                tc["price"][ym] = round(float(r["price"]), 1)
+                tc["inflow"][ym] = round(float(r["inflow"]), 1)
+                tc["net_active"][ym] = round(float(r["na"]), 1)
+                tc["mv"][ym] = round(float(r["mv"]), 1)
+            if tmap:                                              # market-by-stock -> distribute to themes
+                mstock = priced.groupby("vst_id").agg(
+                    gross=("gross", "sum"), price=("price_action", "sum"),
+                    inflow=("implied_inflow", "sum"), na=("net_active", "sum"), mv=("mv_e", "sum")).reset_index()
+                for _, r in mstock.iterrows():
+                    ths = tmap.get(str(r["vst_id"]))
+                    if not ths:
+                        continue
+                    g, p, inf, na, mvv = (float(r["gross"]), float(r["price"]), float(r["inflow"]),
+                                          float(r["na"]), float(r["mv"]))
+                    for th in ths:
+                        tc = theme_cells[th]
+                        tc["gross"][ym] += g
+                        tc["price"][ym] += p
+                        tc["inflow"][ym] += inf
+                        tc["net_active"][ym] += na
+                        tc["mv"][ym] += mvv
         cov_rows.append({"ym": ym, "priced_mv_cr": round(float(tot_val - excl_val), 1),
                          "excl_mv_cr": round(float(excl_val), 1)})
         if log and len(months_axis) % 6 == 0:
@@ -151,6 +287,7 @@ def build_waterfall(months_back: int = 36, end_ym=None, sector_map=None, with_dr
     if not months_axis:
         return {"months": [], "amcs": [], "sectors": [], "cube": {}, "sector_total": {},
                 "market_total": {}, "drilldown": {}, "drill_index": {},
+                "theme_total": {}, "themes": [], "theme_meta": {},
                 "meta": {"error": "no flow months produced"}}
 
     def _arr(d):   # {ym: v} -> list aligned to months_axis (missing month = 0.0)
@@ -222,6 +359,9 @@ def build_waterfall(months_back: int = 36, end_ym=None, sector_map=None, with_dr
         cells_by_code = defaultdict(dict)
         for (code, sec), comp in scheme_cells.items():
             cells_by_code[code][sec] = comp
+        stock_by_code = defaultdict(dict)                     # P4: per-scheme stock cells, by scheme code
+        for (code, vid), comp in stock_cells.items():
+            stock_by_code[code][vid] = comp
         by_amc = defaultdict(list)
         for code in cells_by_code:
             by_amc[code2amc.get(code, "Unknown AMC")].append(code)
@@ -233,6 +373,24 @@ def build_waterfall(months_back: int = 36, end_ym=None, sector_map=None, with_dr
                 total = {k: _sum_arrays([sec_out[s][k] for s in sec_out]) for k in COMPS}
                 if max((abs(v) for v in total["gross"]), default=0.0) < _DRILL_MIN_CR:
                     continue                                  # drop debt/liquid/no-equity schemes
+                # P4 stock leaves: top-N holdings by peak ownership UNION any peak MV > floor, nested by sector
+                ranked = []
+                for vid, comp in stock_by_code.get(code, {}).items():
+                    peak_mv = max((abs(v) for v in comp["mv"].values()), default=0.0)
+                    ranked.append((vid, peak_mv, comp))
+                ranked.sort(key=lambda x: x[1], reverse=True)
+                keep = set(v for v, _pk, _c in ranked[:_STOCK_TOPN]) | set(v for v, pk, _c in ranked if pk > _STOCK_MIN_CR)
+                for vid, _pk, comp in ranked:
+                    if vid not in keep:
+                        continue
+                    sec = smap.get(vid) or "Unclassified"
+                    if sec not in sec_out:
+                        continue
+                    nm, sym = vst_meta.get(vid, (vid, ""))
+                    leaf = {"name": nm, "sym": sym, "vst_id": vid}
+                    for k in COMPS:
+                        leaf[k] = _arr(comp[k])
+                    sec_out[sec].setdefault("stocks", []).append(leaf)
                 schemes.append({"name": code2name.get(code, code), "code": code,
                                 "total": total, "sectors": sec_out})
             if not schemes:
@@ -241,6 +399,14 @@ def build_waterfall(months_back: int = 36, end_ym=None, sector_map=None, with_dr
             slug = amc_slug(amc)
             drilldown[amc] = {"amc": amc, "slug": slug, "months": months_axis, "schemes": schemes}
             drill_index[amc] = slug
+
+    # ---- P4 theme totals (OVERLAPPING NSE thematic indices — a parallel lens, NOT additive) ----
+    theme_total, themes_ranked = {}, []
+    if theme_cells:
+        theme_total = {th: {k: [round(comp[k].get(ym, 0.0), 1) for ym in months_axis] for k in COMPS}
+                       for th, comp in theme_cells.items()}
+        themes_ranked = sorted(theme_total.keys(),
+                               key=lambda t: sum(abs(v) for v in theme_total[t]["net_active"]), reverse=True)
 
     meta = {
         "months_back": months_back, "n_months": len(months_axis),
@@ -262,7 +428,14 @@ def build_waterfall(months_back: int = 36, end_ym=None, sector_map=None, with_dr
     }
     return {"months": months_axis, "amcs": amcs_ranked, "sectors": secs_ranked,
             "cube": cube, "sector_total": sector_total, "market_total": market_total,
-            "drilldown": drilldown, "drill_index": drill_index, "meta": meta}
+            "drilldown": drilldown, "drill_index": drill_index,
+            "theme_total": theme_total, "themes": themes_ranked,
+            "theme_meta": {"counts": _theme_counts(),
+                           "caveat": ("NSE thematic indices OVERLAP — a stock counts in every theme it "
+                                      "belongs to, so theme rows are NOT additive to the market total. "
+                                      "Flow into a theme = the 3-way decomposition summed over the funds' "
+                                      "holdings of that theme's constituents.")},
+            "meta": meta}
 
 
 def _fmt(v):
@@ -309,4 +482,8 @@ def _audit(months_back=36):
 
 
 if __name__ == "__main__":
-    _audit()
+    import sys
+    if "--themes" in sys.argv:        # refresh the NSE thematic-index membership file (needs network)
+        build_theme_map()
+    else:
+        _audit()

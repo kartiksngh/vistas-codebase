@@ -21,12 +21,20 @@ Three things shipped to <https://kartiksngh.github.io/vistas/terminal/> this ses
   sectors × 36mo, **reconciles=True**). New tab (`initOwnership`/`renderOwnership` in `vistas.js`, baked
   `VISTAS_WATERFALL`): AMC+sector selectors → 3-component stacked decomposition plot over time + 1Y/2Y/MAX horizon +
   snapshot table with date slider. Probe `_pup_allocator.js` OWNERSHIP block PASS, 0 errors. Blueprint `OWNERSHIP_FLOW.md`.
+  **★ P3 PIVOT DRILL-DOWN now LIVE too (src backup `b3baf62`):** `build_waterfall(with_drilldown=True)` ALSO emits per
+  AMC every **scheme×sector** (+ **Ownership**=priced MV held) over 36mo (reconciles; prunes debt schemes <₹5cr);
+  `deck.py` writes one **lazy file per AMC** → `data/ownership/<slug>.json` (47 files/12MB, fetched on expand) + a tiny
+  inline `{amc:slug}` index. The snapshot table is now an Excel-style **pivot** (`_wfPivotRender`): root=AMC dropdown →
+  AMC→scheme→sector, each row = Ownership + 3-way split + gross; click a row to expand AND **refocus the chart** onto that
+  cell (`_wfFocus`/`_wfSeriesFor`: inline cube for AMC-level, lazy file for scheme-level). Probe WF-PIVOT block PASS
+  (47 AMC rows → 11 schemes lazy → 22 sectors → sector-click refocus; 0 errors). Aggregates only.
 - **BUILD SPEED (#98):** fixed an O(N²) liquidity lookup in `stock_intel._market_behaviour` (re-scanned the 9.4M-row
   turnover panel per stock) by pre-indexing `turnover_by_sym` once in `build_context` → **build 41min → ~17min**,
   output byte-identical. (This MOOTED the planned multi-core parallelize — algorithmic fix was strictly better.)
 
 **NEXT STEP / OPEN FORKS (all need KV direction or carry risk — surfaced, not auto-launched):**
-- **#102 P3-P5:** pivot drill-down (AMC→schemes→sector/stock expandable), stock/theme level + cross-AMC crowding, agent hook.
+- **#102 P3 DONE+LIVE (2026-06-27).** REMAINING **P4** = stock leaf + cross-AMC crowding (needs own payload-bounded
+  per-scheme×stock design → separate ship; theme taxonomy still open) · **P5** = agent hook (net-active tilt → desks).
 - **#99 cadence-partitioned build** (designed `BUILD_CADENCE.md`): compute fingerprint-gate + COMPUTE/ASSEMBLE split —
   RISK-FLAGGED (silent-stale, bounded ≤1wk + self-healing); best done with KV able to eyeball the first gated-vs-full
   diff. Fetch staleness-gate already effectively covered (pipeline cadence-gate + within-day `--no-fetch`/`--no-rebuild`).
