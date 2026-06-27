@@ -47,7 +47,10 @@ _HERE = os.path.dirname(os.path.abspath(__file__))
 _ROOT = os.path.dirname(_HERE)
 BOOK_DIR = os.path.join(_ROOT, "amc_book")
 
-LIQ_DAYS = 20            # max position ≤ this many days of median daily turnover
+LIQ_DAYS = 20            # max position ≤ this many days of median daily turnover (one patient build)
+LIQ_DAYS_MAX = 60        # relaxed build horizon (a quarter) used ONLY to top a book up to its
+                         # mandate equity floor when the tight cap would otherwise force an
+                         # un-mandated cash pile (the transfer-coefficient fix — see deploy_with_floor)
 TRADE_ADV_FRAC = 0.15   # a single day's trade ≤ this fraction of the day's turnover
 
 
@@ -262,13 +265,15 @@ def median_turnover_cr(symbol, asof=None, window=21):
     return seg[len(seg) // 2]
 
 
-def liquidity_cap_cr(symbol, aum_cr, asof=None):
-    """Max ₹cr a book may hold in `symbol` = LIQ_DAYS × trailing median daily turnover.
-    Returns None if turnover unknown (caller treats as 'no extra cap beyond the mandate')."""
+def liquidity_cap_cr(symbol, aum_cr, asof=None, days=None):
+    """Max ₹cr a book may hold in `symbol` = `days` × trailing median daily turnover (default
+    LIQ_DAYS = one patient build; pass LIQ_DAYS_MAX for the relaxed quarter-long accumulation the
+    stay-invested top-up uses). Returns None if turnover unknown (caller treats as 'no extra cap
+    beyond the mandate')."""
     mt = median_turnover_cr(symbol, asof)
     if mt is None:
         return None
-    return LIQ_DAYS * mt
+    return (days or LIQ_DAYS) * mt
 
 
 # ───────────────────────────────────────────────────────── book + daily fact sheet
@@ -951,6 +956,49 @@ def waterfill(sel, equity_target, max_sector, sector_free="Unclassified", iters=
     return equity_target - remaining
 
 
+def deploy_with_floor(sel, cand, m, aum, asof_str, equity_target,
+                      sector_free="Unclassified", max_widen=3):
+    """Water-fill `sel` to `equity_target`; if the tight (LIQ_DAYS) liquidity cap leaves the book
+    below its MANDATE EQUITY FLOOR (`m['equity_min']`), top it up the way a real FM would.
+
+    Why this exists — the transfer-coefficient (TC) fix: an equity fund may not legally sit in a
+    big cash pile (its mandate sets a hard equity floor, e.g. 0.65 for a Small Cap fund). When a
+    ₹-large book meets an illiquid universe, the one-build (LIQ_DAYS) cap can't place the floor's
+    worth of equity, so the shortfall lands in cash — which (a) BREACHES the mandate and (b) is
+    exactly the TC leak: real per-bet skill (good IC) gets thrown away as un-invested cash, and the
+    book can't keep up with a rising benchmark (the Quant Small-Cap β0.28 pathology). A real FM
+    facing capacity does NOT park 30% in cash — it holds MORE names and accumulates each over a
+    longer horizon (a quarter, LIQ_DAYS_MAX). So: only when the first pass is below the floor, widen
+    the candidate set beyond n_hi (up to `max_widen`×) and relax each name's liquidity cap to
+    LIQ_DAYS_MAX, then re-fill toward the floor. Books that already clear the floor (large/mid, most
+    flexi) are returned UNCHANGED — the top-up never triggers for them.
+
+    Returns (final_sel_list, deployed_fraction, relaxed_flag). `final_sel` carries u['w'] (and
+    u['cap']); whatever still can't fit even at the relaxed horizon is an HONEST capacity limit and
+    stays cash (logged by the caller as a real, not silently-hidden, under-deployment)."""
+    waterfill(sel, equity_target, m["max_sector"], sector_free)
+    deployed = sum(u["w"] for u in sel)
+    floor = m.get("equity_min", equity_target)
+    if deployed >= floor - 1e-4:
+        return sel, deployed, False
+    # widen breadth (a bigger book holds more names) + relax to the quarter-long accumulation
+    have = {u["sym"] for u in sel}
+    extra_cap = max(0, m["n_hi"] * max_widen - len(sel))
+    widened = sel + [u for u in cand if u["sym"] not in have][:extra_cap]
+    for u in widened:
+        cap = m["max_pos"]
+        lc = liquidity_cap_cr(u["sym"], aum, asof_str, days=LIQ_DAYS_MAX)
+        if lc is not None and aum > 0:
+            cap = min(cap, lc / aum)
+        u["cap"] = max(0.0, cap)
+    # fill toward the SAME equity_target the healthy books use (the regulatory equity_min is a floor,
+    # not an operating point — a real small-cap fund runs ~95% invested, not at its 65% minimum). The
+    # widen+relax only raises the achievable ceiling; waterfill still stops at the per-name liquidity
+    # caps, so wherever ADV genuinely binds the book deploys less and the shortfall is HONEST cash.
+    waterfill(widened, equity_target, m["max_sector"], sector_free)
+    return widened, sum(u["w"] for u in widened), True
+
+
 def build_rules_v0(reg_entry, asof, equity_target=0.95, brain_id=None, log=print):
     """Deploy a fresh 100%-cash book into a mandate+liquidity-constrained, MULTI-FORCE-scored
     portfolio as-of `asof`. Returns (book, trades, diag). No look-ahead: only prices/ARM/EPS ≤ asof.
@@ -1010,9 +1058,11 @@ def build_rules_v0(reg_entry, asof, equity_target=0.95, brain_id=None, log=print
         u["w"] = 0.0
 
     # iterative water-fill: place equity_target across names ∝ score, honoring per-name caps AND
-    # per-sector caps; leftover from capped names redistributes to those with headroom. Whatever
-    # still can't fit (a genuine capacity limit — e.g. a huge book in illiquid small-caps) stays cash.
-    waterfill(sel, equity_target, m["max_sector"], SECTOR_FREE)
+    # per-sector caps; leftover from capped names redistributes to those with headroom. If the tight
+    # liquidity cap would leave the book below its MANDATE EQUITY FLOOR, deploy_with_floor widens
+    # breadth + relaxes to a quarter-long accumulation (the TC fix) rather than parking an un-mandated
+    # cash pile; whatever still can't fit even then is a genuine capacity limit and stays cash.
+    sel, _deployed_frac, _relaxed = deploy_with_floor(sel, uni, m, aum, asof, equity_target, SECTOR_FREE)
 
     book = new_book(reg_entry)
     book["inception"] = asof

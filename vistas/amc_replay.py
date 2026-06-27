@@ -339,7 +339,12 @@ def construct_targets(reg_entry, universe, asof_ts, aum_now, brain_id=None):
         if lc is not None and aum_now > 0:
             cap = min(cap, lc / aum_now)
         u["cap"] = max(0.0, cap)
-    af.waterfill(sel, equity_target, m["max_sector"], SECTOR_FREE)
+    # water-fill; if the tight liquidity cap would leave the book below its MANDATE EQUITY FLOOR, a
+    # real FM widens breadth + accumulates over a longer horizon instead of parking the shortfall in
+    # cash. That cash pile both breaches the mandate AND is the transfer-coefficient leak (good IC
+    # thrown away as un-invested cash → can't track a rising benchmark). deploy_with_floor only kicks
+    # in when the first pass is below the floor; fully-invested books pass through unchanged.
+    sel, deployed, relaxed = af.deploy_with_floor(sel, cand, m, aum_now, asof_str, equity_target, SECTOR_FREE)
 
     targets = {}
     for u in sel:
@@ -347,8 +352,8 @@ def construct_targets(reg_entry, universe, asof_ts, aum_now, brain_id=None):
             targets[u["sym"]] = {"w": u["w"], "px": u["px"], "sector": u["sector"],
                                  "isin": u["isin"], "name": u["name"], "arm": u["arm"]}
     info = {"n_cand": len(cand), "n_sel": len(sel), "n_held": len(targets),
-            "equity_target": equity_target, "brain": bid,
-            "deployed": round(sum(t["w"] for t in targets.values()), 4)}
+            "equity_target": equity_target, "brain": bid, "relaxed": bool(relaxed),
+            "deployed": round(deployed, 4)}
     return targets, cand, info
 
 

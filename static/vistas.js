@@ -2359,7 +2359,7 @@ function drawRotStock(rows) {
     const r = rotStockRow(rows);
     const warn = $("rot-stock-warn"); if (warn) warn.innerHTML = "";
     if (!r || !Array.isArray(r.traj) || !r.traj.length) { Plotly.purge("plot-rot-stock"); el.innerHTML = `<div class="empty-note">No trajectory for this stock.</div>`; return; }
-    el.innerHTML = "";
+    Plotly.purge("plot-rot-stock");   // clear prior plot cleanly (innerHTML="" leaves stale Plotly state → blank on stock/slider change)
     const mode = r.arm_history_mode || "ffill";
     if (warn && mode !== "ffill") warn.innerHTML = `<div class="rot-warn">ARM = last-known (no history); only flow moves on the chart.</div>`;
     let pts = r.traj.slice();
@@ -2481,7 +2481,7 @@ function drawRotCentroid() {
   try {
     const e = rotCurEntity();
     if (!e || !Array.isArray(e.points) || !e.points.length) { Plotly.purge("plot-rot-cent"); el.innerHTML = `<div class="empty-note">No centroid trail for this entity.</div>`; return; }
-    el.innerHTML = "";
+    Plotly.purge("plot-rot-cent");   // clear prior plot cleanly (innerHTML="" leaves stale Plotly state → blank on entity/slider change)
     const traces = [];
     // peer background trails (same peer_group, excluding self) — faint, no markers
     const peers = (ROT_CENTROIDS.entities || []).filter((p) => p.entity_id !== e.entity_id && p.peer_group && p.peer_group === e.peer_group && p.entity_type === e.entity_type).slice(0, 12);
@@ -4770,7 +4770,7 @@ function _abDrawMarket(B) {
     const chk = (k) => { const cb = document.querySelector(`#ab-linechk input[data-line="${k}"]`); return cb ? cb.checked : false; };
     const { traces, stat } = _abTraces(m, dates, { nh: chk("nh"), nl: chk("nl"), nhnl: chk("nhnl"), a200: chk("a200"), a50: chk("a50"), gc: chk("gc") });
     if (!traces.length) { Plotly.purge("plot-ab-market"); el.innerHTML = `<div class="empty-note">Pick at least one line to plot.</div>`; const s = $("ab-market-stat"); if (s) s.textContent = ""; return; }
-    el.innerHTML = "";
+    Plotly.purge("plot-ab-market");   // clear prior plot/empty-note cleanly (innerHTML="" leaves stale Plotly state → blank on re-draw)
     Plotly.react("plot-ab-market", traces, baseLayout({
       yaxis: { title: "% of eligible stocks", gridcolor: "#dfe3e8", rangemode: "tozero" },
       xaxis: { gridcolor: "#dfe3e8", rangeslider: { thickness: 0.07 }, type: "date" },
@@ -4798,7 +4798,7 @@ function _abDrawSector(B) {
     else if (metric === "pct_golden_cross") { arr = m.pct_golden_cross; title = "% golden-cross"; color = "#d99a2b"; }
     else { arr = m.pct_above_200dma; title = "% > 200-DMA"; color = "#1f77b4"; }
     if (!Array.isArray(arr) || !arr.length) { Plotly.purge("plot-ab-sector"); el.innerHTML = `<div class="empty-note">No “${fEsc(title)}” series for ${fEsc(sec)}.</div>`; const s = $("ab-sector-stat"); if (s) s.textContent = ""; return; }
-    el.innerHTML = "";
+    Plotly.purge("plot-ab-sector");   // clear prior plot/empty-note cleanly (innerHTML="" leaves stale Plotly state → blank on dropdown change)
     const tr = { type: "scatter", mode: "lines", name: `${sec} — ${title}`, x: B.dates, y: arr, connectgaps: true, line: { color, width: 2 } };
     Plotly.react("plot-ab-sector", [tr], baseLayout({
       yaxis: { title: "% of eligible stocks", gridcolor: "#dfe3e8", rangemode: (metric === "nhnl" ? "normal" : "tozero") },

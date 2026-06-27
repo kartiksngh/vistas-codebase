@@ -51,6 +51,29 @@ const server = http.createServer((req, res) => {
     };
   });
 
+  // ---- 1b) PER-SECTOR breadth chart must RE-PLOT on dropdown change (the innerHTML=""/Plotly.react
+  //          bug: blank on the 2nd draw). Change SECTOR + METRIC and confirm the plot still has traces.
+  const secChange = await page.evaluate(async () => {
+    const fire = (el, ev) => el && el.dispatchEvent(new Event(ev, { bubbles: true }));
+    const sel = document.getElementById("ab-sec-sel");
+    const met = document.getElementById("ab-sec-metric");
+    const plot = document.getElementById("plot-ab-sector");
+    const traces = () => plot ? plot.querySelectorAll(".scatterlayer .trace, .scatterlayer .points path, .lines .js-line").length : 0;
+    const before = traces();
+    // switch to a different sector (2nd option) and a different metric, as a user would
+    if (sel && sel.options.length > 1) { sel.selectedIndex = Math.min(1, sel.options.length - 1); fire(sel, "change"); }
+    await new Promise((r) => setTimeout(r, 700));
+    if (met) { met.value = "pct_above_50dma"; fire(met, "change"); }
+    await new Promise((r) => setTimeout(r, 700));
+    const afterA = traces();
+    // and back to % above 200-DMA (the reported case) on yet another sector
+    if (sel && sel.options.length > 2) { sel.selectedIndex = 2; fire(sel, "change"); }
+    if (met) { met.value = "pct_above_200dma"; fire(met, "change"); }
+    await new Promise((r) => setTimeout(r, 800));
+    const afterB = traces();
+    return { before, afterA, afterB, sector: sel ? sel.value : null };
+  });
+
   // ---- 2) SCREEN tab: Rotation section (stock trail plot + centroid controls) ----
   await page.evaluate(async () => {
     try { if (typeof setView === "function") setView("screen"); } catch (e) {}
@@ -70,6 +93,7 @@ const server = http.createServer((req, res) => {
   });
 
   console.log("ALLOCATOR:", JSON.stringify(alloc));
+  console.log("SEC-CHANGE:", JSON.stringify(secChange), "(afterA/afterB must stay >=1 — the re-plot bug)");
   console.log("ROTATION :", JSON.stringify(rot));
   console.log(`\nCONSOLE/PAGE ERRORS (${errs.length}):`);
   errs.slice(0, 20).forEach((e) => console.log("  - " + e));
@@ -78,10 +102,11 @@ const server = http.createServer((req, res) => {
     && alloc.hasTabButton && alloc.hasPane
     && alloc.plotsWithTraces >= 1
     && alloc.consInAlloc && !alloc.consInMacro
+    && secChange.afterA >= 1 && secChange.afterB >= 1
     && rot.hasRotWord && rot.hasStockSel && rot.hasSubseg && rot.trailTraces >= 1;
   console.log("\n" + (ok
-    ? "PASS: Asset-Allocator tab renders breadth in real Chromium, Consensus moved here (not in Macro), Rotation trail plot renders, 0 errors."
-    : "FAIL: see above (0 errors + alloc tab w/ >=1 traced plot + consensus-in-allocator + rotation trail-plot rendered required)."));
+    ? "PASS: Asset-Allocator breadth renders, per-sector chart RE-PLOTS on dropdown change, Consensus moved here, Rotation trail renders, 0 errors."
+    : "FAIL: see above (0 errors + alloc traced plot + per-sector RE-PLOT on change + consensus-in-allocator + rotation trail required)."));
   await browser.close(); server.close();
   process.exit(ok ? 0 : 1);
 })().catch((e) => { console.log("PROBE THREW:", e.message); try { server.close(); } catch (x) {} process.exit(1); });

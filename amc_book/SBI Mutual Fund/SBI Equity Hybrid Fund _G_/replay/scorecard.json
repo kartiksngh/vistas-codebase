@@ -13,8 +13,8 @@
   "avg_universe": 1169.0,
   "avg_arm_cov_pct": 64.1,
   "avg_dead_included": 69.9,
-  "avg_holdings": 60.0,
-  "avg_oneway_turnover_pct": 28.62
+  "avg_holdings": 78.3,
+  "avg_oneway_turnover_pct": 31.04
  },
  "scorecard": {
   "window": {
@@ -23,22 +23,22 @@
    "years": 11.4
   },
   "book": {
-   "cagr_pct": 14.03,
-   "vol_pct": 15.46,
-   "sharpe": 0.94,
-   "maxdd_pct": -37.47,
-   "final_nav": 446.93
+   "cagr_pct": 14.46,
+   "vol_pct": 15.53,
+   "sharpe": 0.96,
+   "maxdd_pct": -37.58,
+   "final_nav": 466.34
   },
   "benchmark_name": "NIFTY 500",
   "benchmark": {
    "cagr_pct": 12.03,
    "vol_pct": 16.21,
    "maxdd_pct": -38.11,
-   "excess_cagr_pct": 2.0,
-   "tracking_error_pct": 7.24,
-   "info_ratio": 0.28,
+   "excess_cagr_pct": 2.43,
+   "tracking_error_pct": 7.13,
+   "info_ratio": 0.34,
    "beta": 0.86,
-   "up_capture": 0.89,
+   "up_capture": 0.91,
    "down_capture": 0.86
   },
   "real_scheme": {
@@ -48,10 +48,10 @@
   "fundamental_law": {
    "ic_mean": 0.0468,
    "ic_tstat": 4.95,
-   "transfer_coefficient": 0.552,
-   "breadth_per_year_UPPER": 720.0,
-   "implied_IR_UPPER": 0.69,
-   "realized_IR_vs_bench": 0.28,
+   "transfer_coefficient": 0.612,
+   "breadth_per_year_UPPER": 939.0,
+   "implied_IR_UPPER": 0.88,
+   "realized_IR_vs_bench": 0.34,
    "note": "IC = mean cross-sectional Spearman(ARM score, next-rebalance return) over the candidate universe; TC = mean corr(actual target weights, unconstrained score-weights); BR is an UPPER bound (monthly holdings are NOT independent \u2014 true breadth is far lower), so implied_IR is an upper bound on what the signal could deliver, to be read against the realized IR."
   }
  }
