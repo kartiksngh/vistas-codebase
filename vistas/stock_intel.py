@@ -269,8 +269,21 @@ def build_context(industry_map=None) -> dict:
         from vistas import bhav_prices as _bp
         tv = _bp.load_ohlcv(adjusted=False, columns=["date", "sym", "turnover"])
         ctx["turnover"] = tv
+        # ★ PRE-INDEX turnover ONCE: {SYM_UPPER -> date-sorted turnover Series}. The long turnover panel is
+        # ~9.4M rows; the old per-stock `tv[tv["sym"].str.upper()==sym]` full-scanned + re-stringified the
+        # WHOLE column for EVERY stock (O(stocks × rows) — ~98% of the entire quant build). One groupby here
+        # makes each per-stock liquidity lookup O(1). Numerically identical (median is order-independent).
+        try:
+            _tv2 = tv.copy()
+            _tv2["sym"] = _tv2["sym"].astype(str).str.upper()
+            _tv2 = _tv2.sort_values("date")
+            ctx["turnover_by_sym"] = {k: g.set_index("date")["turnover"]
+                                      for k, g in _tv2.groupby("sym", sort=False)}
+        except Exception:
+            ctx["turnover_by_sym"] = {}
     except Exception:
         ctx["turnover"] = None
+        ctx["turnover_by_sym"] = {}
     try:
         ctx["corpactions"] = load_corpactions()
     except Exception:
@@ -330,14 +343,14 @@ def _market_behaviour(sym, ctx):
 
     # --- liquidity: median daily traded value over ~1M (₹ cr) + a warning -----
     liquidity = {"median_turnover_cr": None, "warning": None, "na": None}
-    tv = ctx.get("turnover")
+    tvs = ctx.get("turnover_by_sym")                          # ★ O(1) pre-indexed map (build_context)
     try:
-        if tv is not None and len(tv):
-            sub = tv[tv["sym"].astype(str).str.upper() == str(sym).upper()]
-            if len(sub):
-                t = sub.sort_values("date")["turnover"].dropna().tail(LIQ_WINDOW)
+        if tvs:
+            ser = tvs.get(str(sym).upper())
+            if ser is not None and len(ser):
+                t = ser.dropna().tail(LIQ_WINDOW)              # already date-sorted ascending
                 if len(t):
-                    med_cr = float(t.median()) / 1e7        # rupees -> ₹ crore
+                    med_cr = float(t.median()) / 1e7          # rupees -> ₹ crore
                     liquidity["median_turnover_cr"] = _r(med_cr, 2)
                     if med_cr < ILLIQ_TURNOVER_CR:
                         liquidity["warning"] = (f"Thinly traded — median ~₹{med_cr:.2f} cr/day "

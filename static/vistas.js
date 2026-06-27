@@ -4503,6 +4503,7 @@ function renderConsensus() {
          <p><b>What:</b> Per-stock <b>ARM</b> (LSEG StarMine analyst-revision momentum, 0-100 — high = analysts revising estimates/recommendations UP) rolled up to the 11 analyst-desk sectors. <b>EW</b> = equal-weight mean (one vote per stock); <b>FF</b> = market-cap-weighted (the big names dominate). 50 = neutral; above = the sector is being net-upgraded by the street, below = net-downgraded.</p>
          <p><b>Method:</b> ${C.method || ""} ${C.ff_note || ""}</p>
          <p><b>Why:</b> This is the <i>street lens</i> of the market — whose estimates are rising, which driver (revenue / earnings / EBITDA / recommendation) is moving them, and whether real money (fund flow) agrees. Gaps between the EW line, the FF snapshot and the flow are the signal.</p>
+         <p><b>Flow decomposition:</b> the smart-money bars split each sector's 3-month change in mutual-fund ownership (₹cr) into <b>price action</b> (the holdings simply rose/fell), <b>implied inflow</b> (funds received fresh money and deployed it pro-rata — no view change), and <b>net-active</b> (genuine reweighting beyond price drift — the <i>inflow-immune</i> conviction signal). The stacked total = gross ownership-value change; tick/untick the legend to isolate net-active. Net-active is the true smart-money read; the others are context.</p>
          <p class="src">Source: LSEG StarMine ARM (sector aggregates only) · ARM asof ${C.arm_asof || "—"} · flow asof ${C.flow_asof || "—"}. ARM IC is small (~0.03-0.045) and ~1-3 month horizon — a tilt, not a verdict.</p>
        </details>
        <div class="ab-ctlrow" id="cons-snap-dn"></div>
@@ -4518,7 +4519,7 @@ function renderConsensus() {
        <div class="cgrid3">
          <div><div class="ctitle">Consensus level — ARM (EW), ${selName}</div><div class="plot" id="cons-ew" style="height:260px"></div></div>
          <div><div class="ctitle">What's driving it — the 4 ARM components (EW)</div><div class="plot" id="cons-comp" style="height:260px"></div></div>
-         <div><div class="ctitle">Smart money — net-active fund flow (3M, ₹ cr)</div><div class="plot" id="cons-flow" style="height:260px"></div></div>
+         <div><div class="ctitle">Smart money — flow decomposition (3M, ₹ cr): price · inflow · net-active</div><div class="plot" id="cons-flow" style="height:260px"></div></div>
        </div>
      </section>`;
   host.querySelectorAll(".cchip").forEach((b) => b.addEventListener("click", () => { _consSel = b.dataset.sec; renderConsensus(); }));
@@ -4562,11 +4563,24 @@ function renderConsensus() {
     { yaxis: { title: "ARM 0-100", gridcolor: "#dfe3e8" }, xaxis: { type: "date", gridcolor: "#dfe3e8" },
       shapes: [{ type: "line", xref: "paper", x0: 0, x1: 1, y0: 50, y1: 50, line: { color: "#aab2bd", width: 1, dash: "dot" } }] });
 
-  // (4) sector net-active fund flow (3M trailing ₹cr), bars coloured by sign
-  const fl = (C.flow && C.flow[sel]) || [];
-  const flowTr = { type: "bar", name: "Net flow (3M, ₹ cr)", x: C.flow_dates, y: fl, marker: { color: fl.map((v) => (v >= 0 ? "#2e7d32" : "#b3402f")) } };
-  _consPlot("cons-flow", (fl.length ? [flowTr] : []),
-    { yaxis: { title: "₹ cr (3M net)", gridcolor: "#dfe3e8" }, xaxis: { type: "category", gridcolor: "#dfe3e8" } });
+  // (4) sector fund-flow DECOMPOSITION (3M trailing ₹cr): price action · implied inflow · net-active.
+  //     net-active = inflow-immune conviction (the smart-money signal). The stacked total = gross change
+  //     in fund ownership value; use the legend to tick/untick and isolate net-active. (#net-active fix)
+  const fdt = C.flow_dates || [];
+  const _r1 = (x) => (x === null || x === undefined) ? null : Math.round(x * 10) / 10;
+  const grossS = (C.flow_gross && C.flow_gross[sel]) || [];
+  const padjS = (C.flow_price_adj && C.flow_price_adj[sel]) || [];
+  const nactS = (C.flow_net_active && C.flow_net_active[sel]) || (C.flow && C.flow[sel]) || [];
+  const priceS = grossS.map((g, i) => (g === null || g === undefined || padjS[i] === null || padjS[i] === undefined) ? null : _r1(g - padjS[i]));
+  const inflowS = padjS.map((p, i) => (p === null || p === undefined || nactS[i] === null || nactS[i] === undefined) ? null : _r1(p - nactS[i]));
+  const flowTr = [
+    { type: "bar", name: "Net active (conviction)", x: fdt, y: nactS, marker: { color: "#1f9e89" } },
+    { type: "bar", name: "Implied inflow", x: fdt, y: inflowS, marker: { color: "#d99a2b" } },
+    { type: "bar", name: "Price action", x: fdt, y: priceS, marker: { color: "#9aa6b2" } },
+  ];
+  _consPlot("cons-flow", ((nactS.length || grossS.length) ? flowTr : []),
+    { barmode: "relative", legend: { orientation: "h", y: -0.18, font: { size: 10 } },
+      yaxis: { title: "₹ cr (3M net)", gridcolor: "#dfe3e8" }, xaxis: { type: "category", gridcolor: "#dfe3e8" } });
 }
 
 // ===================================================================================================

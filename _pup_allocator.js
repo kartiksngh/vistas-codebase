@@ -69,6 +69,22 @@ const server = http.createServer((req, res) => {
     return { screenDn, consDn, screenDateChanged };
   });
 
+  // ---- 1a2) CONSENSUS flow chart must now be the 3-component DECOMPOSITION (price · inflow · net-active),
+  //           i.e. >=2 bar traces (not the old single net-flow bar), and a sector switch must keep it populated.
+  const consFlow = await page.evaluate(async () => {
+    const fire = (el, ev) => el && el.dispatchEvent(new Event(ev, { bubbles: true }));
+    const cf = document.getElementById("cons-flow");
+    const barTraces = () => cf ? cf.querySelectorAll(".barlayer .trace").length : 0;
+    const before = barTraces();
+    // switch the consensus sector chip (2nd chip) and confirm the decomposition still renders
+    const chips = Array.from(document.querySelectorAll(".cchip"));
+    if (chips.length > 1) { chips[1].click(); }
+    await new Promise((r) => setTimeout(r, 500));
+    const after = barTraces();
+    const titles = Array.from(document.querySelectorAll("#consensus-cockpit .ctitle")).map((e) => e.textContent || "").join(" | ");
+    return { before, after, decompTitle: /decomposition/i.test(titles) };
+  });
+
   // ---- 1b) PER-SECTOR breadth chart must RE-PLOT on dropdown change (the innerHTML=""/Plotly.react
   //          bug: blank on the 2nd draw). Change SECTOR + METRIC and confirm the plot still has traces.
   const secChange = await page.evaluate(async () => {
@@ -111,6 +127,7 @@ const server = http.createServer((req, res) => {
   });
 
   console.log("ALLOCATOR:", JSON.stringify(alloc));
+  console.log("CONS-FLOW:", JSON.stringify(consFlow), "(decomposition: >=2 bar traces before/after sector switch + 'decomposition' title)");
   console.log("DATE-NAV :", JSON.stringify(dateNav), "(screen+consensus sliders + screen shows historical on drag)");
   console.log("SEC-CHANGE:", JSON.stringify(secChange), "(afterA/afterB must stay >=1 — the re-plot bug)");
   console.log("ROTATION :", JSON.stringify(rot));
@@ -122,6 +139,7 @@ const server = http.createServer((req, res) => {
     && alloc.plotsWithTraces >= 1
     && alloc.consInAlloc && !alloc.consInMacro
     && secChange.afterA >= 1 && secChange.afterB >= 1
+    && consFlow.before >= 2 && consFlow.after >= 2 && consFlow.decompTitle
     && dateNav.screenDn && dateNav.consDn && dateNav.screenDateChanged
     && rot.hasRotWord && rot.hasStockSel && rot.hasSubseg && rot.trailTraces >= 1;
   console.log("\n" + (ok

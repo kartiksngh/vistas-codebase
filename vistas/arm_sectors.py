@@ -271,8 +271,15 @@ def build_consensus_dataset(rows=None, flows_by_sym=None, log=print):
             "stale_n": stale_n,
         }
 
-    # ── net-active fund-flow history (trailing-3M ₹cr), summed by sector ───────────
-    flow, flow_months = {}, []
+    # ── fund-flow DECOMPOSITION history (trailing-3M ₹cr), summed by sector ─────────
+    #   gross      = mv_e − mv_s          (raw change in fund ownership value: price + inflow + active)
+    #   price_adj  = mv_e − mv_s·(1+r)    (price stripped; = implied-inflow + net-active)
+    #   net_active = weight-space         (price AND scheme-inflow stripped — the smart-money conviction)
+    # We bake all three so the panel can show price-action (gross−price_adj), implied-inflow
+    # (price_adj−net_active) and net-active separately. `flow` = net_active is the HEADLINE — fixes the
+    # earlier mislabel where the headline summed the inflow-contaminated price_adj. A stock-month enters
+    # only if all three are present, so the sector decomposition reconciles exactly (gross=price+inflow+active).
+    flow, flow_gross, flow_padj, flow_nact, flow_months = {}, {}, {}, {}, []
     if flows_by_sym is None:
         try:
             from . import funds_flows as _ff
@@ -289,25 +296,37 @@ def build_consensus_dataset(rows=None, flows_by_sym=None, log=print):
         flow_months = sorted(fm)
         fidx = {ym: i for i, ym in enumerate(flow_months)}
         nF = len(flow_months)
-        net = {dk: [0.0] * nF for dk in desk_keys}
+        gg = {dk: [0.0] * nF for dk in desk_keys}
+        pp = {dk: [0.0] * nF for dk in desk_keys}
+        aa = {dk: [0.0] * nF for dk in desk_keys}
         for sym in sym_mnem:
             d = flows_by_sym.get(sym)
             if not d:
                 continue
             mydesks = [dk for dk in desk_keys if _membership(dk, sym)]
-            for ym, fv in zip(d.get("months") or [], d.get("flow") or []):
+            if not mydesks:
+                continue
+            months_i = d.get("months") or []
+            gser, pser, aser = d.get("gross") or [], d.get("price_adj") or [], d.get("net_active") or []
+            for j, ym in enumerate(months_i):
                 i = fidx.get(ym)
                 if i is None:
                     continue
+                gv = gser[j] if j < len(gser) else None
+                pv = pser[j] if j < len(pser) else None
+                av = aser[j] if j < len(aser) else None
+                if gv is None or pv is None or av is None:   # keep the decomposition exact-reconciling
+                    continue
                 for dk in mydesks:
-                    net[dk][i] += _f(fv)
-        # trailing-3-month rolling sum
+                    gg[dk][i] += _f(gv); pp[dk][i] += _f(pv); aa[dk][i] += _f(av)
+        # trailing-3-month rolling sum of each component
+        def _roll3(arr):
+            return [round(sum(arr[max(0, i - 2):i + 1]), 1) for i in range(nF)]
         for dk in desk_keys:
-            roll = []
-            for i in range(nF):
-                lo = max(0, i - 2)
-                roll.append(round(sum(net[dk][lo:i + 1]), 1))
-            flow[dk] = roll
+            flow_gross[dk] = _roll3(gg[dk])
+            flow_padj[dk] = _roll3(pp[dk])
+            flow_nact[dk] = _roll3(aa[dk])
+            flow[dk] = flow_nact[dk]                          # HEADLINE = net-active (inflow-immune)
 
     out = {
         "arm_asof": latest.isoformat(),
@@ -318,7 +337,10 @@ def build_consensus_dataset(rows=None, flows_by_sym=None, log=print):
         "comp_labels": [[ck, lbl] for ck, _code, lbl in COMPONENTS],
         "ew": ew,
         "comp": comp_by_desk,
-        "flow": flow,
+        "flow": flow,                       # HEADLINE = net-active (inflow-immune conviction)
+        "flow_gross": flow_gross,           # raw ownership-value change (price + inflow + active)
+        "flow_price_adj": flow_padj,        # price stripped (= implied-inflow + net-active)
+        "flow_net_active": flow_nact,       # price AND inflow stripped (= net-active; same as `flow`)
         "snap": snap,
         "stale_d": STALE_D, "min_n": MIN_N,
         "ff_note": ("FF (float/market-cap-weighted) ARM uses the LATEST market-cap snapshot held "
@@ -328,8 +350,12 @@ def build_consensus_dataset(rows=None, flows_by_sym=None, log=print):
                    "11 analyst-desk sectors. EW(sector,month) = mean ARM over the sector's stocks whose "
                    f"latest revision is ≤{STALE_D}d old at that month-end (≥{MIN_N} fresh stocks required, "
                    "else blank). Components rolled up the same way, each freshness-guarded. FF = the "
-                   "current mcap-weighted cross-section only. Flow = trailing-3M net-active mutual-fund "
-                   "flow (₹cr) summed by sector. Sector membership = current snapshot applied through history."),
+                   "current mcap-weighted cross-section only. Flow = trailing-3M mutual-fund flow (₹cr) "
+                   "summed by sector, DECOMPOSED into price-action (gross−price_adj), implied-inflow "
+                   "(price_adj−net_active) and net-active (weight-space, inflow-immune — the headline). "
+                   "Per (fund,stock,month): gross=MVend−MVstart, price_adj=MVend−MVstart·(1+r), net_active "
+                   "values the change in portfolio WEIGHT beyond price drift. Sector membership = current "
+                   "snapshot applied through history."),
     }
     log(f"[arm_sectors] consensus: {len(desks)} sectors, {nM} months "
         f"({months[0]}..{months[-1]}), {len(sym_mnem)} stocks, flow {len(flow_months)}m")
