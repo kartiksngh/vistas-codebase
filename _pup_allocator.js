@@ -121,6 +121,38 @@ const server = http.createServer((req, res) => {
     return { before, afterMax, hasSeg: !!document.getElementById("ab-rp-hz") };
   });
 
+  // ---- 1d) OWNERSHIP & FLOW tab (#102): the waterfall decomposition plot (>=2 bar traces = price ·
+  //          inflow · net-active), a snapshot table, AMC-switch redraw, and a date-slider snapshot.
+  const own = await page.evaluate(async () => {
+    try { if (typeof setView === "function") setView("ownership"); } catch (e) {}
+    try { if (typeof renderOwnership === "function") renderOwnership(); } catch (e) {}
+    await new Promise((r) => setTimeout(r, 900));
+    const pane = document.getElementById("view-ownership");
+    const hasTab = !!document.querySelector('#tabs [data-view="ownership"]');
+    const W = window.VISTAS_WATERFALL;
+    const hasData = !!(W && W.cube && W.months && W.months.length);
+    const decomp = document.getElementById("plot-wf-decomp");
+    const bars = () => decomp ? decomp.querySelectorAll(".barlayer .trace").length : 0;
+    const bars0 = bars();
+    const snapRows0 = document.querySelectorAll("#wf-snap table tbody tr").length;
+    const amc = document.getElementById("wf-amc");
+    if (amc && amc.options.length > 1) { amc.selectedIndex = 1; amc.dispatchEvent(new Event("change", { bubbles: true })); }
+    await new Promise((r) => setTimeout(r, 500));
+    const bars1 = bars();
+    const sl = document.querySelector("#wf-snap-dn .dn-sl");
+    let snapChanged = false;
+    if (sl) {
+      const before = (document.querySelector("#wf-snap .ab-screen-head") || {}).textContent || "";
+      sl.value = String(Math.max(0, (parseInt(sl.max, 10) || 0) - 12));
+      sl.dispatchEvent(new Event("input", { bubbles: true }));
+      await new Promise((r) => setTimeout(r, 400));
+      const after = (document.querySelector("#wf-snap .ab-screen-head") || {}).textContent || "";
+      snapChanged = after !== before;
+    }
+    const snapRows1 = document.querySelectorAll("#wf-snap table tbody tr").length;
+    return { hasTab, hasPane: !!pane, hasData, bars0, bars1, snapRows0, snapRows1, hasSlider: !!sl, snapChanged };
+  });
+
   // ---- 2) SCREEN tab: Rotation section (stock trail plot + centroid controls) ----
   await page.evaluate(async () => {
     try { if (typeof setView === "function") setView("screen"); } catch (e) {}
@@ -142,6 +174,7 @@ const server = http.createServer((req, res) => {
   console.log("ALLOCATOR:", JSON.stringify(alloc));
   console.log("CONS-FLOW:", JSON.stringify(consFlow), "(decomposition: >=2 bar traces before/after sector switch + 'decomposition' title)");
   console.log("REL-PERF :", JSON.stringify(relPerf), "(>=2 line traces, survives horizon switch to MAX)");
+  console.log("OWNERSHIP:", JSON.stringify(own), "(>=2 bar traces decomp + snapshot table rows + AMC-switch redraw + date-slider)");
   console.log("DATE-NAV :", JSON.stringify(dateNav), "(screen+consensus sliders + screen shows historical on drag)");
   console.log("SEC-CHANGE:", JSON.stringify(secChange), "(afterA/afterB must stay >=1 — the re-plot bug)");
   console.log("ROTATION :", JSON.stringify(rot));
@@ -155,6 +188,8 @@ const server = http.createServer((req, res) => {
     && secChange.afterA >= 1 && secChange.afterB >= 1
     && consFlow.before >= 2 && consFlow.after >= 2 && consFlow.decompTitle
     && relPerf.before >= 2 && relPerf.afterMax >= 2 && relPerf.hasSeg
+    && own.hasTab && own.hasPane && own.hasData && own.bars0 >= 2 && own.bars1 >= 2
+    && own.snapRows0 >= 1 && own.hasSlider && own.snapChanged
     && dateNav.screenDn && dateNav.consDn && dateNav.screenDateChanged
     && rot.hasRotWord && rot.hasStockSel && rot.hasSubseg && rot.trailTraces >= 1;
   console.log("\n" + (ok

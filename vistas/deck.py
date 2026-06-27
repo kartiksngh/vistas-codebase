@@ -548,6 +548,7 @@ def build_deck_html(built_str: str, reason: str = "manual", terminal: bool = Fal
         market_flows_line = (f"window.VISTAS_MARKET_FLOWS={_json_for_script(site_embed.get('market_flows', {}))};\n" if (lazy and site_embed.get('market_flows')) else "")
         consensus_line = (f"window.VISTAS_CONSENSUS={_json_for_script(site_embed.get('consensus', {}))};\n" if (lazy and site_embed.get('consensus')) else "")
         breadth_line = (f"window.VISTAS_BREADTH={_json_for_script(site_embed.get('breadth', {}))};\n" if (lazy and site_embed.get('breadth')) else "")
+        waterfall_line = (f"window.VISTAS_WATERFALL={_json_for_script(site_embed.get('waterfall', {}))};\n" if (lazy and site_embed.get('waterfall')) else "")
         survivorship_line = (f"window.VISTAS_SURVIVORSHIP={_json_for_script(site_embed.get('survivorship', {}))};\n" if (lazy and site_embed.get('survivorship')) else "")
         lazy_cfg = {"base": "data/", "stocks": True, "fundamentals": True, "quant": True,
                     "funds_holdings": True, "funds_attribution": True, "benchmarks": True,
@@ -572,6 +573,7 @@ def build_deck_html(built_str: str, reason: str = "manual", terminal: bool = Fal
             f"{market_flows_line}"
             f"{consensus_line}"
             f"{breadth_line}"
+            f"{waterfall_line}"
             f"{survivorship_line}"
             f"{lazy_line}"
             f"window.VISTAS_CATALOG={_json_for_script(cat)};\n"
@@ -975,6 +977,20 @@ def save_terminal_site(reason: str = "manual", watchlist=None) -> dict:
     except Exception as e:
         print(f"[deck] market breadth skipped: {e}")
 
+    # 2f-waterfall) OWNERSHIP & FLOW WATERFALL (#102) — the money chain AMC -> sector decomposed into
+    # price / implied-inflow / net-active, monthly history, with AMC / sector / market roll-ups. Stands
+    # on the same flow cube as the consensus panel (funds_flows._pair_flows_active); AGGREGATES only (no
+    # licensed per-stock ARM) -> bake-safe. Graceful-degrade. Feeds the Ownership & Flow tab.
+    waterfall = {}
+    try:
+        from . import flow_waterfall as _wf
+        waterfall = _wf.build_waterfall(months_back=36, log=lambda m: print(m, flush=True))
+        _wm = waterfall.get("meta", {})
+        print(f"[deck] ownership/flow waterfall: {_wm.get('n_amcs')} AMCs x {_wm.get('n_sectors')} sectors, "
+              f"{_wm.get('n_months')} months, reconciles={_wm.get('reconciles')}", flush=True)
+    except Exception as e:
+        print(f"[deck] ownership/flow waterfall skipped: {e}")
+
     # 2g) BRIDGE live-AMC holdings -> store by HOLDINGS FINGERPRINT so the cockpit lists ALL funds
     # without duplicates: matched live funds collapse to their store scheme; unmatched (passive
     # index/ETF + debt/liquid) become HOLDINGS-ONLY cockpit entries (KV: full coverage, survivorship-safe).
@@ -1003,6 +1019,7 @@ def save_terminal_site(reason: str = "manual", watchlist=None) -> dict:
         "screen_svs": screen_svs,
         "consensus": consensus,
         "breadth": breadth,
+        "waterfall": waterfall,
         "all_stocks": all_stocks,
     }
     html = build_deck_html(built_str, reason, terminal=True, site_embed=site_embed)

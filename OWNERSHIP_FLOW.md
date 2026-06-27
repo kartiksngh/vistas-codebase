@@ -67,12 +67,23 @@ Cross-tabs the UI needs: **AMC × sector** (how an AMC's money split across sect
 
 ## Phased build (each phase ships + is probed)
 
-- **P0 (DONE):** fix the consensus flow mislabel → net-active headline + 3-component decomposition. ✓
-- **P1 — AMC × sector waterfall:** extend `build_fund_series` to the 3 figures; add an AMC roll-up; bake an
-  `ownership_flow` cube (AMC→sector, AMC→top-stocks) with monthly history. New `vistas/flow_waterfall.py`.
-- **P2 — the tab:** Ownership & Flow tab; level + figure switches; the 3-component decomposition plot;
-  time-nav. Reads the baked cube (display-plane, no parity port).
-- **P3 — pivot drill-down:** AMC → schemes → sector/stock expandable table at the selected month.
+- **P0 (DONE ✓, LIVE 2026-06-27, commit `6323213`):** fix the consensus flow mislabel → net-active
+  headline + 3-component decomposition.
+- **P1 (DONE ✓, 2026-06-27):** AMC × sector waterfall cube engine = `vistas/flow_waterfall.py`. Stands on
+  `funds_flows._pair_flows_active` (already carries gross/price_adj/net_active + amc); attaches AMC + macro
+  sector (`canonical_vst_sector_map`, 23 sectors) and group-by-sums to (AMC×sector) cells + AMC/sector/market
+  roll-ups, 36-mo history. `build_waterfall()` → {months, amcs, sectors, cube, sector_total, market_total,
+  meta}. **Reconciliation self-audit PASSES** (price+inflow+net_active==gross every month; 4.2 cr/48,774 cr
+  residual = 0.0086% display-rounding, not a bug). `python -m vistas.flow_waterfall` = the audit.
+- **P2 (IN PROGRESS, core 2026-06-27):** the **Ownership & Flow tab** — baked `window.VISTAS_WATERFALL`
+  (deck.py 2f-waterfall), dynamically-injected tab after Asset Allocator. Core shipped: AMC + sector
+  selectors → a (AMC×sector / AMC-total / sector-total / market-total) **3-component stacked decomposition
+  plot** over time (price #9aa6b2 · implied-inflow #d99a2b · net-active #1f9e89, barmode relative, legend
+  tick/untick) + 1Y/2Y/MAX horizon + a **snapshot table** (per-sector net-active/inflow/price/gross) with a
+  **date slider** (time-nav). Defaults chosen per the open-Qs: macro-sector taxonomy · AMC-first ·
+  "implied inflow" labeled as the deployment proxy. Engine `renderOwnership` in `static/vistas.js` (reads
+  the baked cube — no JS↔Python parity port). Probe: `_pup_allocator.js` OWNERSHIP block.
+- **P3 — pivot drill-down:** AMC → schemes → sector/stock expandable table at the selected month (Excel-style).
 - **P4 — stock & theme level + cross-AMC crowding** (who is buying this stock/sector, conviction vs inflow).
 - **P5 — agent hook:** expose "net-active tilt by sector/AMC, last N months" to the analyst/FM/CIO desks.
 

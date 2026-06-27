@@ -652,6 +652,7 @@ async function init() {
   initMacro();
   initGPToggle();       // #49 rebase / absolute level toggle on the GP chart
   initAllocator();      // Asset Allocator tab (market breadth) + relocate the consensus cockpit here
+  initOwnership();      // Ownership & Flow tab (#102) — the money-flow waterfall (AMC -> sector)
   initDateStrips();     // compact window strips on the Fundamentals + Macro measurebars
   applyHash();          // restore a shared/bookmarked view+selection before the first compute
   run();
@@ -1326,9 +1327,10 @@ function setView(v) {
   if ($("view-fundskill")) $("view-fundskill").hidden = (v !== "fundskill");
   if ($("view-macro")) $("view-macro").hidden = (v !== "macro");
   if ($("view-allocator")) $("view-allocator").hidden = (v !== "allocator");
+  if ($("view-ownership")) $("view-ownership").hidden = (v !== "ownership");
   // the Universe/Benchmark/range control bar only applies to Performance + Valuation; hide it on
-  // the self-contained Fundamentals + Quant + Macro + Allocator tabs (they have their own pickers / fixed windows).
-  const ctl = $("ctl"); if (ctl) ctl.style.display = (v === "fundamentals" || v === "quant" || v === "screen" || v === "funds" || v === "fundskill" || v === "macro" || v === "allocator") ? "none" : "";
+  // the self-contained Fundamentals + Quant + Macro + Allocator + Ownership tabs (own pickers / fixed windows).
+  const ctl = $("ctl"); if (ctl) ctl.style.display = (v === "fundamentals" || v === "quant" || v === "screen" || v === "funds" || v === "fundskill" || v === "macro" || v === "allocator" || v === "ownership") ? "none" : "";
   $("tabs").querySelectorAll(".tab[data-view]").forEach((b) => b.classList.toggle("active", b.dataset.view === v));
   if (!linked() && TAB_WIN[v]) { $("start").value = TAB_WIN[v][0]; $("end").value = TAB_WIN[v][1]; }   // restore this tab's own window
   syncDateStrips();
@@ -1365,6 +1367,7 @@ function setView(v) {
     else if (v === "fundskill") renderFundSkill();
     else if (v === "macro") renderMacro();
     else if (v === "allocator") renderAllocator();
+    else if (v === "ownership") renderOwnership();
     else if (BUNDLE) renderAll();
   }
   afterPaint(() => viewPlotsResize(v));     // re-measure now-visible plots once layout settles
@@ -4694,6 +4697,188 @@ function renderAllocator() {
   afterPaint(() => viewPlotsResize("allocator"));
 }
 
+// ===== Ownership & Flow tab (#102) — the money-flow WATERFALL: AMC -> sector, every month's holding
+// change split into price action / implied inflow / net-active (the conviction read), over time.
+// Reads the baked window.VISTAS_WATERFALL (no client recompute -> no JS<->Python parity port).
+// AGGREGATES only; "implied inflow" = deployment inferred from holdings, NOT raw AMFI subscriptions. =====
+let _wfAmc = "__ALL__", _wfSector = "__ALL__", _wfHz = "0", _wfSnapIdx = null, _wfBuilt = false;
+const _WF_COL = { na: "#1f9e89", inflow: "#d99a2b", price: "#9aa6b2" };
+function _wf() { return (typeof window !== "undefined") ? window.VISTAS_WATERFALL : null; }
+function _wfNode(W, amc, sector) {
+  if (!W) return null;
+  if (amc === "__ALL__" && sector === "__ALL__") return W.market_total || null;
+  if (amc === "__ALL__") return (W.sector_total || {})[sector] || null;
+  const a = (W.cube || {})[amc]; if (!a) return null;
+  if (sector === "__ALL__") return a.__total__ || null;
+  return a[sector] || null;
+}
+function _wfPlot(id, traces, layout) {
+  const el = $(id); if (!el) return;
+  if (!traces.length) { Plotly.purge(id); el.innerHTML = ""; return; }
+  Plotly.purge(id); Plotly.react(id, traces, baseLayout(layout), PCONF); attachYAutoscale(id);
+}
+function _wfFmt(v) { return (v === null || v === undefined) ? "—" : (v >= 0 ? "+" : "") + Math.round(v).toLocaleString() + " cr"; }
+function _wfScopeName() {
+  const a = _wfAmc === "__ALL__" ? "All AMCs" : _wfAmc;
+  const s = _wfSector === "__ALL__" ? "all sectors" : _wfSector;
+  return `${a} · ${s}`;
+}
+
+// build the Ownership & Flow tab + view in the DOM (idempotent). Placed right after the Allocator tab.
+function initOwnership() {
+  if (typeof document === "undefined") return;
+  const tabs = $("tabs");
+  if (tabs && !tabs.querySelector('[data-view="ownership"]')) {
+    const btn = document.createElement("button");
+    btn.className = "tab"; btn.setAttribute("data-view", "ownership"); btn.textContent = "Ownership & Flow";
+    btn.addEventListener("click", () => { if (!btn.disabled) setView("ownership"); });
+    const allocTab = tabs.querySelector('[data-view="allocator"]');
+    const note = $("tabnote");
+    if (allocTab && allocTab.nextSibling) tabs.insertBefore(btn, allocTab.nextSibling);
+    else if (note) tabs.insertBefore(btn, note);
+    else tabs.appendChild(btn);
+  }
+  if (!$("view-ownership")) {
+    const main = document.querySelector("main");
+    if (main) {
+      const view = document.createElement("div");
+      view.className = "view"; view.id = "view-ownership"; view.hidden = true;
+      view.innerHTML =
+        `<div class="measurebar">
+           <span class="mlbl">Ownership &amp; Flow</span>
+           <span class="measurenote">The money chain — an <b>AMC</b> raises capital via its schemes, which <b>deploy</b> it into <b>sectors</b> and stocks. Each month's change in a holding is split into <b>price action</b> (moved with the market), <b>implied inflow</b> (fresh SIP/lump-sum money deployed pro-rata — no view change) and <b>net-active</b> (a genuine reweighting — the conviction / smart-money signal). Aggregates only; reconciles exactly.</span>
+         </div>
+         <div id="own-body"></div>`;
+      const allocView = $("view-allocator");
+      if (allocView && allocView.nextSibling) main.insertBefore(view, allocView.nextSibling);
+      else main.appendChild(view);
+    }
+  }
+  const btn = tabs && tabs.querySelector('[data-view="ownership"]');
+  const W = _wf();
+  const has = !!(W && W.cube && W.months && W.months.length);
+  if (btn) { btn.disabled = !has; btn.style.opacity = has ? "" : ".45"; btn.title = has ? "" : "No ownership/flow data in this deck yet"; }
+}
+
+function renderOwnership() {
+  const host = $("own-body"); if (!host) return;
+  const W = _wf();
+  if (!W || !W.cube || !W.months || !W.months.length) {
+    host.innerHTML = `<section class="panel"><div class="empty-note">No ownership &amp; flow data baked into this deck yet.</div></section>`;
+    return;
+  }
+  const months = W.months;
+  const amcs = W.amcs || Object.keys(W.cube);
+  const sectors = W.sectors || Object.keys(W.sector_total || {});
+  if (_wfSnapIdx == null) _wfSnapIdx = months.length - 1;
+  if (!_wfBuilt) {
+    const amcOpts = `<option value="__ALL__">All AMCs (market)</option>` + amcs.map((a) => `<option value="${attEsc(a)}">${fEsc(a)}</option>`).join("");
+    const secOpts = `<option value="__ALL__">All sectors</option>` + sectors.map((s) => `<option value="${attEsc(s)}">${fEsc(s)}</option>`).join("");
+    host.innerHTML =
+      `<section class="panel cpanel">
+         <h2><span class="tag-sec">OWNERSHIP &amp; FLOW</span>Money-flow waterfall — where the smart money is actually going</h2>
+         <details><summary>Definition · Method · Why</summary>
+           <p><b>What:</b> every month, each mutual-fund holding's rupee change is decomposed into three additive parts that sum to the gross change — <b>price action</b> = start value × the stock's return (the holding simply moved with the market, no decision); <b>implied inflow</b> = fresh scheme money deployed pro-rata across the book (every name rises together, still no per-name view); <b>net-active</b> = the genuine reweighting in weight-space (inflow-immune — the only part that reflects conviction).</p>
+           <p><b>Method:</b> price_action = gross − price_adj · implied_inflow = price_adj − net_active · net_active = AUM·(1+R_p)·Δw_active. Rolled up the lattice stock → (AMC × sector) → AMC → sector → market — every level a reconciling group-by of the same cube (price + inflow + net-active = gross every month). Monthly disclosures; ${months.length} months to ${fEsc(months[months.length - 1])}.</p>
+           <p><b>Why:</b> the headline "₹X cr bought" is mostly SIP money landing — only <b>net-active</b> can be a conviction signal. This separates the three so you can see where managers are <i>actually</i> tilting, by AMC and sector, over time. <b>Caveat:</b> "implied inflow" is deployment inferred from holdings, not raw AMFI subscription data.</p>
+         </details>
+         <div class="ab-ctlrow">
+           <span class="ab-ctllbl">AMC</span>
+           <select id="wf-amc" class="ab-sel" style="min-width:200px">${amcOpts}</select>
+           <span class="ab-ctllbl">Sector</span>
+           <select id="wf-sec" class="ab-sel" style="min-width:170px">${secOpts}</select>
+           <span id="wf-hz" style="margin-left:10px">
+             <button type="button" class="fs-lvl" data-hz="12">1Y</button>
+             <button type="button" class="fs-lvl" data-hz="24">2Y</button>
+             <button type="button" class="fs-lvl on" data-hz="0">MAX</button>
+           </span>
+         </div>
+         <div id="wf-head" style="display:flex;flex-wrap:wrap;gap:16px;margin:10px 0"></div>
+         <div id="plot-wf-decomp"></div>
+         <div class="ab-ctlrow" id="wf-snap-dn" style="margin-top:10px"></div>
+         <div id="wf-snap"></div>
+       </section>`;
+    $("wf-amc").addEventListener("change", (e) => { _wfAmc = e.target.value; _wfDraw(); });
+    $("wf-sec").addEventListener("change", (e) => { _wfSector = e.target.value; _wfDraw(); });
+    const hz = $("wf-hz");
+    if (hz) hz.querySelectorAll(".fs-lvl").forEach((b) => b.addEventListener("click", () => {
+      hz.querySelectorAll(".fs-lvl").forEach((x) => x.classList.remove("on")); b.classList.add("on");
+      _wfHz = b.dataset.hz; _wfDrawPlot();
+    }));
+    _wfBuilt = true;
+  }
+  _wfDraw();
+  afterPaint(() => viewPlotsResize("ownership"));
+}
+
+function _wfDraw() { _wfDrawHead(); _wfDrawPlot(); _wfDrawSnap(); }
+
+function _wfDrawHead() {
+  const W = _wf(), node = _wfNode(W, _wfAmc, _wfSector), host = $("wf-head"); if (!host) return;
+  if (!node || !node.gross || !node.gross.length) { host.innerHTML = `<div class="empty-note">No flow for this AMC × sector pair.</div>`; return; }
+  const i = node.gross.length - 1;
+  const stat = (lbl, val, col) => `<div class="cstat"><span class="ck">${lbl}</span><span class="cv" style="color:${col || ''}">${_wfFmt(val)}</span></div>`;
+  host.innerHTML =
+    `<div class="cstat"><span class="ck">${fEsc(_wfScopeName())} · latest ${fEsc(W.months[i])}</span><span class="cv">gross ${_wfFmt(node.gross[i])}</span></div>`
+    + stat("Price action", node.price[i], _WF_COL.price)
+    + stat("Implied inflow", node.inflow[i], _WF_COL.inflow)
+    + stat("Net-active (conviction)", node.net_active[i], node.net_active[i] >= 0 ? _WF_COL.na : "#b3402f");
+}
+
+function _wfDrawPlot() {
+  const W = _wf(), node = _wfNode(W, _wfAmc, _wfSector); if (!W) return;
+  if (!node || !node.gross) { _wfPlot("plot-wf-decomp", [], {}); return; }
+  const n = W.months.length;
+  const back = parseInt(_wfHz, 10) || 0;
+  const h0 = back > 0 ? Math.max(0, n - back) : 0;
+  const x = W.months.slice(h0);
+  const sl = (arr) => arr.slice(h0);
+  const traces = [
+    { type: "bar", x, y: sl(node.net_active), name: "Net-active", marker: { color: _WF_COL.na } },
+    { type: "bar", x, y: sl(node.inflow), name: "Implied inflow", marker: { color: _WF_COL.inflow } },
+    { type: "bar", x, y: sl(node.price), name: "Price action", marker: { color: _WF_COL.price } },
+  ];
+  _wfPlot("plot-wf-decomp", traces, {
+    barmode: "relative", height: 360,
+    title: { text: `Flow decomposition — ${_wfScopeName()} (₹ cr/month)`, font: { size: 13 } },
+    legend: { orientation: "h" }, yaxis: { title: "₹ cr", zeroline: true }, margin: { t: 40 },
+  });
+}
+
+function _wfDrawSnap() {
+  const W = _wf();
+  const dnHost = $("wf-snap-dn");
+  if (dnHost) dateNavControl(dnHost, W.months, _wfSnapIdx, (k) => { _wfSnapIdx = k; _wfSnapTable(); });
+  _wfSnapTable();
+}
+
+function _wfSnapTable() {
+  const W = _wf(), host = $("wf-snap"); if (!host) return;
+  const i = (_wfSnapIdx == null) ? W.months.length - 1 : _wfSnapIdx;
+  const ym = W.months[i];
+  let rows = [], scopeLbl = "";
+  if (_wfAmc === "__ALL__") {
+    scopeLbl = "market, by sector";
+    const ST = W.sector_total || {};
+    rows = Object.keys(ST).map((s) => ({ k: s, na: ST[s].net_active[i], inf: ST[s].inflow[i], pr: ST[s].price[i], gr: ST[s].gross[i] }));
+  } else {
+    scopeLbl = `${_wfAmc}, by sector`;
+    const a = (W.cube || {})[_wfAmc] || {};
+    rows = Object.keys(a).filter((s) => s !== "__total__").map((s) => ({ k: s, na: a[s].net_active[i], inf: a[s].inflow[i], pr: a[s].price[i], gr: a[s].gross[i] }));
+  }
+  rows.sort((p, q) => (q.na || 0) - (p.na || 0));
+  const naCol = (v) => (v >= 0 ? _WF_COL.na : "#b3402f");
+  const tr = rows.map((r) =>
+    `<tr><td>${fEsc(r.k)}</td>`
+    + `<td class="num" style="color:${naCol(r.na)}">${_wfFmt(r.na)}</td>`
+    + `<td class="num" style="color:${_WF_COL.inflow}">${_wfFmt(r.inf)}</td>`
+    + `<td class="num" style="color:${_WF_COL.price}">${_wfFmt(r.pr)}</td>`
+    + `<td class="num">${_wfFmt(r.gr)}</td></tr>`).join("");
+  host.innerHTML =
+    `<div class="ab-screen-head"><b>${fEsc(scopeLbl)}</b> · as of ${fEsc(ym)} — sorted by net-active (conviction)</div>`
+    + `<table class="gauge-tbl"><thead><tr><th>Sector</th><th class="num">Net-active</th><th class="num">Implied inflow</th><th class="num">Price action</th><th class="num">Gross</th></tr></thead><tbody>${tr || `<tr><td colspan="5" class="empty-note">No flow this month.</td></tr>`}</tbody></table>`;
+}
+
 // build the whole breadth scaffold + draw every panel. Guarded; no Plotly key ever set to undefined.
 function renderBreadth(B, wrap) {
   if (!B || !B.market || !B.dates) {
@@ -5241,6 +5426,7 @@ function applyHash() {
       setView("fundamentals");
     } else if (raw.indexOf("valuation") === 0) { setView("valuation"); }
     else if (raw.indexOf("allocator") === 0) { setView("allocator"); }
+    else if (raw.indexOf("ownership") === 0) { setView("ownership"); }
     else if (raw.indexOf("macro") === 0) { setView("macro"); }
     else if (raw.indexOf("screen") === 0) { setView("screen"); }
     else if (raw.indexOf("performance") === 0) {
