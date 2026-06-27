@@ -215,6 +215,25 @@ const server = http.createServer((req, res) => {
     return { hasSel, bars0, rows0, bars1 };
   });
 
+  // ---- 1d4) CROSS-AMC CROWDING (#102 P4b): sector mode (inline cube) -> AMC table + chart; switch to
+  //           stock mode (lazy per-stock file) -> AMC table + chart stay populated.
+  const crowd = await page.evaluate(async () => {
+    const seg = document.getElementById("wf-crowd-mode");
+    const plot = document.getElementById("plot-wf-crowd");
+    const bars = () => plot ? plot.querySelectorAll(".barlayer .trace").length : 0;
+    const trows = () => document.querySelectorAll("#wf-crowd-tbl table tbody tr").length;
+    const secBars = bars(), secRows = trows();
+    const stkBtn = seg ? seg.querySelector('[data-mode="stock"]') : null;
+    let stkBars = 0, stkRows = 0, hasStkSel = false;
+    if (stkBtn) {
+      stkBtn.click();
+      await new Promise((r) => setTimeout(r, 1200));     // lazy fetch of the per-stock crowd file
+      hasStkSel = !!document.getElementById("wf-crowd-stk");
+      stkBars = bars(); stkRows = trows();
+    }
+    return { secBars, secRows, hasStkSel, stkBars, stkRows };
+  });
+
   // ---- 2) SCREEN tab: Rotation section (stock trail plot + centroid controls) ----
   await page.evaluate(async () => {
     try { if (typeof setView === "function") setView("screen"); } catch (e) {}
@@ -239,6 +258,7 @@ const server = http.createServer((req, res) => {
   console.log("OWNERSHIP:", JSON.stringify(own), "(>=2 bar traces decomp + snapshot table rows + AMC-switch redraw + date-slider)");
   console.log("WF-PIVOT :", JSON.stringify(pivot), "(AMC -> schemes (lazy) -> sectors -> STOCKS -> click refocuses chart)");
   console.log("WF-THEME :", JSON.stringify(theme), "(NSE thematic-index lens: selector + >=2 bar traces + table rows + survives theme switch)");
+  console.log("WF-CROWD :", JSON.stringify(crowd), "(cross-AMC crowding: sector AMC-table+chart + stock-mode lazy AMC-table+chart)");
   console.log("DATE-NAV :", JSON.stringify(dateNav), "(screen+consensus sliders + screen shows historical on drag)");
   console.log("SEC-CHANGE:", JSON.stringify(secChange), "(afterA/afterB must stay >=1 — the re-plot bug)");
   console.log("ROTATION :", JSON.stringify(rot));
@@ -257,6 +277,7 @@ const server = http.createServer((req, res) => {
     && pivot.nAmcRows >= 1 && pivot.nSch >= 1 && pivot.nSec >= 1 && pivot.headHasSector && pivot.bars >= 2
     && pivot.nStk >= 1 && pivot.headHasStock
     && theme.hasSel && theme.bars0 >= 2 && theme.rows0 >= 1 && theme.bars1 >= 2
+    && crowd.secBars >= 2 && crowd.secRows >= 1 && crowd.hasStkSel && crowd.stkBars >= 2 && crowd.stkRows >= 1
     && dateNav.screenDn && dateNav.consDn && dateNav.screenDateChanged
     && rot.hasRotWord && rot.hasStockSel && rot.hasSubseg && rot.trailTraces >= 1;
   console.log("\n" + (ok

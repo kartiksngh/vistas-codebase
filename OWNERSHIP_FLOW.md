@@ -95,10 +95,23 @@ Cross-tabs the UI needs: **AMC × sector** (how an AMC's money split across sect
   only a tiny `{amc: slug}` index inline (shell stays light). FE: `renderOwnership`/`_wfPivotRender` in
   `static/vistas.js` (+ `.wf-pivot` CSS). Probe `_pup_allocator.js` WF-PIVOT block PASS (47 AMC rows → expand →
   11 schemes lazy-load → 22 sectors → click sector refocuses chart; 0 errors). Aggregates only (bake-safe).
-- **P4 — stock & theme level + cross-AMC crowding** (who is buying this stock/sector, conviction vs inflow).
-  NOTE: stock = the deepest leaf; needs its own payload-bounded design (per-scheme × stock), so it's a separate
-  ship from P3's AMC→scheme→sector. Theme taxonomy still open (macro-sector used today).
-- **P5 — agent hook:** expose "net-active tilt by sector/AMC, last N months" to the analyst/FM/CIO desks.
+- **P4 (DONE ✓, LIVE 2026-06-27, src backup `8673b1b`):** **stock leaf + NSE thematic-index theme lens.**
+  - **Stock leaf** — the pivot drills a 5th level AMC→scheme→sector→**stock**; under each scheme it keeps the
+    **top-15 holdings by ownership ∪ any holding peak MV > ₹100cr** (KV's spec), nested by sector. Each stock row
+    = Ownership + 3-way split + gross, reconciles, and clicking it charts the stock's flow history. Labels from
+    the holdings table (`vid_name`/`nse_symbol`, no extra source). Engine: `(navindia_code, vst_id)` cells in the
+    same month loop; per-AMC lazy files grew 12→32 MB total (biggest ~2.8 MB, fetched on expand, gzip-served).
+  - **Theme lens** — a parallel **"Flow by NSE theme"** panel (theme selector → decomposition chart + a snapshot
+    table of all themes sorted by net-active). `theme_total` baked INLINE (~5 KB, all months). Built from a
+    committed `{vst_id: [themes]}` map (`data/themes/theme_constituents.json`, fetched once from niftyindices.com
+    via `flow_waterfall.build_theme_map()` → 9 cross-sector themes: Consumption, Energy, Commodities,
+    Infrastructure, CPSE, PSU, Healthcare, MNC, Services). **OVERLAPPING → labeled NOT additive** to the market.
+    **Macro-sector backbone unchanged.** ⚠️ Manufacturing/Digital/EV/Defence are NOT on NSE's public constituent
+    endpoint (CSVs return empty) → absent; add later if a constituent source appears (engine is data-driven).
+  - Probe `_pup_allocator.js` WF-PIVOT (drills to a stock, refocuses chart) + WF-THEME blocks PASS, 0 errors.
+- **P4b (REMAINING) — cross-AMC crowding** ("who is buying this stock/sector", conviction vs inflow): a
+  stock/sector → which AMCs are tilting view. Derivable from the same cube; deferred to its own ship.
+- **P5 — agent hook:** expose "net-active tilt by sector/AMC/theme, last N months" to the analyst/FM/CIO desks.
 
 ## Open questions for KV (don't block P1)
 1. **Theme** vs sector — use the existing macro-sector taxonomy first; add NSE thematic indices later?

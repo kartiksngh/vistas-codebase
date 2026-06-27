@@ -50,6 +50,9 @@ _DRILL_MIN_CR = 5.0
 # peak ownership (MV held) exceeds the floor — bounds the per-AMC file while covering every big position.
 _STOCK_TOPN = 15
 _STOCK_MIN_CR = 100.0
+# cross-AMC crowding (P4b): a STOCK gets a per-stock "who's tilting" file only if total MF ownership of it
+# peaks above this (Rs cr) — keeps the lazy file set to the stocks that actually matter.
+_CROWD_MIN_CR = 300.0
 
 
 def _amc_of(h: pd.DataFrame) -> dict:
@@ -286,7 +289,7 @@ def build_waterfall(months_back: int = 36, end_ym=None, sector_map=None, with_dr
 
     if not months_axis:
         return {"months": [], "amcs": [], "sectors": [], "cube": {}, "sector_total": {},
-                "market_total": {}, "drilldown": {}, "drill_index": {},
+                "market_total": {}, "drilldown": {}, "drill_index": {}, "crowd": {}, "crowd_index": [],
                 "theme_total": {}, "themes": [], "theme_meta": {},
                 "meta": {"error": "no flow months produced"}}
 
@@ -355,6 +358,7 @@ def build_waterfall(months_back: int = 36, end_ym=None, sector_map=None, with_dr
     # Every level still reconciles (each scheme total = Σ its sectors; each a Σ of per-row identities).
     # `mv` = priced ownership value (Σ mv_end), consistent with the flow rows shown alongside it.
     drilldown, drill_index = {}, {}
+    crowd, crowd_index = {}, []
     if with_drilldown:
         cells_by_code = defaultdict(dict)
         for (code, sec), comp in scheme_cells.items():
@@ -400,6 +404,29 @@ def build_waterfall(months_back: int = 36, end_ym=None, sector_map=None, with_dr
             drilldown[amc] = {"amc": amc, "slug": slug, "months": months_axis, "schemes": schemes}
             drill_index[amc] = slug
 
+        # ---- P4b cross-AMC crowding: per STOCK, the AMCs trading it (lazy per-stock files) ----
+        # Aggregate the per-scheme stock cells up to AMC level, then group by stock -> "who is
+        # buying/selling this stock?" (the inverse of the per-AMC drill-down). Sector crowding needs
+        # no extra data — it reads the inline AMC×sector cube directly in the front-end.
+        # vid -> amc -> comp -> {ym: sum}  (four levels; leaf is a float accumulator)
+        amc_stock = defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: defaultdict(float))))
+        for (code, vid), comp in stock_cells.items():
+            dst = amc_stock[vid][code2amc.get(code, "Unknown AMC")]
+            for k in COMPS:
+                for ym, v in comp[k].items():
+                    dst[k][ym] += v
+        for vid, amcs in amc_stock.items():
+            amcs_out = {a: {k: [round(comp[k].get(ym, 0.0), 1) for ym in months_axis] for k in COMPS}
+                        for a, comp in amcs.items()}
+            peak_own = max((sum(amcs_out[a]["mv"][i] for a in amcs_out) for i in range(len(months_axis))), default=0.0)
+            if peak_own < _CROWD_MIN_CR:
+                continue                                  # only stocks with material total MF ownership
+            nm, sym = vst_meta.get(vid, (vid, ""))
+            crowd[vid] = {"vst_id": vid, "name": nm, "sym": sym, "sector": smap.get(vid) or "Unclassified",
+                          "months": months_axis, "amcs": amcs_out}
+            crowd_index.append({"vst_id": vid, "name": nm, "sym": sym, "sector": smap.get(vid) or "Unclassified"})
+        crowd_index.sort(key=lambda x: x["name"])
+
     # ---- P4 theme totals (OVERLAPPING NSE thematic indices — a parallel lens, NOT additive) ----
     theme_total, themes_ranked = {}, []
     if theme_cells:
@@ -429,6 +456,7 @@ def build_waterfall(months_back: int = 36, end_ym=None, sector_map=None, with_dr
     return {"months": months_axis, "amcs": amcs_ranked, "sectors": secs_ranked,
             "cube": cube, "sector_total": sector_total, "market_total": market_total,
             "drilldown": drilldown, "drill_index": drill_index,
+            "crowd": crowd, "crowd_index": crowd_index,
             "theme_total": theme_total, "themes": themes_ranked,
             "theme_meta": {"counts": _theme_counts(),
                            "caveat": ("NSE thematic indices OVERLAP — a stock counts in every theme it "

@@ -4706,8 +4706,10 @@ let _wfAmc = "__ALL__", _wfSector = "__ALL__", _wfHz = "0", _wfSnapIdx = null, _
 //   {amc:null,code:null,sector:null} = market · {amc} = an AMC · {amc,code} = a scheme · +sector = a leaf
 let _wfFocus = { amc: null, code: null, sector: null };
 let _wfTheme = null;    // selected NSE thematic index for the theme-lens chart
+let _wfCrowdMode = "sector", _wfCrowdSec = null, _wfCrowdStk = null;   // cross-AMC crowding (P4b)
 const _wfPivExp = {};   // pivot rowKey -> true (expanded), for the Excel-style drill-down
 const _wfDrill = {};    // amc-slug -> drill payload | null (lazy-loaded per-AMC scheme×sector file)
+const _wfCrowdCache = {}, _wfCrowdInflight = {};   // vst_id -> per-stock "who's trading it" payload (lazy)
 const _WF_COL = { na: "#1f9e89", inflow: "#d99a2b", price: "#9aa6b2" };
 function _wf() { return (typeof window !== "undefined") ? window.VISTAS_WATERFALL : null; }
 function _wfNode(W, amc, sector) {
@@ -4843,23 +4845,34 @@ function renderOwnership() {
          <div id="plot-wf-decomp"></div>
          <div class="ab-ctlrow" id="wf-snap-dn" style="margin-top:10px"></div>
          <div id="wf-snap"></div>
-       </section>` + _wfThemePanelHTML(W);
+       </section>` + _wfCrowdPanelHTML(W) + _wfThemePanelHTML(W);
     $("wf-amc").addEventListener("change", (e) => { _wfAmc = e.target.value; _wfOnScopeChange(); });
     $("wf-sec").addEventListener("change", (e) => { _wfSector = e.target.value; _wfOnScopeChange(); });
     const hz = $("wf-hz");
     if (hz) hz.querySelectorAll(".fs-lvl").forEach((b) => b.addEventListener("click", () => {
       hz.querySelectorAll(".fs-lvl").forEach((x) => x.classList.remove("on")); b.classList.add("on");
-      _wfHz = b.dataset.hz; _wfDrawPlot(); _wfThemeChart();
+      _wfHz = b.dataset.hz; _wfDrawPlot(); _wfThemeChart(); _wfCrowdChart();
     }));
     const tsel = $("wf-theme-sel");
     if (tsel) tsel.addEventListener("change", (e) => { _wfTheme = e.target.value; _wfThemeDraw(); });
+    const cmode = $("wf-crowd-mode");
+    if (cmode) cmode.querySelectorAll(".fs-lvl").forEach((b) => b.addEventListener("click", () => {
+      cmode.querySelectorAll(".fs-lvl").forEach((x) => x.classList.remove("on")); b.classList.add("on");
+      _wfCrowdMode = b.dataset.mode;
+      const sw = $("wf-crowd-sec-wrap"), tw = $("wf-crowd-stk-wrap");
+      if (sw) sw.style.display = _wfCrowdMode === "sector" ? "" : "none";
+      if (tw) tw.style.display = _wfCrowdMode === "stock" ? "" : "none";
+      _wfCrowdDraw();
+    }));
+    const csec = $("wf-crowd-sec"); if (csec) csec.addEventListener("change", (e) => { _wfCrowdSec = e.target.value; _wfCrowdDraw(); });
+    const cstk = $("wf-crowd-stk"); if (cstk) cstk.addEventListener("change", (e) => { _wfCrowdStk = e.target.value; _wfCrowdDraw(); });
     _wfBuilt = true;
   }
   _wfDraw();
   afterPaint(() => viewPlotsResize("ownership"));
 }
 
-function _wfDraw() { _wfDrawHead(); _wfDrawPlot(); _wfDrawSnap(); _wfThemeDraw(); }
+function _wfDraw() { _wfDrawHead(); _wfDrawPlot(); _wfDrawSnap(); _wfThemeDraw(); _wfCrowdDraw(); }
 
 function _wfDrawHead() {
   const W = _wf(), node = _wfSeriesFor(_wfFocus), host = $("wf-head"); if (!host) return;
@@ -4908,7 +4921,7 @@ function _wfOnScopeChange() {
 function _wfDrawSnap() {
   const W = _wf();
   const dnHost = $("wf-snap-dn");
-  if (dnHost) dateNavControl(dnHost, W.months, _wfSnapIdx, (k) => { _wfSnapIdx = k; _wfPivotRender(); _wfThemeTable(); });
+  if (dnHost) dateNavControl(dnHost, W.months, _wfSnapIdx, (k) => { _wfSnapIdx = k; _wfPivotRender(); _wfThemeTable(); _wfCrowdHead(); _wfCrowdTable(); });
   _wfPivotRender();
 }
 
@@ -5012,6 +5025,122 @@ function _wfPivotRender() {
     });
     host.dataset.wfwired = "1";
   }
+}
+
+// ===== P4b cross-AMC crowding: for a chosen SECTOR or STOCK, which AMCs are tilting into/out of it
+// (the inverse of the per-AMC drill-down). Sector = inline AMC×sector cube; stock = lazy per-stock file. =====
+function _wfCrowdPanelHTML(W) {
+  const sectors = (W && W.sectors) || [];
+  const ci = (W && W.crowd_index) || [];
+  if (!sectors.length && !ci.length) return "";
+  if (_wfCrowdSec == null && sectors.length) _wfCrowdSec = sectors[0];
+  if (_wfCrowdStk == null && ci.length) _wfCrowdStk = ci[0].vst_id;
+  const secOpts = sectors.map((s) => `<option value="${attEsc(s)}"${s === _wfCrowdSec ? " selected" : ""}>${fEsc(s)}</option>`).join("");
+  const stkOpts = ci.map((c) => `<option value="${attEsc(c.vst_id)}"${c.vst_id === _wfCrowdStk ? " selected" : ""}>${fEsc(c.name + (c.sym ? " (" + c.sym + ")" : ""))}</option>`).join("");
+  return `<section class="panel cpanel">
+    <h2><span class="tag-sec">CROWDING</span>Cross-AMC crowding — who's tilting into a stock or sector</h2>
+    <details><summary>Definition · Method · Why</summary>
+      <p><b>What:</b> for a chosen <b>sector</b> or <b>stock</b>, the fund houses (AMCs) ranked by their <b>net-active</b> (conviction) tilt into/out of it — the inverse of the per-AMC drill-down. Net-buying = AMCs adding weight; net-selling = trimming.</p>
+      <p><b>Method:</b> sector = Σ over each AMC's holdings in that sector (the inline AMC×sector cube); stock = Σ over each AMC's schemes' holdings of that stock (a lazy per-stock file). Same three-way split; <b>Ownership</b> = MV held. <b>Why:</b> see whether the smart money is <i>crowding in</i> (many AMCs buying) or quietly distributing — and exactly who.</p>
+      <p class="q-note">Stock coverage = stocks with ≥ ₹300 cr total mutual-fund ownership. Reconciles (price + inflow + net-active = gross).</p>
+    </details>
+    <div class="ab-ctlrow">
+      <span class="fs-lvl-seg" id="wf-crowd-mode">
+        <button type="button" class="fs-lvl on" data-mode="sector">By sector</button>
+        <button type="button" class="fs-lvl" data-mode="stock">By stock</button>
+      </span>
+      <span id="wf-crowd-sec-wrap" style="margin-left:10px"><span class="ab-ctllbl">Sector</span> <select id="wf-crowd-sec" class="ab-sel" style="min-width:180px">${secOpts}</select></span>
+      <span id="wf-crowd-stk-wrap" style="margin-left:10px;display:none"><span class="ab-ctllbl">Stock</span> <select id="wf-crowd-stk" class="ab-sel" style="min-width:240px">${stkOpts}</select></span>
+    </div>
+    <div id="wf-crowd-head" style="display:flex;flex-wrap:wrap;gap:16px;margin:10px 0"></div>
+    <div id="plot-wf-crowd"></div>
+    <div id="wf-crowd-tbl" style="margin-top:10px"></div>
+  </section>`;
+}
+
+async function ensureCrowdStock(vid) {
+  if (Object.prototype.hasOwnProperty.call(_wfCrowdCache, vid)) return _wfCrowdCache[vid];
+  if (_wfCrowdInflight[vid]) return _wfCrowdInflight[vid];
+  if (!vid || !LAZY) { _wfCrowdCache[vid] = null; return null; }
+  _wfCrowdInflight[vid] = fetchJSON(LAZY.base + "ownership_stock/" + lazyURL(vid) + ".json").then((b) => {
+    _wfCrowdCache[vid] = b || null; delete _wfCrowdInflight[vid]; return _wfCrowdCache[vid];
+  });
+  return _wfCrowdInflight[vid];
+}
+
+// resolve the current crowding selection -> {label, amcs:{amc:node}, agg:node}; {loading:true} while fetching.
+function _wfCrowdSel() {
+  const W = _wf(); if (!W) return null;
+  if (_wfCrowdMode === "sector") {
+    const sec = _wfCrowdSec; if (!sec) return null;
+    const amcs = {};
+    Object.keys(W.cube || {}).forEach((a) => { const n = (W.cube[a] || {})[sec]; if (n) amcs[a] = n; });
+    return { label: sec, amcs, agg: (W.sector_total || {})[sec] || null };
+  }
+  const vid = _wfCrowdStk; if (!vid) return null;
+  if (!Object.prototype.hasOwnProperty.call(_wfCrowdCache, vid)) { ensureCrowdStock(vid).then(() => _wfCrowdDraw()); return { loading: true }; }
+  const d = _wfCrowdCache[vid]; if (!d) return null;
+  const amcs = d.amcs || {}, ks = ["gross", "price", "inflow", "net_active", "mv"], n = W.months.length;
+  const agg = {}; ks.forEach((k) => { agg[k] = new Array(n).fill(0); });
+  Object.keys(amcs).forEach((a) => ks.forEach((k) => { const arr = amcs[a][k] || []; for (let i = 0; i < n; i++) agg[k][i] += (arr[i] || 0); }));
+  return { label: d.name + (d.sym ? " (" + d.sym + ")" : ""), amcs, agg };
+}
+
+function _wfCrowdDraw() { _wfCrowdHead(); _wfCrowdChart(); _wfCrowdTable(); }
+
+function _wfCrowdHead() {
+  const host = $("wf-crowd-head"); if (!host) return;
+  const W = _wf(), sel = _wfCrowdSel();
+  if (!sel) { host.innerHTML = `<div class="empty-note">No crowding data for this selection.</div>`; return; }
+  if (sel.loading) { host.innerHTML = `<div class="empty-note">loading…</div>`; return; }
+  const i = (_wfSnapIdx == null) ? W.months.length - 1 : _wfSnapIdx;
+  let buyers = 0, sellers = 0;
+  Object.keys(sel.amcs).forEach((a) => { const v = sel.amcs[a].net_active[i]; if (v > 0) buyers++; else if (v < 0) sellers++; });
+  const agg = sel.agg;
+  host.innerHTML =
+    `<div class="cstat"><span class="ck">${fEsc(sel.label)} · as of ${fEsc(W.months[i])}</span><span class="cv">${buyers} buying · ${sellers} selling</span></div>`
+    + (agg ? `<div class="cstat"><span class="ck">Aggregate net-active</span><span class="cv" style="color:${agg.net_active[i] >= 0 ? _WF_COL.na : '#b3402f'}">${_wfFmt(agg.net_active[i])}</span></div>` : "")
+    + (agg && agg.mv ? `<div class="cstat"><span class="ck">Total MF ownership</span><span class="cv">${_wfFmt(agg.mv[i])}</span></div>` : "");
+}
+
+function _wfCrowdChart() {
+  const W = _wf(), sel = _wfCrowdSel(); if (!W) return;
+  if (!sel || sel.loading || !sel.agg) { _wfPlot("plot-wf-crowd", [], {}); return; }
+  const node = sel.agg, n = W.months.length, back = parseInt(_wfHz, 10) || 0, h0 = back > 0 ? Math.max(0, n - back) : 0;
+  const x = W.months.slice(h0), sl = (arr) => arr.slice(h0);
+  const traces = [
+    { type: "bar", x, y: sl(node.net_active), name: "Net-active", marker: { color: _WF_COL.na } },
+    { type: "bar", x, y: sl(node.inflow), name: "Implied inflow", marker: { color: _WF_COL.inflow } },
+    { type: "bar", x, y: sl(node.price), name: "Price action", marker: { color: _WF_COL.price } },
+  ];
+  _wfPlot("plot-wf-crowd", traces, {
+    barmode: "relative", height: 320,
+    title: { text: `Aggregate flow — ${sel.label} (₹ cr/month)`, font: { size: 13 } },
+    legend: { orientation: "h" }, yaxis: { title: "₹ cr", zeroline: true }, margin: { t: 40 },
+  });
+}
+
+function _wfCrowdTable() {
+  const W = _wf(), host = $("wf-crowd-tbl"); if (!host) return;
+  const sel = _wfCrowdSel();
+  if (!sel) { host.innerHTML = ""; return; }
+  if (sel.loading) { host.innerHTML = `<div class="empty-note">loading…</div>`; return; }
+  const i = (_wfSnapIdx == null) ? W.months.length - 1 : _wfSnapIdx;
+  const naCol = (v) => (v >= 0 ? _WF_COL.na : "#b3402f");
+  const rows = Object.keys(sel.amcs).map((a) => ({ a, n: sel.amcs[a] })).filter((r) => r.n);
+  rows.sort((p, q) => (q.n.net_active[i] || 0) - (p.n.net_active[i] || 0));
+  const tr = rows.map((r) => {
+    const n = r.n;
+    return `<tr><td>${fEsc(r.a)}</td>`
+      + `<td class="num">${n.mv ? _wfFmt(n.mv[i]) : "—"}</td>`
+      + `<td class="num" style="color:${naCol(n.net_active[i])}">${_wfFmt(n.net_active[i])}</td>`
+      + `<td class="num" style="color:${_WF_COL.inflow}">${_wfFmt(n.inflow[i])}</td>`
+      + `<td class="num" style="color:${_WF_COL.price}">${_wfFmt(n.price[i])}</td>`
+      + `<td class="num">${_wfFmt(n.gross[i])}</td></tr>`;
+  }).join("");
+  host.innerHTML =
+    `<div class="ab-screen-head"><b>AMCs · ${fEsc(sel.label)}</b> · as of ${fEsc(W.months[i])} — sorted by net-active (conviction)</div>`
+    + `<table class="gauge-tbl wf-pivot"><thead><tr><th>AMC</th><th class="num">Ownership</th><th class="num">Net-active</th><th class="num">Implied inflow</th><th class="num">Price action</th><th class="num">Gross</th></tr></thead><tbody>${tr || `<tr><td colspan="6" class="empty-note">No holders this month.</td></tr>`}</tbody></table>`;
 }
 
 // ===== P4 theme lens: flow into NSE thematic indices (a PARALLEL, OVERLAPPING view — themes share

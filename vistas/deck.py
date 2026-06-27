@@ -999,9 +999,21 @@ def save_terminal_site(reason: str = "manual", watchlist=None) -> dict:
                 with open(os.path.join(_owndir, _pl["slug"] + ".json"), "w", encoding="utf-8") as _f:
                     _json.dump(_pl, _f, separators=(",", ":"))
             print(f"[deck] ownership drill-down: wrote {len(_drill)} AMC files -> data/ownership", flush=True)
+        # P4b cross-AMC crowding: one lazy file per stock (the AMCs trading it); keep only the small
+        # {vst_id,name,sym,sector} index inline (for the stock selector).
+        _crowd = waterfall.pop("crowd", {}) or {}
+        if _crowd:
+            import json as _json2
+            _cdir = os.path.join(site, "data", "ownership_stock")
+            os.makedirs(_cdir, exist_ok=True)
+            for _vid, _pl in _crowd.items():
+                with open(os.path.join(_cdir, str(_vid) + ".json"), "w", encoding="utf-8") as _f:
+                    _json2.dump(_pl, _f, separators=(",", ":"))
+            print(f"[deck] cross-AMC crowding: wrote {len(_crowd)} stock files -> data/ownership_stock", flush=True)
     except Exception as e:
         print(f"[deck] ownership/flow waterfall skipped: {e}")
         waterfall.pop("drilldown", None)
+        waterfall.pop("crowd", None)
 
     # 2g) BRIDGE live-AMC holdings -> store by HOLDINGS FINGERPRINT so the cockpit lists ALL funds
     # without duplicates: matched live funds collapse to their store scheme; unmatched (passive

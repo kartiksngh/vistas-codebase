@@ -28,13 +28,23 @@ Three things shipped to <https://kartiksngh.github.io/vistas/terminal/> this ses
   AMC→scheme→sector, each row = Ownership + 3-way split + gross; click a row to expand AND **refocus the chart** onto that
   cell (`_wfFocus`/`_wfSeriesFor`: inline cube for AMC-level, lazy file for scheme-level). Probe WF-PIVOT block PASS
   (47 AMC rows → 11 schemes lazy → 22 sectors → sector-click refocus; 0 errors). Aggregates only.
+  **★ P4 STOCK-LEAF + THEME LENS now LIVE too (src backup `8673b1b`):** pivot drills a 5th level AMC→scheme→sector→
+  **stock** (per scheme: **top-15 by ownership ∪ any peak MV > ₹100cr**; labels `vid_name`/`nse_symbol`; per-AMC lazy
+  files 12→32 MB, biggest ~2.8 MB on-expand; each stock reconciles + click charts its flow). Plus a parallel **"Flow
+  by NSE theme"** panel (selector → decomposition chart + all-themes table), `theme_total` baked INLINE (~5 KB) from
+  a committed `{vst_id:[themes]}` map `data/themes/theme_constituents.json` (`build_theme_map()`; `-m vistas.flow_waterfall
+  --themes` to refresh) = **9 cross-sector themes** (Consumption/Energy/Commodities/Infra/CPSE/PSU/Healthcare/MNC/
+  Services). OVERLAPPING → labeled NOT additive; macro-sector kept. ⚠️ Manufacturing/Digital/EV/Defence NOT on NSE's
+  public endpoint → absent. Probe WF-PIVOT(→stock)+WF-THEME PASS, 0 errors. **REMAINING: P4b cross-AMC crowding · P5 agent hook.**
 - **BUILD SPEED (#98):** fixed an O(N²) liquidity lookup in `stock_intel._market_behaviour` (re-scanned the 9.4M-row
   turnover panel per stock) by pre-indexing `turnover_by_sym` once in `build_context` → **build 41min → ~17min**,
   output byte-identical. (This MOOTED the planned multi-core parallelize — algorithmic fix was strictly better.)
 
 **NEXT STEP / OPEN FORKS (all need KV direction or carry risk — surfaced, not auto-launched):**
-- **#102 P3 DONE+LIVE (2026-06-27).** REMAINING **P4** = stock leaf + cross-AMC crowding (needs own payload-bounded
-  per-scheme×stock design → separate ship; theme taxonomy still open) · **P5** = agent hook (net-active tilt → desks).
+- **#102 P3 + P4 DONE+LIVE (2026-06-27)** — full pivot AMC→scheme→sector→**stock** (top-15 ∪ >₹100cr) + **NSE
+  thematic theme lens** (9 themes, overlapping). REMAINING **P4b** = cross-AMC crowding (stock/sector → which AMCs
+  tilting) · **P5** = agent hook (net-active tilt → analyst/FM/CIO desks). Marquee themes (Mfg/Digital/EV) blocked
+  on NSE not publishing their constituents.
 - **#99 cadence-partitioned build** (designed `BUILD_CADENCE.md`): compute fingerprint-gate + COMPUTE/ASSEMBLE split —
   RISK-FLAGGED (silent-stale, bounded ≤1wk + self-healing); best done with KV able to eyeball the first gated-vs-full
   diff. Fetch staleness-gate already effectively covered (pipeline cadence-gate + within-day `--no-fetch`/`--no-rebuild`).
