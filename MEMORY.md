@@ -3,31 +3,46 @@
 > Single in-repo state file so a crash resumes with ~no lag. Pairs with `CLAUDE.md`
 > (scope/conventions/architecture — read that too). Source of truth for *state*; the deep
 > conventions live in `CLAUDE.md` and inline in `vistas/analytics.py` / `vistas/fundamentals.py`.
-> Cross-session pointer: global memory `vistas-project.md`. Last updated 2026-06-27.
+> Cross-session pointer: global memory `vistas-project.md`. Last updated 2026-06-28.
 
 ## ▶ RESUME (one-paragraph current state + next step)
 
-**▶▶▶ RESUME — 2026-06-28 (DIGITAL-ABSL firm LIVE + autonomous night: #105 + #52 + #99 + #38):**
-**★ KV DIRECTIVE (2026-06-28):** finish the lined-up tasks, THEN run **Live-Forward (LLM FMs take the seat) for ALL 28
-ABSL schemes** (KV greenlit the ~2M-token spend, conditional on finishing lined-up tasks). **★ NEXT ACTIONS in order:**
-- **#106 (NEW, KV) — Screen flow-axis decomposition toggle.** In the terminal Screen tab ("fund buying vs analyst
-  recommendation" = Smart-money-vs-Street / Analyst×FM quadrant), the FM/fund axis is GROSS money flow; KV wants a SELECTOR
-  to plot the DECOMPOSITIONS of gross: **net-active (conviction, weight-space)**, price-adjusted (where new money landed),
-  gross — per the flow-decomposition framework ([[vistas-flow-decomposition]] / #51: gross = price + scheme-inflow + net-active).
-  Wire in `static/vistas.js` `renderScreen` (SCREEN_WIN-style selector) + ensure `vistas/screens.py` `build_smart_vs_street`
-  bakes the flow COMPONENTS per stock (it currently bakes net-active 1m/3m/6m/12m; check which decompositions exist). Terminal
-  rebuild + `_pup_screen.js` + publish.
-- **#107 — Live-Forward for 28 ABSL.** ★ THEME-UNIVERSE FIX = DONE + VERIFIED (the correctness gate): `amc_live.theme_sectors_for`
-  + `ar.point_in_time_universe(theme_sectors=)` restrict a SECTOR/THEMATIC scheme's FM candidate universe to its desk-sectors
-  (category-gated to "Sectoral / Thematic"; ≤7 of 12 sectors; "Diversified"/"Unclassified" excluded; held names still unioned;
-  enforce_guardrails HARD-drops off-theme proposals). VERIFIED 11 thematic / 17 broad — Banking→Financials, Pharma→Healthcare,
-  Manufacturing excludes Financials/IT/Telecom, all diversified→broad. **REMAINING:** (a) generalize `amc_live.prepare_round`/
-  `apply_round` (hardcoded to `pilot_reg_entries`) to accept the 28 `amc_reg_entries('Aditya Birla Sun Life')`; (b) `amc_round
-  start` → run `_amc_rebalance.js` workflow (28 FM agents ∥ + 1 CIO); (c) save decisions → `amc_round finish` → guardrail+execute
-  onto the 28 ABSL books → mark; (d) publish digital-amc. The seam books are already theme-correct (built from real holdings).
-- **Optional follow-up:** re-run the 28 ABSL historical REPLAYS theme-aware (pass theme to `point_in_time_universe` in `replay()`)
-  to fix the thematic-track convergence + drop the on-site caveat (~1hr re-run via `make_absl_firm.py`).
-- **#99 / #38 — DONE** (engine+analysis / both-legs-exist; see below). Build-cache + theme-universe code backed up `13c7325`.
+**▶▶▶ RESUME — 2026-06-28 (AUTONOMOUS NIGHT COMPLETE — whole queue LIVE: #106 + #107 + #108 + #52):**
+KV directive was "clear the whole queue, nothing pending" + greenlit the ~2M-token Live-Forward. ALL DONE + LIVE + backed up.
+- **#106 SCREEN FLOW-DECOMPOSITION TOGGLE — LIVE** (terminal). The Screen's "fund buying" axis (Smart-money-vs-Street / Analyst×FM
+  quadrant) was the **price-adjusted** flow (== legacy `flow`, strips price but KEEPS scheme inflows — KV's "it's gross" hunch was
+  right: not the conviction signal). Added a 3-button basis selector **Gross / Price-adj. / Net-active** (default price_adj = the
+  unchanged published view). `screens.py` emits per-row `fb={gross,price_adj,net_active:[1m,3m,6m,12m]}` + traj `g/n`; `vistas.js`
+  `screenApplyBasis()` remaps the FM axis + recomputes quadrant/buying/agreement/trail per basis (NEW copies — Funds tab untouched);
+  axis title + caption + methodology basis-aware. `_pup_screen.js` extended (basisOk gate) PASS. Full rebuild + publish (beb8f84).
+- **#108 THEME-FENCED REPLAY + SECTOR BENCHMARKS — DONE.** `theme_sectors_for` RELOCATED amc_live→**`amc_replay`** (universe layer;
+  re-exported from amc_live) so `replay()` uses the SAME fence as the live desk. Added a **CHARACTERISTIC-THEME GUARD**
+  (`_CHARACTERISTIC_THEME_KEYWORDS`: psu/mnc/esg/business cycle/quant/special opp/conglomerate/dividend yield force-BROAD — a sector
+  fence would mislabel an ownership/style theme) → only **7 TRUE-sector funds fenced** (Banking/Pharma/Digital/Consumption/Transport/
+  Manufacturing/Infra), 21 broad. ★ **Sector-index benchmarks** via `_bench_for` `_THEME_BENCHMARK` (a fenced fund scored vs its
+  SECTOR TR index, not NIFTY 500 — else sector beta masquerades as alpha; Fundamental-Law). Re-ran the 7 replays
+  (`make_absl_firm.py --replay-only --theme-only`): tracks DE-CONVERGED (Banking IR 0.45, Pharma 0.98 … Manufacturing 1.67, Digital
+  1.43). Residual high IRs = the rules-FM's uncapped **smid+momentum tilt vs the cap-weighted sector index**, NOT pure stock-selection
+  alpha (honest site note in `amc_site.firms_view`; benchmark label now prefers the scorecard's resolved index). Banking IR 0.45 = the
+  honest baseline.
+- **#107 LIVE-FORWARD for 28 ABSL — LIVE** at https://kartiksngh.github.io/vistas/digital-amc/ (Live-Forward tab). Round machinery
+  generalized 4-pilots→N-AMC: `reg_entries_for(amc)` + `amc` param threaded through `prepare_round`/`apply_round`/`cmd_start`/
+  `cmd_finish` + CLI `--amc` (★ bug caught BEFORE the spend: `main()` dispatch wasn't passing `args.amc` → first manifest was the 4
+  pilots; fixed). `amc_round start --amc "Aditya Birla Sun Life"` → 28 desks; ran `_amc_rebalance.js` Workflow (**28 FM + 1 CIO,
+  2.07M tokens, 7.2 min**); `finish` guardrail+executed onto 28 books (mandate-compliant, active-vs-rules 16-82%), marked, published.
+  ★ THEME FENCE HELD THROUGH THE LLM (Pharma FM 34 longs ALL Healthcare, 0 violations; Banking ALL Financials). ★ CIO independently
+  diagnosed the **√BR effective-breadth collapse** (ONGC top-target in 14/27 books → "the firm runs ~5-6 independent bets, not 27";
+  rewards BFSI+Pharma as the genuine diversifiers) — the Fundamental Law applied live. Compliance: **0 raw-ARM in 62 audit files**
+  (scrub held). round_latest.json auto-surfaces via the existing `live_forward_tab`. Source→vistas-codebase `437d1d6`.
+- **#52 NORTH-STAR P1 DELIVERED** (closed): the live agentic firm now exists; program continues as standing monthly LLM-round + daily
+  python-mark cadence (the LLM round is Claude-triggered — `amc_round start/finish/publish` runbook). [[vistas-agentic-amc]].
+- **★ THE THEME-RESTRICTION LIMIT (KV asked "what is the limit"):** category gate (only SEBI "Sectoral / Thematic") + characteristic-
+  theme force-broad keywords + `weight_floor=3%` + `max_theme_sectors=7` of 12 + exclude Diversified/Unclassified; held names always
+  unioned; off-theme proposals HARD-dropped by `enforce_guardrails`. Net = 7 true-sector funds fenced, everything else go-anywhere.
+- **REMAINING / next:** next monthly LLM round (cadence); the 3 leftover PILOT books (ICICI/SBI/Quant) still show as separate firms on
+  the digital-amc site (cosmetic — clear `amc_book/` of non-ABSL or filter the site); the Pharma/etc desk's displayed `benchmark`
+  label is still the registry NIFTY-500 (scorecard uses the sector index correctly — cosmetic); manager-tenure DB; the Mesh build chain.
+- **#99 / #38 — DONE** earlier this night (build-cache engine off-by-default; both #38 legs already existed). Code backed up `13c7325`.
 **★★ THIS NIGHT SHIPPED + LIVE + TESTED:**
 - **#105 DIGITAL-ABSL FIRM — BUILT (28 books) + PUBLISHED LIVE** at https://kartiksngh.github.io/vistas/digital-amc/
   (Firms & Schemes tab, ABSL default; _pages pushed, source→vistas-codebase `20abc7d`, ARM mirror current).
