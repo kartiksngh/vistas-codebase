@@ -187,6 +187,14 @@ def prepare_desk(reg_entry, asof_str, top_n=70, write=True):
             "held_pct": "your current weight in the name (0 = not held)",
         },
     }
+    # the LEARNING LOOP: embed the FM's most recent graded round (hit rate / conviction-IC / best+worst
+    # calls vs its benchmark) so the agent can learn from its own track record. Best-effort; None on the
+    # first round or before any horizon has elapsed. No licensed data (price-outcome + scrubbed thesis only).
+    try:
+        from . import amc_grade as _grade
+        ctx["last_round_review"] = _grade.latest_review(reg_entry)
+    except Exception:
+        ctx["last_round_review"] = None
     if write:
         os.makedirs(DESK_DIR, exist_ok=True)
         path = os.path.join(DESK_DIR, f"{slug(reg_entry['scheme'])}.json")
@@ -393,6 +401,40 @@ PILOTS = [
 ]
 _FM_KEY = {"Large Cap Fund": "largecap", "Aggressive Hybrid Fund": "agghybrid",
            "Flexi Cap Fund": "flexicap", "Small Cap Fund": "smallcap"}
+
+
+def amc_reg_entries(amc_substr, equity_only=True, min_aum_cr=200.0):
+    """Every mandate-relevant scheme of ONE real AMC — the roster for a FULL digital-AMC firm (e.g.
+    "Aditya Birla Sun Life" → all its equity/hybrid schemes, each becomes a paper book run by an FM
+    desk under the AMC's CIO). This generalises the 4-scheme cross-AMC `pilot_reg_entries` to the
+    per-AMC firm the North Star targets.
+
+    equity_only=True keeps only schemes whose SEBI category has a real equity/hybrid mandate in
+    `amc_firm.MANDATES` (so pure-debt / children / retirement schemes — which would wrongly inherit the
+    default equity mandate — are excluded; they're named by the caller, not silently dropped).
+
+    ONE DESK PER DISTINCT FUND (not per category): every distinct product is its own book, so the 14
+    different thematic funds (PSU, Consumption, Pharma, …) each get a desk — but the Regular/Direct/
+    Growth/IDCW PLANS of the SAME fund (identical holdings) collapse to one (largest-AUM kept), via a
+    normalised scheme name. Returns the reg-entry list sorted by AUM desc."""
+    import re as _re
+    reg = af.registry(amcs=[amc_substr], min_aum_cr=min_aum_cr)
+
+    def _norm(nm):                       # drop plan/option words so Reg vs Direct vs IDCW collapse
+        s = _re.sub(r"[^A-Za-z0-9 ]", " ", str(nm or "").upper())
+        drop = {"REGULAR", "DIRECT", "GROWTH", "IDCW", "DIVIDEND", "PLAN", "OPTION", "G", "R", "D",
+                "REG", "PAYOUT", "REINVESTMENT", "FUND", "THE"}
+        return " ".join(w for w in s.split() if w not in drop)
+
+    best = {}
+    for sch in reg.values():
+        for s in sch.values():
+            if equity_only and s.get("category") not in af.MANDATES:
+                continue
+            key = _norm(s.get("scheme"))
+            if key and (key not in best or af._f(s["aum_cr"]) > af._f(best[key]["aum_cr"])):
+                best[key] = s
+    return sorted(best.values(), key=lambda s: -af._f(s["aum_cr"]))
 
 
 def pilot_reg_entries(min_aum_cr=500.0):

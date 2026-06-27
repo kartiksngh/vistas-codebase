@@ -1,0 +1,393 @@
+{
+ "scheme": "ICICI Pru Large Cap Fund (G)",
+ "amc": "ICICI Prudential Mutual Fund",
+ "category": "Large Cap Fund",
+ "fm_key": "largecap",
+ "round_asof": "2026-06-25",
+ "graded_to": "2026-06-25",
+ "horizon_trading_days": 0,
+ "benchmark": "NIFTY 100",
+ "benchmark_return_pct": 0.0,
+ "n_bets": 37,
+ "n_graded": 0,
+ "n_pending": 37,
+ "n_unpriced": 0,
+ "hit_rate_pct": null,
+ "avg_active_return_pct": null,
+ "median_active_return_pct": null,
+ "conviction_ic": null,
+ "best_calls": [],
+ "worst_calls": [],
+ "bets": [
+  {
+   "sym": "ONGC",
+   "target_pct": 5.01,
+   "play_type": "cyclical",
+   "thesis": "ONGC pairs strong, rising analyst revisions with top-decile cheapness and a stable large-cap energy profile; the cheapness gives downside support while revisions provide the 1-6mo tilt.",
+   "falsification": "Crude and gas realizations roll over and analyst revisions turn falling, or the stock de-rates further despite cheapness over the next two quarters.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "VEDL",
+   "target_pct": 5.01,
+   "play_type": "structural",
+   "thesis": "Diversified metals exposure with confirming momentum and rising revisions; a structural commodity-cycle and deleveraging story I already own at size.",
+   "falsification": "Metals prices fall and revisions roll over, or balance-sheet/dividend concerns re-emerge, taking momentum negative.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "NMDC",
+   "target_pct": 3.24,
+   "play_type": "cyclical",
+   "thesis": "NMDC shows strong rising analyst revisions and above-peer cheapness with neutral-to-positive momentum \u2014 a confirmed materials tilt, not a single-signal chase.",
+   "falsification": "Iron ore prices and revisions both weaken, or volumes disappoint and momentum turns clearly negative.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "NATIONALUM",
+   "target_pct": 2.95,
+   "play_type": "cyclical",
+   "thesis": "NALCO combines rising revisions with positive relative momentum and fair value, a multi-force aluminium expression with large-cap liquidity.",
+   "falsification": "Aluminium/alumina prices fall, revisions turn falling, and relative momentum drops below peers.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "COALINDIA",
+   "target_pct": 2.8,
+   "play_type": "structural",
+   "thesis": "Coal India offers rising revisions, genuine cheapness and a defensive dividend yield \u2014 a lower-beta way to hold the energy tilt.",
+   "falsification": "Volumes/e-auction premia fall, revisions turn falling, or a sharp policy/ESG de-rating hits the multiple.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "HINDALCO",
+   "target_pct": 2.5,
+   "play_type": "cyclical",
+   "thesis": "Hindalco pairs rising revisions with above-peer cheapness and a large-cap downstream aluminium franchise; momentum mildly positive.",
+   "falsification": "Novelis spreads compress, aluminium falls, and revisions turn falling over the next two quarters.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "SAIL",
+   "target_pct": 2.21,
+   "play_type": "cyclical",
+   "thesis": "SAIL is among the cheapest large-cap steelmakers with rising revisions and improving momentum \u2014 a value-plus-revision cyclical.",
+   "falsification": "Steel prices and spreads weaken, revisions fade, and the cheapness becomes a value trap with falling momentum.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "BSE",
+   "target_pct": 2.5,
+   "play_type": "structural",
+   "thesis": "BSE has strong momentum and rising revisions on a structural rise in market activity/derivatives; an asset-light compounder tilt.",
+   "falsification": "Cash/derivative volumes fall, regulatory caps bite, and momentum plus revisions both roll over.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "MCX",
+   "target_pct": 2.21,
+   "play_type": "structural",
+   "thesis": "MCX combines strong relative momentum with rising revisions on growing commodity-derivative volumes and a tech-platform tailwind.",
+   "falsification": "Volume growth stalls, a competitor gains share, and revisions/momentum both turn negative.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "CGPOWER",
+   "target_pct": 2.36,
+   "play_type": "cyclical",
+   "thesis": "CG Power rides the electrical-equipment/transmission capex cycle with rising revisions and confirming momentum; a large-cap capex tilt.",
+   "falsification": "Order inflows slow, margins compress, and revisions turn falling with momentum fading.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "POWERINDIA",
+   "target_pct": 2.21,
+   "play_type": "cyclical",
+   "thesis": "Hitachi Energy India is a direct grid-modernisation capex play with strong momentum and supportive revisions; structural electrification tailwind.",
+   "falsification": "Capex cycle cools, valuation (already rich) de-rates, and momentum plus revisions both turn negative.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "NTPC",
+   "target_pct": 3.24,
+   "play_type": "structural",
+   "thesis": "NTPC is a cheap, large-cap regulated-return utility with a capacity-addition growth angle and mildly rising revisions \u2014 defensive carry in the book.",
+   "falsification": "Regulatory returns are cut, capex disappoints, or revisions turn falling alongside weak momentum.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "POWERGRID",
+   "target_pct": 2.65,
+   "play_type": "structural",
+   "thesis": "Power Grid offers stable regulated cash flows and a transmission-capex tailwind with supportive revisions \u2014 defensive large-cap ballast.",
+   "falsification": "Tariff/regulatory risk materializes, capex slows, and revisions turn falling.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "BAJAJ-AUTO",
+   "target_pct": 2.95,
+   "play_type": "structural",
+   "thesis": "Bajaj Auto shows rising revisions and a premiumisation/export recovery; a quality large-cap auto I keep at size.",
+   "falsification": "Export demand and domestic 2W volumes weaken and revisions turn falling.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "EICHERMOT",
+   "target_pct": 2.36,
+   "play_type": "structural",
+   "thesis": "Eicher's Royal Enfield premium franchise has rising revisions and pricing power; I hold through a momentum lull.",
+   "falsification": "RE volumes stall, competition erodes share, and revisions turn falling.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "TVSMOTOR",
+   "target_pct": 2.06,
+   "play_type": "structural",
+   "thesis": "TVS combines a strong EV transition and export mix with supportive revisions; a structural 2W hold.",
+   "falsification": "EV margins disappoint, volumes slow, and revisions roll over.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "M&M",
+   "target_pct": 2.06,
+   "play_type": "structural",
+   "thesis": "M&M's SUV and tractor leadership with a farm-cycle tailwind justifies a core large-cap auto hold even with neutral revisions.",
+   "falsification": "SUV order book and tractor demand weaken and revisions turn clearly negative.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "ICICIBANK",
+   "target_pct": 4.42,
+   "play_type": "structural",
+   "thesis": "n/a",
+   "falsification": "n/a",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "AXISBANK",
+   "target_pct": 2.95,
+   "play_type": "structural",
+   "thesis": "Axis offers a re-rating path on improving deposit franchise and credit quality with supportive revisions; core large-cap bank.",
+   "falsification": "Asset-quality slippage or NIM pressure with revisions turning falling.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "SBIN",
+   "target_pct": 2.65,
+   "play_type": "cyclical",
+   "thesis": "SBI is a cheap, systemically dominant lender with strong PSU deposit franchise; cheapness cushions soft revisions.",
+   "falsification": "Credit costs rise sharply, cheapness proves a trap, and revisions stay clearly falling.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "KOTAKBANK",
+   "target_pct": 2.21,
+   "play_type": "structural",
+   "thesis": "Kotak's conservative underwriting and strong capital make it a quality core financial; held for benchmark integrity.",
+   "falsification": "Growth stays subdued, ROEs compress, and revisions turn falling.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "CHOLAFIN",
+   "target_pct": 1.91,
+   "play_type": "structural",
+   "thesis": "Chola pairs strong rising revisions with a durable vehicle/loan-against-property growth franchise; a quality NBFC add.",
+   "falsification": "Asset quality deteriorates, growth slows, and revisions turn falling.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "BHARTIARTL",
+   "target_pct": 3.24,
+   "play_type": "structural",
+   "thesis": "n/a",
+   "falsification": "n/a",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "RELIANCE",
+   "target_pct": 3.53,
+   "play_type": "structural",
+   "thesis": "Reliance's retail/Jio compounding plus refining optionality warrants a benchmark-anchor hold; soft momentum is a chance to keep rather than chase.",
+   "falsification": "Retail/telecom growth disappoints, refining margins compress, and revisions stay falling.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "SUNPHARMA",
+   "target_pct": 2.36,
+   "play_type": "structural",
+   "thesis": "Sun Pharma's specialty-pipeline and US franchise make it the core large-cap pharma ballast even with neutral revisions.",
+   "falsification": "Specialty ramp disappoints or US pricing pressure with revisions turning falling.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "APOLLOHOSP",
+   "target_pct": 2.36,
+   "play_type": "structural",
+   "thesis": "Apollo Hospitals rides structural healthcare demand and a digital/pharmacy optionality; a quality large-cap healthcare hold.",
+   "falsification": "Occupancy/ARPOB growth slows or digital losses widen with revisions falling.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "TITAN",
+   "target_pct": 2.21,
+   "play_type": "structural",
+   "thesis": "Titan's jewellery formalisation and premiumisation story is a durable large-cap consumer compounder; modestly rising revisions.",
+   "falsification": "Jewellery demand and margins weaken and revisions turn falling.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "TRENT",
+   "target_pct": 1.91,
+   "play_type": "structural",
+   "thesis": "Trent's Zudio-led store expansion is structural, but rich valuation and soft momentum warrant a smaller weight.",
+   "falsification": "Same-store growth slows, valuation de-rates, and revisions turn falling.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "ASIANPAINT",
+   "target_pct": 2.06,
+   "play_type": "tactical",
+   "thesis": "Asian Paints shows strongly rising revisions even as momentum lags, suggesting an analyst-led recovery setup in a quality franchise.",
+   "falsification": "Volume/margin pressure from new entrants persists and the strong revisions reverse to falling.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "HINDUNILVR",
+   "target_pct": 2.06,
+   "play_type": "structural",
+   "thesis": "HUL is the core defensive FMCG anchor with pricing power and rural-recovery optionality; held for benchmark balance.",
+   "falsification": "Rural demand stays weak, margins compress, and revisions turn clearly falling.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "TCS",
+   "target_pct": 2.21,
+   "play_type": "structural",
+   "thesis": "TCS pairs rising revisions with sector-leading margins and a large-cap quality profile; an IT-recovery tilt as momentum bottoms.",
+   "falsification": "Discretionary IT spend stays weak, deal TCV slows, and revisions turn falling.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "TECHM",
+   "target_pct": 1.77,
+   "play_type": "tactical",
+   "thesis": "Tech Mahindra's margin-recovery program with rising revisions justifies a reduced continued hold within the IT sleeve.",
+   "falsification": "Margin recovery stalls and revisions reverse to falling.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "COFORGE",
+   "target_pct": 1.47,
+   "play_type": "tactical",
+   "thesis": "Coforge has strong rising revisions on a robust deal pipeline; a small analyst-led IT add even as momentum lags.",
+   "falsification": "Deal conversion slows, margins disappoint, and the strong revisions reverse.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "WIPRO",
+   "target_pct": 1.47,
+   "play_type": "structural",
+   "thesis": "Wipro retains a small IT slot on a turnaround/leadership-stabilisation angle with mildly supportive revisions.",
+   "falsification": "Growth keeps lagging peers and revisions turn falling.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "BAJFINANCE",
+   "target_pct": 2.06,
+   "play_type": "structural",
+   "thesis": "Bajaj Finance's diversified consumer-lending franchise and digital scale-up is a durable large-cap NBFC compounder; momentum-weak entry.",
+   "falsification": "Asset quality deteriorates, AUM growth slows, and revisions turn falling.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "HAL",
+   "target_pct": 1.77,
+   "play_type": "structural",
+   "thesis": "HAL's multi-year defense order book is structural, but soft revisions and rich valuation warrant a reduced weight.",
+   "falsification": "Order execution slips, valuation de-rates, and revisions turn clearly falling.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "TATASTEEL",
+   "target_pct": 2.06,
+   "play_type": "structural",
+   "thesis": "Tata Steel keeps a reduced ferrous slot; I shift weight toward cheaper, stronger-revision SAIL/NMDC.",
+   "falsification": "European/India steel spreads improve and revisions turn rising, making the trim early.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  }
+ ]
+}

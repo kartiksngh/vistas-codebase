@@ -1,0 +1,61 @@
+{
+ "scheme": "Aditya Birla SL Multi-Cap Fund (G)",
+ "amc": "Aditya Birla Sun Life Mutual Fund",
+ "category": "Multi Cap Fund",
+ "diag": {
+  "aum0_cr": 6761.2,
+  "start": "2015-01-30",
+  "end": "2026-06-25",
+  "n_rebalances": 138,
+  "cost_bps": 15.0,
+  "brain": "core_multifactor",
+  "brain_thesis": "Analyst upgrades + price momentum + a cheapness lean, combined as orthogonalized residuals \u2014 the validated default that captures the one real multi-force edge.",
+  "avg_universe": 1169.0,
+  "avg_arm_cov_pct": 64.1,
+  "avg_dead_included": 69.9,
+  "avg_holdings": 80.0,
+  "avg_oneway_turnover_pct": 43.68
+ },
+ "scorecard": {
+  "window": {
+   "start": "2015-01-30",
+   "end": "2026-06-25",
+   "years": 11.4
+  },
+  "book": {
+   "cagr_pct": 22.53,
+   "vol_pct": 23.08,
+   "sharpe": 1.01,
+   "maxdd_pct": -43.67,
+   "final_nav": 1013.7
+  },
+  "benchmark_name": "NIFTY 500",
+  "benchmark": {
+   "cagr_pct": 12.03,
+   "vol_pct": 16.21,
+   "maxdd_pct": -38.11,
+   "excess_cagr_pct": 10.49,
+   "tracking_error_pct": 13.66,
+   "info_ratio": 0.77,
+   "beta": 1.16,
+   "up_capture": 1.24,
+   "down_capture": 1.14
+  },
+  "real_scheme": {
+   "matched_name": "Aditya Birla Sun Life Multi-Cap Fund-Direct Growth",
+   "real_cagr_pct": 16.19,
+   "book_cagr_pct": 23.44,
+   "book_minus_real_cagr_pct": 7.25,
+   "overlap_years": 5.13
+  },
+  "fundamental_law": {
+   "ic_mean": 0.0422,
+   "ic_tstat": 4.87,
+   "transfer_coefficient": 0.405,
+   "breadth_per_year_UPPER": 960.0,
+   "implied_IR_UPPER": 0.53,
+   "realized_IR_vs_bench": 0.77,
+   "note": "IC = mean cross-sectional Spearman(ARM score, next-rebalance return) over the candidate universe; TC = mean corr(actual target weights, unconstrained score-weights); BR is an UPPER bound (monthly holdings are NOT independent \u2014 true breadth is far lower), so implied_IR is an upper bound on what the signal could deliver, to be read against the realized IR."
+  }
+ }
+}

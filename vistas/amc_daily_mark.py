@@ -1,9 +1,10 @@
 """vistas/amc_daily_mark.py — the NO-LLM daily MARK for the live-forward digital-AMC books.
 
-Between the monthly LLM rebalance rounds (`amc_live.apply_round`), the four pilot books DON'T change
-their holdings — but they must be MARKED TO MARKET on every trading day so the paper NAV is a true
-daily total-return track and each day has its CITI daily fact sheet. This module is that heartbeat:
-a pure, deterministic, PAPER-ONLY re-pricing.
+Between the monthly LLM rebalance rounds (`amc_live.apply_round`), a paper book DOESN'T change its
+holdings — but it must be MARKED TO MARKET on every trading day so the paper NAV is a true daily
+total-return track and each day has its CITI daily fact sheet. This module is that heartbeat: a pure,
+deterministic, PAPER-ONLY re-pricing, run over EVERY book on disk (the full digital-ABSL firm + any
+future AMC, discovered from amc_book/ — not a hard-coded pilot list).
 
   • NO trades, NO LLM, NO look-ahead (prices ≤ the mark date only).
   • Idempotent + gap-filling: it re-marks the WHOLE window [book inception → latest price date] every
@@ -11,7 +12,7 @@ a pure, deterministic, PAPER-ONLY re-pricing.
   • book.json is NEVER modified here (marking ≠ trading) — the post-round book stays the canonical,
     git-stable audit state between rounds. Only the daily fact sheets + the forward NAV series are written.
 
-Per pilot book, for each trading day d in (inception … latest):
+Per book, for each trading day d in (inception … latest):
   fact_sheet(book, d, prev_trading_day) → save_daily  (the audit fact sheet, CITI schema)
 and we maintain a forward NAV series   live/nav/<slug>.csv   (base 100 at the live-track start, so the
 track is chartable / scoreable later) plus a single  live/daily_mark_status.json  health summary.
@@ -58,6 +59,39 @@ def _window(idx, inception_str):
         i = pos[d]
         prev[d] = idx[i - 1] if i > 0 else None
     return days, prev
+
+
+def _all_book_reg_entries():
+    """Discover EVERY paper book on disk (data-driven) → a minimal reg-entry {amc, scheme} per book,
+    by walking amc_book/<amc>/<scheme>/book.json. This is what makes the daily mark ADAPTABLE rather
+    than fragile: any new AMC or fund (e.g. the full digital-ABSL roster, not just the 4 cross-AMC
+    pilots) is marked automatically — there is no pilot list to keep in sync. `mark_book` needs only
+    the amc+scheme strings (it loads book.json + the price panel); the mandate/benchmark/AUM aren't
+    used to MARK, so a minimal entry is sufficient and exactly mirrors how the book was written."""
+    out, seen = [], set()
+    root = af.BOOK_DIR
+    if not os.path.isdir(root):
+        return out
+    for amc_name in sorted(os.listdir(root)):
+        amc_dir = os.path.join(root, amc_name)
+        if not os.path.isdir(amc_dir):
+            continue
+        for sch_name in sorted(os.listdir(amc_dir)):
+            bj = os.path.join(amc_dir, sch_name, "book.json")
+            if not os.path.isfile(bj):
+                continue
+            try:
+                bk = af._read_json(bj) or {}
+            except Exception:
+                continue
+            amc = bk.get("amc") or amc_name
+            scheme = bk.get("scheme") or sch_name
+            key = (amc, scheme)
+            if key in seen:
+                continue
+            seen.add(key)
+            out.append({"amc": amc, "scheme": scheme})
+    return out
 
 
 def mark_book(reg_entry, idx, log=print):
@@ -116,19 +150,23 @@ def mark_book(reg_entry, idx, log=print):
 
 
 def run(log=print):
-    """Mark all four pilot books → daily fact sheets + forward NAV series + a health summary. Returns
-    the status doc. Safe to run repeatedly (idempotent); does NOT rebuild or publish the site."""
+    """Mark EVERY paper book on disk → daily fact sheets + forward NAV series + a health summary.
+    Data-driven (no pilot list): the full digital-ABSL roster and any future AMC are covered the moment
+    their book.json exists. Returns the status doc. Safe to run repeatedly (idempotent); does NOT rebuild
+    or publish the site."""
     idx = _trading_index()
     latest = str(idx[-1].date())
-    log(f"[daily-mark] latest price date = {latest}; marking the pilot books (paper-only, no trades)…")
+    entries = _all_book_reg_entries()
+    log(f"[daily-mark] latest price date = {latest}; marking {len(entries)} book(s) on disk (paper-only, no trades)…")
     schemes = []
-    for re_ in al.pilot_reg_entries():
+    for re_ in entries:
         st = mark_book(re_, idx, log=log)
         if st:
             schemes.append(st)
     doc = {"latest_price_date": latest, "n_schemes": len(schemes), "schemes": schemes,
            "note": "no-LLM daily mark; holdings frozen between monthly LLM rounds; NAV base-100 at each "
-                   "book's live-forward inception; paper-only; no look-ahead."}
+                   "book's live-forward inception; paper-only; no look-ahead. Data-driven over every "
+                   "amc_book/<amc>/<scheme>/book.json."}
     os.makedirs(LIVE_DIR, exist_ok=True)
     json.dump(doc, open(STATUS_PATH, "w", encoding="utf-8"), indent=1, default=str)
     log(f"[daily-mark] done: {len(schemes)} book(s) marked → {STATUS_PATH}")

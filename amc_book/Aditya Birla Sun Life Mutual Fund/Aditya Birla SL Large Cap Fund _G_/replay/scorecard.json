@@ -1,0 +1,61 @@
+{
+ "scheme": "Aditya Birla SL Large Cap Fund (G)",
+ "amc": "Aditya Birla Sun Life Mutual Fund",
+ "category": "Large Cap Fund",
+ "diag": {
+  "aum0_cr": 28620.3,
+  "start": "2015-01-30",
+  "end": "2026-06-25",
+  "n_rebalances": 138,
+  "cost_bps": 15.0,
+  "brain": "core_multifactor",
+  "brain_thesis": "Analyst upgrades + price momentum + a cheapness lean, combined as orthogonalized residuals \u2014 the validated default that captures the one real multi-force edge.",
+  "avg_universe": 1169.0,
+  "avg_arm_cov_pct": 64.1,
+  "avg_dead_included": 69.9,
+  "avg_holdings": 54.9,
+  "avg_oneway_turnover_pct": 28.59
+ },
+ "scorecard": {
+  "window": {
+   "start": "2015-01-30",
+   "end": "2026-06-25",
+   "years": 11.4
+  },
+  "book": {
+   "cagr_pct": 13.76,
+   "vol_pct": 20.31,
+   "sharpe": 0.75,
+   "maxdd_pct": -44.16,
+   "final_nav": 434.79
+  },
+  "benchmark_name": "NIFTY 100",
+  "benchmark": {
+   "cagr_pct": 10.97,
+   "vol_pct": 16.18,
+   "maxdd_pct": -37.92,
+   "excess_cagr_pct": 2.8,
+   "tracking_error_pct": 10.07,
+   "info_ratio": 0.28,
+   "beta": 1.09,
+   "up_capture": 1.12,
+   "down_capture": 1.1
+  },
+  "real_scheme": {
+   "matched_name": "Aditya Birla Sun Life Large & Mid Cap Fund - Growth - Direct Plan",
+   "real_cagr_pct": 11.55,
+   "book_cagr_pct": 13.76,
+   "book_minus_real_cagr_pct": 2.22,
+   "overlap_years": 11.4
+  },
+  "fundamental_law": {
+   "ic_mean": 0.037,
+   "ic_tstat": 2.39,
+   "transfer_coefficient": 0.886,
+   "breadth_per_year_UPPER": 659.0,
+   "implied_IR_UPPER": 0.84,
+   "realized_IR_vs_bench": 0.28,
+   "note": "IC = mean cross-sectional Spearman(ARM score, next-rebalance return) over the candidate universe; TC = mean corr(actual target weights, unconstrained score-weights); BR is an UPPER bound (monthly holdings are NOT independent \u2014 true breadth is far lower), so implied_IR is an upper bound on what the signal could deliver, to be read against the realized IR."
+  }
+ }
+}

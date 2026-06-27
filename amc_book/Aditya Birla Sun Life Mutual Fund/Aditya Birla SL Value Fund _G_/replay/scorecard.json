@@ -1,0 +1,61 @@
+{
+ "scheme": "Aditya Birla SL Value Fund (G)",
+ "amc": "Aditya Birla Sun Life Mutual Fund",
+ "category": "Value Fund",
+ "diag": {
+  "aum0_cr": 6453.4,
+  "start": "2015-01-30",
+  "end": "2026-06-25",
+  "n_rebalances": 138,
+  "cost_bps": 15.0,
+  "brain": "value_revision",
+  "brain_thesis": "Buy cheap names whose analyst estimates have started turning UP \u2014 cheapness plus a revision catalyst, the contrarian's edge against the value trap.",
+  "avg_universe": 1169.0,
+  "avg_arm_cov_pct": 64.1,
+  "avg_dead_included": 69.9,
+  "avg_holdings": 70.0,
+  "avg_oneway_turnover_pct": 48.37
+ },
+ "scorecard": {
+  "window": {
+   "start": "2015-01-30",
+   "end": "2026-06-25",
+   "years": 11.4
+  },
+  "book": {
+   "cagr_pct": 24.07,
+   "vol_pct": 20.61,
+   "sharpe": 1.17,
+   "maxdd_pct": -49.14,
+   "final_nav": 1169.48
+  },
+  "benchmark_name": "NIFTY 500",
+  "benchmark": {
+   "cagr_pct": 12.03,
+   "vol_pct": 16.21,
+   "maxdd_pct": -38.11,
+   "excess_cagr_pct": 12.04,
+   "tracking_error_pct": 10.07,
+   "info_ratio": 1.2,
+   "beta": 1.12,
+   "up_capture": 1.2,
+   "down_capture": 1.09
+  },
+  "real_scheme": {
+   "matched_name": "Aditya Birla Sun Life Value Fund - Growth - Direct Plan",
+   "real_cagr_pct": 12.49,
+   "book_cagr_pct": 24.07,
+   "book_minus_real_cagr_pct": 11.58,
+   "overlap_years": 11.4
+  },
+  "fundamental_law": {
+   "ic_mean": 0.0337,
+   "ic_tstat": 6.91,
+   "transfer_coefficient": 0.365,
+   "breadth_per_year_UPPER": 840.0,
+   "implied_IR_UPPER": 0.36,
+   "realized_IR_vs_bench": 1.2,
+   "note": "IC = mean cross-sectional Spearman(ARM score, next-rebalance return) over the candidate universe; TC = mean corr(actual target weights, unconstrained score-weights); BR is an UPPER bound (monthly holdings are NOT independent \u2014 true breadth is far lower), so implied_IR is an upper bound on what the signal could deliver, to be read against the realized IR."
+  }
+ }
+}

@@ -350,6 +350,21 @@ table{width:100%;border-collapse:collapse;font-size:12.5px} td{padding:5px 6px;b
 .num{text-align:right;font-variant-numeric:tabular-nums}
 th.num{text-align:right}
 .spark{display:block}
+/* ── firms: AMC selector + firm header ── */
+.firmsel{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 4px}
+.firmpill{background:var(--pnl);border:1px solid var(--bd2);border-radius:10px;padding:8px 13px;cursor:pointer;text-align:left;color:var(--fg);transition:.12s;min-width:150px}
+.firmpill:hover{border-color:var(--acc)}
+.firmpill.on{border-color:var(--acc);background:linear-gradient(180deg,#10243c,#0e1726);box-shadow:0 0 0 1px var(--acc)55}
+.firmpill .fp-name{display:block;font-weight:700;font-size:13.5px;color:#f1f5f9}
+.firmpill .fp-meta{display:block;font-size:10.5px;color:var(--mut);margin-top:2px}
+.firmhdr{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;background:linear-gradient(100deg,#0e1c30,#101725);border:1px solid #24405e;border-left:4px solid var(--acc);border-radius:12px;padding:13px 17px;margin:6px 0 12px}
+.fh-name{font-size:18px;font-weight:800;color:#f1f5f9}
+.fh-tag{font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--gold);background:#fbbf241a;border:1px solid #fbbf2455;padding:1px 8px;border-radius:20px;margin-left:6px;vertical-align:middle}
+.fh-sub{font-size:11.5px;color:var(--mut);margin-top:2px}
+.fh-stats{display:flex;gap:10px;flex-wrap:wrap}
+.fh-stat{background:#0e1320aa;border:1px solid var(--bd);border-radius:9px;padding:7px 13px;min-width:84px}
+.fh-stat .k{display:block;font-size:9.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--mut)}
+.fh-stat b{font-size:15px;color:#f1f5f9}
 /* ── scheme panel ── */
 .schhead h2{font-size:19px;margin:0;color:#f1f5f9}
 .scbacklist{margin-bottom:8px}
@@ -443,6 +458,11 @@ function schemesHome(){
   document.getElementById('schemes-overview').style.display='block';
   document.getElementById('schemes-back').style.display='none';
 }
+// ── firm selector: switch which digital firm (AMC) is shown ──
+function showFirm(key){
+  document.querySelectorAll('.firmblock').forEach(function(b){b.style.display=(b.id==='firm-'+key)?'block':'none';});
+  document.querySelectorAll('.firmpill').forEach(function(p){p.classList.toggle('on', p.getAttribute('data-firm')===key);});
+}
 """
 
 # ══════════════════════════════════════════════════════════════════════════════════════════════
@@ -511,6 +531,9 @@ def load_books():
             # at the book's month-end NAV dates so the two lines share one x-axis for the overlay.
             bench_daily = _read_nav_csv(sch_dir / "replay" / "benchmark_nav.csv")
             bench_series = _align_bench(nav_series, bench_daily) if bench_daily else []
+            # live-forward (paper) NAV since this book's live inception (the round seam), marked daily —
+            # distinct from the 2015→ replay track. Thin (1 pt) right after a seam; grows each trading day.
+            live_nav = _read_live_nav(AMC / "live" / "nav" / (_live_slug(book.get("scheme") or sch_dir.name) + ".csv"))
             books.append({
                 "amc": book.get("amc") or amc_dir.name,
                 "scheme": book.get("scheme") or sch_dir.name,
@@ -528,8 +551,33 @@ def load_books():
                 "blotter": blotter,
                 "nav_series": nav_series,
                 "bench_series": bench_series,   # [(date, bench_nav)] aligned to nav_series dates (or [])
+                "live_nav_series": live_nav,    # [(date, nav)] forward paper track since the live seam (or [])
             })
     return books
+
+def _live_slug(scheme):
+    """Mirror amc_live.slug — the forward-NAV csv filename for a scheme (non-alnum → underscore)."""
+    import re
+    return re.sub(r"[^A-Za-z0-9]+", "_", str(scheme)).strip("_")
+
+def _read_live_nav(p):
+    """Read a live-forward NAV csv (date,total_cr,nav,day_return_pct from amc_daily_mark) → [(date,nav)].
+    This is the PAPER track from the book's live inception forward (NAV base-100 at inception), distinct
+    from the 2015→ replay track. Returns [] if absent/bad. NAV levels only — no raw ARM."""
+    out = []
+    try:
+        with open(p, encoding="utf-8") as fh:
+            fh.readline()                          # header: date,total_cr,nav,day_return_pct
+            for ln in fh:
+                parts = ln.strip().split(",")
+                if len(parts) >= 3:
+                    try:
+                        out.append((parts[0][:10], float(parts[2])))
+                    except Exception:
+                        pass
+    except Exception:
+        return []
+    return out
 
 def _read_nav_csv(p):
     """Read a replay nav.csv / benchmark_nav.csv into {date_str: float}. Returns {} if absent/bad.
@@ -691,6 +739,93 @@ def schemes_overview(books):
         'Excess = book CAGR − benchmark CAGR. Sparkline = month-end book NAV path (solid) vs its benchmark TR '
         '(dashed grey), shared scale.</div>')
 
+# ══════════════════════════════════════════════════════════════════════════════════════════════
+#  FIRMS — group the per-scheme books into per-AMC digital FIRMS (the North-Star unit). One firm =
+#  one paper book per distinct equity/hybrid scheme of that AMC. An AMC selector lets the same view
+#  clone to other AMCs as they are built (we begin with the full digital-ABSL firm).
+# ══════════════════════════════════════════════════════════════════════════════════════════════
+def firm_short(amc):
+    """A compact firm label for the selector (drop the ' Mutual Fund' / AMC suffix)."""
+    s = str(amc or "").strip()
+    for suf in (" Mutual Fund", " Asset Management Company", " Asset Management", " AMC"):
+        if s.endswith(suf):
+            s = s[: -len(suf)].strip()
+    return s or str(amc or "")
+
+def _book_aum(b):
+    """The scheme's seed AUM (₹cr): book.aum0_cr, else the replay diag, else the latest fact-sheet AUM."""
+    cands = [b.get("aum0_cr"),
+             ((b.get("scorecard") or {}).get("diag") or {}).get("aum0_cr"),
+             ((b.get("daily_sheet") or {}).get("header") or {}).get("aum_cr")]
+    for v in cands:
+        try:
+            if v is not None:
+                return float(v)
+        except Exception:
+            pass
+    return None
+
+def _firm_aum(bs):
+    return sum(a for a in (_book_aum(x) for x in bs) if a is not None)
+
+def _firm_groups(books):
+    """{amc: [books]} → list ordered by desk count desc, then firm AUM desc, so the fullest firm
+    (digital-ABSL, 28 desks) is the default selection."""
+    g = {}
+    for b in books:
+        g.setdefault(b["amc"], []).append(b)
+    return sorted(g.items(), key=lambda kv: (-len(kv[1]), -_firm_aum(kv[1])))
+
+def firm_header(amc, bs):
+    """A firm summary strip: firm AUM (Σ scheme AUM), desk count, paper desks beating their benchmark TR."""
+    aum = _firm_aum(bs)
+    scored = [x for x in bs if (x.get("scorecard") or {}).get("scorecard")]
+    beat = 0
+    for x in scored:
+        ex = ((x["scorecard"]["scorecard"].get("benchmark") or {}).get("excess_cagr_pct"))
+        if isinstance(ex, (int, float)) and ex > 0:
+            beat += 1
+    asof = max([x.get("daily_date") for x in bs if x.get("daily_date")], default=None)
+    return (
+        f'<div class="firmhdr"><div class="fh-l">'
+        f'<div class="fh-name">{esc(firm_short(amc))} <span class="fh-tag">digital firm</span></div>'
+        f'<div class="fh-sub">{esc(amc)}</div></div>'
+        f'<div class="fh-stats">'
+        f'<div class="fh-stat"><span class="k">Firm AUM</span><b>₹{aum:,.0f} cr</b></div>'
+        f'<div class="fh-stat"><span class="k">Desks</span><b>{len(bs)}</b></div>'
+        + (f'<div class="fh-stat"><span class="k">Beat bench · paper</span><b>{beat}/{len(scored)}</b></div>' if scored else "")
+        + (f'<div class="fh-stat"><span class="k">As of</span><b>{esc(asof)}</b></div>' if asof else "")
+        + '</div></div>')
+
+def firms_view(books):
+    """The Firms & Schemes tab body: an AMC selector + one firm block (header + schemes table) each.
+    The fullest firm (digital-ABSL) shows by default; pills switch firms; rows open a scheme panel."""
+    if not books:
+        return '<div class="muted pad">No scheme books found under amc_book/.</div>'
+    groups = _firm_groups(books)
+    pills, blocks = "", ""
+    for i, (amc, bs) in enumerate(groups):
+        key = _bk(amc)
+        aum = _firm_aum(bs)
+        on = " on" if i == 0 else ""
+        pills += (f'<button class="firmpill{on}" data-firm="{key}" onclick="showFirm(\'{key}\')">'
+                  f'<span class="fp-name">{esc(firm_short(amc))}</span>'
+                  f'<span class="fp-meta">{len(bs)} desk{"s" if len(bs)!=1 else ""} · ₹{aum:,.0f} cr</span></button>')
+        blocks += (f'<div class="firmblock" id="firm-{key}" style="display:{"block" if i==0 else "none"}">'
+                   f'{firm_header(amc, bs)}{schemes_overview(bs)}</div>')
+    note = ('<div class="muted" style="font-size:11px;margin:8px 0 2px">A <b>digital firm</b> = one paper book per '
+            'distinct equity/hybrid scheme of that AMC, each run by the deterministic rules-FM under its own SEBI '
+            'mandate + liquidity caps (paper-money, no look-ahead, free — no LLM). <b>Firm AUM</b> = Σ each scheme\'s '
+            'real AUM. <b>Beat bench · paper</b> = desks whose paper-track CAGR exceeds their benchmark TR since 2015.'
+            '<br><b>★ Read the historical track honestly:</b> the 2015→ replay selects from the broad point-in-time '
+            'market under each scheme\'s mandate caps + FM brain — it is <b>NOT restricted to a thematic scheme\'s '
+            'sector constituents</b>. So a SECTOR/THEME fund\'s historical CAGR/IR reflects the rules-FM\'s broad-universe '
+            'book (which is why several thematic desks converge to similar numbers), not the theme itself; the '
+            'diversified mandates (Large/Flexi/Value/Multi-Cap/Small…) ARE properly differentiated. The <b>current '
+            'fact sheet / holdings (the seam book) IS each scheme\'s real disclosed portfolio</b> — theme-faithful. '
+            'A theme-restricted historical replay is a known follow-up.</div>')
+    return f'<div class="firmsel">{pills}</div>{note}<div class="firmblocks">{blocks}</div>'
+
 # ── (2) FACT SHEET — newest daily sheet: key stats, top holdings, sector mix ──
 def factsheet_block(b):
     fs = b["daily_sheet"]
@@ -821,6 +956,29 @@ def scorecard_block(b):
           'tracking error — the realised skill the law predicts as IC·√BR·TC. Breadth here is an UPPER bound (monthly holdings '
           'are not independent), so implied IR is a ceiling, not a forecast.</div>')
 
+# ── live-forward (paper) NAV since the seam — the agentic firm's REAL forward track ──
+def live_nav_block(b):
+    ls = b.get("live_nav_series") or []
+    if not ls:
+        return ('<div class="muted" style="font-size:12px">No live-forward track yet — the book is marked '
+                'every trading day from its seam date forward.</div>')
+    d0, n0 = ls[0]
+    d1, n1 = ls[-1]
+    if len(ls) < 2:
+        return (f'<div class="muted" style="font-size:12px">Live-forward paper track begins <b>{esc(d0)}</b> at NAV 100 '
+                'and is marked every trading day forward — one observation so far. (The chart above is the 2015→ '
+                'rules-FM replay; this track is the firm\'s actual go-forward performance.)</div>')
+    since = (float(n1) / 100.0 - 1.0) * 100.0
+    col = "#16a34a" if since >= 0 else "#dc2626"
+    return (f'<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">'
+            f'<div class="fstat"><span class="k">Live NAV</span><b>{_fmt(n1)}</b></div>'
+            f'<div class="fstat"><span class="k">Since seam</span><b style="color:{col}">{_fmt(since,2,True,True)}%</b></div>'
+            f'<div class="fstat"><span class="k">Trading days</span><b>{len(ls)}</b></div>'
+            f'<div>{sparkline(ls, w=240)}</div></div>'
+            f'<div class="muted" style="font-size:11px;margin-top:6px">Paper track from the live seam (<b>{esc(d0)}</b>) '
+            'forward, NAV base-100 at the seam, marked each trading day (no trades between monthly rounds). This is the '
+            'firm\'s actual forward performance — distinct from the deterministic 2015→ replay above.</div>')
+
 # ── per-scheme panel (hidden; revealed by the Schemes tab nav) ──
 def scheme_panel(b):
     return (
@@ -831,6 +989,9 @@ def scheme_panel(b):
         f'<div class="section-h">NAV vs benchmark <span class="hint">paper-trade book NAV overlaid on its benchmark TR, '
         'rebased to 100 at inception</span></div>'
         f'{nav_vs_bench_chart(b) or "<div class=muted>No NAV path yet.</div>"}'
+        f'<div class="section-h">Live-forward NAV <span class="hint">the paper book\'s actual track since the live seam, '
+        'marked daily — the agentic firm going forward</span></div>'
+        f'{live_nav_block(b)}'
         f'<div class="section-h">Scorecard <span class="hint">paper-trade skill vs benchmark TR &amp; the real fund</span></div>'
         f'{scorecard_block(b)}'
         f'<div class="section-h">Fact sheet <span class="hint">latest daily snapshot</span></div>'
@@ -1053,9 +1214,9 @@ def build():
         '<div id="schemes-back" class="scbacklist" style="display:none">'
         '<span class="clr" onclick="schemesHome()">← all schemes</span></div>'
         '<div id="schemes-overview">'
-        '<div class="section-h">Schemes &amp; Books <span class="hint">paper-trading books — click a scheme for its '
-        'scorecard, fact sheet &amp; blotter</span></div>'
-        f'{schemes_overview(books)}</div>'
+        '<div class="section-h">Digital firms &amp; schemes <span class="hint">per-AMC paper-trading firms — pick a firm, '
+        'then click a scheme for its scorecard, fact sheet &amp; blotter</span></div>'
+        f'{firms_view(books)}</div>'
         f'{schemes_panels}')
 
     # ── live-forward tab (only once the first LLM round has run) ──
@@ -1077,7 +1238,7 @@ def build():
         # top tabs
         '<div class="tabs">'
         '<button class="tabbtn on" data-tab="floor" onclick="showTab(\'floor\')">Trading Floor</button>'
-        f'<button class="tabbtn" data-tab="schemes" onclick="showTab(\'schemes\')">Schemes &amp; Books · {n_books}</button>'
+        f'<button class="tabbtn" data-tab="schemes" onclick="showTab(\'schemes\')">Firms &amp; Schemes · {n_books}</button>'
         f'{lf_btn}'
         '</div>'
         # ════ TAB 1: the floor ════

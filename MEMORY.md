@@ -7,7 +7,36 @@
 
 ## ▶ RESUME (one-paragraph current state + next step)
 
-**▶▶▶ RESUME — 2026-06-27 LATE (FM-SHORTLIST #39 + LIVE-FORWARD AMC #52/#95/#96 session, KV-authorized):**
+**▶▶▶ RESUME — 2026-06-28 (DIGITAL-ABSL firm + autonomous night: #105 + #52 + #99 + #38):**
+**★ NEXT ACTION:** (a) PUBLISH the digital-ABSL firm — `python -m vistas.amc_round publish --no-push` → `node _pup_amc.js`
+→ `python -m vistas.amc_round publish` (push + backups); PING KV when live. (b) Decide the #38 fund-cockpit quadrant
+card + ONE terminal rebuild/publish if context allows, else stage+document. KV is ASLEEP — wants ping-on-publish + all 3
+finished (fund quadrant / north-star firm / cadence build). **★★ THIS NIGHT SHIPPED + TESTED (on disk):**
+- **#105 DIGITAL-ABSL FIRM — BUILT (28 books).** `make_absl_firm.py` looped `amc_live.amc_reg_entries('Aditya Birla
+  Sun Life')` → **28 distinct equity/hybrid funds, firm AUM ₹166,219 cr**, EACH with BOTH (A) a seam book (build_rules_v0
+  + blotter + first CITI fact sheet) AND (B) a 2015→ historical replay (NAV track + scorecard, deterministic/FREE/no-LLM,
+  ~1min/scheme). Books in `amc_book/Aditya Birla Sun Life Mutual Fund/<scheme>/`; summary `amc_book/_firm_build_last.json`.
+- **#52 FIRM VIEW + FWD-NAV in `amc_site.py`** — the flat "Schemes & Books" tab is now **"Firms & Schemes"**: an AMC
+  selector (pills), per-firm header (firm AUM, desk count, beat-bench·paper), per-scheme table (smoke-tested PASS);
+  `firms_view/firm_header/_firm_groups/firm_short/_book_aum`. Added a **Live-forward NAV** block to each scheme panel
+  (`live_nav_block` + `_read_live_nav` reads `output/_amc/live/nav/<slug>.csv`, graceful for 1-pt seam). `_pup_amc.js`
+  extended to exercise the Firms tab (pills switch, scheme rows open, 0 errors).
+- **daily mark is now DATA-DRIVEN** — `amc_daily_mark._all_book_reg_entries()` marks EVERY book on disk (not the 4-pilot
+  list) → all 28 ABSL desks auto-mark nightly. Adaptable: new AMC auto-covered.
+- **#99 build_cache.py — ENGINE BUILT + SELF-TEST PASS** (content-addressed memoization + forced-full backstop:
+  disabled-default / empty-cache / code-version-change / periodic-7d / no-last_full). **KEY FINDING:** per-ITEM
+  memoization is UNSAFE for the cross-sectional quant bake (percentile ranks vs all stocks → one stock's output depends
+  on all) — the safe partition is STAGE-LEVEL by source cadence (skip fundamentals/benchmarks when their weekly feeds
+  didn't refresh; always re-bake daily price/quant). Production wiring = a REVIEWED flip (OFF by default; publish stays
+  full). Analysis in the build_cache.py docstring. Did NOT jam into the live builder (correctness > speed).
+- **#38 — SUBSTANTIALLY ALREADY DONE (discovered):** fund-level Analyst×FM quadrant EXISTS as the fund CENTROID
+  (`rotation.py`→`centroids.json`, rendered in Screen rotation view); time-windowed manager-skill EXISTS via the Fund
+  Skill tab's **window-adaptive recompute** (`vistas.js` ~2655 — judge skill over ANY start→end = a manager's tenure,
+  MANUAL window). ONLY the AUTO manager-tenure dates are data-BLOCKED (no free historical-manager API). Optional polish
+  = a fund-cockpit quadrant card (reads centroids.json). KEY: don't manufacture busywork — #38's named legs both exist.
+- (Superseded prior-session items kept below for trail.) Prior-session ships (#96 cadence, #104 learning loop) remain DONE.
+
+**▶ PRIOR — 2026-06-27 (FM-SHORTLIST #39 + LIVE-FORWARD AMC #52/#95/#96 session, KV-authorized):**
 KV greenlit **#39 (FM Action Shortlist)** then **#52/#95/#96 (live-forward Agentic AMC)** — "long tasks, do it if pipelines ready." STATE:
 - **★★ FIRST LIVE-FORWARD ROUND DONE + CLEAN (2026-06-27, seam asof 2026-06-25) — the North Star made its first real decision.** Ran `prepare_round` → `_amc_rebalance.js` workflow (4 FM agents ∥ + 1 CIO, 331,809 tokens) → `apply_round`. Guardrail enforced (ICICI 37 names/95% deployed, SBI 34/72.5%, ABSL 62/95%, Quant 35/95%; dropped FM-over-reached non-candidate tickers e.g. CIPLA/DMART). Rules-vs-LLM (`vs_quant`): ICICI held ICICIBANK +4.4% / refused MTARTECH momentum chase (14 LLM-only vs 32 quant-only). **CIO caught the key fragility**: all 4 FMs crowded the SAME cheap-commodity cluster (ONGC in ALL 4, NMDC in 3) on the SAME ARM signal = correlated desks / low breadth (Fundamental-Law working as designed). **LICENSING CLEAN** (0 raw-ARM-value leaks by the `scrub_arm` rail; scrub fired 1×). Seam books backed up to scratchpad `amc_book_seam_backup/` + git `cfdbbae`. Artifacts: `output/_amc/live/round_latest.json` (+`round_2026-06-25.json`, `round_decisions_2026-06-25.json`), per-scheme blotter/prereg/book mutated to the LLM book. #95 DONE. **REMAINING for #96: (1) surface in `amc_site.py` — add a Live-Forward section reading `round_latest.json` (schemes[].{scheme,n_holdings,n_trades,deployed_pct,turnover_pct,vs_quant{n_llm_only,n_quant_only,top_deviations},stance,book_thesis,guardrail_notes} + cio{firm_view,risk_flags,cross_scheme_notes} + prereg.jsonl) → rebuild+publish digital-amc; (2) CronCreate MONTHLY; (3) `amc_daily_mark.py` + `Run AMC Rebalance.bat`.** amc_site.py: build() @842, per-scheme reads @486-505, _read_json @455.
   **★ SURFACE DONE + LIVE 2026-06-27 (_pages `cb67a78f8`):** added a **"Live-Forward" tab** to `amc_site.py`

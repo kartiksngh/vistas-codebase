@@ -1,0 +1,373 @@
+{
+ "scheme": "Quant Small Cap Fund - (G)",
+ "amc": "Quant Mutual Fund",
+ "category": "Small Cap Fund",
+ "fm_key": "smallcap",
+ "round_asof": "2026-06-25",
+ "graded_to": "2026-06-25",
+ "horizon_trading_days": 0,
+ "benchmark": "NIFTY SMALLCAP 250",
+ "benchmark_return_pct": 0.0,
+ "n_bets": 35,
+ "n_graded": 0,
+ "n_pending": 35,
+ "n_unpriced": 0,
+ "hit_rate_pct": null,
+ "avg_active_return_pct": null,
+ "median_active_return_pct": null,
+ "conviction_ic": null,
+ "best_calls": [],
+ "worst_calls": [],
+ "bets": [
+  {
+   "sym": "HONASA",
+   "target_pct": 2.65,
+   "play_type": "tactical",
+   "thesis": "Strong, rising analyst revisions in a consumer turnaround give a 1-6mo tailwind that the quant baseline ranks #1; momentum-led book should own the revision leaders.",
+   "falsification": "Revisions roll over to falling, or the stock underperforms the smallcap250 over the next quarter despite the upgrade cycle.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "NAZARA",
+   "target_pct": 2.99,
+   "play_type": "tactical",
+   "thesis": "Rising revisions plus structural gaming growth; a revision-led tilt with upside if momentum re-disperses in its favor.",
+   "falsification": "Revisions fade or a regulatory/monetization setback breaks the upgrade trend within a quarter.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "GUJGASLTD",
+   "target_pct": 1.53,
+   "play_type": "cyclical",
+   "thesis": "City-gas margin recovery driving strong upward revisions; a lower-beta way to express the revision tilt.",
+   "falsification": "Gas spreads compress and revisions turn down, or it lags the benchmark over the quarter.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "CHAMBLFERT",
+   "target_pct": 2.14,
+   "play_type": "cyclical",
+   "thesis": "Rising revisions on a favorable fertilizer/input cycle; revision + mild value overlap.",
+   "falsification": "Subsidy/input-cost shift turns revisions negative, or it underperforms peers next quarter.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "EQUITASBNK",
+   "target_pct": 1.71,
+   "play_type": "tactical",
+   "thesis": "Improving asset quality/NIM outlook is lifting revisions; revision-led financials add.",
+   "falsification": "Credit costs rise and revisions reverse, or the SFB cohort de-rates within a quarter.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "POONAWALLA",
+   "target_pct": 3.57,
+   "play_type": "tactical",
+   "thesis": "Loan-book scale-up driving upgrades; rising-revision NBFC with momentum optionality.",
+   "falsification": "Asset-quality or growth disappointment turns revisions down within a quarter.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "CLEANMAX",
+   "target_pct": 2.09,
+   "play_type": "structural",
+   "thesis": "Renewables capacity build supports a multi-quarter upgrade path; revision-led structural add.",
+   "falsification": "Order/execution slippage turns revisions negative or the name lags the benchmark next quarter.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "ENGINERSIN",
+   "target_pct": 4.84,
+   "play_type": "cyclical",
+   "thesis": "Order-book-driven upgrades in a public-capex cycle; revision tilt with cyclical support.",
+   "falsification": "Order inflow slows and revisions fade within a quarter.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "CREDITACC",
+   "target_pct": 1.77,
+   "play_type": "tactical",
+   "thesis": "Asset-quality normalization lifting revisions in MFI lender; revision-led financials.",
+   "falsification": "Rural credit stress re-emerges and revisions turn down within a quarter.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "AIAENG",
+   "target_pct": 2.23,
+   "play_type": "structural",
+   "thesis": "Export demand and pricing supporting upgrades; quality compounder with a live revision tailwind.",
+   "falsification": "Mining-capex slowdown turns revisions negative within a quarter.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "MARKSANS",
+   "target_pct": 4.2,
+   "play_type": "structural",
+   "thesis": "OTC pharma export scale-up driving upgrades; revision-led healthcare add.",
+   "falsification": "Regulatory/pricing setback reverses the upgrade trend within a quarter.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "IPCALAB",
+   "target_pct": 1.78,
+   "play_type": "structural",
+   "thesis": "Domestic + export traction lifting revisions; quality pharma with a revision tailwind.",
+   "falsification": "Revisions stall or USFDA/pricing issues break the trend within a quarter.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "NATCOPHARM",
+   "target_pct": 3.88,
+   "play_type": "tactical",
+   "thesis": "Product-pipeline upgrades supporting rising revisions; revision-led pharma diversifier.",
+   "falsification": "Key-product erosion turns revisions negative within a quarter.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "GRANULES",
+   "target_pct": 3.55,
+   "play_type": "cyclical",
+   "thesis": "Margin and volume recovery lifting revisions; revision-led healthcare cyclical.",
+   "falsification": "API pricing weakens and revisions reverse within a quarter.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "CUB",
+   "target_pct": 2.89,
+   "play_type": "tactical",
+   "thesis": "Growth/NIM normalization lifting revisions; revision-led financials add.",
+   "falsification": "Loan-growth or asset-quality miss reverses revisions within a quarter.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "DEEPAKNTR",
+   "target_pct": 1.06,
+   "play_type": "cyclical",
+   "thesis": "Chemicals demand/margin recovery driving upgrades; revision-led materials.",
+   "falsification": "Chem-cycle weakness turns revisions down within a quarter.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "KTKBANK",
+   "target_pct": 3.85,
+   "play_type": "tactical",
+   "thesis": "Rising revisions plus value support keep this a core revision-led financial; baseline also holds it.",
+   "falsification": "Asset-quality deterioration turns revisions down or it lags the benchmark next quarter.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "ARVIND",
+   "target_pct": 2.14,
+   "play_type": "tactical",
+   "thesis": "Rising revisions in a diversified textile turnaround; conviction hold in the revision cluster.",
+   "falsification": "Revisions roll over or demand softens within a quarter.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "PIRAMALFIN",
+   "target_pct": 3.62,
+   "play_type": "tactical",
+   "thesis": "Retail-lending scale-up lifting revisions; core revision-led financial.",
+   "falsification": "Credit-cost surprise reverses revisions within a quarter.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "WELCORP",
+   "target_pct": 5.0,
+   "play_type": "tactical",
+   "thesis": "Order-driven upgrades support a continued hold; revision tilt with cyclical backing.",
+   "falsification": "Order inflow slows and revisions fade within a quarter.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "MANAPPURAM",
+   "target_pct": 4.62,
+   "play_type": "tactical",
+   "thesis": "Gold-loan growth and subsidiary clean-up lifting revisions; revision-led financial hold.",
+   "falsification": "Regulatory or asset-quality shock reverses revisions within a quarter.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "ASTERDM",
+   "target_pct": 2.66,
+   "play_type": "tactical",
+   "thesis": "Bed-expansion and margin gains lifting revisions; revision-led healthcare hold.",
+   "falsification": "Occupancy/margin miss turns revisions down within a quarter.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "ANTHEM",
+   "target_pct": 1.7,
+   "play_type": "tactical",
+   "thesis": "CDMO order momentum supports continued upgrades; revision-led healthcare hold.",
+   "falsification": "Client/order slippage reverses revisions within a quarter.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "LLOYDSME",
+   "target_pct": 3.88,
+   "play_type": "tactical",
+   "thesis": "Mining/metals integration still positive but revision momentum is fading; keep a reduced position.",
+   "falsification": "Revisions re-accelerate (proving the trim wrong) or metals cycle turns up sharply.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "BBOX",
+   "target_pct": 4.2,
+   "play_type": "structural",
+   "thesis": "IT-infra services story intact but revision support has softened; trim oversized legacy weight.",
+   "falsification": "Revisions strengthen again or order wins re-accelerate momentum next quarter.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "JMFINANCIL",
+   "target_pct": 2.3,
+   "play_type": "structural",
+   "thesis": "Diversified financial with mild value and moderate revisions; keep a smaller core weight.",
+   "falsification": "Revisions deteriorate further or capital-markets activity slows within a quarter.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "CGCL",
+   "target_pct": 3.23,
+   "play_type": "structural",
+   "thesis": "Diversified NBFC with steady but no-longer-strong revisions; reduced hold.",
+   "falsification": "Revisions fall further or growth disappoints within a quarter.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "WELSPUNLIV",
+   "target_pct": 1.32,
+   "play_type": "structural",
+   "thesis": "Home-textile exporter losing revision support; keep a small position pending evidence.",
+   "falsification": "Revisions turn back up or US retail restocking lifts orders next quarter.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "INTELLECT",
+   "target_pct": 1.57,
+   "play_type": "structural",
+   "thesis": "Banking-software story intact long term but no live revision/momentum support; reduce.",
+   "falsification": "Deal wins re-accelerate revisions or momentum within a quarter.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "SUVEN",
+   "target_pct": 2.58,
+   "play_type": "structural",
+   "thesis": "CDMO/specialty name without revision coverage; hold a reduced weight on its own merit, not on revisions.",
+   "falsification": "Operating disappointment or a clear momentum breakdown next quarter.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "STAR",
+   "target_pct": 1.32,
+   "play_type": "structural",
+   "thesis": "Generics turnaround with neutral revisions; smaller hold pending a clearer upgrade trend.",
+   "falsification": "Revisions turn negative or US generics pricing weakens within a quarter.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "KPRMILL",
+   "target_pct": 2.24,
+   "play_type": "structural",
+   "thesis": "High-quality textile vertical; keep a reduced weight despite weak near-term revisions.",
+   "falsification": "Garment/sugar segment weakness deepens or revisions fall further within a quarter.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "USHAMART",
+   "target_pct": 1.42,
+   "play_type": "structural",
+   "thesis": "Wire-rope niche leader with neutral revisions; smaller hold.",
+   "falsification": "Revisions weaken or steel-cycle softness hits margins within a quarter.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "BALRAMCHIN",
+   "target_pct": 1.89,
+   "play_type": "structural",
+   "thesis": "Sugar/ethanol cyclical losing revision support; keep a small position.",
+   "falsification": "Ethanol-policy tailwind revives revisions next quarter.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  },
+  {
+   "sym": "TRITURBINE",
+   "target_pct": 2.58,
+   "play_type": "structural",
+   "thesis": "Steam-turbine niche leader with strong franchise; keep reduced weight despite a soft revision read.",
+   "falsification": "Order inflow slows or revisions deteriorate further within a quarter.",
+   "status": "pending",
+   "raw_return_pct": null,
+   "active_return_pct": null
+  }
+ ]
+}
