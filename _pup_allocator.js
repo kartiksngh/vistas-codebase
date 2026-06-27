@@ -139,6 +139,9 @@ const server = http.createServer((req, res) => {
     if (amc && amc.options.length > 1) { amc.selectedIndex = 1; amc.dispatchEvent(new Event("change", { bubbles: true })); }
     await new Promise((r) => setTimeout(r, 500));
     const bars1 = bars();
+    // #102 net-active-zero-sum fix: an AMC-TOTAL headline must show the one-way "Active reshuffle" (⇄), not net-active≈0
+    const headTxt = (document.getElementById("wf-head") || {}).textContent || "";
+    const headHasReshuffle = /reshuffle/i.test(headTxt) || /⇄/.test(headTxt);
     const sl = document.querySelector("#wf-snap-dn .dn-sl");
     let snapChanged = false;
     if (sl) {
@@ -150,7 +153,7 @@ const server = http.createServer((req, res) => {
       snapChanged = after !== before;
     }
     const snapRows1 = document.querySelectorAll("#wf-snap table tbody tr").length;
-    return { hasTab, hasPane: !!pane, hasData, bars0, bars1, snapRows0, snapRows1, hasSlider: !!sl, snapChanged };
+    return { hasTab, hasPane: !!pane, hasData, bars0, bars1, snapRows0, snapRows1, hasSlider: !!sl, snapChanged, headHasReshuffle };
   });
 
   // ---- 1d2) PIVOT DRILL-DOWN (#102 P3): root at All AMCs -> expand an AMC (lazy-fetch its scheme file)
@@ -163,6 +166,9 @@ const server = http.createServer((req, res) => {
     await new Promise((r) => setTimeout(r, 450));
     const amcRows = q('#wf-snap tr.wf-row[data-key^="amc::"]');
     const nAmcRows = amcRows.length;
+    // #102 fix: AMC-total net-active cell shows the reshuffle marker (⇄), not a signed ~0 net-active
+    const amcCellTxt = amcRows[0] ? ((amcRows[0].querySelectorAll("td")[2] || {}).textContent || "") : "";
+    const amcShowsReshuffle = /⇄/.test(amcCellTxt);
     if (amcRows[0]) amcRows[0].click();                 // expand first AMC -> triggers lazy fetch
     await new Promise((r) => setTimeout(r, 1100));
     const schRows = q('#wf-snap tr.wf-row[data-key^="sch::"]').filter((tr) => seg(tr.dataset.key) === 2);
@@ -195,7 +201,7 @@ const server = http.createServer((req, res) => {
         headHasStock = stName.length > 2 && head2.indexOf(stName) >= 0;
       }
     }
-    return { nAmcRows, nSch, nSec, headHasSector, bars, nStk, headHasStock };
+    return { nAmcRows, nSch, nSec, headHasSector, bars, nStk, headHasStock, amcShowsReshuffle };
   });
 
   // ---- 1d3) THEME LENS (#102 P4): flow-by-NSE-thematic-index panel — selector, decomposition chart
@@ -273,9 +279,9 @@ const server = http.createServer((req, res) => {
     && consFlow.before >= 2 && consFlow.after >= 2 && consFlow.decompTitle
     && relPerf.before >= 2 && relPerf.afterMax >= 2 && relPerf.hasSeg
     && own.hasTab && own.hasPane && own.hasData && own.bars0 >= 2 && own.bars1 >= 2
-    && own.snapRows0 >= 1 && own.hasSlider && own.snapChanged
+    && own.snapRows0 >= 1 && own.hasSlider && own.snapChanged && own.headHasReshuffle
     && pivot.nAmcRows >= 1 && pivot.nSch >= 1 && pivot.nSec >= 1 && pivot.headHasSector && pivot.bars >= 2
-    && pivot.nStk >= 1 && pivot.headHasStock
+    && pivot.nStk >= 1 && pivot.headHasStock && pivot.amcShowsReshuffle
     && theme.hasSel && theme.bars0 >= 2 && theme.rows0 >= 1 && theme.bars1 >= 2
     && crowd.secBars >= 2 && crowd.secRows >= 1 && crowd.hasStkSel && crowd.stkBars >= 2 && crowd.stkRows >= 1
     && dateNav.screenDn && dateNav.consDn && dateNav.screenDateChanged

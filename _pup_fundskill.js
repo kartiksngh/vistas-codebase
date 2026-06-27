@@ -187,18 +187,20 @@ const server = http.createServer((req, res) => {
       try { await renderFundSkill(); } catch (e) { return { threw: e.message, sym: k }; }
       await new Promise((r) => setTimeout(r, 450));
       const host = document.getElementById("fm-shortlist-host");
+      const panel = host && host.closest("section");           // the caveat <details> is a SIBLING of host
       const grid = host && host.querySelector(".fm-shortlist-grid");
       const cols = host ? host.querySelectorAll(".fm-col-h").length : 0;
       const rows = host ? host.querySelectorAll(".fm-shortlist-grid table.gauge-tbl tbody tr").length : 0;
-      const txt = (host && host.textContent) || "";
+      const txt = (host && host.textContent) || "";            // the TABLE area (for the action-verb guard)
+      const panelTxt = (panel && panel.textContent) || txt;    // whole panel incl the caveat <details>
       const r = {
         sym: k, present: !!host, hasGrid: !!grid, cols, rows,
         notLoading: !/Loading…/.test(txt),
         notBlankDash: txt.replace(/\s+/g, "") !== "—",
-        // discipline guards: no decisive action verbs / no return-forecast language in the panel
+        // discipline guard on the TABLE only (the caveat legitimately NAMES "expected return / price target" to say it shows NONE)
         noActionVerbs: !/\b(buy now|sell now|target price|price target|expected return|upside)\b/i.test(txt),
-        hasCaveat: /decision-support/i.test(txt) && /does not size/i.test(txt),
-        hasFlowCaveat: /mildly contrarian/i.test(txt),
+        hasCaveat: /decision-support/i.test(panelTxt) && /does not size/i.test(panelTxt),
+        hasFlowCaveat: /mildly contrarian/i.test(panelTxt),
       };
       if (!best || r.rows > best.rows) best = r;
       if (r.rows > 0) break;   // found a fund with candidates — enough to exercise the table path

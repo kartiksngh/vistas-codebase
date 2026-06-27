@@ -4923,7 +4923,7 @@ function initOwnership() {
       view.innerHTML =
         `<div class="measurebar">
            <span class="mlbl">Ownership &amp; Flow</span>
-           <span class="measurenote">The money chain — an <b>AMC</b> raises capital via its schemes, which <b>deploy</b> it into <b>sectors</b> and stocks. Each month's change in a holding is split into <b>price action</b> (moved with the market), <b>implied inflow</b> (fresh SIP/lump-sum money deployed pro-rata — no view change) and <b>net-active</b> (a genuine reweighting — the conviction / smart-money signal). Aggregates only; reconciles exactly.</span>
+           <span class="measurenote">The money chain — an <b>AMC</b> raises capital via its schemes, which <b>deploy</b> it into <b>sectors</b> and stocks. Each month's change in a holding is split into <b>price action</b> (moved with the market), <b>implied inflow</b> (fresh SIP/lump-sum money deployed pro-rata — no view change) and <b>net-active</b> (a genuine reweighting — the conviction / smart-money signal). Aggregates only; reconciles exactly. <b>Net-active is zero-sum within a fund</b> (an overweight is funded by an underweight), so any fund / AMC / market <i>total</i> nets to ~0 by construction — read the per-sector / stock breakdown, or the one-way <b>⇄ reshuffle</b> (Σ|net-active by sector|/2), not the total.</span>
          </div>
          <div id="own-body"></div>`;
       const allocView = $("view-allocator");
@@ -5003,17 +5003,63 @@ function renderOwnership() {
 
 function _wfDraw() { _wfDrawHead(); _wfDrawPlot(); _wfDrawSnap(); _wfThemeDraw(); _wfCrowdDraw(); }
 
+// ── Net-active is ZERO-SUM within a fund (an overweight is funded by an underweight), so any TOTAL
+// (market / AMC / scheme) nets to ~0 by construction. The meaningful aggregate is the one-way "active
+// reshuffle" = Σ|net-active by sector|/2 (how much conviction money moved BETWEEN sectors) + the biggest
+// +/- sector tilt. Signed net-active stays the right read at the sector & stock (non-total) rows.
+function _wfMag(v) { return (v == null) ? "—" : Math.round(v).toLocaleString() + " cr"; }   // unsigned magnitude
+function _wfSecArr(secMap, i) {              // {sector: node} -> [{sec, na}]; skips __total__
+  if (!secMap) return null;
+  const arr = [];
+  Object.keys(secMap).forEach((sec) => {
+    if (sec === "__total__") return;
+    const nd = secMap[sec], na = (nd && nd.net_active) ? nd.net_active[i] : null;
+    if (na != null) arr.push({ sec, na });
+  });
+  return arr;
+}
+function _wfReshuffleArr(arr) {              // [{sec,na}] -> {reshuffle, top, bot} or null
+  if (!arr || !arr.length) return null;
+  let sumAbs = 0, top = null, bot = null;
+  arr.forEach(({ sec, na }) => {
+    if (na == null) return;
+    sumAbs += Math.abs(na);
+    if (!top || na > top.na) top = { sec, na };
+    if (!bot || na < bot.na) bot = { sec, na };
+  });
+  return { reshuffle: sumAbs / 2, top, bot };
+}
+// sector-breakdown reshuffle for a TOTAL focus (market / AMC / scheme); null if not a total or not loaded.
+function _wfReshuffleFor(f, i) {
+  const W = _wf(); f = f || {};
+  let secMap = null;
+  if (!f.amc) secMap = W.sector_total;                                  // market total
+  else if (!f.code) secMap = (W.cube || {})[f.amc] || null;             // AMC total
+  else if (!f.sector && !f.vst) { const s = _wfScheme(f.amc, f.code); secMap = s ? s.sectors : null; }  // scheme total
+  return secMap ? _wfReshuffleArr(_wfSecArr(secMap, i)) : null;
+}
+
 function _wfDrawHead() {
   const W = _wf(), node = _wfSeriesFor(_wfFocus), host = $("wf-head"); if (!host) return;
   if (!node || !node.gross || !node.gross.length) { host.innerHTML = `<div class="empty-note">No flow for this selection.</div>`; return; }
   const i = node.gross.length - 1;
+  const f = _wfFocus || {};
+  const isTotal = !f.sector && !f.vst;        // market / AMC / scheme totals: net-active nets to ~0 by construction
   const stat = (lbl, val, col) => `<div class="cstat"><span class="ck">${lbl}</span><span class="cv" style="color:${col || ''}">${_wfFmt(val)}</span></div>`;
-  host.innerHTML =
+  let html =
     `<div class="cstat"><span class="ck">${fEsc(_wfScopeName())} · latest ${fEsc(W.months[i])}</span><span class="cv">gross ${_wfFmt(node.gross[i])}</span></div>`
     + (node.mv ? `<div class="cstat"><span class="ck">Ownership (priced)</span><span class="cv">${_wfFmt(node.mv[i])}</span></div>` : "")
     + stat("Price action", node.price[i], _WF_COL.price)
-    + stat("Implied inflow", node.inflow[i], _WF_COL.inflow)
-    + stat("Net-active (conviction)", node.net_active[i], node.net_active[i] >= 0 ? _WF_COL.na : "#b3402f");
+    + stat("Implied inflow", node.inflow[i], _WF_COL.inflow);
+  const rs = isTotal ? _wfReshuffleFor(f, i) : null;
+  if (rs && rs.reshuffle > 0) {                // a total -> show the one-way reshuffle + the biggest sector tilt
+    const tilt = `<span style="color:${_WF_COL.na}">${_wfFmt(rs.top.na)} ${fEsc(rs.top.sec)}</span> · <span style="color:#b3402f">${_wfFmt(rs.bot.na)} ${fEsc(rs.bot.sec)}</span>`;
+    html += `<div class="cstat" title="net-active is zero-sum within a book, so a total nets to ~0; this is the one-way magnitude Σ|net-active by sector|/2"><span class="ck">Active reshuffle (one-way)</span><span class="cv" style="color:${_WF_COL.na}">⇄ ${_wfMag(rs.reshuffle)}</span></div>`
+          + `<div class="cstat"><span class="ck">Biggest tilt (by sector)</span><span class="cv" style="font-size:12px">${tilt}</span></div>`;
+  } else {                                      // a sector / stock cell -> signed net-active is meaningful
+    html += stat("Net-active (conviction)", node.net_active[i], node.net_active[i] >= 0 ? _WF_COL.na : "#b3402f");
+  }
+  host.innerHTML = html;
 }
 
 function _wfDrawPlot() {
@@ -5070,8 +5116,12 @@ function _wfPivotRows() {
   const at = (node) => node ? { mv: node.mv ? node.mv[i] : null, na: node.net_active[i], inf: node.inflow[i], pr: node.price[i], gr: node.gross[i] } : null;
   if (_wfAmc === "__ALL__") {
     const amcs = (W.amcs || Object.keys(W.cube || {})).slice();
-    const amcRows = amcs.map((a) => ({ a, v: at(((W.cube || {})[a] || {}).__total__) })).filter((r) => r.v);
-    amcRows.sort((p, q) => (q.v.na || 0) - (p.v.na || 0));
+    const amcRows = amcs.map((a) => {
+      const v = at(((W.cube || {})[a] || {}).__total__);
+      if (v) { const rs = _wfReshuffleArr(_wfSecArr((W.cube || {})[a], i)); v.resh = rs ? rs.reshuffle : null; v.isTotal = true; }
+      return { a, v };
+    }).filter((r) => r.v);
+    amcRows.sort((p, q) => (q.v.resh || 0) - (p.v.resh || 0));   // totals: sort by one-way reshuffle (net-active≈0)
     for (const { a, v } of amcRows) {
       const key = "amc::" + a;
       out.push({ key, depth: 0, label: a, vals: v, expandable: true, expanded: !!_wfPivExp[key], focus: { amc: a, code: null, sector: null } });
@@ -5092,8 +5142,12 @@ function _wfPushSchemes(out, amc, depth, i, at) {
     else out.push({ key: "none::" + amc, depth, label: "no scheme drill-down for this AMC", placeholder: true });
     return;
   }
-  const schemes = (d.schemes || []).map((s) => ({ s, v: at(s.total) })).filter((r) => r.v);
-  schemes.sort((p, q) => (q.v.na || 0) - (p.v.na || 0));
+  const schemes = (d.schemes || []).map((s) => {
+    const v = at(s.total);
+    if (v) { const rs = _wfReshuffleArr(_wfSecArr(s.sectors, i)); v.resh = rs ? rs.reshuffle : null; v.isTotal = true; }
+    return { s, v };
+  }).filter((r) => r.v);
+  schemes.sort((p, q) => (q.v.resh || 0) - (p.v.resh || 0));   // scheme totals: sort by one-way reshuffle
   for (const { s, v } of schemes) {
     const key = "sch::" + amc + "::" + s.code;
     out.push({ key, depth, label: s.name, vals: v, expandable: true, expanded: !!_wfPivExp[key], focus: { amc, code: s.code, sector: null } });
@@ -5130,15 +5184,17 @@ function _wfPivotRender() {
     return `<tr class="wf-row${r.key === focusKey ? " wf-row-on" : ""}" data-key="${attEsc(r.key)}" data-focus="${attEsc(JSON.stringify(r.focus))}" data-exp="${r.expandable ? 1 : 0}">`
       + `<td style="padding-left:${6 + r.depth * 18}px">${caret(r)}${fEsc(r.label)}</td>`
       + `<td class="num">${r.vals.mv == null ? "—" : _wfFmt(r.vals.mv)}</td>`
-      + `<td class="num" style="color:${naCol(r.vals.na)}">${_wfFmt(r.vals.na)}</td>`
+      + (r.vals.isTotal
+          ? `<td class="num" style="color:${_WF_COL.na}" title="net-active is zero-sum within a book, so this total is ~0; shown is the one-way reshuffle Σ|net-active by sector|/2">⇄ ${r.vals.resh == null ? "—" : _wfMag(r.vals.resh)}</td>`
+          : `<td class="num" style="color:${naCol(r.vals.na)}">${_wfFmt(r.vals.na)}</td>`)
       + `<td class="num" style="color:${_WF_COL.inflow}">${_wfFmt(r.vals.inf)}</td>`
       + `<td class="num" style="color:${_WF_COL.price}">${_wfFmt(r.vals.pr)}</td>`
       + `<td class="num">${_wfFmt(r.vals.gr)}</td></tr>`;
   }).join("");
   const rootLbl = _wfAmc === "__ALL__" ? "market → AMC → scheme → sector" : `${_wfAmc} → scheme → sector`;
   host.innerHTML =
-    `<div class="ab-screen-head"><b>Pivot — ${fEsc(rootLbl)}</b> · as of ${fEsc(ym)} — click a row to drill in &amp; chart it; sorted by net-active (conviction).</div>`
-    + `<table class="gauge-tbl wf-pivot"><thead><tr><th>Name</th><th class="num">Ownership</th><th class="num">Net-active</th><th class="num">Implied inflow</th><th class="num">Price action</th><th class="num">Gross</th></tr></thead><tbody>${body || `<tr><td colspan="6" class="empty-note">No flow this month.</td></tr>`}</tbody></table>`;
+    `<div class="ab-screen-head"><b>Pivot — ${fEsc(rootLbl)}</b> · as of ${fEsc(ym)} — click a row to drill in &amp; chart it. <b>Totals</b> (AMC/scheme) show the one-way <b>⇄ reshuffle</b> — net-active is zero-sum within a book (an overweight is funded by an underweight), so a total nets to ~0; read the <b>per-sector / stock</b> rows (signed net-active) for the conviction tilt. Sorted by reshuffle (totals) / net-active (sector &amp; stock rows).</div>`
+    + `<table class="gauge-tbl wf-pivot"><thead><tr><th>Name</th><th class="num">Ownership</th><th class="num" title="totals: ⇄ one-way reshuffle Σ|net-active by sector|/2 (net-active is zero-sum within a book → totals ≈ 0); sector &amp; stock rows: signed net-active (conviction)">Net-active ⇄</th><th class="num">Implied inflow</th><th class="num">Price action</th><th class="num">Gross</th></tr></thead><tbody>${body || `<tr><td colspan="6" class="empty-note">No flow this month.</td></tr>`}</tbody></table>`;
   if (!host.dataset.wfwired) {
     host.addEventListener("click", (e) => {
       const tr = e.target.closest("tr.wf-row"); if (!tr || !tr.dataset.focus) return;

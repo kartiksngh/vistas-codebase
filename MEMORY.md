@@ -31,6 +31,16 @@ KV greenlit **#39 (FM Action Shortlist)** then **#52/#95/#96 (live-forward Agent
   **monthly LLM rebalance** (CronCreate) + daily Python mark (zero tokens). Discipline OK (paper-only, no-look-ahead, pre-reg falsifier required);
   watch: LEARN/grading loop is capture-only (not wired), frozen-LLM world-knowledge>asof. **NEXT for live-forward: fill gaps 4→5→1, run first
   round (workflow), surface (2/3), publish digital-amc, CronCreate monthly.**
+- **OWNERSHIP net-active "0 for every AMC" FIX (KV-flagged, deck-only JS, in this same build):** NOT a bug —
+  net-active is **zero-sum within a fund** (`Σ net_active = 0` exactly per book: `w_e − w_drift` weights both sum to 1;
+  verified `funds_flows.py:227-229` + data: ICICI sector net-active Fin +5,625 / IT −2,407 … sums to −0.00; per-scheme
+  total max |−0.000|). So AMC/scheme TOTALS show ~0 by construction; signal lives at sector/stock. FIX in `renderOwnership`
+  (`static/vistas.js`): TOTAL rows (market/AMC/scheme) now show the one-way **⇄ reshuffle = Σ|net-active by sector|/2** +
+  biggest +/− sector tilt in the headline, sort totals by reshuffle; SIGNED net-active kept at sector & stock rows;
+  plain-words zero-sum note added. Helpers `_wfMag/_wfSecArr/_wfReshuffleArr/_wfReshuffleFor`. Probe `_pup_allocator.js`
+  +`headHasReshuffle`/`amcShowsReshuffle` gates. (KV's inflow question answered: implied-inflow IS accounted for in its
+  OWN bucket = `w_e·F`, sums to net inflow F; net-active is inflow-IMMUNE by design — don't fold inflow in or a passive
+  SIP fund would fake "conviction"; "where new money went incl inflows" = the PRICE-ADJUSTED figure = inflow+active.)
 - **OPS STATE:** the 8pm Task-Scheduler nightly `vistas.pipeline` (PID 14204) HOLDS the build lock (acquired 21:02, doing a big one-off 600-stock
   screener backfill then rebuild+auto-publish). My #39 JS edits are on disk → the nightly MAY publish them unverified; regardless, do a controlled
   `publish_terminal.py` rebuild → `_pup_fundskill.js` PASS → publish as the authoritative #39 verification once the lock frees. **NEVER 2 builds at
