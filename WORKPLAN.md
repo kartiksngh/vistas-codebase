@@ -4,6 +4,26 @@
 > don't get lost behind in-the-moment side-quests. `[x]` done · `[~]` in progress · `[ ]` to do.
 > Mirrors the task widget (task #s in brackets). KV asked for this 2026-06-26.
 
+## 🚧 IN FLIGHT — 2026-06-27 (two builds, both checkpointed)
+### A) LIVE-FORWARD LLM cadence (#52/#69/#93-96) — engine DONE+validated, round PENDING
+- Design = `LIVE_FORWARD.md`. Engine = **`vistas/amc_live.py`** BUILT + smoke-validated: `prepare_desk` (FM
+  desk: inherited book + candidate universe w/ ARM/z_mom/z_val/brain_score/flow + quant baseline + mandate +
+  scorecard, no look-ahead) · `enforce_guardrails` (reuses `deploy_with_floor`; faithfully reproduces the
+  quant baseline at active-share 0%, keeps any LLM proposal mandate/liquidity/floor-compliant — verified on
+  ICICI) · `apply_decision` (diff vs book→trades, blotter+prereg, **raw-ARM scrub guard**, fact_sheet mark) ·
+  `compare_to_quant` · round driver `prepare_round`/`apply_round` (4 pilots, same set as replay_pilots).
+- REMAINING: author `_amc_rebalance.js` Workflow (per-scheme FM agents read desk file → TradeTickets; CIO
+  review) → run first round at the seam (2026-06-25) → apply → rules-vs-LLM comparison → surface in amc_site
+  → Cron (daily mark + monthly rebalance). NOTE: apply_decision MUTATES amc_book/<>/book.json (git-tracked,
+  restorable) — only run the real round with real LLM tickets.
+### B) TIME-NAV for snapshot plots (#97, KV charting guideline [[vistas-charting-guideline]]) — ALL FRONT-END
+- KV standing rule: every snapshot-in-time plot needs time-navigation (date slider/dropdown); trajectory/
+  component plots need tick-untick. **DATA FINDING: all 4 requested panels already have history baked → pure
+  vistas.js work, no heavy bake:** (1) Allocator "≥m% broke out" screen ← breadth.json sectors[] series (318
+  month-ends); (2) Consensus "where street stands" ← VISTAS_CONSENSUS EW+components monthly (FF latest-only,
+  flag); (3) per-stock ARM histogram ← components[].series + headline.series (~25mo); (4) ARM trajectory ←
+  plot headline + 4 component series w/ legend tick-untick. Then ONE full rebuild → `_pup` probe → publish.
+
 ## 🔧 FOLLOW-UP CYCLE — 2026-06-27 ~06:45 (TC-aware brains + breadth bug) — SHIPPING in one push
 - **#91 TC-AWARE FM DEPLOYMENT (the IR-leak fix).** New `amc_firm.deploy_with_floor()` + `LIQ_DAYS_MAX=60`:
   when the tight (LIQ_DAYS=20) liquidity cap would leave a book below its MANDATE EQUITY FLOOR (`equity_min`),

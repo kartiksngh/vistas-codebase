@@ -51,6 +51,24 @@ const server = http.createServer((req, res) => {
     };
   });
 
+  // ---- 1a) TIME-NAV: the breadth "≥m% broke out" screen + the Consensus snapshot must have a date
+  //          slider, and dragging the screen slider must show a historical "as of" date.
+  const dateNav = await page.evaluate(async () => {
+    const screenDn = !!document.querySelector("#ab-screen-dn .dn-sl");
+    const consDn = !!document.querySelector("#cons-snap-dn .dn-sl");
+    const sl = document.querySelector("#ab-screen-dn .dn-sl");
+    let screenDateChanged = false;
+    if (sl) {
+      const before = (document.querySelector(".ab-screen-head") || {}).textContent || "";
+      sl.value = String(Math.max(0, (parseInt(sl.max, 10) || 0) - 24));   // ~2 years back (populated breadth)
+      sl.dispatchEvent(new Event("input", { bubbles: true }));
+      await new Promise((r) => setTimeout(r, 450));
+      const after = (document.querySelector(".ab-screen-head") || {}).textContent || "";
+      screenDateChanged = /historical/.test(after) && after !== before;
+    }
+    return { screenDn, consDn, screenDateChanged };
+  });
+
   // ---- 1b) PER-SECTOR breadth chart must RE-PLOT on dropdown change (the innerHTML=""/Plotly.react
   //          bug: blank on the 2nd draw). Change SECTOR + METRIC and confirm the plot still has traces.
   const secChange = await page.evaluate(async () => {
@@ -93,6 +111,7 @@ const server = http.createServer((req, res) => {
   });
 
   console.log("ALLOCATOR:", JSON.stringify(alloc));
+  console.log("DATE-NAV :", JSON.stringify(dateNav), "(screen+consensus sliders + screen shows historical on drag)");
   console.log("SEC-CHANGE:", JSON.stringify(secChange), "(afterA/afterB must stay >=1 — the re-plot bug)");
   console.log("ROTATION :", JSON.stringify(rot));
   console.log(`\nCONSOLE/PAGE ERRORS (${errs.length}):`);
@@ -103,6 +122,7 @@ const server = http.createServer((req, res) => {
     && alloc.plotsWithTraces >= 1
     && alloc.consInAlloc && !alloc.consInMacro
     && secChange.afterA >= 1 && secChange.afterB >= 1
+    && dateNav.screenDn && dateNav.consDn && dateNav.screenDateChanged
     && rot.hasRotWord && rot.hasStockSel && rot.hasSubseg && rot.trailTraces >= 1;
   console.log("\n" + (ok
     ? "PASS: Asset-Allocator breadth renders, per-sector chart RE-PLOTS on dropdown change, Consensus moved here, Rotation trail renders, 0 errors."

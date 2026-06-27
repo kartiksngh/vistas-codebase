@@ -55,7 +55,7 @@ const server = http.createServer((req, res) => {
     try { if (typeof renderFundamentals === "function") await renderFundamentals(); } catch (e) {}
   }, SYM);
   await new Promise((r) => setTimeout(r, 2500));
-  const probe = await page.evaluate(() => {
+  const probe = await page.evaluate(async () => {
     const ids = ["plot-fund-dupont3", "plot-fund-growthlvl", "plot-fund-price", "plot-fund-arm", "plot-fund-armts", "plot-macro-infl"];
     const out = {};
     ids.forEach((id) => {
@@ -65,11 +65,32 @@ const server = http.createServer((req, res) => {
       const note = el.querySelector(".empty-note");
       out[id] = { svgTraces, note: note ? note.textContent : null, isPlotly: el.classList.contains("js-plotly-plot") };
     });
-    return { panels: out, fundLoaded: !!(window.FUND_DATA && window.FUND_DATA.RELIANCE && window.FUND_DATA.RELIANCE.analytics), plotlyVer: (window.Plotly && Plotly.version) || "?" };
+    // ── ARM time-nav checks: histogram has a date slider; trajectory plots headline + components (>=2)
+    const armDn = !!document.querySelector("#tog-fund-arm .dn-sl");
+    const armBars = document.getElementById("plot-fund-arm");
+    const armBarN = armBars ? armBars.querySelectorAll(".barlayer .point, .barlayer .trace").length : 0;
+    const armtsEl = document.getElementById("plot-fund-armts");
+    const armtsTraces = armtsEl ? armtsEl.querySelectorAll(".scatterlayer .trace, .scatterlayer .lines").length : 0;
+    // drag the histogram date slider to a PAST date and confirm the "as of" caption changes
+    const sl = document.querySelector("#tog-fund-arm .dn-sl");
+    let armDateChanged = false;
+    if (sl) {
+      const capBefore = (document.querySelector("#stat-fund-arm, #tbl-fund-arm .src") || {}).textContent || "";
+      sl.value = "3"; sl.dispatchEvent(new Event("input", { bubbles: true }));
+      await new Promise((r) => setTimeout(r, 400));
+      const capAfter = (document.querySelector("#tbl-fund-arm .src") || {}).textContent || "";
+      armDateChanged = capAfter && capAfter !== capBefore;
+    }
+    return { panels: out, armDn, armBarN, armtsTraces, armDateChanged,
+             fundLoaded: !!(window.FUND_DATA && window.FUND_DATA.RELIANCE && window.FUND_DATA.RELIANCE.analytics), plotlyVer: (window.Plotly && Plotly.version) || "?" };
   });
   const ferr = await page.evaluate(() => window.__FERR || []);
   console.log("Plotly version:", probe.plotlyVer, "| FUND_DATA.RELIANCE.analytics:", probe.fundLoaded);
   console.log("panel probe:", JSON.stringify(probe.panels, null, 1));
+  console.log("ARM time-nav:", JSON.stringify({ histDateSlider: probe.armDn, histBars: probe.armBarN, trajTraces: probe.armtsTraces, histDateChangedOnDrag: probe.armDateChanged }));
+  const armNavOk = probe.armDn && probe.armtsTraces >= 2 && probe.armBarN >= 1;
+  console.log(armNavOk ? "ARM-NAV PASS: histogram has a date slider, trajectory plots headline + components."
+                       : "ARM-NAV FAIL: expected #tog-fund-arm .dn-sl + >=2 trajectory traces + >=1 histogram bar.");
   console.log(`\nSWALLOWED PANEL THROWS (__FERR ${ferr.length}):`);
   ferr.slice(0, 16).forEach((e) => console.log("  • " + e));
   console.log(`\nNETWORK/CONSOLE ERRORS (${errs.length}):`);

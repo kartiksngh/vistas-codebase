@@ -3464,7 +3464,7 @@ const FUND_PANELS = [
     method: "Peers are the same-sector names whose market cap is closest to this stock's (size-matched, so it's like-for-like). Each multiple is the latest reported figure; growth is the 3-year compound annual rate of sales and net profit; ROE is the latest return on equity. A multiple well BELOW the peer set while growth/ROE is AT or ABOVE it is the classic 'cheap for no obvious reason' screen; a multiple ABOVE the set is only earned by faster growth or fatter, more durable returns.",
     why: "A multiple means nothing in isolation — 20× is dear for a utility and cheap for a compounder. Peers turn 'expensive or cheap' from a gut call into a relative, like-for-like judgement." },
   // ----------------------------------------------------------- LSEG StarMine — Analyst Revision Model (ARM)
-  { id: "arm", sec: "estimates", tag: "LSEG STARMINE · ARM", kind: "both", wide: true,
+  { id: "arm", sec: "estimates", tag: "LSEG STARMINE · ARM", kind: "both", wide: true, tog: true,
     title: "Analyst Revision Score — headline & the parts driving it", keys: "starmine.headline · starmine.components[]",
     what: "LSEG StarMine's Analyst Revision Score (ARM, 0–100) for this stock — the headline, plus the four component scores that drive it: revisions to preferred earnings (EPS), secondary earnings (EBITDA), revenue, and analyst recommendations.",
     method: "ARM is a region-relative PERCENTILE of analyst estimate-revision momentum: ~100 = analysts are raising estimates the most in the region, near 0 = cutting the most. The component bars show WHICH expectations are moving — a high headline carried mostly by Recommendations but with soft Earnings is a weaker, less durable signal than one led by earnings revisions. The headline is a coverage/profitability-weighted blend of the parts, NOT their literal average.",
@@ -3859,36 +3859,65 @@ async function renderFundamentals() {
     if (!syms.some((s) => fStarmine(s))) { note("arm", "No LSEG StarMine coverage for this company."); return; }
     const CATS = ["Headline ARM", "Pref earnings", "Sec earnings", "Revenue", "Recommendations"];
     const KEYS = ["ARM_PREF_EARN_COMP_100", "ARM_SEC_EARN_COMP_100", "ARM_REVENUE_COMP_100", "ARM_REC_COMP_100"];
-    const gv = (o, k) => (o && o[k] !== undefined && o[k] !== null) ? o[k] : null;
-    const traces = syms.map((s, i) => {
-      const sm = fStarmine(s); if (!sm) return null;
-      const cm = {}; (sm.components || []).forEach((c) => { cm[c.key] = c.score; });
-      const ys = [sm.headline.score, gv(cm, KEYS[0]), gv(cm, KEYS[1]), gv(cm, KEYS[2]), gv(cm, KEYS[3])];
-      const tr = { type: "bar", name: multi ? s : "ARM", x: CATS, y: ys, opacity: 0.85,
-        hovertemplate: `${multi ? fEsc(s) + " " : ""}%{x}: %{y}<extra></extra>` };
-      tr.marker = multi ? { color: C(i) } : { color: ["#c9a23a", "#5b8db8", "#5b8db8", "#5b8db8", "#5b8db8"] };
-      return tr;
-    }).filter(Boolean);
-    draw("arm", traces, { barmode: "group", yaxis: { title: "0–100 (region percentile)", range: [0, 100], gridcolor: "#dfe3e8" }, xaxis: { gridcolor: "#dfe3e8" } });
-    const dash = (t) => (t === null || t === undefined) ? "—" : (t > 0 ? `▲ +${t}` : (t < 0 ? `▼ ${t}` : "flat"));
-    const cell = (v) => (v === null || v === undefined) ? "—" : v;
-    const rows = syms.map((s) => { const sm = fStarmine(s); if (!sm) return ""; const h = sm.headline;
-      return `<tr><td class="name">${fEsc(s)}</td><td><b>${cell(h.score)}</b></td><td>${cell(h.global)}</td><td>${cell(h.bucket5)}/5</td><td>${dash(h.trend_30d)}</td><td>${dash(h.trend_90d)}</td><td>${fEsc(sm.read)}</td></tr>`;
-    }).join("");
-    const c0 = fStarmine(syms[0]) || fStarmine(syms.find((s) => fStarmine(s)));
-    setTbl("arm", `<table class="gauge-tbl"><thead><tr><th>Stock</th><th>ARM</th><th>Global</th><th>1–5</th><th>30d</th><th>90d</th><th>Read</th></tr></thead><tbody>${rows}</tbody></table>`
-      + `<div class="src">As of ${fEsc(c0.asof)} · Source: ${fEsc(c0.source)}. ${fEsc(c0.usage)}</div>`);
+    // master date grid for the time-nav = the headline series of the first covered stock (≈25 months baked)
+    const base = fStarmine(syms.find((s) => fStarmine(s)));
+    const master = (base && base.headline && Array.isArray(base.headline.series)) ? base.headline.series.map((a) => a[0]) : [];
+    const r1 = (v) => (v === null || v === undefined) ? null : Math.round(v * 10) / 10;
+    const drawBars = () => {
+      const at = (ARM_HIST_DATE && master.length) ? ARM_HIST_DATE : (master.length ? master[master.length - 1] : null);
+      const atLatest = !at || (master.length && at === master[master.length - 1]);
+      const traces = syms.map((s, i) => {
+        const sm = fStarmine(s); if (!sm) return null;
+        const cm = {}; (sm.components || []).forEach((c) => { cm[c.key] = c; });
+        const hv = atLatest ? sm.headline.score : r1(seriesValAt(sm.headline.series, at));
+        const ys = [hv].concat(KEYS.map((k) => { const c = cm[k]; if (!c) return null; return atLatest ? c.score : r1(seriesValAt(c.series, at)); }));
+        const tr = { type: "bar", name: multi ? s : "ARM", x: CATS, y: ys, opacity: 0.85,
+          hovertemplate: `${multi ? fEsc(s) + " " : ""}%{x}: %{y}<extra></extra>` };
+        tr.marker = multi ? { color: C(i) } : { color: ["#c9a23a", "#5b8db8", "#5b8db8", "#5b8db8", "#5b8db8"] };
+        return tr;
+      }).filter(Boolean);
+      draw("arm", traces, { barmode: "group", yaxis: { title: "0–100 (region percentile)", range: [0, 100], gridcolor: "#dfe3e8" }, xaxis: { gridcolor: "#dfe3e8" } });
+      const dash = (t) => (t === null || t === undefined) ? "—" : (t > 0 ? `▲ +${t}` : (t < 0 ? `▼ ${t}` : "flat"));
+      const cell = (v) => (v === null || v === undefined) ? "—" : v;
+      const rows = syms.map((s) => { const sm = fStarmine(s); if (!sm) return ""; const h = sm.headline;
+        const hAt = atLatest ? h.score : r1(seriesValAt(h.series, at));
+        return `<tr><td class="name">${fEsc(s)}</td><td><b>${cell(hAt)}</b></td><td>${cell(h.global)}</td><td>${cell(h.bucket5)}/5</td><td>${dash(h.trend_30d)}</td><td>${dash(h.trend_90d)}</td><td>${fEsc(sm.read)}</td></tr>`;
+      }).join("");
+      const c0 = fStarmine(syms[0]) || base;
+      setTbl("arm", `<table class="gauge-tbl"><thead><tr><th>Stock</th><th>ARM @ date</th><th>Global</th><th>1–5</th><th>30d</th><th>90d</th><th>Read</th></tr></thead><tbody>${rows}</tbody></table>`
+        + `<div class="src">Parts shown <b>as of ${fEsc(at || "—")}</b> (drag the date slider above) · Global/1–5/30d/90d are latest · latest ${fEsc(c0.asof)} · Source: ${fEsc(c0.source)}. ${fEsc(c0.usage)}</div>`);
+    };
+    const host = $("tog-fund-arm");
+    if (host && master.length) {
+      const idx = (ARM_HIST_DATE && master.indexOf(ARM_HIST_DATE) >= 0) ? master.indexOf(ARM_HIST_DATE) : null;
+      dateNavControl(host, master, idx, (k) => { ARM_HIST_DATE = master[k]; drawBars(); });
+    }
+    drawBars();
   };
 
   // ============================================================ LSEG StarMine ARM — trajectory (date-axis)
   R.armts = () => {
     if (!syms.some((s) => fStarmine(s))) { note("armts", "No LSEG StarMine coverage for this company."); return; }
-    const traces = syms.map((s, i) => {
-      const sm = fStarmine(s); if (!sm) return null; const ser = clip(sm.headline.series);
-      return { type: "scatter", mode: "lines", name: multi ? s : "ARM (headline)", x: ser.map((a) => a[0]), y: ser.map((a) => a[1]), line: { color: C(i), width: 1.8 } };
-    }).filter(Boolean);
-    draw("armts", traces, { yaxis: { title: "ARM (0–100)", range: [0, 100], gridcolor: "#dfe3e8" }, xaxis: { type: "date", gridcolor: "#dfe3e8", rangeslider: { thickness: 0.06 } } });
-    const sm0 = fStarmine(syms[0]); if (sm0) setStat("armts", `${syms[0]}: ${sm0.read} (as of ${sm0.asof})`);
+    const COMPS = [["Pref earnings", "ARM_PREF_EARN_COMP_100", "#5b8db8"], ["Sec earnings", "ARM_SEC_EARN_COMP_100", "#2e8b57"],
+                   ["Revenue", "ARM_REVENUE_COMP_100", "#9467bd"], ["Recommendations", "ARM_REC_COMP_100", "#d99a2b"]];
+    let traces;
+    if (!multi) {                                   // single stock: headline + all 4 components (legend tick/untick)
+      const sm = fStarmine(syms.find((s) => fStarmine(s)));
+      const cm = {}; (sm.components || []).forEach((c) => { cm[c.key] = c; });
+      const hs = clip(sm.headline.series);
+      traces = [{ type: "scatter", mode: "lines", name: "Headline ARM", x: hs.map((a) => a[0]), y: hs.map((a) => a[1]), line: { color: "#c9a23a", width: 2.2 } }];
+      COMPS.forEach(([lbl, key, col]) => {
+        const c = cm[key]; if (!c || !Array.isArray(c.series) || !c.series.length) return;
+        const s2 = clip(c.series);
+        traces.push({ type: "scatter", mode: "lines", name: lbl, x: s2.map((a) => a[0]), y: s2.map((a) => a[1]), line: { color: col, width: 1.3, dash: "dot" } });
+      });
+    } else {                                        // multi-stock compare: one headline line per stock
+      traces = syms.map((s, i) => { const sm = fStarmine(s); if (!sm) return null; const ser = clip(sm.headline.series);
+        return { type: "scatter", mode: "lines", name: s + " (headline)", x: ser.map((a) => a[0]), y: ser.map((a) => a[1]), line: { color: C(i), width: 1.8 } };
+      }).filter(Boolean);
+    }
+    draw("armts", traces, { showlegend: true, yaxis: { title: "ARM (0–100)", range: [0, 100], gridcolor: "#dfe3e8" }, xaxis: { type: "date", gridcolor: "#dfe3e8", rangeslider: { thickness: 0.06 } } });
+    const sm0 = fStarmine(syms[0]); if (sm0) setStat("armts", (multi ? "" : "Headline + the 4 component lines — click any in the legend to show/hide. ") + `${syms[0]}: ${sm0.read} (as of ${sm0.asof})`);
   };
 
   // ============================================================ Module A: growth levels (3-way freq)
@@ -4414,6 +4443,33 @@ function buildMacroToggle(p, items) {  // the per-panel "show" bar (isolate one 
 }
 // ── Analyst Consensus Flow (#46): per-stock ARM rolled up to the 11 analyst-desk sectors —
 // EW history + FF (mcap-weighted) snapshot + the 4 ARM components + sector net-active fund flow.
+// ── reusable TIME-NAVIGATION for snapshot plots (KV charting guideline: every snapshot-in-time plot must
+// let you navigate across time). dateNavControl renders a slider + date label + "latest" into `host`;
+// seriesValAt reads a [[date,val],…] series as-of a date. Used by the ARM histogram, the breadth screen,
+// and the consensus snapshot — and the default pattern for any future snapshot plot.
+let ARM_HIST_DATE = null;       // per-stock ARM histogram: selected as-of date (string) or null=latest
+let ALLOC_SCREEN_IDX = null;    // allocator breakout screen: selected date index or null=latest
+let CONS_SNAP_IDX = null;       // consensus cross-sector snapshot: selected month index or null=latest
+function seriesValAt(series, dateStr) {
+  if (!Array.isArray(series) || !series.length) return null;
+  if (!dateStr) return series[series.length - 1][1];
+  let v = null;
+  for (let i = 0; i < series.length; i++) { if (series[i][0] <= dateStr) v = series[i][1]; else break; }
+  return v;
+}
+function dateNavControl(host, dates, curIdx, onChange) {
+  if (!host || !Array.isArray(dates) || !dates.length) { if (host) host.innerHTML = ""; return; }
+  const i = (curIdx == null) ? dates.length - 1 : Math.max(0, Math.min(dates.length - 1, curIdx));
+  host.innerHTML = `<span class="ab-ctllbl">As of</span>`
+    + `<input type="range" class="rot-slider dn-sl" min="0" max="${dates.length - 1}" value="${i}" step="1">`
+    + `<span class="dn-lbl">${fEsc(String(dates[i]))}</span>`
+    + `<button type="button" class="fs-lvl dn-latest${i === dates.length - 1 ? " on" : ""}">latest</button>`;
+  const sl = host.querySelector(".dn-sl"), lbl = host.querySelector(".dn-lbl"), lt = host.querySelector(".dn-latest");
+  const fire = (k) => { if (lbl) lbl.textContent = String(dates[k]); if (lt) lt.classList.toggle("on", k === dates.length - 1); onChange(k); };
+  if (sl) sl.addEventListener("input", () => fire(+sl.value));
+  if (lt) lt.addEventListener("click", () => { if (sl) sl.value = String(dates.length - 1); fire(dates.length - 1); });
+}
+
 // Reads the baked window.VISTAS_CONSENSUS (no client recompute → no parity port). Renders into
 // #consensus-cockpit at the top of the Macro tab.
 let _consSel = null;
@@ -4449,6 +4505,7 @@ function renderConsensus() {
          <p><b>Why:</b> This is the <i>street lens</i> of the market — whose estimates are rising, which driver (revenue / earnings / EBITDA / recommendation) is moving them, and whether real money (fund flow) agrees. Gaps between the EW line, the FF snapshot and the flow are the signal.</p>
          <p class="src">Source: LSEG StarMine ARM (sector aggregates only) · ARM asof ${C.arm_asof || "—"} · flow asof ${C.flow_asof || "—"}. ARM IC is small (~0.03-0.045) and ~1-3 month horizon — a tilt, not a verdict.</p>
        </details>
+       <div class="ab-ctlrow" id="cons-snap-dn"></div>
        <div class="plot" id="cons-snapshot" style="height:380px"></div>
      </section>
      <section class="panel cpanel">
@@ -4466,17 +4523,27 @@ function renderConsensus() {
      </section>`;
   host.querySelectorAll(".cchip").forEach((b) => b.addEventListener("click", () => { _consSel = b.dataset.sec; renderConsensus(); }));
 
-  // (1) cross-sector snapshot: EW vs FF bars, sorted by EW desc, with a 50 neutral line
-  const ord = sectors.slice().sort((a, b) => ((C.snap[b.key] || {}).ew || 0) - ((C.snap[a.key] || {}).ew || 0));
-  const yN = ord.map((s) => s.name);
-  const ewV = ord.map((s) => (C.snap[s.key] || {}).ew);
-  const ffV = ord.map((s) => (C.snap[s.key] || {}).ff);
-  _consPlot("cons-snapshot",
-    [{ type: "bar", orientation: "h", name: "ARM (EW)", y: yN, x: ewV, marker: { color: ewV.map(_armColor) } },
-     { type: "bar", orientation: "h", name: "ARM (FF-mcap, now)", y: yN, x: ffV, marker: { color: "#c3cad3" } }],
-    { barmode: "group", xaxis: { title: "ARM 0-100 (50 = neutral)", gridcolor: "#dfe3e8", range: [0, Math.max(70, Math.ceil((Math.max.apply(null, ewV.concat(ffV).filter((v) => v != null)) + 5) / 5) * 5)] },
-      yaxis: { automargin: true }, margin: { l: 8, r: 18, t: 8, b: 36 }, height: 380,
-      shapes: [{ type: "line", x0: 50, x1: 50, y0: -0.5, y1: yN.length - 0.5, line: { color: "#5b6770", width: 1, dash: "dot" } }] });
+  // (1) cross-sector snapshot: EW (navigable across C.dates) vs FF (latest-only — no mcap history), 50 line
+  const _cdates = C.dates || [];
+  const ewAtK = (key, k) => { const s = (C.ew && C.ew[key]) || []; return (s[k] == null ? null : s[k]); };
+  const drawConsSnap = (k) => {
+    const li = _cdates.length - 1;
+    const idx = (k == null) ? li : Math.max(0, Math.min(li, k));
+    const atL = (idx === li) || li < 0;
+    const ord = sectors.slice().sort((a, b) => (ewAtK(b.key, idx) || 0) - (ewAtK(a.key, idx) || 0));
+    const yN = ord.map((s) => s.name);
+    const ewV = ord.map((s) => ewAtK(s.key, idx));
+    const tr = [{ type: "bar", orientation: "h", name: "ARM (EW)", y: yN, x: ewV, marker: { color: ewV.map(_armColor) } }];
+    if (atL) tr.push({ type: "bar", orientation: "h", name: "ARM (FF-mcap, latest)", y: yN, x: ord.map((s) => (C.snap[s.key] || {}).ff), marker: { color: "#c3cad3" } });
+    const allv = ewV.concat(atL ? ord.map((s) => (C.snap[s.key] || {}).ff) : []).filter((v) => v != null);
+    const rngMax = Math.max(70, Math.ceil(((allv.length ? Math.max.apply(null, allv) : 60) + 5) / 5) * 5);
+    _consPlot("cons-snapshot", tr,
+      { barmode: "group", xaxis: { title: "ARM 0-100 (50 = neutral)" + (atL ? "" : " · EW as of " + (_cdates[idx] || "") + "; FF has no history"), gridcolor: "#dfe3e8", range: [0, rngMax] },
+        yaxis: { automargin: true }, margin: { l: 8, r: 18, t: 8, b: 36 }, height: 380,
+        shapes: [{ type: "line", x0: 50, x1: 50, y0: -0.5, y1: yN.length - 0.5, line: { color: "#5b6770", width: 1, dash: "dot" } }] });
+  };
+  { const dn = $("cons-snap-dn"); if (dn) dateNavControl(dn, _cdates, CONS_SNAP_IDX, (k) => { CONS_SNAP_IDX = k; drawConsSnap(k); }); }
+  drawConsSnap(CONS_SNAP_IDX);
 
   // (2) EW ARM history for the selected sector + a 50 neutral reference line
   const ewSeries = (C.ew && C.ew[sel]) || [];
@@ -4665,7 +4732,7 @@ function renderBreadth(B, wrap) {
        </section>
 
        <section class="panel">
-         <h2><span class="tag-sec">SCREEN</span>Sectors with ≥ m% of stocks broken out / golden-crossed (now)</h2>
+         <h2><span class="tag-sec">SCREEN</span>Sectors with ≥ m% of stocks broken out / golden-crossed</h2>
          <details><summary>Definition · Method · Why</summary>
            <p><b>What:</b> the literal allocator question — which sectors have at least <b>m%</b> of their eligible stocks currently at a new high (breakout) or in a golden-cross. <b>Why:</b> a high-breadth sector is one that is <i>already</i> participating broadly (coincident, not a forecast). Drill into a sector to see exactly which stocks qualify (where the deck carries the name lists).</p>
          </details>
@@ -4678,6 +4745,7 @@ function renderBreadth(B, wrap) {
            <span class="ab-ctllbl" style="margin-left:10px">m ≥</span>
            <input type="number" id="ab-m" class="ab-minput" min="0" max="100" step="5" value="${ALLOC_M}"> %
          </div>
+         <div class="ab-ctlrow" id="ab-screen-dn"></div>
          <div id="ab-screen-body"></div>
        </section>
 
@@ -4690,7 +4758,7 @@ function renderBreadth(B, wrap) {
     const wseg = $("ab-wseg");
     if (wseg) wseg.querySelectorAll(".ab-wbtn").forEach((b) => b.addEventListener("click", () => {
       ALLOC_W = b.dataset.w; wseg.querySelectorAll(".ab-wbtn").forEach((x) => x.classList.toggle("on", x.dataset.w === ALLOC_W));
-      _abDrawMarket(B); _abDrawSector(B);
+      _abDrawMarket(B); _abDrawSector(B); _abDrawScreen(B);
     }));
     const ssel = $("ab-sec-sel"); if (ssel) ssel.addEventListener("change", () => { ALLOC_SEC = ssel.value; _abDrawSector(B); });
     const smet = $("ab-sec-metric"); if (smet) smet.addEventListener("change", () => _abDrawSector(B));
@@ -4700,6 +4768,7 @@ function renderBreadth(B, wrap) {
       _abDrawScreen(B);
     }));
     const minp = $("ab-m"); if (minp) minp.addEventListener("input", () => { const v = parseFloat(minp.value); ALLOC_M = isNaN(v) ? 0 : v; _abDrawScreen(B); });
+    const sdn = $("ab-screen-dn"); if (sdn) dateNavControl(sdn, B.dates, ALLOC_SCREEN_IDX, (k) => { ALLOC_SCREEN_IDX = k; _abDrawScreen(B); });
   }
 
   // line-toggle checkboxes for the market chart (rebuilt each render so labels reflect the window)
@@ -4835,19 +4904,42 @@ function _abDrawScreen(B) {
     const nOf = (sec, row) => (row && row.n != null) ? row.n : (snapBy[sec] ? snapBy[sec].n : null);
     const thinOf = (sec, row) => (row && row.thin != null) ? !!row.thin : (snapBy[sec] ? !!snapBy[sec].thin : false);
 
-    const secNames = sc ? Object.keys(sc) : (snapSecs ? snapSecs.map((r) => r.sector) : []);
-    if (!secNames.length) { host.innerHTML = `<div class="empty-note">No per-sector snapshot in this deck.</div>`; return; }
-    const rows = secNames.map((sec) => {
-      const row = sc ? sc[sec] : null;
-      const pct = rule === "golden_cross" ? gcPct(sec, row) : breakoutPct(sec, row);
-      return { sec, pct, n: nOf(sec, row), thin: thinOf(sec, row), bk: breakoutPct(sec, row), gc: gcPct(sec, row), a200: a200Pct(sec, row), snap: snapBy[sec] || null };
-    }).filter((r) => r.pct != null && !r.thin);
+    // time-nav: latest uses screen_current (rich, with name lists); a past date is derived from the
+    // per-sector breadth SERIES baked in B.sectors (no name drill-down at past dates — not baked).
+    const _dates = B.dates || [];
+    const _latestIdx = _dates.length - 1;
+    const _idx = (ALLOC_SCREEN_IDX == null) ? _latestIdx : Math.max(0, Math.min(_latestIdx, ALLOC_SCREEN_IDX));
+    const _atLatest = (_idx === _latestIdx) || _latestIdx < 0;
+    const _asofLbl = (_dates.length && _idx >= 0) ? _dates[_idx] : "latest";
+    let rows;
+    if (_atLatest) {
+      const secNames = sc ? Object.keys(sc) : (snapSecs ? snapSecs.map((r) => r.sector) : []);
+      if (!secNames.length) { host.innerHTML = `<div class="empty-note">No per-sector snapshot in this deck.</div>`; return; }
+      rows = secNames.map((sec) => {
+        const row = sc ? sc[sec] : null;
+        const pct = rule === "golden_cross" ? gcPct(sec, row) : breakoutPct(sec, row);
+        return { sec, pct, n: nOf(sec, row), thin: thinOf(sec, row), bk: breakoutPct(sec, row), gc: gcPct(sec, row), a200: a200Pct(sec, row), snap: snapBy[sec] || null };
+      }).filter((r) => r.pct != null && !r.thin);
+    } else {
+      const secObj = B.sectors || {};
+      const pickAt = (arr) => (Array.isArray(arr) && arr[_idx] != null) ? arr[_idx] : null;
+      rows = Object.keys(secObj).map((sec) => {
+        const s = secObj[sec];
+        const bk = (s && s.pct_new_high) ? pickAt(s.pct_new_high[ALLOC_W]) : null;
+        const gc = s ? pickAt(s.pct_golden_cross) : null;
+        const a200 = s ? pickAt(s.pct_above_200dma) : null;
+        const n = s ? pickAt(s.eligible_n) : null;
+        const pct = rule === "golden_cross" ? gc : bk;
+        return { sec, pct, n, thin: false, bk, gc, a200, snap: null };
+      }).filter((r) => r.pct != null);
+      if (!rows.length) { host.innerHTML = `<div class="empty-note">No per-sector breadth on ${fEsc(String(_asofLbl))}.</div>`; return; }
+    }
     rows.sort((a, b) => (b.pct || 0) - (a.pct || 0));
     const hit = rows.filter((r) => r.pct >= m);
     const wlbl = _AB_WLBL[ALLOC_W] || "";
     const ruleLbl = rule === "golden_cross" ? "golden-crossed" : `at a ${wlbl} high`;
 
-    let h = `<div class="ab-screen-head">${hit.length} of ${rows.length} sectors have ≥ <b>${m}%</b> of stocks ${ruleLbl}.</div>`;
+    let h = `<div class="ab-screen-head">${hit.length} of ${rows.length} sectors have ≥ <b>${m}%</b> of stocks ${ruleLbl} <span class="namuted">(as of ${fEsc(String(_asofLbl))}${_atLatest ? "" : " — historical; drag to latest for name drill-downs"})</span>.</div>`;
     h += `<table class="gauge-tbl ab-screen-tbl"><thead><tr><th>Sector</th><th class="num">n</th>`
        + `<th class="num">% ${rule === "golden_cross" ? "golden-cross" : "breakout (" + wlbl + ")"}</th>`
        + `<th class="num">% golden-cross</th><th class="num">% &gt; 200-DMA</th><th></th></tr></thead><tbody>`;
