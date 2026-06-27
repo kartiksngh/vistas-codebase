@@ -71,6 +71,34 @@ const server = http.createServer((req, res) => {
     };
   });
 
+  // #106 — flow-basis decomposition toggle: 3 options (gross / price-adj / net-active); switching must
+  // re-render the scatter on the new basis (markers + rows + 4 chips present, x-axis title reflects the
+  // basis) with no throws, then reset to the default for the subsequent filter tests.
+  const basis = await page.evaluate(async () => {
+    const seg = document.getElementById("screen-basis");
+    const btns = seg ? Array.from(seg.querySelectorAll("button")).map((b) => b.dataset.basis) : [];
+    const def = (seg && (seg.querySelector("button.active") || {}).dataset || {}).basis || null;
+    const click = async (k) => {
+      const b = Array.from(document.querySelectorAll("#screen-basis button")).find((x) => x.dataset.basis === k);
+      if (b) b.click();
+      await new Promise((r) => setTimeout(r, 900));
+      const el = document.getElementById("plot-screen");
+      let title = "";
+      try { title = (el && el._fullLayout && el._fullLayout.xaxis && el._fullLayout.xaxis.title && el._fullLayout.xaxis.title.text) || ""; } catch (e) {}
+      if (!title) { const t = el && el.querySelector(".xtitle"); title = t ? t.textContent : ""; }
+      return {
+        markers: el ? el.querySelectorAll(".scatterlayer .points path.point").length : 0,
+        rows: document.querySelectorAll("#screen-body table.screen-tbl tbody tr").length,
+        chips: document.querySelectorAll("#screen-body .screen-chip").length, title,
+      };
+    };
+    const netActive = await click("net_active");
+    const gross = await click("gross");
+    await click("price_adj");                    // reset to default for the subsequent filter tests
+    return { present: !!seg, btns, def, netActive, gross };
+  });
+  console.log("flow-basis toggle:", JSON.stringify(basis));
+
   // pick the first real AMC in the dropdown → rows must filter to a subset (>0, <= all)
   const filt = await page.evaluate(async () => {
     const sel = document.getElementById("screen-amc");
@@ -154,9 +182,12 @@ const server = http.createServer((req, res) => {
   const magOk = !mag.has || (mag.after <= mag.before && mag.hasFunnel);           // (c2) ₹cr threshold reduces + funnel shown
   const colOk = !colf.has || (colf.after < colf.before);                          // (d) Excel column filter reduces
   const enrichOk = enrich.hasFlow6 && enrich.hasFlow12 && enrich.hasOwn && enrich.pctHdr && enrich.crHdr && enrich.rowsAfter > 0;
-  console.log("gates:", JSON.stringify({ universeLarge, filtOk, magOk, colOk, enrichOk }));
+  const basisOk = basis.present && basis.btns.length === 3 && basis.def === "price_adj"
+    && basis.netActive.markers > 0 && basis.netActive.rows > 0 && basis.netActive.chips === 4
+    && /net-active/i.test(basis.netActive.title) && basis.gross.markers > 0 && /gross/i.test(basis.gross.title);
+  console.log("gates:", JSON.stringify({ universeLarge, filtOk, magOk, colOk, enrichOk, basisOk }));
   const ok = errs.length === 0 && tabEnabled && def.isPlotly && def.markers > 0 && universeLarge && def.chips === 4
-    && def.amcOpts > 1 && def.hasMeth && oneM.markers > 0 && filtOk && magOk && colOk && sorted.rows > 0 && enrichOk;
+    && def.amcOpts > 1 && def.hasMeth && oneM.markers > 0 && filtOk && magOk && colOk && sorted.rows > 0 && enrichOk && basisOk;
   console.log("\n" + (ok
     ? "PASS: all-stocks Screens — large universe, AMC + ₹cr magnitude filters with coverage funnel, Excel column filters, %↔₹ toggle, sort, scatter all work; 0 throws."
     : "FAIL: see above."));

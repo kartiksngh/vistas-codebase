@@ -179,9 +179,9 @@ def main(argv=None):
     except Exception:
         pass
     if args.cmd == "start":
-        cmd_start(args.asof)
+        cmd_start(args.asof, amc=args.amc)
     elif args.cmd == "finish":
-        cmd_finish(args.asof, args.decisions, dry_run=args.dry_run)
+        cmd_finish(args.asof, args.decisions, amc=args.amc, dry_run=args.dry_run)
     elif args.cmd == "publish":
         cmd_publish(args.no_push, args.no_backup)
     elif args.cmd == "mark":
