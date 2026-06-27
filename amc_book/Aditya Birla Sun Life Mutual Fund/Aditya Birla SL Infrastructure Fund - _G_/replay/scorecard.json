@@ -10,11 +10,21 @@
   "cost_bps": 15.0,
   "brain": "momentum_led",
   "brain_thesis": "Ride the strongest trends (6m price momentum) but only where analysts confirm and the name isn't egregiously expensive \u2014 a fast, trend-following desk.",
-  "avg_universe": 1169.0,
-  "avg_arm_cov_pct": 64.1,
-  "avg_dead_included": 69.9,
+  "restricted_to_theme": true,
+  "theme_sectors": [
+   "Auto",
+   "Energy",
+   "Financials",
+   "Industrials",
+   "Materials",
+   "RealtyInfra",
+   "TelecomMedia"
+  ],
+  "avg_universe": 320.0,
+  "avg_arm_cov_pct": 89.3,
+  "avg_dead_included": 0.0,
   "avg_holdings": 50.0,
-  "avg_oneway_turnover_pct": 45.59
+  "avg_oneway_turnover_pct": 33.0
  },
  "scorecard": {
   "window": {
@@ -23,38 +33,38 @@
    "years": 11.4
   },
   "book": {
-   "cagr_pct": 21.84,
-   "vol_pct": 24.58,
-   "sharpe": 0.94,
-   "maxdd_pct": -46.31,
-   "final_nav": 950.36
+   "cagr_pct": 29.85,
+   "vol_pct": 22.26,
+   "sharpe": 1.31,
+   "maxdd_pct": -42.49,
+   "final_nav": 1965.46
   },
-  "benchmark_name": "NIFTY 500",
+  "benchmark_name": "NIFTY INFRASTRUCTURE",
   "benchmark": {
-   "cagr_pct": 12.03,
-   "vol_pct": 16.21,
-   "maxdd_pct": -38.11,
-   "excess_cagr_pct": 9.8,
-   "tracking_error_pct": 16.23,
-   "info_ratio": 0.6,
-   "beta": 1.15,
-   "up_capture": 1.23,
-   "down_capture": 1.15
+   "cagr_pct": 11.19,
+   "vol_pct": 18.56,
+   "maxdd_pct": -41.03,
+   "excess_cagr_pct": 18.66,
+   "tracking_error_pct": 13.87,
+   "info_ratio": 1.35,
+   "beta": 0.94,
+   "up_capture": 1.01,
+   "down_capture": 0.84
   },
   "real_scheme": {
    "matched_name": "Aditya Birla Sun Life Infrastructure Fund - Growth - Direct Plan",
    "real_cagr_pct": 13.63,
-   "book_cagr_pct": 21.84,
-   "book_minus_real_cagr_pct": 8.21,
+   "book_cagr_pct": 29.85,
+   "book_minus_real_cagr_pct": 16.22,
    "overlap_years": 11.4
   },
   "fundamental_law": {
-   "ic_mean": 0.0438,
-   "ic_tstat": 4.69,
-   "transfer_coefficient": 0.484,
+   "ic_mean": 0.0473,
+   "ic_tstat": 4.4,
+   "transfer_coefficient": 0.714,
    "breadth_per_year_UPPER": 600.0,
-   "implied_IR_UPPER": 0.52,
-   "realized_IR_vs_bench": 0.6,
+   "implied_IR_UPPER": 0.83,
+   "realized_IR_vs_bench": 1.35,
    "note": "IC = mean cross-sectional Spearman(ARM score, next-rebalance return) over the candidate universe; TC = mean corr(actual target weights, unconstrained score-weights); BR is an UPPER bound (monthly holdings are NOT independent \u2014 true breadth is far lower), so implied_IR is an upper bound on what the signal could deliver, to be read against the realized IR."
   }
  }

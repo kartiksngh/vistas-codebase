@@ -10,11 +10,15 @@
   "cost_bps": 15.0,
   "brain": "momentum_led",
   "brain_thesis": "Ride the strongest trends (6m price momentum) but only where analysts confirm and the name isn't egregiously expensive \u2014 a fast, trend-following desk.",
-  "avg_universe": 1169.0,
-  "avg_arm_cov_pct": 64.1,
-  "avg_dead_included": 69.9,
-  "avg_holdings": 50.0,
-  "avg_oneway_turnover_pct": 45.37
+  "restricted_to_theme": true,
+  "theme_sectors": [
+   "Healthcare"
+  ],
+  "avg_universe": 44.0,
+  "avg_arm_cov_pct": 96.4,
+  "avg_dead_included": 0.0,
+  "avg_holdings": 41.3,
+  "avg_oneway_turnover_pct": 10.58
  },
  "scorecard": {
   "window": {
@@ -23,38 +27,38 @@
    "years": 11.4
   },
   "book": {
-   "cagr_pct": 21.84,
-   "vol_pct": 24.43,
-   "sharpe": 0.95,
-   "maxdd_pct": -47.26,
-   "final_nav": 951.01
+   "cagr_pct": 19.45,
+   "vol_pct": 16.29,
+   "sharpe": 1.19,
+   "maxdd_pct": -26.6,
+   "final_nav": 758.11
   },
-  "benchmark_name": "NIFTY 500",
+  "benchmark_name": "NIFTY HEALTHCARE INDEX",
   "benchmark": {
-   "cagr_pct": 12.03,
-   "vol_pct": 16.21,
-   "maxdd_pct": -38.11,
-   "excess_cagr_pct": 9.81,
-   "tracking_error_pct": 16.1,
-   "info_ratio": 0.61,
-   "beta": 1.14,
-   "up_capture": 1.23,
-   "down_capture": 1.14
+   "cagr_pct": 9.37,
+   "vol_pct": 17.99,
+   "maxdd_pct": -43.1,
+   "excess_cagr_pct": 10.07,
+   "tracking_error_pct": 10.24,
+   "info_ratio": 0.98,
+   "beta": 0.75,
+   "up_capture": 0.78,
+   "down_capture": 0.67
   },
   "real_scheme": {
    "matched_name": "Aditya Birla Sun Life Pharma and Healthcare Fund-Direct-Growth",
    "real_cagr_pct": 21.11,
-   "book_cagr_pct": 28.85,
-   "book_minus_real_cagr_pct": 7.75,
+   "book_cagr_pct": 30.2,
+   "book_minus_real_cagr_pct": 9.09,
    "overlap_years": 6.96
   },
   "fundamental_law": {
-   "ic_mean": 0.0438,
-   "ic_tstat": 4.69,
-   "transfer_coefficient": 0.502,
-   "breadth_per_year_UPPER": 600.0,
-   "implied_IR_UPPER": 0.54,
-   "realized_IR_vs_bench": 0.61,
+   "ic_mean": 0.0433,
+   "ic_tstat": 2.73,
+   "transfer_coefficient": 0.842,
+   "breadth_per_year_UPPER": 495.0,
+   "implied_IR_UPPER": 0.81,
+   "realized_IR_vs_bench": 0.98,
    "note": "IC = mean cross-sectional Spearman(ARM score, next-rebalance return) over the candidate universe; TC = mean corr(actual target weights, unconstrained score-weights); BR is an UPPER bound (monthly holdings are NOT independent \u2014 true breadth is far lower), so implied_IR is an upper bound on what the signal could deliver, to be read against the realized IR."
   }
  }

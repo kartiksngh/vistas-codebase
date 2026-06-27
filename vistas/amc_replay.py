@@ -212,10 +212,34 @@ def _norm_idx(s):
     return re.sub(r"\b(TRI|TR|PRI|INDEX|TOTAL RETURN)\b", "", str(s or "").upper()).strip()
 
 
+# A fenced SECTOR/THEMATIC fund must be scored against its own SECTOR TR index, not a broad one — else
+# sector beta masquerades as selection skill (a Manufacturing book fenced to industrials/auto/materials
+# shows ~20% 'excess' vs NIFTY 500 that is almost all the 2015-26 manufacturing super-cycle, IR ~1.6 —
+# implausible as skill; the Fundamental Law says strip the beta to read true IC·√BR·TC). Scheme-name
+# keyword → the available NSE sector TR index. First match wins; only applied to theme-fenced funds.
+_THEME_BENCHMARK = [
+    ("pharma", "NIFTY HEALTHCARE INDEX"), ("healthcare", "NIFTY HEALTHCARE INDEX"),
+    ("bank", "NIFTY FINANCIAL SERVICES"), ("financial", "NIFTY FINANCIAL SERVICES"),
+    ("digital", "NIFTY INDIA DIGITAL"), ("technology", "NIFTY IT"), ("infotech", "NIFTY IT"),
+    ("manufactur", "NIFTY INDIA MANUFACTURING"),
+    ("infrastructure", "NIFTY INFRASTRUCTURE"),
+    ("transport", "NIFTY TRANSPORTATION & LOGISTICS"), ("logistic", "NIFTY TRANSPORTATION & LOGISTICS"),
+    ("consumption", "NIFTY INDIA CONSUMPTION"), ("consumer", "NIFTY INDIA CONSUMPTION"),
+    ("auto", "NIFTY AUTO"), ("energy", "NIFTY ENERGY"), ("metal", "NIFTY METAL"),
+    ("realty", "NIFTY REALTY"), ("fmcg", "NIFTY FMCG"), ("media", "NIFTY MEDIA"),
+]
+
+
 def _bench_for(reg_entry):
-    """Pick the best real NSE TR index name (present in data.available()) for this scheme: match the
-    scheme's stated benchmark string, else fall back by the mandate's market-cap buckets."""
+    """Pick the best real NSE TR index name (present in data.available()) for this scheme: a theme-fenced
+    sector fund → its SECTOR index (so excess = within-sector selection skill, not sector beta); else match
+    the scheme's stated benchmark string, else fall back by the mandate's market-cap buckets."""
     avail = list(_data.available())
+    if theme_sectors_for(reg_entry):                     # only the genuinely fenced sector/thematic funds
+        nm = str(reg_entry.get("scheme") or "").lower()
+        for kw, idx in _THEME_BENCHMARK:
+            if kw in nm and idx in avail:
+                return idx
     target = _norm_idx(reg_entry.get("benchmark"))
     best, blen = None, -1
     for a in avail:
@@ -235,6 +259,68 @@ def _bench_for(reg_entry):
 
 
 # ───────────────────────────────────────────────────────── point-in-time universe
+# ───────────────────────────────────────────────────────── theme restriction (sector/thematic schemes)
+_THEME_SKIP_SECTORS = {"Unclassified", "Diversified"}   # holding-co / catch-all buckets don't DEFINE a theme
+# Characteristic (cross-sector, ownership/style-defined) themes that must stay BROAD — a sector fence would
+# mislabel the track (no PSU/MNC/ESG ownership flag exists). Matched as substrings of the scheme name.
+_CHARACTERISTIC_THEME_KEYWORDS = ("psu", "mnc", "esg", "business cycle", "quant",
+                                  "special opp", "special situation", "conglomerate", "dividend yield")
+
+
+def theme_sectors_for(reg_entry, weight_floor=3.0, max_theme_sectors=7):
+    """The desk-sectors a SECTOR/THEMATIC scheme is restricted to (or None = diversified → broad universe),
+    derived from the scheme's real disclosed equity holdings mapped to the SAME desk-sector taxonomy the
+    universe uses (`_sector_map`) — so the theme filter is taxonomy-aligned BY CONSTRUCTION (no taxonomy
+    mismatch bug). A scheme is 'thematic' iff it carries MEANINGFUL weight (≥ `weight_floor`% of its mapped
+    equity sleeve) in only a SMALL number (≤ `max_theme_sectors`) of the desk-sectors: a Pharma fund lives
+    in 1, an Infra fund in ~3-4, while a diversified Flexi/Large/Value fund spreads across ≥6.
+
+    Used in TWO places with one definition: the LIVE FM desk (amc_live.prepare_desk restricts the names an
+    FM may ADD) AND the HISTORICAL replay (replay restricts the point-in-time universe it water-fills) — so
+    a thematic scheme's paper track is built only from on-theme names, not the whole market.
+
+    LIMITATION (honest): a CHARACTERISTIC theme is defined by an OWNERSHIP or STYLE attribute that cuts
+    ACROSS sectors, not by a sector — PSU (govt-owned), MNC (foreign-parent), ESG (screen), Business Cycle
+    / Quant / Special-Situations (rotation style). Fencing such a fund to the sectors it happens to
+    concentrate in would MISLABEL the track (a "PSU" book holding private Reliance, since the filter is on
+    SECTOR not on ownership). We have no point-in-time PSU/MNC/ESG eligibility flag, so the honest choice is
+    to leave these on the BROAD universe (force-broad keyword guard below). Only TRUE sector themes
+    (Banking, Pharma, Digital/Tech, Consumption, Transport, Manufacturing, Infra) are fenced."""
+    # CATEGORY GATE: only a SEBI "Sectoral / Thematic" scheme is ever theme-restricted. Diversified
+    # mandates (Flexi/Large/Multi-Cap/Value/Dividend-Yield/Large&Mid/Equity-Savings/ELSS/Focused/Hybrid)
+    # invest across the whole market by DESIGN — they must stay broad even if their current book happens
+    # to concentrate in a few sectors.
+    cat = str(reg_entry.get("category") or "").lower()
+    if "thematic" not in cat and "sector" not in cat:
+        return None
+    # CHARACTERISTIC-THEME GUARD: a theme defined by ownership/style (PSU/MNC/ESG/business-cycle/quant/
+    # special-situations/conglomerate/dividend-yield), NOT by a sector, cuts across the whole market — a
+    # sector fence would mislabel it. No ownership flag exists, so leave it broad (the live LLM FM still
+    # self-restricts via the scheme name + its inherited book; the rules-replay is a go-anywhere proxy,
+    # exactly as the real fund is). Keyword-matched on the scheme NAME (robust to category-string variants).
+    name = str(reg_entry.get("scheme") or "").lower()
+    if any(k in name for k in _CHARACTERISTIC_THEME_KEYWORDS):
+        return None
+    smap = _sector_map()
+    if not smap:
+        return None
+    w, tot = {}, 0.0
+    for h in reg_entry.get("real_holdings", []):
+        sym = str(h.get("symbol") or "").upper()
+        pct = af._f(h.get("pct"))
+        if not sym or pct <= 0:
+            continue
+        sec = smap.get(sym)
+        if not sec or sec in _THEME_SKIP_SECTORS:
+            continue
+        w[sec] = w.get(sec, 0.0) + pct
+        tot += pct
+    if tot <= 0 or not w:
+        return None
+    meaningful = {s for s, ww in w.items() if 100.0 * ww / tot >= weight_floor} or {max(w, key=w.get)}
+    return meaningful if len(meaningful) <= max_theme_sectors else None
+
+
 def point_in_time_universe(asof_ts, theme_sectors=None):
     """The survivorship-clean investable universe AS-OF `asof_ts` (a Timestamp in the panel index):
     every symbol actively trading on/near asof, tagged with last price, trailing-median turnover,
@@ -410,6 +496,9 @@ def replay(reg_entry, start=DEFAULT_START, end=None, cost_bps=COST_BPS, brain_id
     if aum0 <= 0:
         raise ValueError("scheme AUM is zero — cannot seed a book")
     brain_id = brain_id or reg_entry.get("brain") or af.brain_for_mandate(reg_entry.get("category"), reg_entry.get("mandate"))
+    theme = theme_sectors_for(reg_entry)            # sector/thematic schemes → restrict the universe to the theme
+    if theme:
+        log(f"   theme-restricted replay universe → {', '.join(sorted(theme))}")
     cal = panel.index
     cal = cal[(cal >= pd.Timestamp(start)) & (cal <= pd.Timestamp(end))] if end else cal[cal >= pd.Timestamp(start)]
     if len(cal) < 60:
@@ -452,7 +541,7 @@ def replay(reg_entry, start=DEFAULT_START, end=None, cost_bps=COST_BPS, brain_id
                     if p0 and p1 == p1 and p1 and p0 > 0:
                         xs.append(sc); ys.append(p1 / p0 - 1.0)
                 ic_samples.append(_spearman(xs, ys))
-            uni, umeta = point_in_time_universe(t)
+            uni, umeta = point_in_time_universe(t, theme_sectors=theme)
             if not uni:
                 pending_ic = None
                 monthly.append({"date": t.strftime("%Y-%m-%d"), "nav": round(nav, 4),
@@ -482,6 +571,8 @@ def replay(reg_entry, start=DEFAULT_START, end=None, cost_bps=COST_BPS, brain_id
     diag = {"aum0_cr": round(aum0, 1), "start": str(nav.index[0].date()), "end": str(nav.index[-1].date()),
             "n_rebalances": len(rebset), "cost_bps": cost_bps, "brain": brain_id,
             "brain_thesis": af.BRAINS.get(brain_id, {}).get("thesis"),
+            "restricted_to_theme": bool(theme),
+            "theme_sectors": (sorted(theme) if theme else None),
             "avg_universe": round(float(np.nanmean(cov_uni)), 0) if cov_uni else None,
             "avg_arm_cov_pct": round(float(np.nanmean(cov_arm)), 1) if cov_arm else None,
             "avg_dead_included": round(float(np.nanmean(cov_dead)), 1) if cov_dead else None,

@@ -1940,6 +1940,18 @@ let SCREEN_TROUBLED = false;           // optional "troubled only" preset (price
 let SCREEN_COLF = {};                  // Excel-like per-column filters: {key: ">5" | "<0" | "10-50" | ...}
 let SCREEN_SORT = { key: "mcap_cr", dir: -1 };
 let SCREEN_DATA = null;                // lazy-fetched full screen object (rows are ~1.5MB, not inlined)
+let SCREEN_FLOW_BASIS = "price_adj";   // #106 FM-axis flow basis: "price_adj" (legacy default) | "gross" | "net_active"
+const SCREEN_BASIS_LABEL = { price_adj: "Price-adjusted", gross: "Gross", net_active: "Net-active (conviction)" };
+const SCREEN_BASIS_AXIS = {
+  price_adj: "price-adjusted net flow (₹cr, signed-log)",
+  gross: "gross flow — price + inflow + active (₹cr, signed-log)",
+  net_active: "net-active conviction flow — inflow-immune (₹cr, signed-log)",
+};
+const SCREEN_BASIS_DEF = {
+  price_adj: "strips price drift only (= the legacy axis); still carries new scheme money deployed pro-rata",
+  gross: "the raw ₹ change in MF holdings — price move + scheme inflows + active conviction, undecomposed",
+  net_active: "weight-space conviction, inflow-immune — the rupees managers re-weighted toward the stock independent of price and fresh inflows (the truest read of conviction)",
+};
 const SCREEN_QCOL = { 1: "#2ca02c", 2: "#1f77b4", 3: "#9467bd", 4: "#8a8f98" };
 const SCREEN_DET = { "operating": { c: "#d62728", t: "operating" }, "headline-only": { c: "#ff7f0e", t: "headline-only" }, "mixed": { c: "#e0a000", t: "mixed" } };
 // --- Quadrant-rotation (A3) state ---
@@ -2064,6 +2076,35 @@ function screenColMatch(v, expr) {
 const SCREEN_FILT_COLS = ["ret_6m", "dd_52w", "eps_yoy", "ebitda_yoy", "arm", "flow_1m", "flow_3m",
   "flow_6m", "flow_12m", "net_breadth", "quadrant", "own_promoter", "own_fii", "own_dii", "own_public", "mf_pct_mcap", "namc"];
 
+// #106 — remap each row's FM-axis values to the selected flow basis (gross / price-adjusted / net-active),
+// recomputing the buying flags, quadrant, and 3M-vs-1M agreement so filters/sort/table/scatter/trail all
+// follow it. Returns NEW shallow copies — never mutates the shared row store (the Funds tab keeps the
+// default basis). Falls back to the legacy values for an older deck whose rows carry no `fb` block.
+function screenApplyBasis(rows) {
+  const basis = SCREEN_FLOW_BASIS;
+  const quad = (rec, buy) => (rec && buy) ? 1 : (rec && !buy) ? 2 : ((!rec) && buy) ? 3 : 4;
+  return (rows || []).map((r) => {
+    const s = r.fb && r.fb[basis];
+    if (!s) return r;                                   // older deck w/o fb, or missing basis → leave legacy values
+    const c = Object.assign({}, r);
+    c.flow_1m = s[0]; c.flow_3m = s[1]; c.flow_6m = s[2]; c.flow_12m = s[3];
+    c.buying_1m = s[0] > 0; c.buying_3m = s[1] > 0;
+    c.quadrant_1m = quad(r.recommending, c.buying_1m);
+    c.quadrant_3m = quad(r.recommending, c.buying_3m);
+    c.flow_agreement = (c.buying_3m === c.buying_1m) ? "confirmed" : "inflecting";
+    if (Array.isArray(r.traj)) {                        // make the rotation trail follow the basis too
+      c.traj = r.traj.map((p) => {
+        const raw = (basis === "gross") ? p.g : (basis === "net_active") ? p.n : p.flow;
+        const fv = (raw == null) ? p.flow : raw;        // graceful fallback to price-adj on a missing month
+        const a = p.arm;
+        const tq = (a != null && a >= 50 && fv > 0) ? 1 : (a != null && a >= 50) ? 2 : (fv > 0) ? 3 : 4;
+        return Object.assign({}, p, { flow: fv, quad: tq });
+      });
+    }
+    return c;
+  });
+}
+
 // the filter funnel: base -> troubled? -> AMC magnitude -> column filters; returns rows + the coverage stages
 function screenFilter(d) {
   const all = d.rows || [];
@@ -2163,7 +2204,7 @@ function screenScatter(rows, win, qlab) {
   const xlo = Math.min(0, ...xsAll), xhi = Math.max(0, ...xsAll), xpad = Math.max(0.35, (xhi - xlo) * 0.12);
   const layout = baseLayout({
     hovermode: "closest",
-    xaxis: { title: "←  net selling      net active flow (₹cr, signed-log)      net buying  →", tickvals: ticks.map(slog), ticktext: ticks.map(fmtCr), range: [xlo - xpad, xhi + xpad], gridcolor: "#eef1f4", zeroline: false },
+    xaxis: { title: `←  net selling      ${SCREEN_BASIS_AXIS[SCREEN_FLOW_BASIS] || "net flow (₹cr, signed-log)"}      net buying  →`, tickvals: ticks.map(slog), ticktext: ticks.map(fmtCr), range: [xlo - xpad, xhi + xpad], gridcolor: "#eef1f4", zeroline: false },
     yaxis: { title: "LSEG StarMine ARM (analyst-revision score)", range: [-6, 106], gridcolor: "#eef1f4", zeroline: false },
     shapes: [
       { type: "line", x0: 0, x1: 0, yref: "paper", y0: 0, y1: 1, line: { color: "#aab0b8", width: 1, dash: "dot" } },
@@ -2184,7 +2225,8 @@ async function renderScreen() {
   const aum = d.amc_aum || {};
   const amcNames = Object.keys(aum).sort();
   if (SCREEN_AMC && !aum[SCREEN_AMC]) SCREEN_AMC = "";           // selection no longer valid → reset to All MF
-  const ff = screenFilter(d);                                   // base → troubled → AMC magnitude → column filters
+  const dB = Object.assign({}, d, { rows: screenApplyBasis(d.rows) });   // #106 remap the FM axis to the chosen flow basis
+  const ff = screenFilter(dB);                                  // base → troubled → AMC magnitude → column filters
   let rows = ff.rows;
   // Q3 relabel: drop the unproven "FM ahead of the street" lead-lag claim — on our data fund flow
   // does not predict forward returns, so this is a positioning disagreement to investigate, not a signal.
@@ -2210,6 +2252,7 @@ async function renderScreen() {
     .map(([v, l]) => `<option value="${v}"${SCREEN_RUPEE_MIN === v ? " selected" : ""}>${l}</option>`).join("");
   html += `<div class="fb-controls screen-ctl">`
     + `<span class="seg" id="screen-win"><button data-win="3m" class="${win === "3m" ? "active" : ""}">3-month flow</button><button data-win="1m" class="${win === "1m" ? "active" : ""}">1-month flow</button></span>`
+    + `<span class="seg" id="screen-basis" title="How fund buying is measured on the horizontal axis — Gross (raw ₹) → Price-adjusted (price stripped; the legacy axis) → Net-active (inflow-immune conviction, the truest read)"><button data-basis="gross" class="${SCREEN_FLOW_BASIS === "gross" ? "active" : ""}">Gross</button><button data-basis="price_adj" class="${SCREEN_FLOW_BASIS === "price_adj" ? "active" : ""}">Price-adj.</button><button data-basis="net_active" class="${SCREEN_FLOW_BASIS === "net_active" ? "active" : ""}">Net-active</button></span>`
     + `<span class="seg" id="screen-amt" title="ownership & MF columns: percent of market cap, or absolute ₹ crore"><button data-amt="pct" class="${!SCREEN_AMT ? "active" : ""}">%</button><button data-amt="cr" class="${SCREEN_AMT ? "active" : ""}">₹ cr</button></span>`
     + `<label>Holdings of <select id="screen-amc">${amcOpts}</select></label>`
     + `<label>Min holding <select id="screen-rupee">${crOpts}</select></label>`
@@ -2220,7 +2263,7 @@ async function renderScreen() {
   [1, 2, 3, 4].forEach((q) => { html += `<span class="screen-chip" style="border-left-color:${SCREEN_QCOL[q]}"><b style="color:${SCREEN_QCOL[q]}">${qc[q] || 0}</b> ${fEsc(qlab[q] || ("Q" + q))}</span>`; });
   html += `</div>`;
   html += `<div class="plot" id="plot-screen" style="height:460px"></div>`;
-  html += `<div class="q-cap">Bubble size = number of AMCs holding the stock (ownership breadth). Border colour = deterioration type (<span style="color:#d62728">operating</span> / <span style="color:#ff7f0e">headline-only</span> / <span style="color:#e0a000">mixed</span>). Horizontal split at ARM 50 (analysts recommending); vertical split at zero net flow (FMs buying). Stocks without ARM appear in the table only.</div>`;
+  html += `<div class="q-cap"><b>Fund-buying axis = ${fEsc(SCREEN_BASIS_LABEL[SCREEN_FLOW_BASIS])} flow</b> — ${fEsc(SCREEN_BASIS_DEF[SCREEN_FLOW_BASIS])}. Switch the basis with the Gross / Price-adj. / Net-active toggle above; <b>Net-active</b> is the truest conviction read (it removes both price drift and mechanically-deployed scheme inflows). Bubble size = number of AMCs holding the stock (ownership breadth). Border colour = deterioration type (<span style="color:#d62728">operating</span> / <span style="color:#ff7f0e">headline-only</span> / <span style="color:#e0a000">mixed</span>). Horizontal split at ARM 50 (analysts recommending); vertical split at zero flow (FMs net buying). Stocks without ARM appear in the table only.</div>`;
   html += `</section>`;
 
   html += `<section class="panel"><h2><span class="tag-sec">DETAIL</span>Stocks <span class="screen-cnt">(${rows.length})</span> · type Excel-style filters under any column (e.g. <code>&gt;5</code>, <code>&lt;0</code>, <code>10-50</code>)</h2>`;
@@ -2229,7 +2272,7 @@ async function renderScreen() {
 
   html += `<section class="panel"><details><summary>Definition · Method · Why</summary><div class="screen-meth">`
     + `<p><b>What this is.</b> Every stock the mutual-fund industry holds (the names with a money-flow axis), plotted by where the two professional crowds stand: sell-side analysts (ARM) on the vertical, buy-side fund managers (net active flow) on the horizontal. <b>No pre-filter</b> — slice the universe with the <b>AMC-holding</b> filters (pick an AMC, set a minimum ₹cr held and/or a minimum % of that AMC's AUM) and the <b>Excel-style per-column filters</b> (e.g. 6M &lt; 0, ARM &gt; 60). "Troubled only" is the optional old preset (price correction + deteriorating earnings).</p>`
-    + `<p><b>Analyst axis (vertical).</b> LSEG StarMine <b>ARM</b> (0–100; ≥50 = revisions turning up = "recommending"). Each stock shows its <b>ARM as-of date</b> (latest revision change-point); a score not revised in &gt;90 days is flagged <b>stale (⌛)</b> and is NOT counted as recommending. <b>FM axis (horizontal).</b> <b>Corp-action-immune net active flow</b> = Σ over funds of (end − start × (1 + index TR)) — genuine added/trimmed rupees, price-and-split-neutral. 3M default (persistence = conviction); 1M + breadth + a 3M-vs-1M agreement flag alongside.</p>`
+    + `<p><b>Analyst axis (vertical).</b> LSEG StarMine <b>ARM</b> (0–100; ≥50 = revisions turning up = "recommending"). Each stock shows its <b>ARM as-of date</b> (latest revision change-point); a score not revised in &gt;90 days is flagged <b>stale (⌛)</b> and is NOT counted as recommending. <b>FM axis (horizontal) — selectable flow basis (#106).</b> The fund-buying axis decomposes the raw rupee change in MF holdings into three figures you can switch between: <b>Gross</b> = the raw ₹ change (price move + scheme inflows + active conviction, undecomposed); <b>Price-adjusted</b> = Σ over funds of (end − start × (1 + index TR)) — strips price/split drift only, but still carries new scheme money the fund had to deploy pro-rata (this was the legacy axis); <b>Net-active</b> = the weight-space conviction flow, also inflow-immune (the rupees managers actively re-weighted toward the stock, independent of price AND fresh inflows) — the truest read of conviction. 3M default (persistence = conviction); 1M + breadth + a 3M-vs-1M agreement flag alongside. The quadrant, chip counts and rotation trail all recompute on the chosen basis.</p>`
     + `<p><b>AMC filters.</b> Pick an AMC → the funnel shows how many of its holdings survive each threshold (e.g. "395 held → 250 ≥₹10cr → 200 ≥2% of AUM"). "% of AMC AUM" = the position ₹cr ÷ that AMC's total disclosed AUM. MF holdings/AUM are reconstructed from the monthly disclosed portfolios. <b>Ownership columns</b>: Prom/FII/DII/Public (latest quarterly %); Public = retail+HNI+corporates (true retail not separately disclosed); MF = MF industry's % of market cap (a subset of DII). The <b>% ↔ ₹cr</b> toggle flips ownership/MF between percent and rupees.</p>`
     + `<p><b>Deterioration tag.</b> operating = EPS&amp;EBITDA both down; headline-only = EPS down, EBITDA up (one-off/below-the-line); |EPS YoY|&gt;80% ⚠ likely a corp-action artefact.</p>`
     + `<p>We make <b>NO claim that fund managers lead analysts</b> — on our data fund flow does not predict forward returns; each quadrant is a positioning disagreement to investigate, not a signal. The analyst (ARM) axis is forward-validated on our panel; the fund-flow axis is a diagnostic only. <b>Diagnostics only — not buy/sell advice.</b></p>`
@@ -2242,6 +2285,7 @@ async function renderScreen() {
 
   // wire controls
   const seg = $("screen-win"); if (seg) seg.querySelectorAll("button").forEach((b) => { b.onclick = () => { SCREEN_WIN = b.dataset.win; renderScreen(); }; });
+  const bseg = $("screen-basis"); if (bseg) bseg.querySelectorAll("button").forEach((b) => { b.onclick = () => { SCREEN_FLOW_BASIS = b.dataset.basis; renderScreen(); }; });
   const amtSeg = $("screen-amt"); if (amtSeg) amtSeg.querySelectorAll("button").forEach((b) => { b.onclick = () => { SCREEN_AMT = (b.dataset.amt === "cr"); renderScreen(); }; });
   const amc = $("screen-amc"); if (amc) amc.onchange = () => { SCREEN_AMC = amc.value; if (!SCREEN_AMC) SCREEN_PCTAUM_MIN = null; renderScreen(); };
   const rup = $("screen-rupee"); if (rup) rup.onchange = () => { SCREEN_RUPEE_MIN = +rup.value || 0; renderScreen(); };

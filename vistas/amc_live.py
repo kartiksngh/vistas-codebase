@@ -112,51 +112,10 @@ def _book_value(book, asof_str):
 
 
 # ───────────────────────────────────────────────────────── 1) ASSEMBLE the FM desk (no look-ahead)
-_THEME_SKIP_SECTORS = {"Unclassified", "Diversified"}   # holding-co / catch-all buckets don't DEFINE a theme
-
-
-def theme_sectors_for(reg_entry, weight_floor=3.0, max_theme_sectors=7):
-    """The desk-sectors a SECTOR/THEMATIC scheme is restricted to (or None = diversified → broad universe),
-    derived from the scheme's real disclosed equity holdings mapped to the SAME 11 desk-sector taxonomy the
-    universe uses (`ar._sector_map`) — so the theme filter is taxonomy-aligned BY CONSTRUCTION (no taxonomy
-    mismatch bug). A scheme is 'thematic' iff it carries MEANINGFUL weight (≥ `weight_floor`% of its mapped
-    equity sleeve) in only a SMALL number (≤ `max_theme_sectors`) of the 11 desk-sectors: a Pharma fund
-    lives in 1, an Infra fund in ~3-4, while a diversified Flexi/Large/Value fund spreads across ≥6.
-
-    Held names are ALWAYS shown on the desk anyway (prepare_desk unions the current book), so this only
-    restricts the EXPANSION universe (the NEW names an FM may add) to on-theme sectors. And because
-    enforce_guardrails DROPS any proposed name absent from the candidates, the restriction becomes a HARD
-    theme guardrail — a Pharma FM literally cannot add a bank. Returns a set of desk-sectors, or None.
-
-    LIMITATION (honest): a CHARACTERISTIC theme that isn't a sector — PSU (govt-owned), MNC, ESG — spreads
-    across many sectors, so this correctly leaves it on the broad universe (the LLM self-restricts via the
-    scheme name + its inherited book); a true PSU/MNC/ESG eligibility flag is a separate data task."""
-    # CATEGORY GATE: only a SEBI "Sectoral / Thematic" scheme is ever theme-restricted. Diversified
-    # mandates (Flexi/Large/Multi-Cap/Value/Dividend-Yield/Large&Mid/Equity-Savings/ELSS/Focused/Hybrid)
-    # invest across the whole market by DESIGN — they must stay broad even if their current book happens
-    # to concentrate in a few sectors. (Within the thematic category, the ≤max_theme_sectors cut still
-    # lets a genuinely go-anywhere thematic — Quant / Special Opportunities — fall back to broad.)
-    cat = str(reg_entry.get("category") or "").lower()
-    if "thematic" not in cat and "sector" not in cat:
-        return None
-    smap = ar._sector_map()
-    if not smap:
-        return None
-    w, tot = {}, 0.0
-    for h in reg_entry.get("real_holdings", []):
-        sym = str(h.get("symbol") or "").upper()
-        pct = af._f(h.get("pct"))
-        if not sym or pct <= 0:
-            continue
-        sec = smap.get(sym)
-        if not sec or sec in _THEME_SKIP_SECTORS:
-            continue
-        w[sec] = w.get(sec, 0.0) + pct
-        tot += pct
-    if tot <= 0 or not w:
-        return None
-    meaningful = {s for s, ww in w.items() if 100.0 * ww / tot >= weight_floor} or {max(w, key=w.get)}
-    return meaningful if len(meaningful) <= max_theme_sectors else None
+# theme_sectors_for now lives in amc_replay (the universe layer) so the REPLAY engine can apply the SAME
+# theme restriction the live FM desk does — one definition, used in both places. Re-exported here unchanged
+# so prepare_desk (and any other caller in this module) keeps working exactly as before.
+theme_sectors_for = ar.theme_sectors_for
 
 
 def prepare_desk(reg_entry, asof_str, top_n=70, write=True):
@@ -506,28 +465,37 @@ def pilot_reg_entries(min_aum_cr=500.0):
     return out
 
 
-def prepare_round(asof_str, log=print):
-    """Assemble + write the desk file for each pilot so the FM agents can Read them. Returns the manifest
+def reg_entries_for(amc=None, min_aum_cr=200.0):
+    """The reg-entries for a live-forward round: the FULL per-AMC firm (all equity/hybrid desks of `amc`,
+    e.g. 'Aditya Birla Sun Life' → 28 schemes) when `amc` is given, else the 4 cross-AMC pilots."""
+    return amc_reg_entries(amc, equity_only=True, min_aum_cr=min_aum_cr) if amc else pilot_reg_entries()
+
+
+def prepare_round(asof_str, amc=None, min_aum_cr=200.0, log=print):
+    """Assemble + write the desk file for each scheme in the round so the FM agents can Read them. `amc`
+    (e.g. 'Aditya Birla Sun Life') runs the FULL per-AMC firm — one desk per distinct equity/hybrid fund;
+    amc=None runs the 4 cross-AMC pilots. Returns the manifest
     [{slug, scheme, amc, category, fm_key, path, n_candidates, n_held, aum_cr}] the Workflow consumes."""
     os.makedirs(DESK_DIR, exist_ok=True)
     manifest = []
-    for re_ in pilot_reg_entries():
+    for re_ in reg_entries_for(amc, min_aum_cr):
         ctx = prepare_desk(re_, asof_str, write=True)
         manifest.append({"slug": slug(re_["scheme"]), "scheme": re_["scheme"], "amc": re_["amc"],
                          "category": re_["category"], "fm_key": _FM_KEY.get(re_["category"], "flexicap"),
                          "path": ctx["_path"], "n_candidates": len(ctx["candidates"]),
                          "n_held": ctx["current_book"]["n_holdings"], "aum_cr": ctx["aum_cr"]})
         log(f"[prep] {re_['scheme']}: desk written ({len(ctx['candidates'])} candidates, {ctx['current_book']['n_holdings']} held)")
-    json.dump({"asof": asof_str, "schemes": manifest},
+    json.dump({"asof": asof_str, "amc": amc, "schemes": manifest},
               open(os.path.join(LIVE_DIR, "round_manifest.json"), "w", encoding="utf-8"), indent=1)
     return manifest
 
 
-def apply_round(asof_str, decisions, cio=None, log=print):
+def apply_round(asof_str, decisions, cio=None, amc=None, min_aum_cr=200.0, log=print):
     """`decisions` = {slug: {stance, experience_note, tickets:[{sym, action, target_pct, play_type,
     rationale, thesis, falsification}]}} from the Workflow. Re-assembles each desk, guardrails + executes
-    each FM's targets onto the book, marks, and writes the round summary. Returns the summaries list."""
-    by_slug = {slug(re_["scheme"]): re_ for re_ in pilot_reg_entries()}
+    each FM's targets onto the book, marks, and writes the round summary. Returns the summaries list.
+    `amc` selects the SAME roster `prepare_round` used (the per-AMC firm); amc=None = the 4 pilots."""
+    by_slug = {slug(re_["scheme"]): re_ for re_ in reg_entries_for(amc, min_aum_cr)}
     summaries = []
     for sl, re_ in by_slug.items():
         dec = decisions.get(sl) or {}

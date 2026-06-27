@@ -113,6 +113,10 @@ def build_smart_vs_street(site_data_dir, root, nse500=None, progress=None):
 
     # universe = NSE-500 constituents UNION every stock any MF holds this month (the names with an FM axis).
     universe = sorted(set(cons.keys()) | set(held_syms))
+    def _wsum(ser):                                   # 1/3/6/12-mo trailing sums of a flow figure (skip non-numeric)
+        s = [x for x in (ser or []) if isinstance(x, (int, float))]
+        return [round(s[-1], 1) if s else 0.0, round(sum(s[-3:]), 1) if s else 0.0,
+                round(sum(s[-6:]), 1) if s else 0.0, round(sum(s[-12:]), 1) if s else 0.0]
     rows = []
     for sym in universe:
         q = _jload(os.path.join(site_data_dir, "quant", sym + ".json"))
@@ -143,6 +147,11 @@ def build_smart_vs_street(site_data_dir, root, nse500=None, progress=None):
         flow_3m = sum(flowser[-3:]) if flowser else 0.0
         flow_6m = sum(flowser[-6:]) if flowser else 0.0
         flow_12m = sum(flowser[-12:]) if flowser else 0.0
+        # #106 flow-axis decomposition: trailing sums for each of the three flow figures so the FM axis is
+        # switchable. price_adj == the legacy `flow` (strips price only); net_active = inflow-immune conviction.
+        fb = {"gross": _wsum(smf.get("gross")),
+              "price_adj": _wsum(smf.get("price_adj") or smf.get("flow")),
+              "net_active": _wsum(smf.get("net_active"))}
         buyers = (smf.get("buyers") or [None])[-1]
         sellers = (smf.get("sellers") or [None])[-1]
         vid = c.get("vst_id")
@@ -183,17 +192,27 @@ def build_smart_vs_street(site_data_dir, root, nse500=None, progress=None):
         # the flat last-known current score (arm_history='flat') — flow is then the only moving axis.
         smf_months = smf.get("months") or []
         smf_flow = smf.get("flow") or []
+        smf_gross = smf.get("gross") or []
+        smf_nact = smf.get("net_active") or []
         arm_ser = arm_hist_by_vid.get(vid) or []
         traj = []
-        for mym, mfl in list(zip(smf_months, smf_flow))[-TRAJ_MAX_MONTHS:]:
+        zipped = list(zip(smf_months, smf_flow))[-TRAJ_MAX_MONTHS:]
+        base_k = max(0, len(smf_months) - len(zipped))   # align gross/net_active (full parallel arrays) to the slice
+        for j, (mym, mfl) in enumerate(zipped):
             if not isinstance(mfl, (int, float)):
                 continue
+            k = base_k + j
+            mg = smf_gross[k] if k < len(smf_gross) else None
+            mn = smf_nact[k] if k < len(smf_nact) else None
             a = _rot._arm_on_month(arm_ser, mym) if (arm_ser and _rot) else arm   # ffill ARM; else flat current
             tq = (1 if (a is not None and a >= ARM_REC and mfl > 0) else
                   2 if (a is not None and a >= ARM_REC) else
                   3 if mfl > 0 else 4)
             traj.append({"date": mym, "arm": (round(a, 1) if a is not None else None),
-                         "flow": round(float(mfl), 1), "quad": tq})
+                         "flow": round(float(mfl), 1),
+                         "g": (round(float(mg), 1) if isinstance(mg, (int, float)) else None),
+                         "n": (round(float(mn), 1) if isinstance(mn, (int, float)) else None),
+                         "quad": tq})
         arm_history_mode = "ffill" if arm_ser else ("flat" if arm is not None else "none")
         rows.append({
             "symbol": sym, "name": c.get("name"), "sector": c.get("sector"), "vst_id": vid,
@@ -204,6 +223,7 @@ def build_smart_vs_street(site_data_dir, root, nse500=None, progress=None):
             "arm": arm, "arm_asof": arm_asof, "arm_stale": bool(arm_stale), "recommending": bool(rec),
             "flow_1m": round(flow_1m, 1), "flow_3m": round(flow_3m, 1),
             "flow_6m": round(flow_6m, 1), "flow_12m": round(flow_12m, 1),
+            "fb": fb,                          # #106: {gross|price_adj|net_active: [1m,3m,6m,12m]} for the FM-axis toggle
             "buyers": buyers, "sellers": sellers, "net_breadth": nb,
             "buying_3m": bool(buy3), "buying_1m": bool(buy1),
             "flow_agreement": ("confirmed" if buy3 == buy1 else "inflecting"),
@@ -228,7 +248,12 @@ def build_smart_vs_street(site_data_dir, root, nse500=None, progress=None):
         "universe": "All MF-held stocks (+ NSE 500)", "n_universe": len(universe), "n_screened": len(rows),
         "n_troubled": sum(1 for r in rows if r["troubled"]), "n_with_arm": sum(1 for r in rows if r["arm"] is not None),
         "filter": {"ret_6m_max": RET6M_MAX, "off_52w_high_pct": DD_OFF_HIGH, "fundamentals": "TTM EPS or PAT YoY < 0"},
-        "axes": {"analyst": "StarMine ARM score >=50 = recommending", "fm": "corp-action-adjusted net active flow >0 = buying"},
+        "axes": {"analyst": "StarMine ARM score >=50 = recommending",
+                 "fm": "fund net buying >0 (basis selectable: gross / price-adjusted / net-active conviction)"},
+        "flow_basis_legend": {
+            "gross": "raw rupee change in MF holdings (price move + scheme inflows + active conviction, undecomposed)",
+            "price_adj": "strips price drift only (= the legacy axis); still carries new scheme money deployed pro-rata",
+            "net_active": "weight-space conviction, inflow-immune — the rupees managers re-weighted toward the stock independent of price and fresh inflows"},
         "default_window": "3m", "holdings_asof": hold_ym,
         "amc_aum": amc_aum,                     # AMC -> total disclosed AUM (₹cr) for the % -of-AMC-AUM filter
         "quadrant_labels": {"1": "Recommending + Buying", "2": "Recommending + Not buying",

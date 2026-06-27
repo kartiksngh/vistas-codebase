@@ -49,13 +49,14 @@ def latest_asof():
 
 
 # ───────────────────────────────────────────────────────── 1) START (deterministic prep)
-def cmd_start(asof=None, log=print):
-    """Assemble + write the four FM decision desks and the round manifest; print the manifest JSON
-    (the Workflow `args`). No book changes, no look-ahead. Returns the manifest doc."""
+def cmd_start(asof=None, amc=None, log=print):
+    """Assemble + write the FM decision desks and the round manifest; print the manifest JSON (the Workflow
+    `args`). `amc` (e.g. 'Aditya Birla Sun Life') runs the FULL per-AMC firm (one desk per equity/hybrid
+    fund); amc=None runs the 4 cross-AMC pilots. No book changes, no look-ahead. Returns the manifest doc."""
     asof = asof or latest_asof()
-    log(f"[round/start] preparing the FM desks as-of {asof} …")
-    manifest = al.prepare_round(asof, log=log)
-    doc = {"asof": asof, "schemes": manifest}
+    log(f"[round/start] preparing the FM desks as-of {asof}{' for ' + amc if amc else ' (4 pilots)'} …")
+    manifest = al.prepare_round(asof, amc=amc, log=log)
+    doc = {"asof": asof, "amc": amc, "schemes": manifest}
     log("")
     log(f"[round/start] {len(manifest)} desks written under {al.DESK_DIR}")
     log("Next: run the Workflow `_amc_rebalance.js` with the args printed below, save its result to")
@@ -71,15 +72,22 @@ def _load_decisions(path):
     return d.get("asof"), (d.get("decisions") or {}), d.get("cio")
 
 
-def cmd_finish(asof, decisions_path, dry_run=False, log=print):
+def cmd_finish(asof, decisions_path, amc=None, dry_run=False, log=print):
     """Guardrail + execute the FM decisions onto the books, mark, compare-to-quant, write the round
-    docs. `--dry-run` validates the decisions file (counts/structure) WITHOUT trading or writing."""
+    docs. `amc` must match the roster `start` used; if omitted it defaults to the `amc` recorded in
+    round_manifest.json. `--dry-run` validates the decisions file (counts/structure) WITHOUT trading."""
     if not os.path.exists(decisions_path):
         raise SystemExit(f"decisions file not found: {decisions_path}")
     a2, decisions, cio = _load_decisions(decisions_path)
     asof = asof or a2
     if not asof:
         raise SystemExit("no asof (pass --asof or include it in the decisions file)")
+    if amc is None:                      # default the roster from the manifest `start` wrote (so finish matches start)
+        try:
+            mani = json.load(open(os.path.join(LIVE_DIR, "round_manifest.json"), encoding="utf-8"))
+            amc = mani.get("amc")
+        except Exception:
+            amc = None
     if not decisions:
         raise SystemExit(f"no `decisions` in {decisions_path}")
     n_tickets = sum(len((v or {}).get("tickets") or []) for v in decisions.values())
@@ -91,7 +99,7 @@ def cmd_finish(asof, decisions_path, dry_run=False, log=print):
             log(f"   {sl}: {len(longs)} long / {len(v.get('tickets') or [])} tickets — \"{(v.get('stance') or '')[:60]}\"")
         log("[round/finish] DRY-RUN — parsed OK; nothing applied.")
         return None
-    doc = al.apply_round(asof, decisions, cio, log=log)
+    doc = al.apply_round(asof, decisions, cio, amc=amc, log=log)
     log("")
     for s in doc["schemes"]:
         vq = s.get("vs_quant") or {}
@@ -155,8 +163,10 @@ def main(argv=None):
     sub = ap.add_subparsers(dest="cmd", required=True)
     ps = sub.add_parser("start", help="prepare FM desks + print the Workflow args")
     ps.add_argument("--asof", default=None)
+    ps.add_argument("--amc", default=None, help="run the FULL per-AMC firm (e.g. 'Aditya Birla Sun Life'); omit = 4 pilots")
     pf = sub.add_parser("finish", help="apply the Workflow's FM/CIO decisions to the books")
     pf.add_argument("--asof", default=None)
+    pf.add_argument("--amc", default=None, help="roster to apply onto (defaults to the amc recorded by start)")
     pf.add_argument("--decisions", required=True, help="path to the Workflow's {asof,decisions,cio} json")
     pf.add_argument("--dry-run", action="store_true", help="validate the decisions file without trading")
     pb = sub.add_parser("publish", help="mark + rebuild + push the digital-AMC site")

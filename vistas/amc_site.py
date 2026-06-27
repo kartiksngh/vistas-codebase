@@ -539,7 +539,9 @@ def load_books():
                 "scheme": book.get("scheme") or sch_dir.name,
                 "key": _bk(amc_dir.name + "-" + sch_dir.name),
                 "category": book.get("category"),
-                "benchmark": book.get("benchmark") or scorecard.get("scorecard", {}).get("benchmark_name"),
+                # show the benchmark the track is ACTUALLY scored against (the scorecard's resolved index —
+                # a SECTOR index for theme-fenced funds), not the seam book's generic stated benchmark.
+                "benchmark": scorecard.get("scorecard", {}).get("benchmark_name") or book.get("benchmark"),
                 "aum0_cr": book.get("aum0_cr"),
                 "code": book.get("code"),
                 "n_positions": len(book.get("positions", {}) or {}),
@@ -817,13 +819,19 @@ def firms_view(books):
             'distinct equity/hybrid scheme of that AMC, each run by the deterministic rules-FM under its own SEBI '
             'mandate + liquidity caps (paper-money, no look-ahead, free — no LLM). <b>Firm AUM</b> = Σ each scheme\'s '
             'real AUM. <b>Beat bench · paper</b> = desks whose paper-track CAGR exceeds their benchmark TR since 2015.'
-            '<br><b>★ Read the historical track honestly:</b> the 2015→ replay selects from the broad point-in-time '
-            'market under each scheme\'s mandate caps + FM brain — it is <b>NOT restricted to a thematic scheme\'s '
-            'sector constituents</b>. So a SECTOR/THEME fund\'s historical CAGR/IR reflects the rules-FM\'s broad-universe '
-            'book (which is why several thematic desks converge to similar numbers), not the theme itself; the '
-            'diversified mandates (Large/Flexi/Value/Multi-Cap/Small…) ARE properly differentiated. The <b>current '
-            'fact sheet / holdings (the seam book) IS each scheme\'s real disclosed portfolio</b> — theme-faithful. '
-            'A theme-restricted historical replay is a known follow-up.</div>')
+            '<br><b>★ Read the historical track honestly:</b> a <b>true SECTOR/THEME fund</b> (Banking, Pharma, Digital, '
+            'Consumption, Transport, Manufacturing, Infra) is now <b>theme-fenced</b> — its 2015→ replay picks ONLY from '
+            'its own sector(s), and is scored against its <b>sector TR index</b> (NIFTY Healthcare / Financial Services / '
+            'India Manufacturing …), which removes the broad-market sector beta that made every thematic desk look alike. '
+            'A residual high IR on some desks (e.g. Digital, Transport) is NOT certified pure stock-selection alpha — the '
+            'rules-FM is NOT cap-weight-constrained, so within the sector it tilts to smid + momentum names that beat the '
+            'cap-weighted sector index; that is a <b>factor tilt vs the index</b>, read it as such (Banking, IR ~0.45, is '
+            'the honest baseline). '
+            '<b>Diversified mandates</b> (Large/Flexi/Value/Multi-Cap/Small…) select from the broad market vs their broad '
+            'benchmark, as they should. <b>Characteristic themes</b> (PSU/MNC/ESG/Business-Cycle) are defined by ownership/'
+            'style, not a sector — with no point-in-time eligibility flag they stay on the broad universe vs NIFTY 500, so '
+            'their excess still carries some style beta (flagged, a known limitation). The <b>current fact sheet / holdings '
+            '(the seam book) IS each scheme\'s real disclosed portfolio</b> — theme-faithful.</div>')
     return f'<div class="firmsel">{pills}</div>{note}<div class="firmblocks">{blocks}</div>'
 
 # ── (2) FACT SHEET — newest daily sheet: key stats, top holdings, sector mix ──

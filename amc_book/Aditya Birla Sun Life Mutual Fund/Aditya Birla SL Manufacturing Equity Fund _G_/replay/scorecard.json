@@ -10,11 +10,20 @@
   "cost_bps": 15.0,
   "brain": "momentum_led",
   "brain_thesis": "Ride the strongest trends (6m price momentum) but only where analysts confirm and the name isn't egregiously expensive \u2014 a fast, trend-following desk.",
-  "avg_universe": 1169.0,
-  "avg_arm_cov_pct": 64.1,
-  "avg_dead_included": 69.9,
+  "restricted_to_theme": true,
+  "theme_sectors": [
+   "Auto",
+   "Consumer",
+   "Energy",
+   "Healthcare",
+   "Industrials",
+   "Materials"
+  ],
+  "avg_universe": 351.0,
+  "avg_arm_cov_pct": 92.0,
+  "avg_dead_included": 0.0,
   "avg_holdings": 50.0,
-  "avg_oneway_turnover_pct": 45.62
+  "avg_oneway_turnover_pct": 33.28
  },
  "scorecard": {
   "window": {
@@ -23,38 +32,38 @@
    "years": 11.4
   },
   "book": {
-   "cagr_pct": 21.84,
-   "vol_pct": 24.6,
-   "sharpe": 0.94,
-   "maxdd_pct": -46.23,
-   "final_nav": 950.84
+   "cagr_pct": 32.33,
+   "vol_pct": 21.37,
+   "sharpe": 1.44,
+   "maxdd_pct": -34.36,
+   "final_nav": 2440.14
   },
-  "benchmark_name": "NIFTY 500",
+  "benchmark_name": "NIFTY INDIA MANUFACTURING",
   "benchmark": {
-   "cagr_pct": 12.03,
-   "vol_pct": 16.21,
-   "maxdd_pct": -38.11,
-   "excess_cagr_pct": 9.81,
-   "tracking_error_pct": 16.25,
-   "info_ratio": 0.6,
-   "beta": 1.15,
-   "up_capture": 1.24,
-   "down_capture": 1.15
+   "cagr_pct": 13.17,
+   "vol_pct": 17.52,
+   "maxdd_pct": -48.52,
+   "excess_cagr_pct": 19.16,
+   "tracking_error_pct": 11.45,
+   "info_ratio": 1.67,
+   "beta": 1.03,
+   "up_capture": 1.11,
+   "down_capture": 0.95
   },
   "real_scheme": {
    "matched_name": "Aditya Birla Sun Life Manufacturing Equity Fund - Direct Plan - Growth",
    "real_cagr_pct": 13.15,
-   "book_cagr_pct": 21.74,
-   "book_minus_real_cagr_pct": 8.59,
+   "book_cagr_pct": 32.27,
+   "book_minus_real_cagr_pct": 19.12,
    "overlap_years": 11.39
   },
   "fundamental_law": {
-   "ic_mean": 0.0438,
-   "ic_tstat": 4.69,
-   "transfer_coefficient": 0.481,
+   "ic_mean": 0.0539,
+   "ic_tstat": 5.34,
+   "transfer_coefficient": 0.694,
    "breadth_per_year_UPPER": 600.0,
-   "implied_IR_UPPER": 0.52,
-   "realized_IR_vs_bench": 0.6,
+   "implied_IR_UPPER": 0.92,
+   "realized_IR_vs_bench": 1.67,
    "note": "IC = mean cross-sectional Spearman(ARM score, next-rebalance return) over the candidate universe; TC = mean corr(actual target weights, unconstrained score-weights); BR is an UPPER bound (monthly holdings are NOT independent \u2014 true breadth is far lower), so implied_IR is an upper bound on what the signal could deliver, to be read against the realized IR."
   }
  }

@@ -61,6 +61,13 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--amc", default="Aditya Birla Sun Life", help="AMC name substring (the firm to build)")
     ap.add_argument("--no-replay", action="store_true", help="seam books only — skip the ~1min/scheme history")
+    ap.add_argument("--replay-only", action="store_true",
+                    help="re-run ONLY the historical replays (leave the existing seam books/blotters/fact "
+                         "sheets untouched) — used to refresh tracks after a universe/theme change")
+    ap.add_argument("--theme-only", action="store_true",
+                    help="restrict the build to SECTOR/THEMATIC schemes that get a theme fence (those where "
+                         "theme_sectors_for is non-None) — combine with --replay-only to refresh just the "
+                         "tracks a theme change actually moves (the broad funds are unchanged)")
     ap.add_argument("--min-aum-cr", type=float, default=200.0)
     args = ap.parse_args()
 
@@ -72,29 +79,40 @@ def main():
     if not entries:
         print(f"  no equity/hybrid schemes for '{args.amc}' (≥₹{args.min_aum_cr}cr) — nothing to build")
         return 1
+    if args.theme_only:
+        entries = [e for e in entries if ar.theme_sectors_for(e)]
+        print(f"--theme-only: {len(entries)} theme-fenced scheme(s) selected")
+        if not entries:
+            print("  no theme-fenced schemes — nothing to build")
+            return 1
     df = af._prices()
     dates = list(df.index.astype(str))
     asof, prev_asof = dates[-1], dates[-2]
     firm_aum = sum(af._f(e["aum_cr"]) for e in entries)
+    mode = "REPLAY-ONLY" if args.replay_only else ("OFF" if args.no_replay else "ON")
     print(f"firm: {len(entries)} distinct equity/hybrid funds · firm AUM ₹{firm_aum:,.0f} cr · "
-          f"as of {asof} (prev {prev_asof}) · replay={'OFF' if args.no_replay else 'ON'}\n")
+          f"as of {asof} (prev {prev_asof}) · replay={mode}\n")
 
     ok, failed, summary = 0, [], []
     t0 = time.time()
     for i, entry in enumerate(entries, 1):
         scheme = entry["scheme"]
         tag = f"[{i:>2}/{len(entries)}] {scheme[:46]:<46}"
-        try:
-            book, diag, sheet = build_seam_book(entry, asof, prev_asof)
-        except (Exception, SystemExit) as e:
-            failed.append((scheme, f"seam-book: {e}"))
-            print(f"{tag}  SEAM FAIL — {e}")
-            continue
-
-        fo = sheet["footer"]
-        row = {"scheme": scheme, "category": entry.get("category"), "aum": af._f(entry["aum_cr"]),
-               "bench": entry.get("benchmark"), "n": fo["n_holdings"],
-               "deployed": diag["deployed_pct"], "cash_pct": fo["cash_pct"], "brain": diag.get("brain")}
+        if args.replay_only:
+            # leave the seam book/blotter/fact sheet exactly as built; only refresh the historical track
+            row = {"scheme": scheme, "category": entry.get("category"), "aum": af._f(entry["aum_cr"]),
+                   "bench": entry.get("benchmark")}
+        else:
+            try:
+                book, diag, sheet = build_seam_book(entry, asof, prev_asof)
+            except (Exception, SystemExit) as e:
+                failed.append((scheme, f"seam-book: {e}"))
+                print(f"{tag}  SEAM FAIL — {e}")
+                continue
+            fo = sheet["footer"]
+            row = {"scheme": scheme, "category": entry.get("category"), "aum": af._f(entry["aum_cr"]),
+                   "bench": entry.get("benchmark"), "n": fo["n_holdings"],
+                   "deployed": diag["deployed_pct"], "cash_pct": fo["cash_pct"], "brain": diag.get("brain")}
 
         if not args.no_replay:
             try:
@@ -114,7 +132,10 @@ def main():
         summary.append(row)
         ex = (f"CAGR {row.get('cagr')!s:>6} · excess {row.get('excess')!s:>6} · IR {row.get('ir')!s:>5} "
               f"({row.get('replay_s','-')}s)") if not args.no_replay else ""
-        print(f"{tag}  {row['n']:>3} names · deployed {row['deployed']:>5.1f}% · {row['brain']:<10} {ex}")
+        if args.replay_only:
+            print(f"{tag}  {ex}")
+        else:
+            print(f"{tag}  {row['n']:>3} names · deployed {row['deployed']:>5.1f}% · {row['brain']:<10} {ex}")
 
     dt = time.time() - t0
     print("\n" + "=" * 84)

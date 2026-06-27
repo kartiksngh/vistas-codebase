@@ -10,11 +10,19 @@
   "cost_bps": 15.0,
   "brain": "momentum_led",
   "brain_thesis": "Ride the strongest trends (6m price momentum) but only where analysts confirm and the name isn't egregiously expensive \u2014 a fast, trend-following desk.",
-  "avg_universe": 1169.0,
-  "avg_arm_cov_pct": 64.1,
-  "avg_dead_included": 69.9,
-  "avg_holdings": 54.3,
-  "avg_oneway_turnover_pct": 48.5
+  "restricted_to_theme": true,
+  "theme_sectors": [
+   "Consumer",
+   "Financials",
+   "Industrials",
+   "Technology",
+   "TelecomMedia"
+  ],
+  "avg_universe": 293.0,
+  "avg_arm_cov_pct": 89.5,
+  "avg_dead_included": 0.0,
+  "avg_holdings": 50.0,
+  "avg_oneway_turnover_pct": 33.01
  },
  "scorecard": {
   "window": {
@@ -23,38 +31,38 @@
    "years": 11.4
   },
   "book": {
-   "cagr_pct": 19.51,
-   "vol_pct": 24.84,
-   "sharpe": 0.86,
-   "maxdd_pct": -44.91,
-   "final_nav": 762.9
+   "cagr_pct": 31.86,
+   "vol_pct": 22.28,
+   "sharpe": 1.38,
+   "maxdd_pct": -37.99,
+   "final_nav": 2341.78
   },
-  "benchmark_name": "NIFTY 500",
+  "benchmark_name": "NIFTY INDIA DIGITAL",
   "benchmark": {
-   "cagr_pct": 12.03,
-   "vol_pct": 16.21,
-   "maxdd_pct": -38.11,
-   "excess_cagr_pct": 7.48,
-   "tracking_error_pct": 16.29,
-   "info_ratio": 0.46,
-   "beta": 1.17,
-   "up_capture": 1.24,
-   "down_capture": 1.18
+   "cagr_pct": 9.08,
+   "vol_pct": 18.8,
+   "maxdd_pct": -47.49,
+   "excess_cagr_pct": 22.78,
+   "tracking_error_pct": 15.98,
+   "info_ratio": 1.43,
+   "beta": 0.84,
+   "up_capture": 0.93,
+   "down_capture": 0.73
   },
   "real_scheme": {
    "matched_name": "Aditya Birla Sun Life Digital India Fund - Growth - Direct Plan",
    "real_cagr_pct": 14.15,
-   "book_cagr_pct": 19.51,
-   "book_minus_real_cagr_pct": 5.36,
+   "book_cagr_pct": 31.86,
+   "book_minus_real_cagr_pct": 17.7,
    "overlap_years": 11.4
   },
   "fundamental_law": {
-   "ic_mean": 0.0438,
-   "ic_tstat": 4.69,
-   "transfer_coefficient": 0.393,
-   "breadth_per_year_UPPER": 652.0,
-   "implied_IR_UPPER": 0.44,
-   "realized_IR_vs_bench": 0.46,
+   "ic_mean": 0.0708,
+   "ic_tstat": 6.41,
+   "transfer_coefficient": 0.617,
+   "breadth_per_year_UPPER": 600.0,
+   "implied_IR_UPPER": 1.07,
+   "realized_IR_vs_bench": 1.43,
    "note": "IC = mean cross-sectional Spearman(ARM score, next-rebalance return) over the candidate universe; TC = mean corr(actual target weights, unconstrained score-weights); BR is an UPPER bound (monthly holdings are NOT independent \u2014 true breadth is far lower), so implied_IR is an upper bound on what the signal could deliver, to be read against the realized IR."
   }
  }

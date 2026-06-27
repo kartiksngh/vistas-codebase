@@ -10,11 +10,15 @@
   "cost_bps": 15.0,
   "brain": "momentum_led",
   "brain_thesis": "Ride the strongest trends (6m price momentum) but only where analysts confirm and the name isn't egregiously expensive \u2014 a fast, trend-following desk.",
-  "avg_universe": 1169.0,
-  "avg_arm_cov_pct": 64.1,
-  "avg_dead_included": 69.9,
-  "avg_holdings": 51.4,
-  "avg_oneway_turnover_pct": 47.51
+  "restricted_to_theme": true,
+  "theme_sectors": [
+   "Financials"
+  ],
+  "avg_universe": 75.0,
+  "avg_arm_cov_pct": 87.7,
+  "avg_dead_included": 0.0,
+  "avg_holdings": 48.9,
+  "avg_oneway_turnover_pct": 16.81
  },
  "scorecard": {
   "window": {
@@ -23,38 +27,38 @@
    "years": 11.4
   },
   "book": {
-   "cagr_pct": 19.66,
-   "vol_pct": 24.84,
-   "sharpe": 0.86,
-   "maxdd_pct": -44.81,
-   "final_nav": 774.02
+   "cagr_pct": 18.36,
+   "vol_pct": 21.08,
+   "sharpe": 0.92,
+   "maxdd_pct": -42.84,
+   "final_nav": 683.05
   },
-  "benchmark_name": "NIFTY 500",
+  "benchmark_name": "NIFTY FINANCIAL SERVICES",
   "benchmark": {
-   "cagr_pct": 12.03,
-   "vol_pct": 16.21,
-   "maxdd_pct": -38.11,
-   "excess_cagr_pct": 7.63,
-   "tracking_error_pct": 16.31,
-   "info_ratio": 0.47,
-   "beta": 1.17,
-   "up_capture": 1.24,
-   "down_capture": 1.18
+   "cagr_pct": 12.1,
+   "vol_pct": 20.84,
+   "maxdd_pct": -43.52,
+   "excess_cagr_pct": 6.26,
+   "tracking_error_pct": 13.75,
+   "info_ratio": 0.45,
+   "beta": 0.79,
+   "up_capture": 0.83,
+   "down_capture": 0.76
   },
   "real_scheme": {
    "matched_name": "Aditya Birla Sun Life Banking and Financial Services Fund - Direct Plan - Growth",
    "real_cagr_pct": 13.0,
-   "book_cagr_pct": 19.66,
-   "book_minus_real_cagr_pct": 6.66,
+   "book_cagr_pct": 18.36,
+   "book_minus_real_cagr_pct": 5.36,
    "overlap_years": 11.4
   },
   "fundamental_law": {
-   "ic_mean": 0.0438,
-   "ic_tstat": 4.69,
-   "transfer_coefficient": 0.392,
-   "breadth_per_year_UPPER": 617.0,
-   "implied_IR_UPPER": 0.43,
-   "realized_IR_vs_bench": 0.47,
+   "ic_mean": 0.0735,
+   "ic_tstat": 4.0,
+   "transfer_coefficient": 0.782,
+   "breadth_per_year_UPPER": 587.0,
+   "implied_IR_UPPER": 1.39,
+   "realized_IR_vs_bench": 0.45,
    "note": "IC = mean cross-sectional Spearman(ARM score, next-rebalance return) over the candidate universe; TC = mean corr(actual target weights, unconstrained score-weights); BR is an UPPER bound (monthly holdings are NOT independent \u2014 true breadth is far lower), so implied_IR is an upper bound on what the signal could deliver, to be read against the realized IR."
   }
  }
