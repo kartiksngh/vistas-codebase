@@ -3,9 +3,38 @@
 > Single in-repo state file so a crash resumes with ~no lag. Pairs with `CLAUDE.md`
 > (scope/conventions/architecture — read that too). Source of truth for *state*; the deep
 > conventions live in `CLAUDE.md` and inline in `vistas/analytics.py` / `vistas/fundamentals.py`.
-> Cross-session pointer: global memory `vistas-project.md`. Last updated 2026-06-26.
+> Cross-session pointer: global memory `vistas-project.md`. Last updated 2026-06-27.
 
 ## ▶ RESUME (one-paragraph current state + next step)
+
+**▶▶▶ RESUME — 2026-06-27 (FLOW-DECOMPOSITION + OWNERSHIP-FLOW + BUILD-SPEED session · all PUBLISHED LIVE):**
+Three things shipped to <https://kartiksngh.github.io/vistas/terminal/> this session, all on the flow/ownership theme:
+- **Smart-money "net-active" FIX (commit `6323213`):** the Asset-Allocator → Analyst-Consensus flow chart summed
+  `d["flow"]` (= price_adj, inflow-contaminated) under a "net-active" label. Repointed to the true 3-component
+  **decomposition** (price action · implied inflow · net-active) baked per sector in `vistas/arm_sectors.py`; FE
+  `renderConsensus`. Market headline was +111,766 cr "net-active" → TRUE +7,697 cr (14× overstatement). [[vistas-flow-decomposition]]
+- **Sector REL-PERF + NIFTY500 EW-vs-cap (commit `1596c30`):** new chart in the sector-breadth section — each sector's
+  EW + FF-cap index relative to NIFTY 500 TR, plus the 500 EW-vs-cap "breadth-of-rally" line. Engine `vistas/breadth.py`
+  `_rel_perf()` (FF weights = a 31-Dec-2025 SNAPSHOT → composition/look-ahead caveat baked, default recent window).
+- **★ OWNERSHIP & FLOW tab — P0✓ P1✓ P2-core LIVE (commit `27d60a7`):** the money-flow WATERFALL. Engine
+  `vistas/flow_waterfall.py` (`build_waterfall`, AMC×sector cube on `funds_flows._pair_flows_active`, 47 AMCs × 23
+  sectors × 36mo, **reconciles=True**). New tab (`initOwnership`/`renderOwnership` in `vistas.js`, baked
+  `VISTAS_WATERFALL`): AMC+sector selectors → 3-component stacked decomposition plot over time + 1Y/2Y/MAX horizon +
+  snapshot table with date slider. Probe `_pup_allocator.js` OWNERSHIP block PASS, 0 errors. Blueprint `OWNERSHIP_FLOW.md`.
+- **BUILD SPEED (#98):** fixed an O(N²) liquidity lookup in `stock_intel._market_behaviour` (re-scanned the 9.4M-row
+  turnover panel per stock) by pre-indexing `turnover_by_sym` once in `build_context` → **build 41min → ~17min**,
+  output byte-identical. (This MOOTED the planned multi-core parallelize — algorithmic fix was strictly better.)
+
+**NEXT STEP / OPEN FORKS (all need KV direction or carry risk — surfaced, not auto-launched):**
+- **#102 P3-P5:** pivot drill-down (AMC→schemes→sector/stock expandable), stock/theme level + cross-AMC crowding, agent hook.
+- **#99 cadence-partitioned build** (designed `BUILD_CADENCE.md`): compute fingerprint-gate + COMPUTE/ASSEMBLE split —
+  RISK-FLAGGED (silent-stale, bounded ≤1wk + self-healing); best done with KV able to eyeball the first gated-vs-full
+  diff. Fetch staleness-gate already effectively covered (pipeline cadence-gate + within-day `--no-fetch`/`--no-rebuild`).
+- **#95/#96 live-forward first round:** engine `vistas/amc_live.py` + workflow `_amc_rebalance.js` READY but NOT run
+  (stateful paper-trades + token cost → wanted KV's go/scope). **#100** daily MFI NAV = deferred till pipeline wf done.
+**OPS (unchanged):** ONE build at a time (lock `data/_refresh/.build.lock`; NEVER 2 — silent death); within-day publish =
+`--no-fetch`/`--no-rebuild` (no redundant fetch); raw per-stock ARM NEVER persisted to the site (sector AGGREGATES ok);
+never set a Plotly trace marker/line/mode/fill to `undefined`. Detail → [[vistas-flow-decomposition]], [[vistas-build-discipline]].
 
 **▶▶▶ RESUME — 2026-06-26 EVE (big multi-feature session · ULTRACODE on · EASY-FIRST per KV · live tracker = `WORKPLAN.md`):**
 Driving 5+ workstreams via ISOLATED workflows (compact-safe; durable outputs = `.md` specs). **BLOCKER all session:** a full `publish_terminal` build (PID 35268, since 20:56) HELD `data/_refresh/.build.lock` → ALL build-input edits gated (`static/vistas.js`, `vistas/*.py`). That build WILL surface the already-built **valuation charts** (EV/EBITDA·P/S·EV/Sales·P/B·DY·FCFy) — diagnosed as a STALE SHELL (data fresh in the per-stock JSONs, old inlined JS), **not a bug**; the rebuild re-inlines current `vistas.js`. **Workstreams:**

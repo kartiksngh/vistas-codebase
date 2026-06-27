@@ -338,6 +338,13 @@ table.ftable tbody tr:hover { background: #f7fafc; }
 .gauge-tbl.fs-lb tbody tr { cursor: pointer; }
 .gauge-tbl.fs-lb tbody tr:hover { background: #f6f8fa; }
 .gauge-tbl.fs-lb tr.fs-sel-row { background: #fff8e1; }
+/* Ownership & Flow pivot — Excel-style drill-down (AMC -> scheme -> sector) */
+.wf-pivot th.num, .wf-pivot td.num { text-align: right; font-variant-numeric: tabular-nums; }
+.wf-pivot tbody tr.wf-row { cursor: pointer; }
+.wf-pivot tbody tr.wf-row:hover { background: #f6f8fa; }
+.wf-pivot tbody tr.wf-row-on { background: #e8f6f3; }
+.wf-caret { display: inline-block; width: 14px; color: var(--muted); font-size: 10px; }
+.wf-caret-none { color: transparent; }
 /* Fund-Skill analysis-window control bar + vantage-point rolling panel */
 .fs-winbar { display: flex; align-items: center; flex-wrap: wrap; gap: 7px; margin: 4px 0 6px; padding: 7px 9px; background: #f6f8fa; border: 1px solid #e3e7eb; border-radius: 7px; }
 .fs-hold-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin: 14px 0 4px; }

@@ -4702,6 +4702,11 @@ function renderAllocator() {
 // Reads the baked window.VISTAS_WATERFALL (no client recompute -> no JS<->Python parity port).
 // AGGREGATES only; "implied inflow" = deployment inferred from holdings, NOT raw AMFI subscriptions. =====
 let _wfAmc = "__ALL__", _wfSector = "__ALL__", _wfHz = "0", _wfSnapIdx = null, _wfBuilt = false;
+// the "chosen cell" the header + time-series plot follow, climbing the lattice when a field is null:
+//   {amc:null,code:null,sector:null} = market · {amc} = an AMC · {amc,code} = a scheme · +sector = a leaf
+let _wfFocus = { amc: null, code: null, sector: null };
+const _wfPivExp = {};   // pivot rowKey -> true (expanded), for the Excel-style drill-down
+const _wfDrill = {};    // amc-slug -> drill payload | null (lazy-loaded per-AMC scheme×sector file)
 const _WF_COL = { na: "#1f9e89", inflow: "#d99a2b", price: "#9aa6b2" };
 function _wf() { return (typeof window !== "undefined") ? window.VISTAS_WATERFALL : null; }
 function _wfNode(W, amc, sector) {
@@ -4712,6 +4717,34 @@ function _wfNode(W, amc, sector) {
   if (sector === "__ALL__") return a.__total__ || null;
   return a[sector] || null;
 }
+// lazy-load an AMC's drill-down file (scheme -> sector history); cached, null on absent/failure. The
+// pivot fetches it on first expand; the time-series plot reuses the cache for scheme-level cells.
+async function ensureWfDrill(slug) {
+  if (Object.prototype.hasOwnProperty.call(_wfDrill, slug)) return _wfDrill[slug];
+  if (!slug || !LAZY) { _wfDrill[slug] = null; return null; }
+  const b = await fetchJSON(LAZY.base + "ownership/" + lazyURL(slug) + ".json");
+  _wfDrill[slug] = b || null;
+  return _wfDrill[slug];
+}
+function _wfDrillFor(amc) {                 // sync: the cached drill payload for an AMC, or null
+  const W = _wf(); if (!W || !amc) return null;
+  const slug = (W.drill_index || {})[amc];
+  return slug ? (_wfDrill[slug] || null) : null;
+}
+function _wfScheme(amc, code) {             // a scheme node from the cached drill file, or null
+  const d = _wfDrillFor(amc); if (!d) return null;
+  return (d.schemes || []).find((s) => s.code === code) || null;
+}
+// resolve the focused cell to its {gross,price,inflow,net_active,mv} arrays (inline cube for market /
+// sector / AMC / AMC×sector; the lazy drill file for scheme / scheme×sector).
+function _wfSeriesFor(f) {
+  const W = _wf(); if (!W) return null;
+  f = f || {};
+  if (!f.amc) return _wfNode(W, "__ALL__", f.sector || "__ALL__");
+  if (!f.code) return _wfNode(W, f.amc, f.sector || "__ALL__");
+  const sch = _wfScheme(f.amc, f.code); if (!sch) return null;
+  return f.sector ? ((sch.sectors || {})[f.sector] || null) : sch.total;
+}
 function _wfPlot(id, traces, layout) {
   const el = $(id); if (!el) return;
   if (!traces.length) { Plotly.purge(id); el.innerHTML = ""; return; }
@@ -4719,9 +4752,12 @@ function _wfPlot(id, traces, layout) {
 }
 function _wfFmt(v) { return (v === null || v === undefined) ? "—" : (v >= 0 ? "+" : "") + Math.round(v).toLocaleString() + " cr"; }
 function _wfScopeName() {
-  const a = _wfAmc === "__ALL__" ? "All AMCs" : _wfAmc;
-  const s = _wfSector === "__ALL__" ? "all sectors" : _wfSector;
-  return `${a} · ${s}`;
+  const f = _wfFocus || {};
+  if (!f.amc) return "All AMCs · " + (f.sector || "all sectors");
+  let nm = f.amc;
+  if (f.code) { const sch = _wfScheme(f.amc, f.code); nm += " · " + (sch ? sch.name : f.code); }
+  if (f.sector) nm += " · " + f.sector;
+  return nm;
 }
 
 // build the Ownership & Flow tab + view in the DOM (idempotent). Placed right after the Allocator tab.
@@ -4798,8 +4834,8 @@ function renderOwnership() {
          <div class="ab-ctlrow" id="wf-snap-dn" style="margin-top:10px"></div>
          <div id="wf-snap"></div>
        </section>`;
-    $("wf-amc").addEventListener("change", (e) => { _wfAmc = e.target.value; _wfDraw(); });
-    $("wf-sec").addEventListener("change", (e) => { _wfSector = e.target.value; _wfDraw(); });
+    $("wf-amc").addEventListener("change", (e) => { _wfAmc = e.target.value; _wfOnScopeChange(); });
+    $("wf-sec").addEventListener("change", (e) => { _wfSector = e.target.value; _wfOnScopeChange(); });
     const hz = $("wf-hz");
     if (hz) hz.querySelectorAll(".fs-lvl").forEach((b) => b.addEventListener("click", () => {
       hz.querySelectorAll(".fs-lvl").forEach((x) => x.classList.remove("on")); b.classList.add("on");
@@ -4814,19 +4850,20 @@ function renderOwnership() {
 function _wfDraw() { _wfDrawHead(); _wfDrawPlot(); _wfDrawSnap(); }
 
 function _wfDrawHead() {
-  const W = _wf(), node = _wfNode(W, _wfAmc, _wfSector), host = $("wf-head"); if (!host) return;
-  if (!node || !node.gross || !node.gross.length) { host.innerHTML = `<div class="empty-note">No flow for this AMC × sector pair.</div>`; return; }
+  const W = _wf(), node = _wfSeriesFor(_wfFocus), host = $("wf-head"); if (!host) return;
+  if (!node || !node.gross || !node.gross.length) { host.innerHTML = `<div class="empty-note">No flow for this selection.</div>`; return; }
   const i = node.gross.length - 1;
   const stat = (lbl, val, col) => `<div class="cstat"><span class="ck">${lbl}</span><span class="cv" style="color:${col || ''}">${_wfFmt(val)}</span></div>`;
   host.innerHTML =
     `<div class="cstat"><span class="ck">${fEsc(_wfScopeName())} · latest ${fEsc(W.months[i])}</span><span class="cv">gross ${_wfFmt(node.gross[i])}</span></div>`
+    + (node.mv ? `<div class="cstat"><span class="ck">Ownership (priced)</span><span class="cv">${_wfFmt(node.mv[i])}</span></div>` : "")
     + stat("Price action", node.price[i], _WF_COL.price)
     + stat("Implied inflow", node.inflow[i], _WF_COL.inflow)
     + stat("Net-active (conviction)", node.net_active[i], node.net_active[i] >= 0 ? _WF_COL.na : "#b3402f");
 }
 
 function _wfDrawPlot() {
-  const W = _wf(), node = _wfNode(W, _wfAmc, _wfSector); if (!W) return;
+  const W = _wf(), node = _wfSeriesFor(_wfFocus); if (!W) return;
   if (!node || !node.gross) { _wfPlot("plot-wf-decomp", [], {}); return; }
   const n = W.months.length;
   const back = parseInt(_wfHz, 10) || 0;
@@ -4845,38 +4882,115 @@ function _wfDrawPlot() {
   });
 }
 
+// dropdown change: re-root the pivot at the chosen AMC, collapse drill state, refocus the plot there.
+function _wfOnScopeChange() {
+  _wfFocus = { amc: _wfAmc === "__ALL__" ? null : _wfAmc, code: null, sector: _wfSector === "__ALL__" ? null : _wfSector };
+  for (const k in _wfPivExp) delete _wfPivExp[k];
+  if (_wfFocus.amc) {                                  // warm the AMC's drill file so schemes show at once
+    const slug = (_wf().drill_index || {})[_wfFocus.amc];
+    if (slug && !_wfDrillFor(_wfFocus.amc)) ensureWfDrill(slug).then(() => _wfPivotRender());
+  }
+  _wfDraw();
+}
+
 function _wfDrawSnap() {
   const W = _wf();
   const dnHost = $("wf-snap-dn");
-  if (dnHost) dateNavControl(dnHost, W.months, _wfSnapIdx, (k) => { _wfSnapIdx = k; _wfSnapTable(); });
-  _wfSnapTable();
+  if (dnHost) dateNavControl(dnHost, W.months, _wfSnapIdx, (k) => { _wfSnapIdx = k; _wfPivotRender(); });
+  _wfPivotRender();
 }
 
-function _wfSnapTable() {
+// the pivot rowKey of the currently-focused cell, for row highlighting.
+function _wfFocusKey() {
+  const f = _wfFocus || {};
+  if (!f.amc) return null;
+  if (!f.code) return "amc::" + f.amc;
+  return "sch::" + f.amc + "::" + f.code + (f.sector ? "::" + f.sector : "");
+}
+
+// build the flat list of VISIBLE pivot rows from the expansion state, at the snapshot month `i`.
+//   root = the AMC dropdown: All AMCs -> [AMC -> scheme -> sector]; a specific AMC -> [scheme -> sector].
+function _wfPivotRows() {
+  const W = _wf(), out = [];
+  const i = (_wfSnapIdx == null) ? W.months.length - 1 : _wfSnapIdx;
+  const at = (node) => node ? { mv: node.mv ? node.mv[i] : null, na: node.net_active[i], inf: node.inflow[i], pr: node.price[i], gr: node.gross[i] } : null;
+  if (_wfAmc === "__ALL__") {
+    const amcs = (W.amcs || Object.keys(W.cube || {})).slice();
+    const amcRows = amcs.map((a) => ({ a, v: at(((W.cube || {})[a] || {}).__total__) })).filter((r) => r.v);
+    amcRows.sort((p, q) => (q.v.na || 0) - (p.v.na || 0));
+    for (const { a, v } of amcRows) {
+      const key = "amc::" + a;
+      out.push({ key, depth: 0, label: a, vals: v, expandable: true, expanded: !!_wfPivExp[key], focus: { amc: a, code: null, sector: null } });
+      if (_wfPivExp[key]) _wfPushSchemes(out, a, 1, i, at);
+    }
+  } else {
+    _wfPushSchemes(out, _wfAmc, 0, i, at);
+  }
+  return out;
+}
+
+// append an AMC's scheme rows (and, if expanded, their sector children); lazy-fetch the drill file if absent.
+function _wfPushSchemes(out, amc, depth, i, at) {
+  const d = _wfDrillFor(amc);
+  if (!d) {
+    const slug = (_wf().drill_index || {})[amc];
+    if (slug) { ensureWfDrill(slug).then(() => _wfPivotRender()); out.push({ key: "load::" + amc, depth, label: "loading schemes…", placeholder: true }); }
+    else out.push({ key: "none::" + amc, depth, label: "no scheme drill-down for this AMC", placeholder: true });
+    return;
+  }
+  const schemes = (d.schemes || []).map((s) => ({ s, v: at(s.total) })).filter((r) => r.v);
+  schemes.sort((p, q) => (q.v.na || 0) - (p.v.na || 0));
+  for (const { s, v } of schemes) {
+    const key = "sch::" + amc + "::" + s.code;
+    out.push({ key, depth, label: s.name, vals: v, expandable: true, expanded: !!_wfPivExp[key], focus: { amc, code: s.code, sector: null } });
+    if (_wfPivExp[key]) {
+      const secs = Object.keys(s.sectors || {}).map((sec) => ({ sec, v: at(s.sectors[sec]) })).filter((r) => r.v);
+      secs.sort((p, q) => (q.v.na || 0) - (p.v.na || 0));
+      for (const { sec, v: sv } of secs) {
+        out.push({ key: key + "::" + sec, depth: depth + 1, label: sec, vals: sv, expandable: false, focus: { amc, code: s.code, sector: sec } });
+      }
+    }
+  }
+}
+
+// render the Excel-style pivot into #wf-snap; one delegated click handler toggles drill + focuses the cell.
+function _wfPivotRender() {
   const W = _wf(), host = $("wf-snap"); if (!host) return;
   const i = (_wfSnapIdx == null) ? W.months.length - 1 : _wfSnapIdx;
   const ym = W.months[i];
-  let rows = [], scopeLbl = "";
-  if (_wfAmc === "__ALL__") {
-    scopeLbl = "market, by sector";
-    const ST = W.sector_total || {};
-    rows = Object.keys(ST).map((s) => ({ k: s, na: ST[s].net_active[i], inf: ST[s].inflow[i], pr: ST[s].price[i], gr: ST[s].gross[i] }));
-  } else {
-    scopeLbl = `${_wfAmc}, by sector`;
-    const a = (W.cube || {})[_wfAmc] || {};
-    rows = Object.keys(a).filter((s) => s !== "__total__").map((s) => ({ k: s, na: a[s].net_active[i], inf: a[s].inflow[i], pr: a[s].price[i], gr: a[s].gross[i] }));
-  }
-  rows.sort((p, q) => (q.na || 0) - (p.na || 0));
+  const rows = _wfPivotRows();
+  const focusKey = _wfFocusKey();
   const naCol = (v) => (v >= 0 ? _WF_COL.na : "#b3402f");
-  const tr = rows.map((r) =>
-    `<tr><td>${fEsc(r.k)}</td>`
-    + `<td class="num" style="color:${naCol(r.na)}">${_wfFmt(r.na)}</td>`
-    + `<td class="num" style="color:${_WF_COL.inflow}">${_wfFmt(r.inf)}</td>`
-    + `<td class="num" style="color:${_WF_COL.price}">${_wfFmt(r.pr)}</td>`
-    + `<td class="num">${_wfFmt(r.gr)}</td></tr>`).join("");
+  const caret = (r) => r.expandable ? `<span class="wf-caret">${r.expanded ? "▾" : "▸"}</span>` : `<span class="wf-caret wf-caret-none"></span>`;
+  const body = rows.map((r) => {
+    if (r.placeholder) return `<tr><td colspan="6" style="padding-left:${10 + r.depth * 18}px;color:#8a93a0;font-style:italic">${fEsc(r.label)}</td></tr>`;
+    return `<tr class="wf-row${r.key === focusKey ? " wf-row-on" : ""}" data-key="${attEsc(r.key)}" data-focus="${attEsc(JSON.stringify(r.focus))}" data-exp="${r.expandable ? 1 : 0}">`
+      + `<td style="padding-left:${6 + r.depth * 18}px">${caret(r)}${fEsc(r.label)}</td>`
+      + `<td class="num">${r.vals.mv == null ? "—" : _wfFmt(r.vals.mv)}</td>`
+      + `<td class="num" style="color:${naCol(r.vals.na)}">${_wfFmt(r.vals.na)}</td>`
+      + `<td class="num" style="color:${_WF_COL.inflow}">${_wfFmt(r.vals.inf)}</td>`
+      + `<td class="num" style="color:${_WF_COL.price}">${_wfFmt(r.vals.pr)}</td>`
+      + `<td class="num">${_wfFmt(r.vals.gr)}</td></tr>`;
+  }).join("");
+  const rootLbl = _wfAmc === "__ALL__" ? "market → AMC → scheme → sector" : `${_wfAmc} → scheme → sector`;
   host.innerHTML =
-    `<div class="ab-screen-head"><b>${fEsc(scopeLbl)}</b> · as of ${fEsc(ym)} — sorted by net-active (conviction)</div>`
-    + `<table class="gauge-tbl"><thead><tr><th>Sector</th><th class="num">Net-active</th><th class="num">Implied inflow</th><th class="num">Price action</th><th class="num">Gross</th></tr></thead><tbody>${tr || `<tr><td colspan="5" class="empty-note">No flow this month.</td></tr>`}</tbody></table>`;
+    `<div class="ab-screen-head"><b>Pivot — ${fEsc(rootLbl)}</b> · as of ${fEsc(ym)} — click a row to drill in &amp; chart it; sorted by net-active (conviction).</div>`
+    + `<table class="gauge-tbl wf-pivot"><thead><tr><th>Name</th><th class="num">Ownership</th><th class="num">Net-active</th><th class="num">Implied inflow</th><th class="num">Price action</th><th class="num">Gross</th></tr></thead><tbody>${body || `<tr><td colspan="6" class="empty-note">No flow this month.</td></tr>`}</tbody></table>`;
+  if (!host.dataset.wfwired) {
+    host.addEventListener("click", (e) => {
+      const tr = e.target.closest("tr.wf-row"); if (!tr || !tr.dataset.focus) return;
+      const key = tr.dataset.key;
+      if (tr.dataset.exp === "1") _wfPivExp[key] = !_wfPivExp[key];
+      try { _wfFocus = JSON.parse(tr.dataset.focus); } catch (_e) {}
+      // if focusing/expanding into an AMC whose drill file isn't loaded, fetch then re-render
+      if (_wfFocus.amc && !_wfDrillFor(_wfFocus.amc)) {
+        const slug = (_wf().drill_index || {})[_wfFocus.amc];
+        if (slug) ensureWfDrill(slug).then(() => { _wfDrawHead(); _wfDrawPlot(); _wfPivotRender(); });
+      }
+      _wfDrawHead(); _wfDrawPlot(); _wfPivotRender();
+    });
+    host.dataset.wfwired = "1";
+  }
 }
 
 // build the whole breadth scaffold + draw every panel. Guarded; no Plotly key ever set to undefined.

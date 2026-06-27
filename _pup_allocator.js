@@ -153,6 +153,37 @@ const server = http.createServer((req, res) => {
     return { hasTab, hasPane: !!pane, hasData, bars0, bars1, snapRows0, snapRows1, hasSlider: !!sl, snapChanged };
   });
 
+  // ---- 1d2) PIVOT DRILL-DOWN (#102 P3): root at All AMCs -> expand an AMC (lazy-fetch its scheme file)
+  //           -> expand a scheme -> sector children -> click a sector and the chart refocuses to it.
+  const pivot = await page.evaluate(async () => {
+    const seg = (k) => (k.match(/::/g) || []).length;
+    const q = (s) => Array.from(document.querySelectorAll(s));
+    const amc = document.getElementById("wf-amc");
+    if (amc) { amc.value = "__ALL__"; amc.dispatchEvent(new Event("change", { bubbles: true })); }
+    await new Promise((r) => setTimeout(r, 450));
+    const amcRows = q('#wf-snap tr.wf-row[data-key^="amc::"]');
+    const nAmcRows = amcRows.length;
+    if (amcRows[0]) amcRows[0].click();                 // expand first AMC -> triggers lazy fetch
+    await new Promise((r) => setTimeout(r, 1100));
+    const schRows = q('#wf-snap tr.wf-row[data-key^="sch::"]').filter((tr) => seg(tr.dataset.key) === 2);
+    const nSch = schRows.length;
+    if (schRows[0]) schRows[0].click();                 // expand first scheme -> sector children
+    await new Promise((r) => setTimeout(r, 500));
+    const secRows = q('#wf-snap tr.wf-row').filter((tr) => seg(tr.dataset.key) === 3);
+    const nSec = secRows.length;
+    let headHasSector = false, bars = 0;
+    if (secRows[0]) {
+      const secName = ((secRows[0].querySelector("td") || {}).textContent || "").trim();
+      secRows[0].click();                               // focus a scheme×sector leaf
+      await new Promise((r) => setTimeout(r, 450));
+      const head = (document.getElementById("wf-head") || {}).textContent || "";
+      headHasSector = secName.length > 0 && head.indexOf(secName) >= 0;
+      const decomp = document.getElementById("plot-wf-decomp");
+      bars = decomp ? decomp.querySelectorAll(".barlayer .trace").length : 0;
+    }
+    return { nAmcRows, nSch, nSec, headHasSector, bars };
+  });
+
   // ---- 2) SCREEN tab: Rotation section (stock trail plot + centroid controls) ----
   await page.evaluate(async () => {
     try { if (typeof setView === "function") setView("screen"); } catch (e) {}
@@ -175,6 +206,7 @@ const server = http.createServer((req, res) => {
   console.log("CONS-FLOW:", JSON.stringify(consFlow), "(decomposition: >=2 bar traces before/after sector switch + 'decomposition' title)");
   console.log("REL-PERF :", JSON.stringify(relPerf), "(>=2 line traces, survives horizon switch to MAX)");
   console.log("OWNERSHIP:", JSON.stringify(own), "(>=2 bar traces decomp + snapshot table rows + AMC-switch redraw + date-slider)");
+  console.log("WF-PIVOT :", JSON.stringify(pivot), "(AMC rows -> expand -> schemes (lazy) -> sectors -> click sector refocuses chart)");
   console.log("DATE-NAV :", JSON.stringify(dateNav), "(screen+consensus sliders + screen shows historical on drag)");
   console.log("SEC-CHANGE:", JSON.stringify(secChange), "(afterA/afterB must stay >=1 — the re-plot bug)");
   console.log("ROTATION :", JSON.stringify(rot));
@@ -190,6 +222,7 @@ const server = http.createServer((req, res) => {
     && relPerf.before >= 2 && relPerf.afterMax >= 2 && relPerf.hasSeg
     && own.hasTab && own.hasPane && own.hasData && own.bars0 >= 2 && own.bars1 >= 2
     && own.snapRows0 >= 1 && own.hasSlider && own.snapChanged
+    && pivot.nAmcRows >= 1 && pivot.nSch >= 1 && pivot.nSec >= 1 && pivot.headHasSector && pivot.bars >= 2
     && dateNav.screenDn && dateNav.consDn && dateNav.screenDateChanged
     && rot.hasRotWord && rot.hasStockSel && rot.hasSubseg && rot.trailTraces >= 1;
   console.log("\n" + (ok

@@ -984,12 +984,24 @@ def save_terminal_site(reason: str = "manual", watchlist=None) -> dict:
     waterfall = {}
     try:
         from . import flow_waterfall as _wf
-        waterfall = _wf.build_waterfall(months_back=36, log=lambda m: print(m, flush=True))
+        waterfall = _wf.build_waterfall(months_back=36, with_drilldown=True, log=lambda m: print(m, flush=True))
         _wm = waterfall.get("meta", {})
         print(f"[deck] ownership/flow waterfall: {_wm.get('n_amcs')} AMCs x {_wm.get('n_sectors')} sectors, "
               f"{_wm.get('n_months')} months, reconciles={_wm.get('reconciles')}", flush=True)
+        # P3 drill-down: write one lazy-loaded file per AMC (AMC -> scheme -> sector, full history); keep
+        # only the small {amc: slug} index inline so the shell stays light. Aggregates only (bake-safe).
+        _drill = waterfall.pop("drilldown", {}) or {}
+        if _drill:
+            import json as _json
+            _owndir = os.path.join(site, "data", "ownership")
+            os.makedirs(_owndir, exist_ok=True)
+            for _amc, _pl in _drill.items():
+                with open(os.path.join(_owndir, _pl["slug"] + ".json"), "w", encoding="utf-8") as _f:
+                    _json.dump(_pl, _f, separators=(",", ":"))
+            print(f"[deck] ownership drill-down: wrote {len(_drill)} AMC files -> data/ownership", flush=True)
     except Exception as e:
         print(f"[deck] ownership/flow waterfall skipped: {e}")
+        waterfall.pop("drilldown", None)
 
     # 2g) BRIDGE live-AMC holdings -> store by HOLDINGS FINGERPRINT so the cockpit lists ALL funds
     # without duplicates: matched live funds collapse to their store scheme; unmatched (passive

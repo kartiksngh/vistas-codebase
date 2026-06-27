@@ -30,6 +30,7 @@ cube. Display-plane only: AGGREGATES (no per-stock licensed ARM rides here) -> s
 from __future__ import annotations
 import json
 import os
+import re
 from collections import defaultdict
 
 import numpy as np
@@ -42,12 +43,27 @@ from .funds_flows import _load, _pair_flows_active, _prev_ym
 # computed BEFORE pruning, so nothing is lost from the AMC/sector/market aggregates.
 _KEEP_MIN_CR = 5.0
 _RECON_TOL_CR = 0.5            # reconciliation must hold to well under a crore
+# the per-AMC drill-down (P3): a SCHEME is kept in its AMC file only if its peak monthly |gross| clears
+# this — drops debt/liquid/no-equity schemes so each lazy-loaded AMC file stays lean.
+_DRILL_MIN_CR = 5.0
 
 
 def _amc_of(h: pd.DataFrame) -> dict:
     """navindia_code -> AMC name (stable per scheme; last non-null wins)."""
     sub = h[["navindia_code", "amc"]].dropna().drop_duplicates(subset=["navindia_code"], keep="last")
     return dict(zip(sub["navindia_code"].astype(str), sub["amc"].astype(str)))
+
+
+def _scheme_name_of(h: pd.DataFrame) -> dict:
+    """navindia_code -> scheme display name (last non-null wins)."""
+    sub = h[["navindia_code", "scheme_name"]].dropna().drop_duplicates(subset=["navindia_code"], keep="last")
+    return dict(zip(sub["navindia_code"].astype(str), sub["scheme_name"].astype(str)))
+
+
+def amc_slug(name: str) -> str:
+    """AMC name -> a stable, filesystem/URL-safe slug for its lazy drill-down file."""
+    s = re.sub(r"[^a-z0-9]+", "-", str(name).lower()).strip("-")
+    return s or "amc"
 
 
 def _sector_map(explicit=None) -> dict:
@@ -60,7 +76,8 @@ def _sector_map(explicit=None) -> dict:
         return {}
 
 
-def build_waterfall(months_back: int = 36, end_ym=None, sector_map=None, log=print) -> dict:
+def build_waterfall(months_back: int = 36, end_ym=None, sector_map=None, with_drilldown: bool = False,
+                    log=print) -> dict:
     """Build the AMC x sector money-flow waterfall cube over the trailing `months_back` months.
 
     Returns a baked-ready dict:
@@ -76,6 +93,7 @@ def build_waterfall(months_back: int = 36, end_ym=None, sector_map=None, log=pri
     Each array is aligned to `months`. Components reconcile: price + inflow + net_active == gross."""
     h, ret = _load()
     code2amc = _amc_of(h)
+    code2name = _scheme_name_of(h)
     smap = _sector_map(sector_map)
 
     all_months = sorted(h["ym"].unique())
@@ -85,7 +103,9 @@ def build_waterfall(months_back: int = 36, end_ym=None, sector_map=None, log=pri
 
     months_axis = []
     # key=(amc, sector) -> component -> {ym: value};  derive arrays at the end
-    cells = defaultdict(lambda: {"gross": {}, "price": {}, "inflow": {}, "net_active": {}})
+    cells = defaultdict(lambda: {"gross": {}, "price": {}, "inflow": {}, "net_active": {}, "mv": {}})
+    # P3 drill-down: key=(navindia_code, sector) -> component -> {ym: value} (per-SCHEME, same loop)
+    scheme_cells = defaultdict(lambda: {"gross": {}, "price": {}, "inflow": {}, "net_active": {}, "mv": {}})
     # per-month coverage: priced MV that entered the decomposition vs total MV touched
     cov_rows = []
 
@@ -104,13 +124,25 @@ def build_waterfall(months_back: int = 36, end_ym=None, sector_map=None, log=pri
         priced["implied_inflow"] = priced["price_adj"] - priced["net_active"]
         grp = priced.groupby(["amc", "sector"]).agg(
             gross=("gross", "sum"), price=("price_action", "sum"),
-            inflow=("implied_inflow", "sum"), na=("net_active", "sum")).reset_index()
+            inflow=("implied_inflow", "sum"), na=("net_active", "sum"), mv=("mv_e", "sum")).reset_index()
         for _, r in grp.iterrows():
             c = cells[(r["amc"], r["sector"])]
             c["gross"][ym] = round(float(r["gross"]), 1)
             c["price"][ym] = round(float(r["price"]), 1)
             c["inflow"][ym] = round(float(r["inflow"]), 1)
             c["net_active"][ym] = round(float(r["na"]), 1)
+            c["mv"][ym] = round(float(r["mv"]), 1)
+        if with_drilldown:                                   # per-SCHEME (navindia_code) x sector, same priced rows
+            sgrp = priced.groupby(["navindia_code", "sector"]).agg(
+                gross=("gross", "sum"), price=("price_action", "sum"),
+                inflow=("implied_inflow", "sum"), na=("net_active", "sum"), mv=("mv_e", "sum")).reset_index()
+            for _, r in sgrp.iterrows():
+                sc = scheme_cells[(str(r["navindia_code"]), r["sector"])]
+                sc["gross"][ym] = round(float(r["gross"]), 1)
+                sc["price"][ym] = round(float(r["price"]), 1)
+                sc["inflow"][ym] = round(float(r["inflow"]), 1)
+                sc["net_active"][ym] = round(float(r["na"]), 1)
+                sc["mv"][ym] = round(float(r["mv"]), 1)
         cov_rows.append({"ym": ym, "priced_mv_cr": round(float(tot_val - excl_val), 1),
                          "excl_mv_cr": round(float(excl_val), 1)})
         if log and len(months_axis) % 6 == 0:
@@ -118,12 +150,13 @@ def build_waterfall(months_back: int = 36, end_ym=None, sector_map=None, log=pri
 
     if not months_axis:
         return {"months": [], "amcs": [], "sectors": [], "cube": {}, "sector_total": {},
-                "market_total": {}, "meta": {"error": "no flow months produced"}}
+                "market_total": {}, "drilldown": {}, "drill_index": {},
+                "meta": {"error": "no flow months produced"}}
 
     def _arr(d):   # {ym: v} -> list aligned to months_axis (missing month = 0.0)
         return [d.get(ym, 0.0) for ym in months_axis]
 
-    COMPS = ("gross", "price", "inflow", "net_active")
+    COMPS = ("gross", "price", "inflow", "net_active", "mv")
 
     # ---- materialise the full cube (pre-pruning) so roll-ups are exact ----
     amc_set = sorted({a for (a, _s) in cells})
@@ -181,6 +214,34 @@ def build_waterfall(months_back: int = 36, end_ym=None, sector_map=None, log=pri
     amcs_ranked = sorted(cube.keys(), key=lambda a: _abs_na(cube[a]["__total__"]), reverse=True)
     secs_ranked = sorted(sector_total.keys(), key=lambda s: _abs_na(sector_total[s]), reverse=True)
 
+    # ---- P3 drill-down: per-AMC {scheme: {sector arrays + total}}, written to lazy files by the deck ----
+    # Every level still reconciles (each scheme total = Σ its sectors; each a Σ of per-row identities).
+    # `mv` = priced ownership value (Σ mv_end), consistent with the flow rows shown alongside it.
+    drilldown, drill_index = {}, {}
+    if with_drilldown:
+        cells_by_code = defaultdict(dict)
+        for (code, sec), comp in scheme_cells.items():
+            cells_by_code[code][sec] = comp
+        by_amc = defaultdict(list)
+        for code in cells_by_code:
+            by_amc[code2amc.get(code, "Unknown AMC")].append(code)
+        for amc, clist in by_amc.items():
+            schemes = []
+            for code in clist:
+                secs = cells_by_code[code]
+                sec_out = {s: {k: _arr(secs[s][k]) for k in COMPS} for s in secs}
+                total = {k: _sum_arrays([sec_out[s][k] for s in sec_out]) for k in COMPS}
+                if max((abs(v) for v in total["gross"]), default=0.0) < _DRILL_MIN_CR:
+                    continue                                  # drop debt/liquid/no-equity schemes
+                schemes.append({"name": code2name.get(code, code), "code": code,
+                                "total": total, "sectors": sec_out})
+            if not schemes:
+                continue
+            schemes.sort(key=lambda x: sum(abs(v) for v in x["total"]["net_active"]), reverse=True)
+            slug = amc_slug(amc)
+            drilldown[amc] = {"amc": amc, "slug": slug, "months": months_axis, "schemes": schemes}
+            drill_index[amc] = slug
+
     meta = {
         "months_back": months_back, "n_months": len(months_axis),
         "n_amcs": len(cube), "n_sectors": len(sector_total),
@@ -200,7 +261,8 @@ def build_waterfall(months_back: int = 36, end_ym=None, sector_map=None, log=pri
         ],
     }
     return {"months": months_axis, "amcs": amcs_ranked, "sectors": secs_ranked,
-            "cube": cube, "sector_total": sector_total, "market_total": market_total, "meta": meta}
+            "cube": cube, "sector_total": sector_total, "market_total": market_total,
+            "drilldown": drilldown, "drill_index": drill_index, "meta": meta}
 
 
 def _fmt(v):
