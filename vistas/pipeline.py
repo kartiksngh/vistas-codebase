@@ -392,6 +392,14 @@ def run_daily(publish=True, skip=(), only=(), light=False, dry_run=False, force_
         say("[2/5] reloading data + rebuilding the hosted site…")
         from vistas import data
         data.reload()
+        # mark the live-forward digital-AMC pilot books to the just-refreshed close (no-LLM,
+        # paper-only; holdings frozen between monthly LLM rounds). Best-effort — a hiccup here must
+        # NEVER block the terminal build/publish, so it is wrapped and non-fatal.
+        try:
+            from vistas import amc_daily_mark
+            amc_daily_mark.run(log=say)
+        except Exception as e:
+            say(f"  (digital-AMC daily mark skipped, non-fatal: {e})")
         build_info = {}
         try:
             build_info = pt.build_site()

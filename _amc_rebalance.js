@@ -13,8 +13,11 @@ export const meta = {
 // FM does NOT need to satisfy caps exactly — it expresses a view. Paper-only. No look-ahead (the desk is
 // already point-in-time as-of `asof`). Never invent tickers — use only `sym`s present in the desk candidates.
 
-const A = (args && args.asof) || null
-const SCHEMES = (args && Array.isArray(args.schemes)) ? args.schemes : []
+// args may arrive as a parsed object OR (harness quirk) as a JSON string — handle both.
+const ARGS = (typeof args === 'string') ? JSON.parse(args) : (args || {})
+const A = ARGS.asof || null
+const SCHEMES = Array.isArray(ARGS.schemes) ? ARGS.schemes : []
+if (!SCHEMES.length) throw new Error('amc-rebalance: no schemes in args (asof=' + A + ') — check the args payload')
 
 const TICKET_SCHEMA = {
   type: 'object',
@@ -68,6 +71,7 @@ function fmPrompt(s) {
     `- Express genuine conviction weights. A deterministic guardrail will AFTERWARDS clip to mandate/liquidity caps and top up to the equity floor, so you do not need to hit the caps exactly — but stay broadly within the mandate's spirit (respect the holding-count band and don't grossly exceed per-name/sector caps).`,
     `- Treat ARM as a SMALL ~1-6 month analyst-revision tilt (IC ~0.05), never a guarantee; synthesize it WITH momentum, valuation, flows and your book — do not chase a single signal.`,
     `- For every ticket give a one-line rationale, a thesis, and a FALSIFICATION (what would prove you wrong). These are pre-registered for honest scoring — no hindsight.`,
+    `- In all WRITTEN text (book_thesis / experience_note / rationale / thesis / falsification), describe analyst-revision strength QUALITATIVELY ("strong / rising / falling revisions") — do NOT quote a numeric ARM or StarMine score; the saved audit trail must not carry licensed values.`,
     `- Include explicit EXIT tickets (target_pct 0) for held names you are dropping.`,
     `Paper-money only. Be honest and defensible; you synthesize validated signals, you do not manufacture alpha.`,
     `Return the structured object.`,

@@ -839,10 +839,144 @@ def scheme_panel(b):
         f'{trade_register(b)}'
         f'</div>')
 
+# ───────────────────────────────────────────── LIVE-FORWARD round (the LLM FMs take the seat)
+LF_CSS = """
+<style>
+.lf-intro{color:#9fb0c0;font-size:13px;line-height:1.55;max-width:1000px;margin:2px 0 16px}
+.lf-cio{background:#0d1b2acc;border:1px solid #1e3a5f;border-left:3px solid var(--acc);border-radius:10px;padding:14px 16px;margin:0 0 18px}
+.lf-cio .lbl{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#38bdf8;margin-bottom:6px}
+.lf-fv{font-size:14px;line-height:1.6;color:#e6edf3}
+.lf-sub{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#7d8ea0;margin:12px 0 4px}
+.lf-risk li{color:#fca5a5;font-size:12.5px;line-height:1.5;margin:3px 0}
+.lf-cross li{color:#a7c0d8;font-size:12.5px;line-height:1.5;margin:3px 0}
+.lf-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:16px}
+.lf-card{background:#0c1622;border:1px solid #1c2c40;border-radius:10px;padding:14px 16px}
+.lf-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.lf-h b{font-size:15px;color:#e6edf3}
+.lf-stance{font-size:13px;color:#7dd3fc;font-style:italic;margin:2px 0 8px}
+.lf-thesis{font-size:12.5px;line-height:1.55;color:#bcccdc;margin-bottom:10px}
+.lf-vq{margin:8px 0}
+.lf-dev{width:100%;border-collapse:collapse;font-size:12px;margin-top:5px}
+.lf-dev th{color:#7d8ea0;font-weight:600;text-align:left;padding:2px 6px;border-bottom:1px solid #1c2c40}
+.lf-dev td{padding:2px 6px;border-bottom:1px solid #14202e;color:#cdd9e5}
+.lf-bets{margin:10px 0 4px}
+.lf-bet{font-size:12px;line-height:1.45;color:#bcccdc;padding:5px 0;border-top:1px solid #14202e}
+.lf-bet b{color:#e6edf3}
+.lf-th{color:#9fb0c0}
+.lf-fx{color:#d99a2b}
+.pill2{background:#1e3a5f;color:#7dd3fc;border-radius:4px;padding:1px 6px;font-size:10.5px}
+.lf-guard{font-size:11.5px;color:#7d8ea0;margin-top:8px;border-top:1px solid #14202e;padding-top:6px}
+</style>"""
+
+
+def load_round():
+    """The latest live-forward round (round_latest.json) + each scheme's pre-registered theses
+    (prereg.jsonl, this round only). Returns None if no round has run yet (site degrades gracefully)."""
+    p = AMC / "live" / "round_latest.json"
+    if not p.exists():
+        return None
+    try:
+        rd = json.loads(p.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+    asof = str(rd.get("asof"))
+    name2s = {s.get("scheme"): s for s in rd.get("schemes", [])}
+    for s in rd.get("schemes", []):
+        s["_prereg"] = []
+    for pf in BOOKS.glob("*/*/prereg.jsonl"):
+        try:
+            rows = [json.loads(l) for l in pf.read_text(encoding="utf-8").splitlines() if l.strip()]
+        except Exception:
+            continue
+        rows = [r for r in rows if str(r.get("date")) == asof and r.get("decided_by") == "LLM-FM"]
+        if not rows:
+            continue
+        sch = None
+        bj = pf.parent / "book.json"
+        if bj.exists():
+            try:
+                sch = json.loads(bj.read_text(encoding="utf-8")).get("scheme")
+            except Exception:
+                sch = None
+        s = name2s.get(sch)
+        if s is not None:
+            s["_prereg"] = sorted(rows, key=lambda r: -float(r.get("target_pct") or 0))
+    return rd
+
+
+def _lf_dev_row(d):
+    delta = d.get("delta_pct") or 0
+    col = "#16a34a" if delta > 0 else "#dc2626"
+    return (f'<tr><td><b>{esc(d.get("sym"))}</b></td><td class="muted">{esc((d.get("name") or "")[:22])}</td>'
+            f'<td style="text-align:right">{(d.get("llm_pct") or 0):.1f}%</td>'
+            f'<td style="text-align:right" class="muted">{(d.get("quant_pct") or 0):.1f}%</td>'
+            f'<td style="text-align:right;color:{col}">{"+" if delta>0 else ""}{delta:.1f}</td></tr>')
+
+
+def lf_scheme_card(s):
+    vq = s.get("vs_quant") or {}
+    devs = (vq.get("top_deviations") or [])[:6]
+    dev_tbl = ""
+    if devs:
+        dev_tbl = ('<table class="lf-dev"><thead><tr><th>Name</th><th></th>'
+                   '<th style="text-align:right">LLM</th><th style="text-align:right">Rules</th>'
+                   '<th style="text-align:right">&Delta;</th></tr></thead><tbody>'
+                   + "".join(_lf_dev_row(d) for d in devs) + '</tbody></table>')
+    prereg = s.get("_prereg") or []
+    bets = ""
+    if prereg:
+        bets = '<div class="lf-bets"><div class="lf-sub">Pre-registered bets — thesis &amp; falsifier (anti-hindsight)</div>' + "".join(
+            f'<div class="lf-bet"><b>{esc(b.get("sym"))}</b> <span class="pill2">{esc(b.get("play_type"))}</span> '
+            f'<span class="muted">{float(b.get("target_pct") or 0):.1f}%</span><br>'
+            f'<span class="lf-th">{esc(b.get("thesis"))}</span><br>'
+            f'<span class="lf-fx">&#10007; wrong if: {esc(b.get("falsification"))}</span></div>'
+            for b in prereg[:6]) + '</div>'
+    g = "; ".join(s.get("guardrail_notes") or [])
+    return (f'<div class="lf-card">'
+            f'<div class="lf-h"><b>{esc(s.get("scheme"))}</b>'
+            f'<span class="tag">{s.get("n_holdings")} names · {s.get("deployed_pct")}% deployed · '
+            f'{s.get("n_trades")} trades · turnover {s.get("turnover_pct")}%</span></div>'
+            f'<div class="lf-stance">{esc(s.get("stance"))}</div>'
+            f'<div class="lf-thesis">{esc(s.get("book_thesis"))}</div>'
+            f'<div class="lf-vq"><span class="lf-sub">vs the rules-FM baseline</span> '
+            f'<span class="muted">{vq.get("n_llm_only","?")} LLM-only · {vq.get("n_quant_only","?")} rules-only names</span>'
+            f'{dev_tbl}</div>'
+            f'{bets}'
+            + (f'<div class="lf-guard">&#9881; guardrail: {esc(g)}</div>' if g else '')
+            + '</div>')
+
+
+def live_forward_tab(rd):
+    cio = rd.get("cio") or {}
+    risk = "".join(f'<li>{esc(r)}</li>' for r in (cio.get("risk_flags") or []))
+    cross = "".join(f'<li>{esc(c)}</li>' for c in (cio.get("cross_scheme_notes") or []))
+    cio_box = ""
+    if cio:
+        cio_box = (f'<div class="lf-cio"><div class="lbl">CIO — firm review of this round</div>'
+                   f'<div class="lf-fv">{esc(cio.get("firm_view"))}</div>'
+                   + (f'<div class="lf-sub">&#9888; Risk flags</div><ul class="lf-risk">{risk}</ul>' if risk else "")
+                   + (f'<div class="lf-sub">Cross-scheme breadth</div><ul class="lf-cross">{cross}</ul>' if cross else "")
+                   + '</div>')
+    cards = "".join(lf_scheme_card(s) for s in rd.get("schemes", []))
+    return (LF_CSS +
+            '<div class="section-h">Live-Forward — the LLM fund managers take the seat '
+            f'<span class="hint">as of {esc(rd.get("asof"))} · from the seam on, the agents decide; a deterministic guardrail enforces the mandate</span></div>'
+            '<div class="lf-intro">The historical track was built by the deterministic <b>rules-FM</b>. From the latest data '
+            'date forward, the <b>LLM fund-manager agents</b> read their desk (the inherited book + a candidate universe with '
+            'validated signals + the rules-FM target as a reference) and set a genuine <b>conviction</b> target book; a '
+            'deterministic guardrail then clips to the mandate / liquidity / equity-floor. Every bet is <b>pre-registered with a '
+            'falsifier</b> (anti-hindsight), it is <b>paper-money only</b> with no look-ahead, and the committed audit trail '
+            'carries <b>no licensed analyst values</b>. Skill will be scored — once next month\'s data lands — by whether the '
+            'pre-registered theses played out, via the Fundamental Law (IC&middot;&radic;breadth&middot;TC).</div>'
+            f'{cio_box}'
+            f'<div class="lf-grid">{cards}</div>')
+
+
 def build():
     org = json.loads((AMC / "org.json").read_text(encoding="utf-8"))
     ctx = json.loads((AMC / "context.json").read_text(encoding="utf-8"))
     books = load_books()          # the per-scheme paper-trading books (NAV / fact-sheet / blotter / scorecard)
+    round_doc = load_round()      # the latest live-forward LLM round (None until the first round has run)
     cio = org.get("cio", {}) or {}
     mp = cio.get("market_pulse", {}) or {}
     asof = org.get("data_asof") or ctx.get("data_asof")
@@ -924,6 +1058,11 @@ def build():
         f'{schemes_overview(books)}</div>'
         f'{schemes_panels}')
 
+    # ── live-forward tab (only once the first LLM round has run) ──
+    lf_btn = (f'<button class="tabbtn" data-tab="liveforward" onclick="showTab(\'liveforward\')">'
+              f'Live-Forward · {esc(round_doc.get("asof"))}</button>') if round_doc else ""
+    lf_view = (f'<div class="tabview" id="tab-liveforward">{live_forward_tab(round_doc)}</div>') if round_doc else ""
+
     gen = datetime.date(2026, 6, 26).isoformat()
     html_doc = (
         '<!doctype html><html lang="en"><head><meta charset="utf-8">'
@@ -939,6 +1078,7 @@ def build():
         '<div class="tabs">'
         '<button class="tabbtn on" data-tab="floor" onclick="showTab(\'floor\')">Trading Floor</button>'
         f'<button class="tabbtn" data-tab="schemes" onclick="showTab(\'schemes\')">Schemes &amp; Books · {n_books}</button>'
+        f'{lf_btn}'
         '</div>'
         # ════ TAB 1: the floor ════
         '<div class="tabview on" id="tab-floor">'
@@ -963,6 +1103,7 @@ def build():
         '</div>'   # /tab-floor
         # ════ TAB 2: schemes & books ════
         f'<div class="tabview" id="tab-schemes">{schemes_tab}</div>'
+        f'{lf_view}'
         # footer
         '<div class="foot"><b>How to read this.</b> An <b>experimental, paper-money</b> research firm: agents — '
         'sector analysts, fund managers, a CIO — read the terminal\'s real data and produce grounded views. '

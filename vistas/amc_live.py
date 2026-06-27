@@ -36,7 +36,20 @@ def slug(s):
 
 
 # ───────────────────────────────────────────────────────── licensing scrub
-_ARM_RE = re.compile(r"\bARM\s*(?:of|=|:|score)?\s*\d{1,3}\b|\bARM\s*\d{1,3}\b", re.IGNORECASE)
+# Strip any raw LSEG StarMine analyst-revision (ARM) value, however phrased, BEFORE it is persisted to the
+# git-tracked amc_book/ audit trail. The agent MAY see "ARM 78" in its desk to reason; the committed text must
+# carry it only QUALITATIVELY. Defence-in-depth: the rebalance prompt also tells agents not to quote a numeric
+# revision score in persisted fields (belt) — this scrub is the suspenders.
+# Conservative on the NUMBER side: a 0-100 number is only scrubbed when it sits next to a metric NAME
+# (ARM / StarMine / analyst-revision / revision score|momentum|rank), so weights/counts/years are untouched.
+_ARM_NAME = (r"(?:ARM|StarMine(?:\s+ARM)?|analyst[\s-]*revisions?(?:\s+(?:score|momentum|rank))?"
+             r"|revision[\s-]*(?:score|momentum|rank))")
+_ARM_CONN = r"(?:\s+(?:of|score|rank|reading|value|is|at|near|around)|\s*[:=])*"   # 0+ score-connector tokens
+_ARM_RE = re.compile(
+    _ARM_NAME + _ARM_CONN + r"\s*\d{1,3}(?:\.\d+)?\b"                  # NAME [connectors] NUMBER
+    r"|\b\d{1,3}(?:\.\d+)?\s*(?:on\s+(?:the|its)\s+)?" + _ARM_NAME,    # NUMBER [on the] NAME
+    re.IGNORECASE,
+)
 
 
 def scrub_arm(text):

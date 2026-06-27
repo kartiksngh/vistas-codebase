@@ -9,6 +9,39 @@
 
 **▶▶▶ RESUME — 2026-06-27 LATE (FM-SHORTLIST #39 + LIVE-FORWARD AMC #52/#95/#96 session, KV-authorized):**
 KV greenlit **#39 (FM Action Shortlist)** then **#52/#95/#96 (live-forward Agentic AMC)** — "long tasks, do it if pipelines ready." STATE:
+- **★★ FIRST LIVE-FORWARD ROUND DONE + CLEAN (2026-06-27, seam asof 2026-06-25) — the North Star made its first real decision.** Ran `prepare_round` → `_amc_rebalance.js` workflow (4 FM agents ∥ + 1 CIO, 331,809 tokens) → `apply_round`. Guardrail enforced (ICICI 37 names/95% deployed, SBI 34/72.5%, ABSL 62/95%, Quant 35/95%; dropped FM-over-reached non-candidate tickers e.g. CIPLA/DMART). Rules-vs-LLM (`vs_quant`): ICICI held ICICIBANK +4.4% / refused MTARTECH momentum chase (14 LLM-only vs 32 quant-only). **CIO caught the key fragility**: all 4 FMs crowded the SAME cheap-commodity cluster (ONGC in ALL 4, NMDC in 3) on the SAME ARM signal = correlated desks / low breadth (Fundamental-Law working as designed). **LICENSING CLEAN** (0 raw-ARM-value leaks by the `scrub_arm` rail; scrub fired 1×). Seam books backed up to scratchpad `amc_book_seam_backup/` + git `cfdbbae`. Artifacts: `output/_amc/live/round_latest.json` (+`round_2026-06-25.json`, `round_decisions_2026-06-25.json`), per-scheme blotter/prereg/book mutated to the LLM book. #95 DONE. **REMAINING for #96: (1) surface in `amc_site.py` — add a Live-Forward section reading `round_latest.json` (schemes[].{scheme,n_holdings,n_trades,deployed_pct,turnover_pct,vs_quant{n_llm_only,n_quant_only,top_deviations},stance,book_thesis,guardrail_notes} + cio{firm_view,risk_flags,cross_scheme_notes} + prereg.jsonl) → rebuild+publish digital-amc; (2) CronCreate MONTHLY; (3) `amc_daily_mark.py` + `Run AMC Rebalance.bat`.** amc_site.py: build() @842, per-scheme reads @486-505, _read_json @455.
+  **★ SURFACE DONE + LIVE 2026-06-27 (_pages `cb67a78f8`):** added a **"Live-Forward" tab** to `amc_site.py`
+  (`load_round`/`live_forward_tab`/`lf_scheme_card`/`LF_CSS`, conditional button+view, generic `showTab` handles it)
+  — CIO firm review + risk flags (ONGC-crowding insight) · per-FM stance/book_thesis/vs_quant top-deviations/guardrail ·
+  pre-registered bets (thesis→falsifier from prereg.jsonl). Verified 7/7 content + MY section 0 raw-ARM (the site's 243
+  ARM mentions are the pre-existing P0 analyst desks = signed-off terminal-family display, not mine). Published by copy
+  `output/_amc/site/index.html` → `_pages/digital-amc/index.html` + git push.
+  **★★ #96 CADENCE BUILT + TESTED 2026-06-27 (this session) — #96 fully closed bar a live publish of the new code:**
+  - **`vistas/amc_daily_mark.py`** = the NO-LLM daily MARK (the autonomous heartbeat BETWEEN monthly rounds). Re-prices
+    the 4 pilot books to the latest close every trading day → daily CITI fact sheets + a forward NAV series
+    `output/_amc/live/nav/<slug>.csv` (base-100 at each book's inception) + `daily_mark_status.json`. **Idempotent +
+    gap-filling** (re-marks the whole [inception→latest] window each run; a missed day self-heals). **PROVEN book.json
+    BYTE-IDENTICAL before/after** (marking ≠ trading; hash-checked). Forward day-return path proven on a synthetic
+    24th→25th window (NAV 100→99.434, −0.566%). Today latest-price = 2026-06-25 = round date → 0 forward days yet
+    (NAV 100, correct); does real work as data advances.
+  - **`vistas/amc_round.py`** = the monthly-round orchestration (deterministic glue around the ONE LLM step). CLI:
+    `start [--asof]` (prepare_round + print the Workflow args JSON on stdout) · `finish --asof --decisions <path>
+    [--dry-run]` (apply_round) · `publish [--no-push] [--no-backup]` (daily-mark → `amc_site.build()` → copy to
+    _pages/digital-amc + push + `backup_codebase`/`backup_arm`, all under the shared build lock) · `mark`. All three
+    safe paths TESTED (start, finish --dry-run parsed 4 books/304 tickets/CIO, publish --no-push rebuilt 694KB w/
+    Live-Forward tab).
+  - **Bats:** `Run AMC Daily Mark.bat` (heartbeat) · `Publish Digital-AMC.bat` (mark+rebuild+push one-click).
+  - **Daily-mark WIRED INTO `vistas/pipeline.py`** right after `data.reload()` (best-effort, non-fatal) → the books mark
+    every nightly run automatically — **NO new scheduled task needed** (pipeline already runs ~8pm IST).
+  - **★ CRON REALITY (audit-grade honesty):** a MONTHLY CronCreate is NOT viable — its jobs die when the Claude session
+    exits and even `durable` recurring jobs **auto-expire after 7 days** (per the tool schema); Windows Task Scheduler
+    can run forever but CANNOT drive an LLM Workflow. ⇒ the monthly LLM round is **Claude-triggered** (human-in-the-loop,
+    also desirable — KV eyeballs each month before it goes live): KV says "run the AMC round" → Claude runs
+    `amc_round start` → Workflow `_amc_rebalance.js` → save result to `round_decisions_<asof>.json` → `amc_round finish`
+    → `amc_round publish`. The DAILY MARK is the genuinely-autonomous half (pipeline). First-round driver proven this
+    session; NOTE the args-as-STRING quirk (workflow parses both). **All new code is ON DISK + TESTED but NOT yet pushed**
+    (no live-content change since the NAV isn't surfaced on the site yet) — KV to click `Publish Digital-AMC.bat` (or say
+    go) to lock it in + back up the source.
 - **#39 CODE-COMPLETE + logic-validated, PENDING BUILD.** A per-fund **evidence shortlist** in the Funds cockpit (`renderFundSkill`):
   TRIM candidates (held names in the WEAK Smart-vs-Street quadrant 4 = not-recommending ∧ net-selling, weakest-ARM first) +
   ADD candidates (in-mandate un-held names in STRONG quadrant 1 = recommending ∧ buying, best-ARM first). **Decision-SUPPORT, not
