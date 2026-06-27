@@ -112,6 +112,53 @@ def _book_value(book, asof_str):
 
 
 # ───────────────────────────────────────────────────────── 1) ASSEMBLE the FM desk (no look-ahead)
+_THEME_SKIP_SECTORS = {"Unclassified", "Diversified"}   # holding-co / catch-all buckets don't DEFINE a theme
+
+
+def theme_sectors_for(reg_entry, weight_floor=3.0, max_theme_sectors=7):
+    """The desk-sectors a SECTOR/THEMATIC scheme is restricted to (or None = diversified → broad universe),
+    derived from the scheme's real disclosed equity holdings mapped to the SAME 11 desk-sector taxonomy the
+    universe uses (`ar._sector_map`) — so the theme filter is taxonomy-aligned BY CONSTRUCTION (no taxonomy
+    mismatch bug). A scheme is 'thematic' iff it carries MEANINGFUL weight (≥ `weight_floor`% of its mapped
+    equity sleeve) in only a SMALL number (≤ `max_theme_sectors`) of the 11 desk-sectors: a Pharma fund
+    lives in 1, an Infra fund in ~3-4, while a diversified Flexi/Large/Value fund spreads across ≥6.
+
+    Held names are ALWAYS shown on the desk anyway (prepare_desk unions the current book), so this only
+    restricts the EXPANSION universe (the NEW names an FM may add) to on-theme sectors. And because
+    enforce_guardrails DROPS any proposed name absent from the candidates, the restriction becomes a HARD
+    theme guardrail — a Pharma FM literally cannot add a bank. Returns a set of desk-sectors, or None.
+
+    LIMITATION (honest): a CHARACTERISTIC theme that isn't a sector — PSU (govt-owned), MNC, ESG — spreads
+    across many sectors, so this correctly leaves it on the broad universe (the LLM self-restricts via the
+    scheme name + its inherited book); a true PSU/MNC/ESG eligibility flag is a separate data task."""
+    # CATEGORY GATE: only a SEBI "Sectoral / Thematic" scheme is ever theme-restricted. Diversified
+    # mandates (Flexi/Large/Multi-Cap/Value/Dividend-Yield/Large&Mid/Equity-Savings/ELSS/Focused/Hybrid)
+    # invest across the whole market by DESIGN — they must stay broad even if their current book happens
+    # to concentrate in a few sectors. (Within the thematic category, the ≤max_theme_sectors cut still
+    # lets a genuinely go-anywhere thematic — Quant / Special Opportunities — fall back to broad.)
+    cat = str(reg_entry.get("category") or "").lower()
+    if "thematic" not in cat and "sector" not in cat:
+        return None
+    smap = ar._sector_map()
+    if not smap:
+        return None
+    w, tot = {}, 0.0
+    for h in reg_entry.get("real_holdings", []):
+        sym = str(h.get("symbol") or "").upper()
+        pct = af._f(h.get("pct"))
+        if not sym or pct <= 0:
+            continue
+        sec = smap.get(sym)
+        if not sec or sec in _THEME_SKIP_SECTORS:
+            continue
+        w[sec] = w.get(sec, 0.0) + pct
+        tot += pct
+    if tot <= 0 or not w:
+        return None
+    meaningful = {s for s, ww in w.items() if 100.0 * ww / tot >= weight_floor} or {max(w, key=w.get)}
+    return meaningful if len(meaningful) <= max_theme_sectors else None
+
+
 def prepare_desk(reg_entry, asof_str, top_n=70, write=True):
     """Build the FM's decision desk as-of `asof_str` and (optionally) write it to a file the LLM FM agent
     Reads. Returns the context dict. No look-ahead: universe/prices/ARM/forces are all ≤ asof."""
@@ -119,7 +166,8 @@ def prepare_desk(reg_entry, asof_str, top_n=70, write=True):
     asof_ts = _asof_ts(asof_str)
     bid = reg_entry.get("brain") or af.brain_for_mandate(reg_entry.get("category"), m)
 
-    uni, umeta = ar.point_in_time_universe(asof_ts)
+    theme = theme_sectors_for(reg_entry)                  # None for diversified mandates (→ broad universe)
+    uni, umeta = ar.point_in_time_universe(asof_ts, theme_sectors=theme)
     buckets = set(m.get("buckets", ["large", "mid", "small"]))
     cand = [u for u in uni if u.get("bucket") in buckets] or list(uni)
     bid, _bdiag = af.score_universe(cand, asof_str, bid)          # attaches z_arm/z_mom/z_val + brain score
@@ -177,7 +225,16 @@ def prepare_desk(reg_entry, asof_str, top_n=70, write=True):
         "track_record": {k: sc.get("benchmark", {}).get(k) for k in ("cagr_pct", "excess_cagr_pct", "info_ratio", "beta")} if sc else {},
         "quant_baseline_top": quant_baseline,
         "candidates": desk,
-        "universe_meta": {"n": umeta.get("n"), "arm_coverage_pct": umeta.get("arm_cov")},
+        "universe_meta": {"n": umeta.get("n"), "arm_coverage_pct": umeta.get("arm_cov"),
+                          "restricted_to_theme": bool(theme),
+                          "theme_sectors": (sorted(theme) if theme else None),
+                          "note": ("Your candidate universe is RESTRICTED to your fund's theme sectors "
+                                   f"({', '.join(sorted(theme))}) — you may only ADD names from these sectors "
+                                   "(your current holdings are always shown so you can trim/hold them). Any "
+                                   "off-theme ticker you propose will be dropped by the guardrail."
+                                   if theme else
+                                   "Diversified mandate — your candidate universe is the broad market (within "
+                                   "your market-cap buckets).")},
         "signal_legend": {
             "arm": "LSEG StarMine analyst-revision momentum 0-100 (>=50 = analysts upgrading; a SMALL ~1-6mo tilt, IC~0.05, NOT a guarantee)",
             "z_mom": "cross-sectional z of 6m-1m price momentum (>0 = stronger than peers)",

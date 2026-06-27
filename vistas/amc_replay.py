@@ -235,11 +235,16 @@ def _bench_for(reg_entry):
 
 
 # ───────────────────────────────────────────────────────── point-in-time universe
-def point_in_time_universe(asof_ts):
+def point_in_time_universe(asof_ts, theme_sectors=None):
     """The survivorship-clean investable universe AS-OF `asof_ts` (a Timestamp in the panel index):
     every symbol actively trading on/near asof, tagged with last price, trailing-median turnover,
     size bucket (turnover rank), ARM score (or neutral 50), sector, and whether it later delists.
-    Returns (list[dict], meta)."""
+    Returns (list[dict], meta).
+
+    `theme_sectors` (optional set of desk-sectors): if given, the universe is RESTRICTED to names in
+    those sectors — used by sector/thematic schemes so a Pharma desk only ever sees pharma names (the
+    size buckets are still ranked MARKET-WIDE first, then the theme filter is applied, so 'large' keeps
+    its market meaning). None ⇒ the full broad universe (diversified schemes; the historical replay)."""
     panel = _panel(); pf = _panel_ff()
     sym2isin, sym2name = _identity_maps()
     sector_map = _sector_map()
@@ -295,11 +300,23 @@ def point_in_time_universe(asof_ts):
         for u in uni:
             u["bucket"] = "large"     # no turnover data → don't bucket-filter (flagged)
 
+    # THEME RESTRICTION (sector/thematic schemes): keep only names in the scheme's desk-sectors. Done
+    # AFTER market-wide bucketing so 'large/mid/small' retain their market meaning; None ⇒ no restriction.
+    n_full = len(uni)
+    if theme_sectors:
+        ts = set(theme_sectors)
+        uni = [u for u in uni if u.get("sector") in ts]
+        if not uni:
+            return [], {"n": 0, "theme_sectors": sorted(ts), "theme_empty": True, "n_full_universe": n_full}
+
     n_arm = sum(1 for u in uni if u["arm"] is not None)
     meta = {"n": len(uni), "n_arm": n_arm, "arm_cov": round(100.0 * n_arm / len(uni), 1),
             "n_dead_included": sum(1 for u in uni if u["dead_later"]),
             "have_turnover": have_turn,
             "buckets": {b: sum(1 for u in uni if u["bucket"] == b) for b in ("large", "mid", "small")}}
+    if theme_sectors:
+        meta["theme_sectors"] = sorted(set(theme_sectors))
+        meta["n_full_universe"] = n_full
     return uni, meta
 
 

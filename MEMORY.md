@@ -7,15 +7,23 @@
 
 ## ▶ RESUME (one-paragraph current state + next step)
 
-**▶▶▶ RESUME — 2026-06-28 (DIGITAL-ABSL firm + autonomous night: #105 + #52 + #99 + #38):**
-**★ NEXT ACTION:** (a) PUBLISH the digital-ABSL firm — `python -m vistas.amc_round publish --no-push` → `node _pup_amc.js`
-→ `python -m vistas.amc_round publish` (push + backups); PING KV when live. (b) Decide the #38 fund-cockpit quadrant
-card + ONE terminal rebuild/publish if context allows, else stage+document. KV is ASLEEP — wants ping-on-publish + all 3
-finished (fund quadrant / north-star firm / cadence build). **★★ THIS NIGHT SHIPPED + TESTED (on disk):**
-- **#105 DIGITAL-ABSL FIRM — BUILT (28 books).** `make_absl_firm.py` looped `amc_live.amc_reg_entries('Aditya Birla
-  Sun Life')` → **28 distinct equity/hybrid funds, firm AUM ₹166,219 cr**, EACH with BOTH (A) a seam book (build_rules_v0
-  + blotter + first CITI fact sheet) AND (B) a 2015→ historical replay (NAV track + scorecard, deterministic/FREE/no-LLM,
-  ~1min/scheme). Books in `amc_book/Aditya Birla Sun Life Mutual Fund/<scheme>/`; summary `amc_book/_firm_build_last.json`.
+**▶▶▶ RESUME — 2026-06-28 (DIGITAL-ABSL firm LIVE + autonomous night: #105 + #52 + #99 + #38):**
+**★ NEXT ACTIONS (KV decisions needed — all that remains is externally-gated):** (1) **theme-restricted historical replay**
+— the replay picks from the broad point-in-time MARKET under mandate caps, so ABSL's 14 thematic desks' HISTORICAL tracks
+converge (~21.8% CAGR/9.8 excess/IR 0.6) and are NOT theme-faithful (a known follow-up; caveat shown on the site). The SEAM
+books/fact sheets ARE the real disclosed portfolios. Fix = restrict the replay universe to the scheme's historical
+sector/theme. (2) **#99** enable the stage-level cadence gate (reviewed flip) — or accept the finding that its ceiling is
+low (dominant cost = daily quant bake, can't skip). (3) **#38** source manager-tenure dates (paid/scrape) to auto-fill the
+window — the only missing piece. (4) **LLM FM/CIO layer** for the 28 ABSL desks (~2M tokens/round — needs KV OK).
+**★★ THIS NIGHT SHIPPED + LIVE + TESTED:**
+- **#105 DIGITAL-ABSL FIRM — BUILT (28 books) + PUBLISHED LIVE** at https://kartiksngh.github.io/vistas/digital-amc/
+  (Firms & Schemes tab, ABSL default; _pages pushed, source→vistas-codebase `20abc7d`, ARM mirror current).
+  `make_absl_firm.py` looped `amc_live.amc_reg_entries('Aditya Birla Sun Life')` → **28 distinct equity/hybrid funds,
+  firm AUM ₹166,219 cr**, EACH with (A) a seam book (build_rules_v0 + blotter + first CITI fact sheet) AND (B) a 2015→
+  historical replay (deterministic/FREE/no-LLM, 60.6 min total, 0 fails). Books in `amc_book/Aditya Birla Sun Life Mutual
+  Fund/<scheme>/`; summary `amc_book/_firm_build_last.json`. _pup_amc.js PASS (4 firm pills, switch+drill, 0 errors).
+  ★ CAVEAT (honest, shown on site): thematic desks' HISTORICAL tracks are the rules-FM broad-universe book, NOT theme-
+  restricted → they converge; only the diversified mandates (Large/Flexi/Value/Multi-Cap/Small) are differentiated.
 - **#52 FIRM VIEW + FWD-NAV in `amc_site.py`** — the flat "Schemes & Books" tab is now **"Firms & Schemes"**: an AMC
   selector (pills), per-firm header (firm AUM, desk count, beat-bench·paper), per-scheme table (smoke-tested PASS);
   `firms_view/firm_header/_firm_groups/firm_short/_book_aum`. Added a **Live-forward NAV** block to each scheme panel
