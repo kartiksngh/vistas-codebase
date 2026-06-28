@@ -3304,8 +3304,10 @@ function fsSurvivorshipHTML() {
 // momentum (ARM, the one forward-validated axis, IC~0.03-0.045) ONLY; flow is a sign-flag, never the key.
 const FM_SHORTLIST_CAVEAT = `<details class="q-note"><summary>Definition · Method · Why · Limits</summary>
 <p><b>Evidence shortlist — decision-support for the fund manager, not instructions.</b> This panel ranks names by forces <i>already validated and published on this terminal</i>; it invents no new signal and forecasts no return. <b>It does not size, time, or recommend trades — the fund manager decides and sizes under the mandate's constraints.</b></p>
-<p><b>Weakening-force holdings</b> = names this fund currently holds that now sit in the weak quadrant (analysts not revising up <i>and</i> funds net-selling). Sorted by analyst-revision momentum (ARM), weakest first. <i>Candidates to review, not "sells."</i></p>
-<p><b>Strengthening-force candidates</b> = in-mandate names this fund does <b>not</b> hold (or is underweight) that sit in the strong quadrant (analysts revising up <i>and</i> funds net-buying). Sorted by analyst-revision momentum. <i>Candidates to research, not "buys."</i></p>
+<p>The book is split into <b>three force-based action lists</b> (held vs not-held × strengthening vs weakening):</p>
+<p><b>Held · weakening (TRIM)</b> = names this fund currently holds that now sit in the weak quadrant (analysts not revising up <i>and</i> funds net-selling). Sorted by ARM, weakest first. <i>Candidates to review for trimming, not "sells."</i></p>
+<p><b>Held · strengthening (ADD-MORE)</b> = names this fund <b>already holds</b> that sit in the strong quadrant (analysts revising up <i>and</i> funds net-buying). Sorted by ARM, best first; the Held-wt vs Bench-wt columns flag where the position is still underweight (room to add). <i>Candidates to consider adding to, not "buys."</i></p>
+<p><b>Not held · strengthening (ADD)</b> = in-mandate names this fund does <b>not</b> hold that sit in the strong quadrant. Sorted by ARM. <i>Candidates to research, not "buys."</i></p>
 <p><b>Honest limits:</b> Analyst-revision (ARM) has a <b>small</b> forward edge on our data (rank-correlation ~0.03–0.045 over 1–6 months) — useful across many names, never decisive on one. <b>Net fund flow shows what managers <i>did</i>; on our data it does <i>not</i> predict returns (crowding has if anything been mildly contrarian) — read it as positioning, not a buy signal.</b> We do <b>not</b> combine the two into one score (the blend did not beat analyst-revisions alone) and show <b>no expected return, price target, or confidence %</b>. This is a small, mechanically-filtered snapshot from the latest disclosed holdings month — not the full opportunity set; absence from a list is not a verdict. Mandate eligibility uses reconstructed (not official) benchmark weights. ARM scores older than 90 days are excluded (not shown as "weak").</p></details>`;
 
 function fmShortlistHTML() {
@@ -3368,27 +3370,31 @@ function fmRow(r, held, benchW) {
 }
 
 function fmShortlistTable(rows, mode) {
-  const isAdd = mode === "add";
-  if (!rows.length) return `<div class="empty-note">No ${isAdd ? "in-mandate strengthening-force candidates" : "weakening-force holdings"} this month.</div>`;
+  const showAddCols = (mode === "add" || mode === "add_more");   // add + add-more show Bench/Held wt + #funds
+  if (!rows.length) {
+    const what = mode === "add" ? "in-mandate strengthening-force candidates (not held)"
+      : mode === "add_more" ? "held names with strengthening forces" : "weakening-force holdings";
+    return `<div class="empty-note">No ${what} this month.</div>`;
+  }
   const num = (v) => (v == null || isNaN(v)) ? "—" : Number(v).toFixed(2);
   const flowCell = (v) => {
     if (v == null || isNaN(v)) return `<td class="num">—</td>`;
     return `<td class="num ${v >= 0 ? "pos" : "neg"}">${v >= 0 ? "+" : "−"}${fmCr(Math.abs(v))}</td>`;
   };
   let h = `<div class="screen-tblwrap"><table class="gauge-tbl"><thead><tr><th>Stock</th><th>Sector</th>`
-    + (isAdd ? `<th class="num">Bench wt</th><th class="num">Held wt</th>` : `<th class="num">Wt %</th>`)
+    + (showAddCols ? `<th class="num">Bench wt</th><th class="num">Held wt</th>` : `<th class="num">Wt %</th>`)
     + `<th class="num">ARM</th><th class="num">Flow 3M ₹cr</th><th class="num">Breadth</th>`
-    + (isAdd ? `<th class="num">#funds</th>` : ``)
+    + (showAddCols ? `<th class="num">#funds</th>` : ``)
     + `<th>What the signals say</th></tr></thead><tbody>`;
   rows.forEach((x) => {
     h += `<tr><td class="lft"><b>${fEsc(x.symbol)}</b> <span class="sec">${fEsc(x.name || "")}</span></td>`
       + `<td class="lft sec">${fEsc(x.sector || "—")}</td>`;
-    h += isAdd ? `<td class="num">${num(x.bench_wt)}</td><td class="num">${x.cur == null ? "—" : num(x.cur)}</td>`
+    h += showAddCols ? `<td class="num">${num(x.bench_wt)}</td><td class="num">${x.cur == null ? "—" : num(x.cur)}</td>`
                : `<td class="num">${x.cur == null ? "—" : num(x.cur)}</td>`;
     h += `<td class="num ${x.recommending ? "pos" : "neg"}" title="as of ${fEsc(x.arm_asof || "—")}">${x.arm == null ? "—" : Math.round(x.arm)}</td>`
       + flowCell(x.flow_3m)
       + `<td class="num">${x.net_breadth == null ? "—" : (x.net_breadth > 0 ? "+" : "") + x.net_breadth}</td>`;
-    if (isAdd) h += `<td class="num">${x.mf_nfunds == null ? "—" : x.mf_nfunds}</td>`;
+    if (showAddCols) h += `<td class="num">${x.mf_nfunds == null ? "—" : x.mf_nfunds}</td>`;
     h += `<td class="lft sec">${fEsc(x.rationale)}</td></tr>`;
   });
   return h + `</tbody></table></div>`;
@@ -3421,24 +3427,26 @@ async function renderFMShortlist(f) {
     .filter((r) => { if (!r) return false; const k = r.symbol || r.vst_id; if (seenTrim[k]) return false; seenTrim[k] = 1; return true; });
   let trim = heldRows.filter((r) => usable(r) && TRIM_QUADS.indexOf(r.quadrant_3m) >= 0)
     .map((r) => fmRow(r, held, benchW)).sort((a, b) => (a.arm - b.arm) || (Math.abs(b.flow_3m || 0) - Math.abs(a.flow_3m || 0)));
-  // ADD: strong quadrant, in-mandate, not-held-or-underweight, best ARM first
+  // ADD-MORE: HELD names in the strong quadrant (recommending & buying) — consider increasing, best ARM first
+  let addMore = heldRows.filter((r) => usable(r) && r.quadrant_3m === ADD_QUAD)
+    .map((r) => fmRow(r, held, benchW)).sort((a, b) => b.arm - a.arm);
+  // ADD: strong quadrant, in-mandate, NOT held (held strong names are ADD-MORE), best ARM first
   let add = screen.rows.filter((r) => {
     if (!usable(r) || r.quadrant_3m !== ADD_QUAD) return false;
+    if (fmHeldWt(r, held) != null) return false;                  // held -> it's an ADD-MORE, not a new ADD
     const s = r.symbol;
     const bw = benchW ? (benchW[s] != null ? benchW[s] : (r.vst_id != null ? benchW["vid:" + r.vst_id] : undefined)) : undefined;
-    const hw = fmHeldWt(r, held);
-    const isHeld = hw != null;
-    if (isHeld && !(bw != null && hw < bw)) return false;        // held & not underweight -> not an "add"
-    if (benchW && bw == null) return false;                      // bench loaded but name out of mandate universe
+    if (benchW && bw == null) return false;                       // bench loaded but name out of mandate universe
     return true;
   }).map((r) => fmRow(r, held, benchW)).sort((a, b) => b.arm - a.arm);
-  trim = trim.slice(0, CAP); add = add.slice(0, CAP);
+  trim = trim.slice(0, CAP); addMore = addMore.slice(0, CAP); add = add.slice(0, CAP);
   host.innerHTML =
-    `<div class="fm-shortlist-grid">
-       <div><h3 class="fm-col-h">Weakening-force holdings (${trim.length})</h3>${fmShortlistTable(trim, "trim")}</div>
-       <div><h3 class="fm-col-h">Strengthening-force candidates · in-mandate, not held (${add.length})</h3>${fmShortlistTable(add, "add")}</div>
+    `<div class="fm-shortlist-grid fm-3col">
+       <div><h3 class="fm-col-h">Held · weakening — consider TRIM (${trim.length})</h3>${fmShortlistTable(trim, "trim")}</div>
+       <div><h3 class="fm-col-h">Held · strengthening — consider ADD-MORE (${addMore.length})</h3>${fmShortlistTable(addMore, "add_more")}</div>
+       <div><h3 class="fm-col-h">Not held · strengthening — consider ADD (${add.length})</h3>${fmShortlistTable(add, "add")}</div>
      </div>
-     <div class="q-note">As of ${fEsc(screen.holdings_asof || "—")} · ranked by analyst-revision momentum (ARM); flow shown as a sign-flag, not the ranking key.</div>`;
+     <div class="q-note">As of ${fEsc(screen.holdings_asof || "—")} · ranked by analyst-revision momentum (ARM); flow shown as a sign-flag, not the ranking key. Decision-support — the FM decides &amp; sizes.</div>`;
 }
 
 async function renderFundSkill() {

@@ -895,7 +895,9 @@ details.fs-market > summary { cursor:pointer; font-size:13px; padding:4px 0; }
 .rot-pctile .rp { font-size: 12px; color: #44505c; }
 .rot-pctile .rp b { color: var(--navy); }
 
-/* FM action shortlist (#39) — two-column evidence shortlist */
+/* FM action shortlist (#39) — evidence shortlist (TRIM / ADD-MORE / ADD) */
 .fm-shortlist-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.fm-shortlist-grid.fm-3col { grid-template-columns: 1fr 1fr 1fr; }   /* held-trim · held-add-more · not-held-add (#114) */
 .fm-col-h { font-size: 13px; margin: 0 0 8px; color: var(--navy); }
+@media (max-width: 1280px) { .fm-shortlist-grid.fm-3col { grid-template-columns: 1fr; } }
 @media (max-width: 900px) { .fm-shortlist-grid { grid-template-columns: 1fr; } }

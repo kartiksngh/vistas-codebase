@@ -82,15 +82,17 @@ def build_shortlist(screen: dict, book, *, sebi_category: Optional[str] = None,
              as-of month as the screen -> like-for-like.
     benchmark_constituents : {symbol -> bench_weight_pct} for the fund's benchmark (optional; if None
              the underweight test is skipped and Add eligibility = "in screen universe").
-    Returns {'trim':[...], 'add':[...], 'meta':{...}}. No file written.
+    Returns {'trim':[...], 'add_more':[...], 'add':[...], 'meta':{...}}. No file written.
+    Held names split by force: weakening quadrant -> 'trim'; strengthening quadrant -> 'add_more'.
+    Not-held strengthening names -> 'add'.
     """
     rows = {r["symbol"]: r for r in screen.get("rows", []) if r.get("symbol")}
     rows_by_vid = {str(r["vst_id"]): r for r in screen.get("rows", []) if r.get("vst_id") is not None}
     held = _held_map(book)
 
-    # ---- TRIM: currently HELD, in a weakening quadrant, weakest ARM first (ties -> larger outflow) ----
-    #   resolve each book row to its screen row by vst_id (then symbol); dedupe so a name can't repeat.
-    trim, _seen = [], set()
+    # ---- HELD-SIDE: TRIM (held + weakening) and ADD-MORE (held + strengthening). Iterate the BOOK,
+    #   resolve each row to its screen row by vst_id (then symbol), dedupe so a name can't repeat. ----
+    trim, add_more, _seen = [], [], set()
     for h in (book or []):
         vid = h.get("vst_id")
         sym = h.get("symbol") or h.get("sym")
@@ -101,31 +103,34 @@ def build_shortlist(screen: dict, book, *, sebi_category: Optional[str] = None,
         if key in _seen:
             continue
         _seen.add(key)
-        if r.get("quadrant_3m") in TRIM_QUADS:
-            trim.append(_emit(r, held_wt=_held_wt(r, held)))
-    trim.sort(key=lambda e: (e["arm"], -abs(e["flow_3m_cr"] or 0)))
+        q = r.get("quadrant_3m")
+        bw = (benchmark_constituents or {}).get(r.get("symbol"))
+        if q in TRIM_QUADS:                                       # held + Neither (weak) -> trim/sell candidate
+            trim.append(_emit(r, held_wt=_held_wt(r, held), bench_wt=bw))
+        elif q == ADD_QUAD:                                       # held + recommending&buying -> ADD-MORE candidate
+            add_more.append(_emit(r, held_wt=_held_wt(r, held), bench_wt=bw))
+    trim.sort(key=lambda e: (e["arm"], -abs(e["flow_3m_cr"] or 0)))    # weakest ARM first
+    add_more.sort(key=lambda e: -e["arm"])                            # best ARM first
 
-    # ---- ADD: NOT held (or underweight), strong quadrant, in-mandate, best ARM first ----
+    # ---- ADD: NOT held, strong quadrant, in-mandate, best ARM first (held strong names go to ADD-MORE) ----
     add = []
     for s, r in rows.items():
         if not _usable(r) or r.get("quadrant_3m") != ADD_QUAD:
             continue
+        if _held_wt(r, held) is not None:                        # held -> it's an ADD-MORE, not a new ADD
+            continue
         bw = (benchmark_constituents or {}).get(s)
-        hw = _held_wt(r, held)
-        is_held = hw is not None
-        if is_held:
-            if bw is None or hw >= bw - UNDERWEIGHT_EPS:         # held & not underweight -> not an "add"
-                continue
         if benchmark_constituents is not None and bw is None:    # bench provided but name out of universe
             continue
-        add.append(_emit(r, held_wt=hw, bench_wt=bw, not_held=not is_held))
+        add.append(_emit(r, held_wt=None, bench_wt=bw, not_held=True))
     add.sort(key=lambda e: -e["arm"])
 
     return {
         "trim": trim[:TRIM_MAX],
+        "add_more": add_more[:ADD_MAX],
         "add":  add[:ADD_MAX],
         "meta": {
-            "n_trim": len(trim), "n_add": len(add), "n_held": len(held),
+            "n_trim": len(trim), "n_add_more": len(add_more), "n_add": len(add), "n_held": len(held),
             "holdings_asof": holdings_asof or screen.get("holdings_asof"),
             "sebi_category": sebi_category,
             "ranked_by": "ARM (analyst-revision momentum); flow shown as sign-flag only",

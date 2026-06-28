@@ -39,9 +39,13 @@ KV directive was "clear the whole queue, nothing pending" + greenlit the ~2M-tok
 - **★ THE THEME-RESTRICTION LIMIT (KV asked "what is the limit"):** category gate (only SEBI "Sectoral / Thematic") + characteristic-
   theme force-broad keywords + `weight_floor=3%` + `max_theme_sectors=7` of 12 + exclude Diversified/Unclassified; held names always
   unioned; off-theme proposals HARD-dropped by `enforce_guardrails`. Net = 7 true-sector funds fenced, everything else go-anywhere.
-- **REMAINING / next:** next monthly LLM round (cadence); the 3 leftover PILOT books (ICICI/SBI/Quant) still show as separate firms on
-  the digital-amc site (cosmetic — clear `amc_book/` of non-ABSL or filter the site); the Pharma/etc desk's displayed `benchmark`
-  label is still the registry NIFTY-500 (scorecard uses the sector index correctly — cosmetic); manager-tenure DB; the Mesh build chain.
+- **✅ 2026-06-29 — both digital-amc COSMETICS DONE + LIVE** (source `f4aae14`): (1) single-desk PILOT firms (ICICI/SBI/Quant) now
+  FILTERED from the firm selector via `amc_site._firm_groups` `MIN_FIRM_DESKS=2` (graceful fallback; a partial AMC reappears once it has
+  ≥2 books) → only the 28-desk ABSL firm pill shows (`_pup_amc.js` nPills=1 PASS); (2) thematic desks display their **sector-index**
+  benchmark label (the `amc_site.py:544` scorecard-`benchmark_name` precedence just needed a rebuild to surface).
+- **REMAINING / next:** next monthly LLM round (cadence); manager-tenure DB; the Mesh build chain; **#114** FM-shortlist ADD-MORE/TRIM
+  for held names (terminal feature, buildable); **#115** dual-flow (net-active + gross) into recos/portfolios — GATED on the decisive
+  all-starts×10k score-vs-screen NAV test (harness built in scratchpad, calibrated; see global memory `vistas-arm-momentum-signal`).
 - **#99 / #38 — DONE** earlier this night (build-cache engine off-by-default; both #38 legs already existed). Code backed up `13c7325`.
 **★★ THIS NIGHT SHIPPED + LIVE + TESTED:**
 - **#105 DIGITAL-ABSL FIRM — BUILT (28 books) + PUBLISHED LIVE** at https://kartiksngh.github.io/vistas/digital-amc/
