@@ -770,13 +770,18 @@ def _book_aum(b):
 def _firm_aum(bs):
     return sum(a for a in (_book_aum(x) for x in bs) if a is not None)
 
+MIN_FIRM_DESKS = 2   # hide single-scheme PILOT stubs (the old ICICI/SBI/Quant prototypes) — a real digital
+                     # firm is multi-desk; a partial AMC reappears automatically once it has >=2 books built.
 def _firm_groups(books):
     """{amc: [books]} → list ordered by desk count desc, then firm AUM desc, so the fullest firm
-    (digital-ABSL, 28 desks) is the default selection."""
+    (digital-ABSL, 28 desks) is the default. Single-desk pilot stubs are filtered out (with a graceful
+    fallback so the view is never empty)."""
     g = {}
     for b in books:
         g.setdefault(b["amc"], []).append(b)
-    return sorted(g.items(), key=lambda kv: (-len(kv[1]), -_firm_aum(kv[1])))
+    full = [kv for kv in g.items() if len(kv[1]) >= MIN_FIRM_DESKS]
+    use = full or list(g.items())          # fallback: if nothing clears the bar, show everything
+    return sorted(use, key=lambda kv: (-len(kv[1]), -_firm_aum(kv[1])))
 
 def firm_header(amc, bs):
     """A firm summary strip: firm AUM (Σ scheme AUM), desk count, paper desks beating their benchmark TR."""

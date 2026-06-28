@@ -733,8 +733,17 @@ def _zsafe(x):
 def brain_core_multifactor(uni, asof):
     """LENS 1 — CORE-MULTIFACTOR (the validated default workhorse).
     score = z(ARM) + z(resid_mom⊥ARM) + 0.5·z(resid_val⊥ARM). Momentum and value are ORTHOGONALIZED
-    against ARM so each adds INDEPENDENT breadth (not a re-weighting of revisions). This is the one
-    construction the research stress-tested to destruction (OOS IC@6m ~0.11, 100% all-starts beat-rate).
+    against ARM so each adds INDEPENDENT breadth (not a re-weighting of revisions).
+    VALIDATION (stated honestly — do NOT overclaim): the load-bearing ARM+momentum pair IS validated on
+    Vistas stock data (mesh_research.py / MESH_RESEARCH_FINDINGS.md) — IC@6m ~0.11, t=14.3 (Newey-West
+    5.2), and it beats ARM-on-the-same-rows in 100% of rolling-5y windows (walk-forward, no look-ahead).
+    CAVEATS: (1) that "all-starts beat-rate" means the COMPOSITE'S IC beats ARM's IC in every rolling
+    window — it is NOT the project's literal >=10k-random-portfolio NAV-percentile bar, which THIS exact
+    deployed stack has never been run through (no such harness exists in vistas/ yet — see task #115);
+    (2) the validated headline stack was ARM+mom+FLOW+breadth, whereas this brain instead carries VALUE
+    at half weight — value is the WEAKEST, regime-conditional leg ("medium overfit risk on the weights").
+    So: ARM+momentum = a real edge; the value leg and the exact 1.0/1.0/0.5 weights are ASSERTED, not
+    yet bar-proven.
     LAW: IC from two replicated, imperfectly-correlated factors (analyst-revision + price momentum);
     BR widened by adding near-orthogonal value; TC leak = momentum TURNOVER (the binding constraint —
     its deployable IR must be turnover-validated)."""

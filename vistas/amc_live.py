@@ -208,7 +208,7 @@ def prepare_desk(reg_entry, asof_str, top_n=70, write=True):
             "z_mom": "cross-sectional z of 6m-1m price momentum (>0 = stronger than peers)",
             "z_val": "cross-sectional z of cheapness (E/P+B/P+S/P; >0 = cheaper than peers)",
             "brain_score": f"this desk's multi-force blend ({bid}) used by the quant baseline",
-            "net_flow_cr": "net-active mutual-fund flow (₹cr; >0 = smart money accumulating)",
+            "net_flow_cr": "net-active mutual-fund flow (₹cr; >0 = funds adding active money). WEAK CONFIRMATION ONLY — as a standalone forecast it does NOT beat ARM (lost its backtest gate); use to confirm a thesis, never to lead it",
             "held_pct": "your current weight in the name (0 = not held)",
         },
     }
