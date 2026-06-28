@@ -41,12 +41,31 @@ UNDERWEIGHT_EPS = 0.0       # "underweight vs benchmark" = held_wt < bench_wt - 
 
 
 def _held_map(book: Iterable[dict]) -> dict:
+    """Map a fund's equity book to held weights, keyed on vst_id FIRST (as "vid:<id>") and symbol as a
+    fallback. The baked crowd_flow.equity_holdings is vst_id-keyed (symbol is dropped in the vst_id
+    groupby), so a symbol-only join silently came up empty — held names showed as not-held and the
+    weakening (TRIM) list was always 0. vst_id is the canonical identity, so join on it."""
     held = {}
     for h in (book or []):
+        wt = float(h.get("pct", h.get("weight", 0)) or 0)
+        vid = h.get("vst_id")
+        if vid is not None:
+            held["vid:" + str(vid)] = wt
         s = h.get("symbol") or h.get("sym")
         if s:
-            held[s] = float(h.get("pct", h.get("weight", 0)) or 0)
+            held[s] = wt
     return held
+
+
+def _held_wt(r: dict, held: dict):
+    """The fund's held weight for a screen row — vst_id join first, then symbol. None if not held."""
+    vid = r.get("vst_id")
+    if vid is not None and ("vid:" + str(vid)) in held:
+        return held["vid:" + str(vid)]
+    s = r.get("symbol")
+    if s is not None and s in held:
+        return held[s]
+    return None
 
 
 def _usable(r: dict) -> bool:
@@ -66,16 +85,24 @@ def build_shortlist(screen: dict, book, *, sebi_category: Optional[str] = None,
     Returns {'trim':[...], 'add':[...], 'meta':{...}}. No file written.
     """
     rows = {r["symbol"]: r for r in screen.get("rows", []) if r.get("symbol")}
+    rows_by_vid = {str(r["vst_id"]): r for r in screen.get("rows", []) if r.get("vst_id") is not None}
     held = _held_map(book)
 
     # ---- TRIM: currently HELD, in a weakening quadrant, weakest ARM first (ties -> larger outflow) ----
-    trim = []
-    for s, wt in held.items():
-        r = rows.get(s)
+    #   resolve each book row to its screen row by vst_id (then symbol); dedupe so a name can't repeat.
+    trim, _seen = [], set()
+    for h in (book or []):
+        vid = h.get("vst_id")
+        sym = h.get("symbol") or h.get("sym")
+        r = (rows_by_vid.get(str(vid)) if vid is not None else None) or (rows.get(sym) if sym else None)
         if not r or not _usable(r):
             continue
+        key = r.get("symbol") or r.get("vst_id")
+        if key in _seen:
+            continue
+        _seen.add(key)
         if r.get("quadrant_3m") in TRIM_QUADS:
-            trim.append(_emit(r, held_wt=wt))
+            trim.append(_emit(r, held_wt=_held_wt(r, held)))
     trim.sort(key=lambda e: (e["arm"], -abs(e["flow_3m_cr"] or 0)))
 
     # ---- ADD: NOT held (or underweight), strong quadrant, in-mandate, best ARM first ----
@@ -84,13 +111,14 @@ def build_shortlist(screen: dict, book, *, sebi_category: Optional[str] = None,
         if not _usable(r) or r.get("quadrant_3m") != ADD_QUAD:
             continue
         bw = (benchmark_constituents or {}).get(s)
-        is_held = s in held
+        hw = _held_wt(r, held)
+        is_held = hw is not None
         if is_held:
-            if bw is None or held[s] >= bw - UNDERWEIGHT_EPS:   # held & not underweight -> not an "add"
+            if bw is None or hw >= bw - UNDERWEIGHT_EPS:         # held & not underweight -> not an "add"
                 continue
         if benchmark_constituents is not None and bw is None:    # bench provided but name out of universe
             continue
-        add.append(_emit(r, held_wt=held.get(s), bench_wt=bw, not_held=not is_held))
+        add.append(_emit(r, held_wt=hw, bench_wt=bw, not_held=not is_held))
     add.sort(key=lambda e: -e["arm"])
 
     return {

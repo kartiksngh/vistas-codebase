@@ -3343,14 +3343,23 @@ function fmRationale(r) {
   return a + "; " + f;
 }
 
+// the fund's held weight for a screen row — join on vst_id FIRST (the baked equity_holdings book is
+// vst_id-keyed; symbol is dropped in the vst_id groupby), then fall back to symbol. Returns null if not held.
+function fmHeldWt(r, held) {
+  if (r.vst_id != null && held["vid:" + r.vst_id] != null) return held["vid:" + r.vst_id];
+  if (r.symbol != null && held[r.symbol] != null) return held[r.symbol];
+  return null;
+}
+
 function fmRow(r, held, benchW) {
   const s = r.symbol;
   const bw = benchW ? (benchW[s] != null ? benchW[s] : (r.vst_id != null ? benchW["vid:" + r.vst_id] : undefined)) : undefined;
+  const hw = fmHeldWt(r, held);
   return {
     symbol: s, name: r.name, sector: r.sector, vst_id: r.vst_id,
-    cur: (s in held) ? held[s] : null,
+    cur: (hw != null ? hw : null),
     bench_wt: (bw != null ? bw : null),
-    not_held: !(s in held),
+    not_held: (hw == null),
     arm: r.arm, arm_asof: r.arm_asof, arm_stale: !!r.arm_stale, recommending: !!r.recommending,
     flow_3m: r.flow_3m, flow_1m: r.flow_1m, buying_3m: !!r.buying_3m,
     net_breadth: r.net_breadth, mf_nfunds: r.mf_nfunds, quadrant_3m: r.quadrant_3m,
@@ -3391,21 +3400,35 @@ async function renderFMShortlist(f) {
   const screen = screenData();
   if (!screen || !screen.rows) { host.innerHTML = `<div class="empty-note">Screen data unavailable in this deck.</div>`; return; }
   const TRIM_QUADS = [4], ADD_QUAD = 1, CAP = 15;   // 4 = Neither (weak); 1 = Recommending+Buying (strong)
-  const rows = {}; screen.rows.forEach((r) => { if (r.symbol) rows[r.symbol] = r; });
+  // index the screen by BOTH keys; the held book is keyed on vst_id (the canonical identity every baked
+  // equity_holdings row carries) — symbol is dropped in the vst_id groupby, so a symbol-only join is EMPTY
+  // (the #39 bug: held names showed as not-held + the weakening column came up 0). Join on vst_id.
+  const rows = {}, rowsByVid = {};
+  screen.rows.forEach((r) => { if (r.symbol) rows[r.symbol] = r; if (r.vst_id != null) rowsByVid[r.vst_id] = r; });
   const book = (f.crowd_flow && f.crowd_flow.equity_holdings) || [];
-  const held = {}; book.forEach((h) => { const s = h.symbol || h.sym; if (s) held[s] = +((h.pct != null ? h.pct : (h.weight != null ? h.weight : 0))) || 0; });
+  const held = {};
+  book.forEach((h) => {
+    const wt = +((h.pct != null ? h.pct : (h.weight != null ? h.weight : 0))) || 0;
+    if (h.vst_id != null) held["vid:" + h.vst_id] = wt;       // primary key (book is vst_id-keyed)
+    const s = h.symbol || h.sym; if (s) held[s] = wt;          // symbol fallback (e.g. a paper book that carries it)
+  });
   const benchW = await fmBenchWeights(f.sebi_category);
   const usable = (r) => r && r.arm != null && !r.arm_stale;
-  // TRIM: held + weak quadrant, weakest ARM first (ties -> larger outflow)
-  let trim = Object.keys(held).map((s) => rows[s]).filter((r) => usable(r) && TRIM_QUADS.indexOf(r.quadrant_3m) >= 0)
+  // TRIM: held + weak quadrant, weakest ARM first (ties -> larger outflow). Resolve each book row to a
+  // screen row by vst_id (then symbol); dedupe so a name can't appear twice.
+  const seenTrim = {};
+  const heldRows = book.map((h) => (h.vst_id != null && rowsByVid[h.vst_id]) || rows[h.symbol || h.sym] || null)
+    .filter((r) => { if (!r) return false; const k = r.symbol || r.vst_id; if (seenTrim[k]) return false; seenTrim[k] = 1; return true; });
+  let trim = heldRows.filter((r) => usable(r) && TRIM_QUADS.indexOf(r.quadrant_3m) >= 0)
     .map((r) => fmRow(r, held, benchW)).sort((a, b) => (a.arm - b.arm) || (Math.abs(b.flow_3m || 0) - Math.abs(a.flow_3m || 0)));
   // ADD: strong quadrant, in-mandate, not-held-or-underweight, best ARM first
   let add = screen.rows.filter((r) => {
     if (!usable(r) || r.quadrant_3m !== ADD_QUAD) return false;
     const s = r.symbol;
     const bw = benchW ? (benchW[s] != null ? benchW[s] : (r.vst_id != null ? benchW["vid:" + r.vst_id] : undefined)) : undefined;
-    const isHeld = s in held;
-    if (isHeld && !(bw != null && held[s] < bw)) return false;   // held & not underweight -> not an "add"
+    const hw = fmHeldWt(r, held);
+    const isHeld = hw != null;
+    if (isHeld && !(bw != null && hw < bw)) return false;        // held & not underweight -> not an "add"
     if (benchW && bw == null) return false;                      // bench loaded but name out of mandate universe
     return true;
   }).map((r) => fmRow(r, held, benchW)).sort((a, b) => b.arm - a.arm);

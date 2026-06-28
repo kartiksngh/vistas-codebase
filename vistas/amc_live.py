@@ -83,7 +83,14 @@ def load_book(reg_entry):
 def _flow_snapshot():
     """Optional net-active-flow enrichment {sym: flow_cr} from the baked smart-money-vs-street screen
     (current snapshot). Best-effort — the desk is multi-force without it (ARM+mom+value), this just adds
-    the smart-money lens where present."""
+    the smart-money lens where present.
+
+    Reads the TRUE inflow-immune **net-active** 3-month flow from each row's `fb.net_active` (the #51
+    decomposition: gross = price + scheme-inflow + net-active; net_active is the conviction leg the FM
+    signal_legend actually advertises). NOTE: the legacy top-level `flow_3m` is the *price-adjusted* leg
+    (price stripped but inflows kept) — used only as a fallback for an older screen without `fb`. The
+    original code read `net_active_cr/flow/flow_cr`, none of which exist on the rows, so the snapshot
+    came out EMPTY and the desk silently never received the smart-money lens (fixed)."""
     for cand in (os.path.join(_ROOT, "output", "terminal_site", "data", "_screens", "smart_vs_street.json"),
                  os.path.join(_ROOT, "data", "_screens", "smart_vs_street.json")):
         try:
@@ -92,7 +99,9 @@ def _flow_snapshot():
             out = {}
             for r in rows:
                 s = r.get("symbol") or r.get("sym")
-                f = r.get("net_active_cr", r.get("flow", r.get("flow_cr")))
+                na = (r.get("fb") or {}).get("net_active")          # [1m, 3m, 6m, 12m] inflow-immune flow
+                f = (na[1] if isinstance(na, (list, tuple)) and len(na) > 1   # prefer net-active 3m (conviction)
+                     else r.get("net_active_cr", r.get("flow_3m", r.get("flow", r.get("flow_cr")))))  # fallbacks
                 if s is not None and f is not None:
                     out[s] = round(float(f), 1)
             return out
