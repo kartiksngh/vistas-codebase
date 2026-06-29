@@ -508,6 +508,20 @@ def _orthogonalize(target_z, base_z):
     return [t - beta * b for t, b in zip(target_z, base_z)]
 
 
+# In-process memo for the per-name forces. momentum_6m1m / value_yields / _trailing_vol depend ONLY
+# on (sym, asof) and the (immutable-within-a-run) price/screener panels — never on the brain, the
+# pilot, or the window. The SAME (sym, asof) pair recurs heavily across the pilots/era-splits of one
+# autoresearch run, so memoizing makes replays 2..N nearly free on shared names. PURE speedup — the
+# returned values are byte-identical to the un-cached path (verified by objective parity). Cleared by
+# _clear_force_cache() if a panel is ever reloaded.
+_MOM_CACHE = {}
+_VOL_CACHE = {}
+
+
+def _clear_force_cache():
+    _MOM_CACHE.clear(); _VOL_CACHE.clear(); _VAL_CACHE.clear()
+
+
 def momentum_6m1m(sym, asof=None):
     """Trailing 6-month price total return, SKIPPING the most recent month (classic price momentum,
     the validated edge source). = price[asof − 1m] / price[asof − 7m] − 1, read from the adjusted
@@ -515,20 +529,50 @@ def momentum_6m1m(sym, asof=None):
     7-month-ago anchor price is missing. Plain words: 'how much did this stock run over the half-year
     ending a month ago' — skipping the last month avoids the well-known 1-month reversal."""
     import pandas as pd
+    key = (sym, str(asof))
+    if key in _MOM_CACHE:
+        return _MOM_CACHE[key]
     df = _prices()
     if df is None or sym not in df.columns:
-        return None
+        _MOM_CACHE[key] = None; return None
     s = df[sym].dropna()
     if asof:
         s = s[s.index <= str(asof)]
     if len(s) < 30:
-        return None
+        _MOM_CACHE[key] = None; return None
     end = s.index[-1]
     p_recent = _asof_level(s, end - pd.DateOffset(months=1))
     p_old = _asof_level(s, end - pd.DateOffset(months=7))
     if p_recent is None or p_old is None or p_old <= 0:
-        return None
-    return p_recent / p_old - 1.0
+        _MOM_CACHE[key] = None; return None
+    out = p_recent / p_old - 1.0
+    _MOM_CACHE[key] = out
+    return out
+
+
+def trailing_vol(sym, asof=None, window=126):
+    """Annualised trailing volatility of `sym` as-of `asof` = std(daily simple returns over the last
+    `window` trading rows ≤ asof) · √252, from the adjusted TR panel (no look-ahead). Returns None if
+    < 20 usable returns. Plain words: 'how jumpy has this stock been over the last ~6 months' — the σ
+    in the risk-scaled allocation key a_i ∝ score/σ² (Markowitz/Kelly tilt). Cached per (sym, asof)."""
+    key = (sym, str(asof), window)
+    if key in _VOL_CACHE:
+        return _VOL_CACHE[key]
+    df = _prices()
+    if df is None or sym not in df.columns:
+        _VOL_CACHE[key] = None; return None
+    s = df[sym].dropna()
+    if asof:
+        s = s[s.index <= str(asof)]
+    if len(s) < 21:
+        _VOL_CACHE[key] = None; return None
+    r = s.iloc[-(window + 1):].pct_change().dropna()
+    if len(r) < 20:
+        _VOL_CACHE[key] = None; return None
+    import math as _m
+    out = float(r.std() * _m.sqrt(252))
+    _VOL_CACHE[key] = (out if out == out and out > 0 else None)
+    return _VOL_CACHE[key]
 
 
 def _asof_level(s, ts):

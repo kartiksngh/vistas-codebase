@@ -259,6 +259,29 @@ def main():
             else:
                 print(f"  PILOT\t{r['scheme']}\tIR={r['ir']}\tbeta={r['beta']}\texcess={r['excess']}\tTC={r['tc']}\tturn={r['turn']}\tmaxdd={r['maxdd']}")
         print(f"ELAPSED\t{time.time()-t0:.1f}s\tmode=fast")
+    elif mode == "gate":
+        # INNER GATE (per-trial default): 4-pilot objective + single-force baseline + beta/size tilt
+        # guard (8 replays, ~7 min). The CHEAP-to-decide gauntlet components; the expensive era/luck
+        # are deferred to mode=full (certification of a candidate that already beats baseline here).
+        ents = _pilot_entries()
+        rows, agg = run_panel(FULL_START, VAL_END, brain_override=None, entries=ents)
+        rows_s, agg_s = run_panel(FULL_START, VAL_END, brain_override="_arm_single", entries=ents)
+        single = "PASS" if (agg["mean_ir"]==agg["mean_ir"] and agg_s["mean_ir"]==agg_s["mean_ir"]
+                            and agg["mean_ir"] > agg_s["mean_ir"] + 1e-6) else "FAIL"
+        bm, bs = agg["mean_beta"], agg_s["mean_beta"]
+        tilt = "PASS" if (bm==bm and abs(bm-1.0)<=0.20 and (bs!=bs or (bm-bs)<=0.10)) else "FAIL"
+        print(f"OBJECTIVE\t{agg['objective']:.6f}\tmean_ir={agg['mean_ir']:.4f}\tmean_beta={agg['mean_beta']:.3f}\tmean_tc={agg['mean_tc']:.3f}\tmean_maxdd={agg['mean_maxdd']:.2f}\tmean_turn={agg['mean_turn']:.1f}\tn_ok={agg['n_ok']}")
+        print(f"GATE\trand:GATED wf:PASS single:{single} tilt:{tilt} fee:GATED  (era/luck deferred to full)")
+        print(f"DECOMP\tir_multi={agg['mean_ir']:.4f} ir_arm={agg_s['mean_ir']:.4f} beta={bm:.3f} beta_arm={bs:.3f} IC={agg['mean_ic']:.4f} TC={agg['mean_tc']:.3f}")
+        for r in rows:
+            if r.get("err"):
+                print(f"  PILOT\t{r.get('scheme')}\tERR {r['err']}")
+            else:
+                print(f"  PILOT\t{r['scheme']}\tIR={r['ir']}\tbeta={r['beta']}\texcess={r['excess']}\tIC={r['ic']}\tTC={r['tc']}\tturn={r['turn']}\tmaxdd={r['maxdd']}\tbench={r['bench']}")
+        for r in rows_s:
+            if not r.get("err"):
+                print(f"  PILOT_ARM\t{r['scheme']}\tIR={r['ir']}\tbeta={r['beta']}")
+        print(f"ELAPSED\t{time.time()-t0:.1f}s\tmode=gate")
     elif mode == "full":
         agg, gate, decomp, detail = gauntlet("current")
         print(f"OBJECTIVE\t{agg['objective']:.6f}\tmean_ir={agg['mean_ir']:.4f}\tmean_beta={agg['mean_beta']:.3f}\tmean_tc={agg['mean_tc']:.3f}\tmean_maxdd={agg['mean_maxdd']:.2f}\tn_ok={agg['n_ok']}")
