@@ -552,6 +552,102 @@ function buildRSCtl(defKey) {
   if (t) t.addEventListener("change", onManual);
 }
 
+// --------------------------------------------------------------------- fuzzy search
+// Typo- + acronym-tolerant scoring shared by every search box (universe picker,
+// single-select combos, command palette). Pure display layer — touches no analytics,
+// so there is NO Python/parity port. Returns a 0..1 score; 0 = no match.
+//   "absl flexi"  -> Aditya Birla Sun Life Flexi Cap Fund   (acronym token + word token)
+//   "koatq qiant" -> Kotak Quant                            (Damerau edit distance: typos+transpositions)
+// Design: tokenize the query; EVERY token must clear a floor against SOME target field
+// (AND semantics); each token is scored as the best of {substring, word-prefix, acronym-
+// prefix, edit-distance}. Targets are prepped once (memoized) — never per keystroke.
+function fuzzyNorm(s) { return String(s == null ? "" : s).toLowerCase().replace(/[^a-z0-9\s]+/g, " ").replace(/\s+/g, " ").trim(); }
+function fuzzyTokens(s) { const n = fuzzyNorm(s); return n ? n.split(" ") : []; }
+function fuzzyAcr(words) { return words.map((w) => w[0]).join(""); }
+// Build a reusable target descriptor. `primary` drives the acronym (the display name);
+// `extra` (ticker, aliases, AMC, category, sub-label) widens substring/word matching
+// without polluting the acronym.
+function fuzzyPrep(primary, extra) {
+  const pNorm = fuzzyNorm(primary);
+  const pWords = pNorm ? pNorm.split(" ") : [];
+  const allNorm = fuzzyNorm((primary || "") + " " + (extra || ""));
+  const allWords = allNorm ? allNorm.split(" ") : [];
+  return { norm: allNorm, words: allWords, flat: allNorm.replace(/ /g, ""), acr: fuzzyAcr(pWords) };
+}
+// Damerau–Levenshtein (handles substitution/insert/delete AND transposition, e.g.
+// "koatq"->"kotak") with a cap + per-row early-exit so non-matches bail cheaply.
+function damerauLev(a, b, cap) {
+  const la = a.length, lb = b.length;
+  if (cap == null) cap = Math.max(la, lb);
+  if (Math.abs(la - lb) > cap) return cap + 1;
+  if (!la) return lb; if (!lb) return la;
+  let row0 = new Array(lb + 1), row1 = new Array(lb + 1), row2 = new Array(lb + 1);
+  for (let j = 0; j <= lb; j++) row1[j] = j;
+  for (let i = 1; i <= la; i++) {
+    row2[0] = i; let rowMin = i;
+    const ai = a.charCodeAt(i - 1);
+    for (let j = 1; j <= lb; j++) {
+      const cost = ai === b.charCodeAt(j - 1) ? 0 : 1;
+      let v = Math.min(row1[j] + 1, row2[j - 1] + 1, row1[j - 1] + cost);
+      if (i > 1 && j > 1 && ai === b.charCodeAt(j - 2) && a.charCodeAt(i - 2) === b.charCodeAt(j - 1))
+        v = Math.min(v, row0[j - 2] + 1);   // transposition
+      row2[j] = v; if (v < rowMin) rowMin = v;
+    }
+    if (rowMin > cap) return cap + 1;        // whole row already over budget — bail
+    const tmp = row0; row0 = row1; row1 = row2; row2 = tmp;
+  }
+  return row1[lb];
+}
+// Best score of ONE query token against a prepped target.
+function fuzzyTokenScore(qt, P) {
+  if (!qt) return 1;
+  if (P.norm.indexOf(qt) === 0) return 1.0;                 // prefix of whole name
+  let best = 0;
+  if (P.norm.indexOf(qt) >= 0) best = 0.86;                 // substring somewhere
+  for (const w of P.words) {
+    if (w === qt) { best = 1.0; break; }                    // exact word
+    if (w.indexOf(qt) === 0) { if (best < 0.95) best = 0.95; }   // word prefix
+    else if (best < 0.85 && w.indexOf(qt) >= 0) best = 0.85;     // word substring
+  }
+  if (best < 1.0 && P.acr) {
+    if (P.acr === qt) best = 1.0;
+    else if (P.acr.indexOf(qt) === 0 && best < 0.92) best = 0.92;   // acronym prefix ("absl"⊂"abslfcf")
+  }
+  // glued compound ("smallcap" = "small cap"): exact char sequence ignoring spaces — leak-proof
+  if (best < 0.9 && qt.length >= 4 && P.flat.indexOf(qt) >= 0) best = 0.9;
+  if (best >= 0.95) return best;                            // good enough — skip edit distance
+  if (qt.length < 4) return best;                          // short tokens: substring/prefix/acronym only —
+                                                           // edit distance on 2-3 chars leaks (kota→tata, bank→bata)
+  const tol = Math.floor((qt.length - 1) / 4) + 1;         // ~1 typo per 4 chars (len 4-7 → 1 edit, not 2)
+  for (const w of P.words) {
+    if (Math.abs(w.length - qt.length) > tol) continue;
+    const d = damerauLev(qt, w, tol);
+    if (d <= tol) { const s = 1 - d / Math.max(qt.length, w.length); if (s > best) best = s; }
+  }
+  if (P.acr && Math.abs(P.acr.length - qt.length) <= tol) {
+    const d = damerauLev(qt, P.acr, tol);
+    if (d <= tol) { const s = 0.85 * (1 - d / Math.max(qt.length, P.acr.length)); if (s > best) best = s; }
+  }
+  return best;
+}
+const FUZZY_FLOOR = 0.5;
+// Full query score against a prepped target (or a raw string). AND across query tokens.
+function fuzzyScore(query, prep) {
+  const P = (typeof prep === "string") ? fuzzyPrep(prep) : prep;
+  const qToks = fuzzyTokens(query);
+  if (!qToks.length) return String(query == null ? "" : query).trim() ? 0 : 1;   // punctuation-only query → no match; empty → all
+  let sum = 0;
+  for (const qt of qToks) {
+    const s = fuzzyTokenScore(qt, P);
+    if (s < FUZZY_FLOOR) return 0;                          // every query token must hit something
+    sum += s;
+  }
+  let score = sum / qToks.length;
+  const qn = fuzzyNorm(query);
+  if (qn && P.norm.indexOf(qn) >= 0) score = Math.min(1, score + 0.15);   // contiguity bonus
+  return score;
+}
+
 // --------------------------------------------------------------------- MultiSelect
 class MultiSelect {
   constructor(el, opts) {
@@ -586,35 +682,29 @@ class MultiSelect {
     this.box.querySelectorAll(".x").forEach((x) =>
       x.addEventListener("click", (e) => { e.stopPropagation(); this.remove(x.dataset.n); this.onToggle(); }));
   }
-  // acronym from the company name (first letter of each word), memoized per option —
-  // so "HUL" finds "Hindustan Unilever", "TCS" finds "Tata Consultancy Services".
-  _acr(o) {
-    if (o._acr === undefined)
-      o._acr = (o.label || "").split(/[^A-Za-z0-9]+/).filter(Boolean).map((w) => w[0]).join("").toUpperCase();
-    return o._acr;
+  // memoized fuzzy descriptor: acronym from the company label ("HUL"→Hindustan Unilever,
+  // "TCS"→Tata Consultancy Services); ticker + former-ticker aliases widen matching.
+  _prep(o) {
+    if (o._fz === undefined) o._fz = fuzzyPrep(o.label || o.name, o.name + " " + (o.aliases ? o.aliases.join(" ") : ""));
+    return o._fz;
   }
-  // match the query against the ticker/index name, the full company name (substring),
-  // and the name's acronym (prefix) — so stocks are findable by part of name or acronym.
-  _match(o, q) {
-    if (!q) return true;
-    if (o.name.toLowerCase().includes(q)) return true;
-    if (o.label && o.label.toLowerCase().includes(q)) return true;
-    // former NSE tickers (renames/reorgs) — so "TATAMOTORS" still finds the live TMPV column
-    if (o.aliases) { for (const al of o.aliases) if (al.toLowerCase().includes(q)) return true; }
-    const a = this._acr(o);
-    return !!a && a.toLowerCase().startsWith(q);
-  }
+  // fuzzy score (0 = no match): name/label substring, word-prefix, acronym, or edit-distance typo.
+  _score(o, q) { return q ? fuzzyScore(q, this._prep(o)) : 1; }
+  _match(o, q) { return this._score(o, q) > 0; }
   renderList() {
     const q = this.search.value.trim().toLowerCase();
     const groups = {};
     this.options.forEach((o) => {
-      if (!this._match(o, q)) return;
-      (groups[o.group] = groups[o.group] || []).push(o);
+      const sc = this._score(o, q);
+      if (sc <= 0) return;
+      (groups[o.group] = groups[o.group] || []).push([o, sc]);
     });
     let html = "";
     Object.keys(groups).forEach((g) => {
+      const arr = groups[g];
+      if (q) arr.sort((a, b) => b[1] - a[1]);   // best match first within each group
       html += `<div class="grp">${g}</div>`;
-      groups[g].forEach((o) => {
+      arr.forEach(([o]) => {
         const checked = this.sel.includes(o.name) ? "checked" : "";
         const meta = o.has_history ? `${o.start ? o.start.slice(0, 4) : ""}–${o.end ? o.end.slice(0, 4) : ""}` : "not local";
         const lblText = (o.label || "") + ((o.aliases && o.aliases.length) ? `  ·  was ${o.aliases.join(", ")}` : "");
@@ -1554,12 +1644,17 @@ class ComboBox {
   setValue(v) { this.value = v; const it = this.items.find((x) => x.sym === v); this.input.value = it ? it.disp : (v || ""); }
   openIt() { this.el.classList.add("open"); this.renderList(); }
   closeIt() { this.el.classList.remove("open"); }
-  _acr(it) { if (it._acr === undefined) it._acr = (it.name || "").split(/[^A-Za-z0-9]+/).filter(Boolean).map((w) => w[0]).join("").toUpperCase(); return it._acr; }
-  _match(it, q) { if (!q) return true; if (it.sym.toLowerCase().includes(q)) return true; if (it.name && it.name.toLowerCase().includes(q)) return true; const a = this._acr(it); return !!a && a.toLowerCase().startsWith(q); }
+  // fuzzy descriptor: acronym from the display name; the internal sym + sub-label
+  // (AMC / category) widen matching so "absl flexi" or a category word both hit.
+  _prep(it) { if (it._fz === undefined) it._fz = fuzzyPrep(it.name || it.sym, (it.sym || "") + " " + (it.sub || "")); return it._fz; }
+  _score(it, q) { return q ? fuzzyScore(q, this._prep(it)) : 1; }
+  _match(it, q) { return this._score(it, q) > 0; }
   renderList() {
     const q = this.input.value.trim().toLowerCase();
     let html = this.allowNone ? `<div class="cbopt" data-s="__none__"><span class="cbname">— none —</span></div>` : "";
-    html += this.items.filter((it) => this._match(it, q)).slice(0, 100).map((it) => {
+    let arr = this.items.map((it) => [it, this._score(it, q)]).filter((x) => x[1] > 0);
+    if (q) arr.sort((a, b) => b[1] - a[1]);   // best match first
+    html += arr.slice(0, 100).map(([it]) => {
       const lead = this.hideSym ? (it.sub ? `<span class="cbsub">${fEsc(it.sub)}</span>` : "") : `<span class="cbsym">${it.sym}</span>`;
       return `<div class="cbopt${it.sym === this.value ? " sel" : ""}" data-s="${it.sym}">${lead}<span class="cbname">${fEsc(it.name || "")}</span></div>`;
     }).join("");
@@ -6009,15 +6104,13 @@ async function renderMacro() {
 // real terminal. Plus shareable URL hashes so any view is bookmarkable.
 let CMDK_ENTS = [], CMDK_HITS = [], CMDK_SEL = 0;
 
-function cmdkAcr(s) { return (s || "").split(/[^A-Za-z0-9]+/).filter(Boolean).map((w) => w[0]).join("").toUpperCase(); }
-function cmdkMatch(e, q) {
-  if (!q) return true;
-  if (e.name.toLowerCase().includes(q)) return true;
-  if (e.label && e.label.toLowerCase().includes(q)) return true;
-  if (e.aliases) { for (const al of e.aliases) if (al.toLowerCase().includes(q)) return true; }
-  const a = cmdkAcr(e.label || e.name);
-  return !!a && a.toLowerCase().startsWith(q);
+// fuzzy descriptor for a palette entity: acronym from the friendly label, with the
+// ticker/name + aliases + any extra (AMC/category) widening substring/typo matching.
+function cmdkPrep(e) {
+  if (e._fz === undefined) e._fz = fuzzyPrep(e.label || e.name, e.name + " " + (e.aliases ? e.aliases.join(" ") : "") + " " + (e.extra || ""));
+  return e._fz;
 }
+function cmdkScore(e, q) { return q ? fuzzyScore(q, cmdkPrep(e)) : 1; }
 function buildEntityIndex() {
   const ents = [], byName = {};
   ((CAT && CAT.indices) || []).forEach((o) => {
@@ -6065,7 +6158,9 @@ function cmdkOpen() { buildEntityIndex(); const m = $("cmdk"); if (!m) return; m
 function cmdkClose() { const m = $("cmdk"); if (m) m.hidden = true; }
 function cmdkRender(q) {
   q = (q || "").trim().toLowerCase();
-  CMDK_HITS = CMDK_ENTS.filter((e) => cmdkMatch(e, q)).slice(0, 60);
+  let arr = CMDK_ENTS.map((e) => [e, cmdkScore(e, q)]).filter((x) => x[1] > 0);
+  if (q) arr.sort((a, b) => b[1] - a[1]);   // best match first
+  CMDK_HITS = arr.slice(0, 60).map((x) => x[0]);
   CMDK_SEL = 0;
   const list = $("cmdk-list"); if (!list) return;
   list.innerHTML = CMDK_HITS.length ? CMDK_HITS.map((e, i) => {
