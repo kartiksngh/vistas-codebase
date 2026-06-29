@@ -136,3 +136,18 @@ Validation era (all the loop sees) = 2015-01-30 → 2020-12-31. The loop evaluat
   lift is bounded; this is the ceiling, reported as such, not over-claimed.
 - The DISCARD condition: if it only passes by w_max→1 (collapsing to Quant) or by a beta/size tilt, or
   fails luck off the 50/50 point (not plateau-robust), discard.
+
+### Q2 — POST-HOC HONESTY (recorded before the holdout test)
+- WALK-FORWARD RE-SELECTION CHECK: on the first half (2015-2018) ALL FOUR pilots had positive in-sample
+  IR (ICICI 0.79, SBI 0.84, ABSL 1.08, Quant 0.63) — so the wf gate does NOT drop ICICI/SBI; it keeps all
+  4, caps Quant 0.55, and still beats equal-weight on the 2nd half (0.019 vs −0.397) → wf:PASS, but the
+  OOS lift is SMALL. The specific "drop ICICI/SBI" selection is a FULL-validation-era artifact (they are
+  net-negative over 2015-2020 as a whole) that is NOT stable across the sub-split. The champion's MECHANISM
+  (cap + de-correlation breadth) is robust; its DESK SELECTION is partly era-fit. Carried as a caveat.
+- FDR (Benjamini-Hochberg across the ~3 firm-construction families tested on the 4-pilot val era):
+  champion p_luck=0.0455 is BARELY below raw 0.05 but at BH rank-1 the threshold is 0.05/3=0.0167, which it
+  does NOT clear → fdr:FAIL. The edge is significant single-test but NOT after multiple-testing correction.
+- VERDICT going into the holdout: Q2 passes the whole gauntlet EXCEPT FDR (and fee:GATED). It is a real
+  breadth mechanism with a BORDERLINE, multiple-testing-fragile edge. The sealed holdout (2021-2026) is the
+  final arbiter: HOLD → a bounded, defensible candidate (promote with the M=4 + FDR + selection caveats);
+  COLLAPSE → declare overfit, do NOT promote (a successful null session per the contract).
