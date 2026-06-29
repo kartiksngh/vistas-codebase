@@ -43,9 +43,24 @@ KV directive was "clear the whole queue, nothing pending" + greenlit the ~2M-tok
   FILTERED from the firm selector via `amc_site._firm_groups` `MIN_FIRM_DESKS=2` (graceful fallback; a partial AMC reappears once it has
   ≥2 books) → only the 28-desk ABSL firm pill shows (`_pup_amc.js` nPills=1 PASS); (2) thematic desks display their **sector-index**
   benchmark label (the `amc_site.py:544` scorecard-`benchmark_name` precedence just needed a rebuild to surface).
-- **REMAINING / next:** next monthly LLM round (cadence); manager-tenure DB; the Mesh build chain; **#114** FM-shortlist ADD-MORE/TRIM
-  for held names (terminal feature, buildable); **#115** dual-flow (net-active + gross) into recos/portfolios — GATED on the decisive
-  all-starts×10k score-vs-screen NAV test (harness built in scratchpad, calibrated; see global memory `vistas-arm-momentum-signal`).
+- **✅ 2026-06-29 — #114 FM-SHORTLIST ADD-MORE/TRIM — SHIPPED LIVE** (publish `--no-rebuild`; source→vistas-codebase `a18c95b`).
+  The FM Action Shortlist is now a **3-column action board** (was 2): **Held·weakening→TRIM** | **Held·strengthening→ADD-MORE**
+  (NEW; held names in quadrant 1 = recommending∧buying, best-ARM first, shows Held-wt vs Bench-wt for underweight room) |
+  **Not-held·strengthening→ADD**. Held-side iterates the BOOK, resolves to screen rows by **vst_id then symbol**, dedupes; ADD now
+  excludes held names (they route to ADD-MORE). Twin in `vistas/fm_shortlist.py` (`add_more` list) + JS `renderFMShortlist` (`fm-3col`
+  grid) + CSS + caveat. Verified: full `--no-fetch` rebuild + Node smoke-test PASS; headless probe `_pup_fmshortlist.js` drives the
+  REAL ABSL Flexi via a leaderboard-row click (the old `window.FUNDSKILL_SYM` hack silently hit the default fund — FUNDSKILL_SYM is a
+  module `let`, not on window) → **Lenskart rank #1 in ADD-MORE, correctly OUT of ADD/TRIM, held wt resolves** (the original user bug
+  was Lenskart in ADD @held-wt-0; now fixed AND placed right).
+- **✅ 2026-06-29 — #115 dual-flow into recos/portfolios — GATE-RESOLVED (no wiring; the discipline-respecting outcome).**
+  Net-active flow ran the decisive NAV gate (all-starts + cost): faint IC, near-independent of ARM+mom (breadth) but **FAILS in NAV
+  space** (worse Sharpe/Martin/DD; loses ~62% of 5y windows) → it stays **decision-support, NOT a score/size input** (no-manufacture-
+  alpha). BOTH flow views are already surfaced as lenses (Screen **#106** Gross/Price-adj/Net-active toggle + Ownership **#102**
+  decomposition + FM sign-flag), so "take both into account" is satisfied at the LENS level. KV's distinct **gross/inflow price-push**
+  hypothesis ("deployed inflow can lift price despite −ve net-active") is **untested** — the mesh panel has no gross-flow history →
+  scoped as a separate per-stock gross-flow-history build, NOT wired speculatively. See global memory `vistas-arm-momentum-signal`.
+- **REMAINING / next:** next monthly LLM round (cadence); manager-tenure DB; the Mesh build chain; the gross/inflow-flow-history panel
+  (#115 follow-on); productionize the scratchpad signal-NAV harness as `vistas/signal_navtest.py`.
 - **#99 / #38 — DONE** earlier this night (build-cache engine off-by-default; both #38 legs already existed). Code backed up `13c7325`.
 **★★ THIS NIGHT SHIPPED + LIVE + TESTED:**
 - **#105 DIGITAL-ABSL FIRM — BUILT (28 books) + PUBLISHED LIVE** at https://kartiksngh.github.io/vistas/digital-amc/

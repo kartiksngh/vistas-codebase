@@ -26,6 +26,7 @@ from __future__ import annotations
 
 import os
 import json
+import urllib.parse
 import pandas as pd
 
 RET6M_MAX = 0.0          # 6M total return < 0 = price correction
@@ -53,6 +54,16 @@ def _jload(p):
         return json.load(open(p, encoding="utf-8"))
     except Exception:
         return None
+
+
+def _safe_name(sym):
+    """Filename/URL-safe encoding of a symbol — MUST match the writer in deck.py/_safe_name
+    (urllib.parse.quote(sym, safe="")). The per-stock quant/fundamentals JSONs are written URL-encoded
+    (so an HTTP fetch of data/quant/<encoded>.json works even when the symbol contains '&', which a URL
+    would read as a query separator): e.g. 'M&M' -> 'M%26M.json'. Reading them with the RAW symbol silently
+    missed every '&'-symbol (M&M, M&MFIN, J&KBANK, ARE&M, GVT&D, IL&FS*, COX&KINGS, …) -> they were dropped
+    from the screen universe entirely. Encode the symbol the same way the file was named."""
+    return urllib.parse.quote(str(sym), safe="")
 
 
 def _amc_holdings(root):
@@ -119,8 +130,9 @@ def build_smart_vs_street(site_data_dir, root, nse500=None, progress=None):
                 round(sum(s[-6:]), 1) if s else 0.0, round(sum(s[-12:]), 1) if s else 0.0]
     rows = []
     for sym in universe:
-        q = _jload(os.path.join(site_data_dir, "quant", sym + ".json"))
-        fu = _jload(os.path.join(site_data_dir, "fundamentals", sym + ".json"))
+        fn = _safe_name(sym) + ".json"     # URL-encoded to match the written filename (e.g. M&M -> M%26M.json)
+        q = _jload(os.path.join(site_data_dir, "quant", fn))
+        fu = _jload(os.path.join(site_data_dir, "fundamentals", fn))
         if not q and not fu:
             continue
         q = q or {}
