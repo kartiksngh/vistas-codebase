@@ -795,6 +795,21 @@ def brain_value_revision(uni, asof):
     return cov
 
 
+def brain_arm_only(uni, asof):
+    """LENS 0 — ARM-ONLY SINGLE FORCE (the baseline, NOT a deployed desk philosophy).
+    score = z(ARM) only. This is the 'single best component' reference the Fundamental-Law gate
+    measures every multi-force brain against ('the combination must beat its best individual signal,
+    or it is dilution' — the Mesh-blend lesson). It is NEVER assigned to a real mandate by
+    brain_for_mandate; it exists only so the autoresearch harness can ask 'does the multi-force book
+    actually beat tilting by ARM alone, applied identically?'. No look-ahead (ARM ≤ asof)."""
+    cov = _attach_forces(uni, asof)
+    for i, u in enumerate(uni):
+        u["score_raw"] = u["z_arm"]
+    _rescale_positive(uni)
+    cov["brain"] = "arm_only"
+    return cov
+
+
 def brain_regime_switch(uni, asof, regime=None):
     """LENS 4 — REGIME-SWITCH (tilt the blend by a simple market read).
     A single breadth/trend regime read decides the mix between the other brains:
@@ -888,6 +903,13 @@ BRAINS = {
                   "breadth-of-momentum market read; the core blend when the state is unclear.",
         "law": "IC: rotates with the regime (momentum in trends, value in reversals). "
                "BR/TC: a transfer-management lens — buys the right leak for the state, soft 3-state.",
+    },
+    "arm_only": {
+        "fn": brain_arm_only, "play": "structural",
+        "thesis": "Single-force ARM (analyst-revision percentile) baseline — the 'best single component' "
+                  "reference the Fundamental-Law gate measures every multi-force brain against. Not a "
+                  "deployed desk; never assigned by brain_for_mandate.",
+        "law": "IC: ARM alone (the one historically-validated single force). BR/TC: the reference leak.",
     },
 }
 _DEFAULT_BRAIN = "core_multifactor"
