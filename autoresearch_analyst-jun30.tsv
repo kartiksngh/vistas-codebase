@@ -1,0 +1,12 @@
+commit	persona	obj_value	gate	decomp	status	prereg_ref	description
+90f22d4	analyst	-0.056305	single:FAIL era:PASS luck:PASS tilt:PASS fdr:NA fee:GATED rand:GATED	na	keep	BASE	baseline ew_blend z(flow)+z(dbreadth)+z(arm_trend_3m) -- LOSES to ARM(0.071) and mom_6m(0.106)
+90f22d4	analyst	-0.108152	single:FAIL era:PASS luck:PASS tilt:PASS fdr:NA fee:GATED rand:GATED	na	discard	P1	mom_6m alone IC.108 -- strongest single but a single force cannot beat itself (correct null)
+90f22d4	analyst	-0.103579	single:FAIL era:PASS luck:PASS tilt:PASS fdr:NA fee:GATED rand:GATED	na	discard	P2	mom+arm equal-weight IC.104 DILUTES vs mom alone .108 -- the proven dilution trap live
+90f22d4	analyst	-0.082622	single:FAIL era:PASS luck:PASS tilt:PASS fdr:NA fee:GATED rand:GATED	na	discard	P3	mom orth vs ARM + arm IC.083 -- orthogonalising mom vs ARM REMOVES IC (mom IC lives partly in ARM-corr part)
+90f22d4	analyst	-0.087884	single:FAIL era:PASS luck:PASS tilt:PASS fdr:NA fee:GATED rand:GATED	na	discard	P4	mom+arm+value orth IC.088 < mom alone -- value(.041) dilutes
+90f22d4	analyst	-0.096744	single:FAIL era:PASS luck:PASS tilt:PASS fdr:NA fee:GATED rand:GATED	na	discard	P5	2*mom+arm orth IC.097 < mom alone -- still below P1; orth+arm leg drags
+90f22d4	analyst	0.009020	single:FAIL era:FAIL luck:FAIL tilt:FAIL fdr:NA fee:GATED rand:GATED	na	discard	P7	mom orth vs ARM + arm_trend_3m -> NEGATIVE IC -.009 CERTIFIED DEAD END (double-removes momentum then adds weak trend)
+90f22d4	analyst	-0.085721	single:FAIL era:PASS luck:PASS tilt:PASS fdr:NA fee:GATED rand:GATED	na	discard	P8	mom+arm+breadth orth IC.086 < mom alone -- breadth(.053) dilutes
+8812812	analyst	-0.118067	single:PASS era:PASS plateau:PASS luck:PASS tilt:PASS fdr:PASS fee:GATED rand:GATED	IC0.118 sizeNeutralIC0.102 large-cap-IC0.091 legcorr0.72	keep	P6/P9	CHAMPION two-horizon momentum z(mom_6m)+z(mom_12m) -- beats best single (0.112) plateau-robust era-stable; HOLDOUT held IC0.111
+8812812	analyst	-0.116900	single:PASS era:PASS plateau:PASS luck:PASS tilt:PASS	plateau	discard	P9	plateau on blend ratio 3:1..1:3 all IC 0.116-0.118 -- FLAT (mechanism not spike)
+8812812	analyst	-0.113200	single:NA era:NA	horizon	discard	P11	horizon plateau {6,9,12}m blends ~0.114-0.118; mom_3m weaker(.085) dilutes; no extra term-structure
