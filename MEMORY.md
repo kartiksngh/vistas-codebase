@@ -52,6 +52,20 @@ KV directive was "clear the whole queue, nothing pending" + greenlit the ~2M-tok
   REAL ABSL Flexi via a leaderboard-row click (the old `window.FUNDSKILL_SYM` hack silently hit the default fund — FUNDSKILL_SYM is a
   module `let`, not on window) → **Lenskart rank #1 in ADD-MORE, correctly OUT of ADD/TRIM, held wt resolves** (the original user bug
   was Lenskart in ADD @held-wt-0; now fixed AND placed right).
+- **✅ 2026-06-29 — #116 SCREEN `&`-SYMBOL COVERAGE BUG — FIXED + LIVE** (publish `--no-rebuild`; source→vistas-codebase `666e740`).
+  KV: "I don't see Mahindra Finance (MMFS) in #screen." Root cause: `screens.py` read each stock's per-stock
+  `quant/<sym>.json` + `fundamentals/<sym>.json` by the **RAW symbol**, but the writer (`deck.py/_safe_name` =
+  `urllib.parse.quote(sym, safe="")`, JS twin `safeName`) URL-encodes the filename (`&` is a URL query separator → `M&M`
+  ⇒ `M%26M.json`). So **every `&`-symbol was silently dropped** (missing-file → `continue`): M&M (NIFTY-50!), **M&MFIN
+  (=Mahindra Finance, KV's "MMFS")**, J&KBANK, ARE&M, GVT&D. Fix = added `_safe_name` in screens.py, encode the read path.
+  Screen 1043→**1048 rows**; M&MFIN now present (ARM 70, quadrant 2 = analysts recommending ∧ funds net-selling, 51 funds).
+  ★ Whole-chain coverage audit (May-2026 holdings, 43,654 rows): **0** held names have vst_id-but-no-symbol; screens.py was
+  the ONLY raw-symbol reader (writers + JS cockpit-fetch already encode; the `encodeURIComponent(safeName)` "double-encode" is
+  CORRECT — fetching a file whose name literally contains `%26`); the residual **1.35% of held MV unmapped = recent IPOs /
+  unlisted / demerger entities** (Meesho, Pine Labs, Physicswallah, ICICI-AMC pre-listing, new Vedanta entities) w/ no price
+  history yet → expected frontier, not a bug. Durable lesson → global `identifier-resolution` skill (hard rule #6: read path
+  must mirror write-path key-encoding; special-char names are the canary; assert output_count==universe_count). OPEN follow-on
+  (optional): actively map the large recently-listed names (Meesho/Pine Labs/Physicswallah) to push coverage past 98.65%.
 - **✅ 2026-06-29 — #115 dual-flow into recos/portfolios — GATE-RESOLVED (no wiring; the discipline-respecting outcome).**
   Net-active flow ran the decisive NAV gate (all-starts + cost): faint IC, near-independent of ARM+mom (breadth) but **FAILS in NAV
   space** (worse Sharpe/Martin/DD; loses ~62% of 5y windows) → it stays **decision-support, NOT a score/size input** (no-manufacture-

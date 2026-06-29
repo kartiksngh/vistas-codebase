@@ -16129,6 +16129,318 @@
    "n_cand_vids": 1,
    "his_final_vid": "VST00031",
    "his_agrees": true
+  },
+  "12380": {
+   "vst_id": "VST00180",
+   "name": "BHARAT COKING COAL LTD",
+   "nse_symbol": "BHARATCOAL",
+   "conf": "isin-link"
+  },
+  "12426": {
+   "vst_id": "VST01256",
+   "name": "TAMILNAD MERCA BANK LTD",
+   "nse_symbol": "TMB",
+   "conf": "isin-link"
+  },
+  "14928": {
+   "vst_id": "VST00175",
+   "name": "CENTRAL MINE P N D INST L",
+   "nse_symbol": "CMPDI",
+   "conf": "isin-link"
+  },
+  "20967": {
+   "vst_id": "VST00834",
+   "name": "ICICI PRUDENTIAL AMC LTD",
+   "nse_symbol": "ICICIAMC",
+   "conf": "isin-link"
+  },
+  "22655": {
+   "vst_id": "VST01296",
+   "name": "VEDANTA OIL AND GAS LTD",
+   "nse_symbol": "VOGL",
+   "conf": "isin-link"
+  },
+  "23308": {
+   "vst_id": "VST01581",
+   "name": "POWERICA LIMITED",
+   "nse_symbol": "POWERICA",
+   "conf": "isin-link"
+  },
+  "2400": {
+   "vst_id": "VST03768",
+   "name": "PRECISION WIRES INDIA LTD",
+   "nse_symbol": "PRECWIRE",
+   "conf": "isin-link"
+  },
+  "2963": {
+   "vst_id": "VST01428",
+   "name": "INDO BORAX & CHEMICAL LTD",
+   "nse_symbol": "INDOBORAX",
+   "conf": "isin-link"
+  },
+  "33984": {
+   "vst_id": "VST00178",
+   "name": "AMIR CHAND JAG KUM (E) L",
+   "nse_symbol": "AMIRCHAND",
+   "conf": "isin-link"
+  },
+  "34784": {
+   "vst_id": "VST01611",
+   "name": "AEQUS LIMITED",
+   "nse_symbol": "AEQUS",
+   "conf": "isin-link"
+  },
+  "36129": {
+   "vst_id": "VST00556",
+   "name": "VIDYA WIRES LIMITED",
+   "nse_symbol": "VIDYAWIRES",
+   "conf": "isin-link"
+  },
+  "39206": {
+   "vst_id": "VST01674",
+   "name": "KSH INTERNATIONAL LIMITED",
+   "nse_symbol": "KSHINTL",
+   "conf": "isin-link"
+  },
+  "40519": {
+   "vst_id": "VST01284",
+   "name": "VEDANTA POWER LIMITED",
+   "nse_symbol": "VEDPOWER",
+   "conf": "isin-link"
+  },
+  "67414": {
+   "vst_id": "VST00653",
+   "name": "FRACTAL ANALYTICS LIMITED",
+   "nse_symbol": "FRACTAL",
+   "conf": "isin-link"
+  },
+  "70588": {
+   "vst_id": "VST01180",
+   "name": "EXCELSOFT TECHNOLOGIES L",
+   "nse_symbol": "EXCELSOFT",
+   "conf": "isin-link"
+  },
+  "70661": {
+   "vst_id": "VST00445",
+   "name": "SUDEEP PHARMA LIMITED",
+   "nse_symbol": "SUDEEPPHRM",
+   "conf": "isin-link"
+  },
+  "71135": {
+   "vst_id": "VST01041",
+   "name": "AYE FINANCE LIMITED",
+   "nse_symbol": "AYE",
+   "conf": "isin-link"
+  },
+  "71174": {
+   "vst_id": "VST00119",
+   "name": "CORONA REMEDIES LIMITED",
+   "nse_symbol": "CORONA",
+   "conf": "isin-link"
+  },
+  "72061": {
+   "vst_id": "VST00244",
+   "name": "MUFIN GREEN FINANCE LTD",
+   "nse_symbol": "MUFIN",
+   "conf": "isin-link"
+  },
+  "72182": {
+   "vst_id": "VST01234",
+   "name": "CLEAN MAX ENVIRO EN SOL L",
+   "nse_symbol": "CLEANMAX",
+   "conf": "isin-link"
+  },
+  "72748": {
+   "vst_id": "VST00622",
+   "name": "EMMVEE PHOTOVOLTAIC PWR L",
+   "nse_symbol": "EMMVEE",
+   "conf": "isin-link"
+  },
+  "76330": {
+   "vst_id": "VST00356",
+   "name": "CAPILLARY TECHNO INDIA L",
+   "nse_symbol": "CAPILLARY",
+   "conf": "isin-link"
+  },
+  "76423": {
+   "vst_id": "VST00515",
+   "name": "AMAGI MEDIA LABS LIMITED",
+   "nse_symbol": "AMAGI",
+   "conf": "isin-link"
+  },
+  "76701": {
+   "vst_id": "VST00533",
+   "name": "FUJIYAMA POWER SYSTEMS L",
+   "nse_symbol": "UTLSOLAR",
+   "conf": "isin-link"
+  },
+  "76878": {
+   "vst_id": "VST00323",
+   "name": "WAKEFIT INNOVATIONS LTD",
+   "nse_symbol": "WAKEFIT",
+   "conf": "isin-link"
+  },
+  "77096": {
+   "vst_id": "VST00570",
+   "name": "PINE LABS LIMITED",
+   "nse_symbol": "PINELABS",
+   "conf": "isin-link"
+  },
+  "77250": {
+   "vst_id": "VST00393",
+   "name": "INSOLATION ENERGY LIMITED",
+   "nse_symbol": "INA",
+   "conf": "isin-link"
+  },
+  "77963": {
+   "vst_id": "VST00479",
+   "name": "MEESHO LIMITED",
+   "nse_symbol": "MEESHO",
+   "conf": "isin-link"
+  },
+  "77966": {
+   "vst_id": "VST00349",
+   "name": "BILLIONBRAINS GARAGE VN L",
+   "nse_symbol": "GROWW",
+   "conf": "isin-link"
+  },
+  "77972": {
+   "vst_id": "VST00397",
+   "name": "PHYSICSWALLAH LIMITED",
+   "nse_symbol": "PWL",
+   "conf": "isin-link"
+  },
+  "78519": {
+   "vst_id": "VST00174",
+   "name": "RATNAVEER PRECISION ENG L",
+   "nse_symbol": "RATNAVEER",
+   "conf": "isin-link"
+  },
+  "78712": {
+   "vst_id": "VST00532",
+   "name": "SHADOWFAX TECHNOLOGIES L",
+   "nse_symbol": "SHADOWFAX",
+   "conf": "isin-link"
+  },
+  "78772": {
+   "vst_id": "VST00530",
+   "name": "ONEMI TECHNOLOGY SOL LTD",
+   "nse_symbol": "KISSHT",
+   "conf": "isin-link"
+  },
+  "83241": {
+   "vst_id": "VST00045",
+   "name": "SEDEMAC MECHATRONICS LTD",
+   "nse_symbol": "SEDEMAC",
+   "conf": "isin-link"
+  },
+  "83464": {
+   "vst_id": "VST00616",
+   "name": "TENNECO CLEAN AIR INDIA L",
+   "nse_symbol": "TENNIND",
+   "conf": "isin-link"
+  },
+  "92339": {
+   "vst_id": "VST00623",
+   "name": "VEDANTA ALUMINIUM METAL L",
+   "nse_symbol": "VAML",
+   "conf": "isin-link"
+  },
+  "92401": {
+   "vst_id": "VST00624",
+   "name": "VEDANTA IRON AND STEEL L",
+   "nse_symbol": "VISL",
+   "conf": "isin-link"
+  },
+  "94372": {
+   "vst_id": "VST00777",
+   "name": "KWALITY WALL'S (INDIA) L",
+   "nse_symbol": "KWIL",
+   "conf": "isin-link"
+  },
+  "94648": {
+   "vst_id": "VST00512",
+   "name": "PARK MEDI WORLD LIMITED",
+   "nse_symbol": "PARKHOSPS",
+   "conf": "isin-link"
+  },
+  "95536": {
+   "vst_id": "VST00627",
+   "name": "PNGS REVA DIAMOND JEWEL L",
+   "nse_symbol": "PNGSREVA",
+   "conf": "isin-link"
+  },
+  "95586": {
+   "vst_id": "VST00469",
+   "name": "OMNITECH ENGINEERING LTD",
+   "nse_symbol": "OMNI",
+   "conf": "isin-link"
+  },
+  "95705": {
+   "vst_id": "VST00945",
+   "name": "NEPHROCARE HEALTH SERV L",
+   "nse_symbol": "NEPHROPLUS",
+   "conf": "isin-link"
+  },
+  "95970": {
+   "vst_id": "VST00344",
+   "name": "SAI PARENTERALS LIMITED",
+   "nse_symbol": "SAIPARENT",
+   "conf": "isin-link"
+  },
+  "72469": {
+   "vst_id": "VST04243",
+   "name": "TATA STEEL LIMITED",
+   "nse_symbol": "TATASTEEL",
+   "conf": "partly-paid-link"
+  },
+  "73247": {
+   "vst_id": "VST00993",
+   "name": "HATSUN AGRO PRODUCT LTD.",
+   "nse_symbol": "HATSUN",
+   "conf": "partly-paid-link"
+  },
+  "74812": {
+   "vst_id": "VST03868",
+   "name": "RELIANCE INDUSTRIES LTD",
+   "nse_symbol": "RELIANCE",
+   "conf": "partly-paid-link"
+  },
+  "75230": {
+   "vst_id": "VST01546",
+   "name": "MOLD-TEK PACKAGING LTD",
+   "nse_symbol": "MOLDTKPAC",
+   "conf": "partly-paid-link"
+  },
+  "78481": {
+   "vst_id": "VST00937",
+   "name": "ADANI ENTERPRISES LIMITED",
+   "nse_symbol": "ADANI-RE",
+   "conf": "partly-paid-link"
+  },
+  "92860": {
+   "vst_id": "VST00549",
+   "name": "SAMMAAN CAPITAL LIMITED",
+   "nse_symbol": "SAMMAANCAP",
+   "conf": "partly-paid-link"
+  },
+  "93334": {
+   "vst_id": "VST04078",
+   "name": "SOBHA LIMITED",
+   "nse_symbol": "SOBHA",
+   "conf": "partly-paid-link"
+  },
+  "94298": {
+   "vst_id": "VST01207",
+   "name": "UPL LIMITED",
+   "nse_symbol": "UPL-RE",
+   "conf": "partly-paid-link"
+  },
+  "95402": {
+   "vst_id": "VST00540",
+   "name": "FUSION FINANCE LIMITED",
+   "nse_symbol": "FUSION",
+   "conf": "partly-paid-link"
   }
  },
  "review": [
