@@ -702,6 +702,128 @@ def self_validate(start="2013-01-01", log=print) -> dict:
     }
 
 
+# ================================================================== THE MUTABLE ANALYST DESK SIGNAL
+# This is the ONLY function the autoresearch ANALYST loop edits (tag analyst-jun30). Everything
+# above (build_panel/_assemble_wide/evaluate/_ic_block/arm_baseline) is the FROZEN evaluator + the
+# frozen data plumbing and must NOT change. desk_signal() ASSEMBLES the analyst pitch score from the
+# already-built forces in the panel. Every clause must trace to a VALIDATED force; no free parameter
+# fit to maximise backtest IC; the assembly must clear the parameter plateau (autoresearch §3).
+#
+# House law (ANALYST_GOLDMINE §0): LEVEL = context, CHANGE = edge, every edge has a CLOCK.
+#   validated forces:
+#     arm_level     (ARM_100_REG, the analyst-revision LEVEL — IC@6m ~0.056 full / ~0.071 same-rows)
+#     arm_trend_3m  (dARM over 3 month-ends — the revision DIRECTION, the "change is edge" mechanic)
+#     mom_6m/mom_12m(price momentum — a separately validated cross-sectional force)
+#     value_z       (combined E/P,B/P,S/P cheapness z — value, Ambit sign-replication only)
+#     flow_intensity_3m / dbreadth (smart-money + Chen-Hong-Stein breadth — narrow universe ~57%)
+#     quality_score (ROE - accrual penalty — Sloan)
+# PROVEN DEAD END: equal-weight z(flow)+z(dbreadth)+z(arm_trend_3m) DILUTES ARM (0.071->0.054).
+
+# The baseline assembly = the proven equal-weight blend (so the very first ledger row is honest).
+DESK_PARAMS = {
+    "mode": "ew_blend",        # which assembly to build (trials flip this / the weights below)
+    "weights": {"flow": 1.0, "dbreadth": 1.0, "arm_trend_3m": 1.0},
+    "winsor": None,            # None or a float p in (0,0.5): clip each force-z to [-z_p, z_p]
+    "orth": None,              # None or "arm": orthogonalise non-ARM legs vs ARM cross-sectionally
+}
+
+
+def _w(panel, col):
+    """frozen helper: wide month_end x symbol frame for a panel column."""
+    return _wide_from_panel(panel, col)
+
+
+def _winsor_z(z: pd.DataFrame, p):
+    """Clip a cross-sectional z frame to +/- the p-quantile magnitude per month (robustness).
+    p=None -> unchanged. p e.g. 0.02 trims the 2% tails so one outlier name can't dominate a z-sum."""
+    if not p:
+        return z
+    def _row(r):
+        v = r.dropna()
+        if len(v) < 5:
+            return r
+        lim = v.abs().quantile(1.0 - p)
+        return r.clip(lower=-lim, upper=lim)
+    return z.apply(_row, axis=1)
+
+
+def _orth_vs(target: pd.DataFrame, base: pd.DataFrame) -> pd.DataFrame:
+    """Cross-sectionally orthogonalise `target` vs `base` each month: residual of target ~ a + b*base
+    over the names present in both. Returns the residual (the part of `target` NOT explained by base).
+    This is how a value/momentum/flow leg is made to carry information BEYOND ARM (decorrelation)."""
+    out = pd.DataFrame(index=target.index, columns=target.columns, dtype=float)
+    for t in target.index:
+        if t not in base.index:
+            continue
+        y = target.loc[t]
+        x = base.loc[t]
+        common = y.index.intersection(x.index)
+        y, x = y[common], x[common]
+        ok = y.notna() & x.notna()
+        if ok.sum() < 10:
+            continue
+        yy, xx = y[ok].astype(float), x[ok].astype(float)
+        sx = xx.std()
+        if not np.isfinite(sx) or sx == 0:
+            out.loc[t, ok.index[ok]] = yy.values
+            continue
+        b = np.cov(xx, yy, ddof=0)[0, 1] / (sx ** 2)
+        a = yy.mean() - b * xx.mean()
+        resid = yy - (a + b * xx)
+        out.loc[t, resid.index] = resid.values
+    return out
+
+
+def desk_signal(panel: pd.DataFrame) -> pd.DataFrame:
+    """Assemble the analyst desk's ex-ante pitch score (wide month_end x symbol).
+
+    The score is a cross-sectional composite of validated forces. Higher score = stronger BUY pitch.
+    Trials edit ONLY DESK_PARAMS / the branches here — never the evaluator. The frozen evaluate()
+    then turns this into the IC verdict on the SAME convention as the published numbers.
+    """
+    P = DESK_PARAMS
+    mode = P["mode"]
+
+    def Z(col):
+        return _xs_z_wide(_w(panel, col))
+
+    if mode == "ew_blend":
+        # BASELINE: equal-weight z(flow)+z(dbreadth)+z(arm_trend_3m), all-three-present mask.
+        wt = P["weights"]
+        zf = _winsor_z(Z("flow_intensity_3m"), P["winsor"])
+        zb = _winsor_z(Z("dbreadth"), P["winsor"])
+        za = _winsor_z(Z("arm_trend_3m"), P["winsor"])
+        have_all = zf.notna() & zb.notna() & za.notna()
+        s = (wt["flow"] * zf + wt["dbreadth"] * zb + wt["arm_trend_3m"] * za)
+        return s.where(have_all)
+
+    if mode == "weighted":
+        # GENERAL weighted z-composite over an arbitrary set of force columns (weights in P["weights"]).
+        # mask = ALL named legs present (a true confluence) unless a leg weight is 0.
+        wt = P["weights"]
+        legs = {}
+        for col, w in wt.items():
+            if w == 0:
+                continue
+            z = _winsor_z(Z(col), P["winsor"])
+            if P["orth"] == "arm" and col != "arm_level":
+                z = _winsor_z(_orth_vs(_w(panel, col), _w(panel, "arm_level")), P["winsor"])
+            legs[col] = (w, z)
+        if not legs:
+            raise ValueError("no legs")
+        mask = None
+        for col, (w, z) in legs.items():
+            m = z.notna()
+            mask = m if mask is None else (mask & m)
+        s = None
+        for col, (w, z) in legs.items():
+            term = w * z
+            s = term if s is None else s.add(term, fill_value=0.0)
+        return s.where(mask)
+
+    raise ValueError(f"unknown desk mode {mode}")
+
+
 if __name__ == "__main__":     # python -m vistas.mesh_research
     res = self_validate()
     print(json.dumps({k: v for k, v in res.items()
