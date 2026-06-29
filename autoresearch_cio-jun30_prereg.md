@@ -151,3 +151,26 @@ Validation era (all the loop sees) = 2015-01-30 → 2020-12-31. The loop evaluat
   breadth mechanism with a BORDERLINE, multiple-testing-fragile edge. The sealed holdout (2021-2026) is the
   final arbiter: HOLD → a bounded, defensible candidate (promote with the M=4 + FDR + selection caveats);
   COLLAPSE → declare overfit, do NOT promote (a successful null session per the contract).
+
+### ★ SEALED-HOLDOUT VERDICT (2021-01..2026-06, one-shot, the final arbiter)
+- Champion IR_firm = 0.988 (p_luck=0.015) vs naive equal-weight IR = 0.792 (p=0.043) → champion − naive
+  = +0.196 IR OOS (in-sample lift was +0.445; it SHRANK but stayed positive & same-signed → the breadth
+  MECHANISM generalised). Mechanism held: cap Quant at 0.55, lean on the de-correlated/skilled book; s up
+  0.72→0.84, M_eff held 1.57→1.66, ρ̄ down 0.518→0.392. tilt:PASS (beta 0.112), luck:PASS (clears even BH).
+- BUT single:FAIL OOS (0.988 < Quant standalone 1.044) — with M=4 and one dominant de-correlated specialist
+  the firm cannot out-IR that specialist. The √BR breadth bound the operator flagged, confirmed empirically.
+  (era:FAIL is a HARNESS ARTIFACT — the 3 sub-eras are all pre-2021 so they're empty on the holdout; discount.)
+- DECISION: the over-naive breadth lift is a REAL, OOS-robust, defensible CIO finding (promote the
+  ALLOCATOR as "beats the naive equal-weight firm via genuine breadth", with the M=4 + FDR + era-fit-of-
+  selection caveats). It is NOT promoted as "beats the single best desk" (it doesn't, OOS). Honest, bounded
+  — exactly the contract's calibrated outcome, not a 1-year miracle.
+
+### Q3 — unconstrained max-Sharpe (Σ⁻¹μ) allocator (EXPECTED DEAD-END / over-fit control)
+- Hypothesis: the theoretically IR-maximising firm is w ∝ Σ⁻¹ μ (μ=in-sample desk mean active returns,
+  Σ=in-sample desk active-ret covariance). Does the disciplined capped rule leave free IR on the table?
+- Mechanism / prediction (first principles): Σ⁻¹μ is the in-sample optimiser — with M=4 and ~1465 daily
+  obs it WILL fit the validation noise (extreme long/short desk weights), inflate in-sample IR, and then
+  COLLAPSE out-of-sample (the classic Markowitz error-maximisation). It also typically goes long/short
+  (violates a long-only firm) and concentrates → fails the breadth + tilt gates. I PRE-REGISTER this as an
+  expected DISCARD: if in-sample IR >> champion but holdout IR << champion (or it fails wf/tilt), that is
+  the curve-fit the contract forbids, certified as a dead-end (not re-walked).
