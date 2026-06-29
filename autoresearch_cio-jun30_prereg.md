@@ -116,3 +116,23 @@ Validation era (all the loop sees) = 2015-01-30 → 2020-12-31. The loop evaluat
 ### Q0 — NEW BASELINE (equal-weight 4-pilot firm)
 - Hypothesis/mechanism: naive firm rides all 4 equally; IR≈0.37, M_eff≈2.0; below best single pilot 0.60
   → the naive firm FAILS `single` (must actually decorrelate to justify itself).
+
+### Q2 — CAPPED de-crowding (the breadth-honest champion candidate)
+- Hypothesis: w_d ∝ max(0, IR_d^val)^gamma / crowd_load_d^kappa, THEN apply a per-desk weight CAP w_max
+  and renormalise (iteratively) so NO desk exceeds w_max. The cap is the crowding/fragility cap in the
+  search space — it FORCES the firm to stay diversified instead of collapsing onto one book.
+- Mechanism (first principles, the √BR breadth effect made real): dropping the two negative-skill large-
+  caps (ICICI, SBI) leaves ABSL (large-cap skill) + Quant (de-correlated small-cap). The cap keeps the
+  firm ~50/50 across them rather than 89% Quant. ABSL alone (IR 0.60, p_luck 0.082) and Quant alone
+  (0.57, p 0.109) are EACH individually NOT luck-significant; combined ~50/50 (ρ̄≈0.003) the firm IR rises
+  to ~0.80 and p_luck≈0.043 — two uncorrelated bets, each insignificant alone, JOINTLY significant. That
+  is genuine breadth (M_eff≈2.0, NOT a single-book tilt), the exact thing the objective grades.
+- Provenance: each weight = (in-sample IR) ÷ (crowding load), capped. The retained set + the cap are the
+  fragility/crowding control. Beta must stay flat (it's not the Quant size tilt because the cap stops the
+  firm BECOMING Quant).
+- Expected on decomposition: ρ̄ DOWN to ~0, M_eff ~2.0 (HELD, not collapsed), both ABSL & Quant present
+  (~40-60% each), s up (losers dropped). TARGET: pass single AND luck AND rand AND tilt, plateau-robust
+  in (gamma, kappa, w_max). HONEST BOUND: M=4 with only 2 positive-skill desks → M_eff caps at ~2, so the
+  lift is bounded; this is the ceiling, reported as such, not over-claimed.
+- The DISCARD condition: if it only passes by w_max→1 (collapsing to Quant) or by a beta/size tilt, or
+  fails luck off the 50/50 point (not plateau-robust), discard.

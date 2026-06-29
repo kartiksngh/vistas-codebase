@@ -34,11 +34,57 @@ import pandas as pd
 # ── DEFAULT_PARAMS = the BASELINE: equal weight (the naive firm, CIO adds nothing). ───────────────
 #   The loop mutates these. Every knob has a first-principles meaning and is plateau-tested.
 DEFAULT_PARAMS = {
-    "mode": "equal",          # BASELINE = naive 1/N firm. The loop mutates this. 'equal'|'skill'|'decrowd'.
+    "mode": "decrowd",        # 'equal' = naive 1/N baseline. The loop mutates this. 'equal'|'skill'|'decrowd'.
     "gamma": 1.0,             # skill-tilt exponent (skill / decrowd): w ∝ max(0, IR_d)^gamma.
     "kappa": 1.0,             # de-crowding exponent: w ∝ skill / crowd_load^kappa. 0 = no de-crowd.
     "floor": 0.05,            # crowd_load floor (avoid blow-up when a desk is ~uncorrelated).
+    "w_max": 0.55,            # crowding/fragility CAP: no desk may exceed this firm weight (forces breadth,
+                              #   stops the firm collapsing onto one book = the size-tilt trap). 1.0 = no cap.
 }
+
+
+def _apply_cap(w: dict, w_max: float) -> dict:
+    """Cap each desk's NORMALISED weight at w_max and redistribute the excess to the uncapped desks,
+    iterating to a fixed point (the standard 'cap-and-spill' / waterfilling). Forces firm breadth: it is
+    the crowding/fragility cap — it prevents a single-book tilt masquerading as firm skill. If w_max is
+    too small to fit (n·w_max < 1) it degenerates gracefully to equal weight over the active set."""
+    names = [k for k, v in w.items() if v > 0]
+    if not names:
+        return w
+    if w_max >= 1.0 or len(names) * w_max <= 1.0 + 1e-12:
+        if len(names) * w_max <= 1.0 + 1e-12:        # cap can't be satisfied → equal over active set
+            return {k: (1.0 / len(names) if k in names else 0.0) for k in w}
+        return w
+    x = {k: max(0.0, v) for k, v in w.items()}
+    for _ in range(100):
+        tot = sum(x.values())
+        x = {k: (v / tot if tot > 0 else 0.0) for k, v in x.items()}
+        over = {k: v for k, v in x.items() if v > w_max + 1e-12}
+        if not over:
+            break
+        # pin the over-cap desks AT w_max, redistribute the rest proportionally among the uncapped
+        pinned = {k: w_max for k in over}
+        free = {k: v for k, v in x.items() if k not in over and v > 0}
+        rem = 1.0 - w_max * len(pinned)
+        fsum = sum(free.values())
+        x = {**{k: 0.0 for k in w}, **pinned,
+             **({k: (rem * v / fsum) for k, v in free.items()} if fsum > 0 else
+                {k: rem / max(1, len(free)) for k in free})}
+    return x
+
+
+def _insample_ir(A: "pd.DataFrame"):
+    """Each desk's IR measured ON THE WINDOW the evaluator passed (annualised daily active-return IR).
+    Walk-forward safe (the wf gate hands the past-only slice). Correctly shows NEGATIVE skill for a desk
+    that didn't beat its bench in-sample, so max(0,·) starves it — the CIO stops funding losers."""
+    out = {}
+    for nm in A.columns:
+        t = A[nm].dropna()
+        if len(t) < 30 or t.std(ddof=1) == 0:
+            out[nm] = 0.0
+        else:
+            out[nm] = float((t.mean() * 252) / (t.std(ddof=1) * (252 ** 0.5)))
+    return out
 
 
 def _crowd_load(A: "pd.DataFrame", floor: float = 0.05):
@@ -67,20 +113,26 @@ def firm_weights(meta: dict, A: pd.DataFrame, params: dict) -> dict:
         return {nm: 1.0 for nm in names}
 
     if mode == "skill":
-        # conviction tilt: lean on validated skill. w_d ∝ max(0, IR_d)^gamma. Pure skill, no breadth term.
+        # conviction tilt: lean on in-sample skill. w_d ∝ max(0, IR_d)^gamma. Pure skill, no breadth term.
         g = float(params.get("gamma", 1.0))
-        return {nm: (max(0.0, float(meta.get(nm, {}).get("ir") or 0.0)) ** g) for nm in names}
+        ir_is = _insample_ir(A)
+        out = {nm: (max(0.0, ir_is[nm]) ** g) for nm in names}
+        return _apply_cap(out, float(params.get("w_max", 1.0)))
 
     if mode == "decrowd":
-        # THE breadth lever: w_d ∝ max(0, IR_d)^gamma / crowd_load_d^kappa. Reward validated skill,
-        # DIVIDE by crowding → starve the correlated clones, ride the de-correlated breadth-adders.
+        # THE breadth lever: w_d ∝ max(0, IR_d)^gamma / crowd_load_d^kappa, IR & crowd measured IN-SAMPLE
+        # (walk-forward safe), THEN capped at w_max so the firm stays diversified. max(0,·) drops desks
+        # that didn't beat their own benchmark in-sample; /crowd_load up-weights the de-correlated
+        # breadth-adders; the cap stops the firm collapsing onto one book (the size-tilt trap). The
+        # √BR breadth effect: two uncorrelated desks, each insignificant alone, jointly significant.
         g = float(params.get("gamma", 1.0))
         k = float(params.get("kappa", 1.0))
         load = _crowd_load(A, float(params.get("floor", 0.05)))
+        ir_is = _insample_ir(A)
         out = {}
         for nm in names:
-            ir = max(0.0, float(meta.get(nm, {}).get("ir") or 0.0))
+            ir = max(0.0, ir_is[nm])
             out[nm] = (ir ** g) / (load[nm] ** k)
-        return out
+        return _apply_cap(out, float(params.get("w_max", 0.55)))
 
     raise ValueError(f"unknown CIO mode {mode!r}")
