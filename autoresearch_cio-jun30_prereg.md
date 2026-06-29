@@ -66,3 +66,20 @@ correlated cluster (that is the tilt trap the gauntlet must catch).
 - Mechanism: pure measurement, no edge claim. Establishes the number the loop must beat.
 - Expected: IR_firm modest (~0.7–1.0 realised); M_eff ≈ 2; single-best-desk IR likely HIGHER than the
   equal-weight firm (so the naive firm FAILS the `single` gate — proving the CIO must actually decorrelate).
+
+### P2 — de-crowding firm weighting (THE breadth lever)
+- Hypothesis: w_d ∝ max(0, IR_d) / (crowd_load_d)^kappa, where crowd_load_d = mean correlation of desk d's
+  active return with all other desks (its contribution to ρ̄). Reward validated skill, DIVIDE by crowding.
+- Mechanism (first principles, the CIO's actual job): team-IR = s·√M_eff and M_eff = N/(1+(N−1)ρ̄). To LIFT
+  M_eff you must LOWER ρ̄ — i.e. starve the crowded clones (the 17 NIFTY-500 generalist desks that are one
+  large-cap active bet in 17 coats) and ride the de-correlated sector/thematic desks (Pharma/SmallCap/
+  Digital/Transport/Banking/Infra/Mfg — each on its OWN NIFTY sub-index, a genuinely distinct bet). This is
+  pure breadth cultivation + crowding killing — exactly what the objective grades. Provenance: every weight
+  = (desk's gauntlet-graded IR) ÷ (its measured crowding load); the de-correlation is the benchmark-identity
+  structure, not a fit.
+- Expected on decomposition: ρ̄ DOWN, M_eff UP (well above the baseline 1.76), n_active lower (concentrated
+  on the breadth-adders), s roughly flat-or-up. The lift should come from M_eff (breadth), NOT from a tilt
+  (beta must stay flat, |beta|≤0.25). TARGET: beat the single best desk IR 1.762 BECAUSE diversification of
+  independent active bets pushes the firm IR above any one desk — the whole point of √BR. If it beats single
+  ONLY via a beta/size tilt (tilt:FAIL) → discard. Must clear the parameter plateau in kappa.
+- crowd_load is computed on the SAME in-sample window the evaluator hands firm_weights (walk-forward safe).
