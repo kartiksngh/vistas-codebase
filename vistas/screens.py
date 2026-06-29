@@ -164,8 +164,12 @@ def build_smart_vs_street(site_data_dir, root, nse500=None, progress=None):
         fb = {"gross": _wsum(smf.get("gross")),
               "price_adj": _wsum(smf.get("price_adj") or smf.get("flow")),
               "net_active": _wsum(smf.get("net_active"))}
-        buyers = (smf.get("buyers") or [None])[-1]
+        buyers = (smf.get("buyers") or [None])[-1]            # price-adjusted (legacy default)
         sellers = (smf.get("sellers") or [None])[-1]
+        na_buyers = (smf.get("na_buyers") or [None])[-1]      # net-active (conviction)
+        na_sellers = (smf.get("na_sellers") or [None])[-1]
+        g_buyers = (smf.get("g_buyers") or [None])[-1]        # gross (raw, price-inflated)
+        g_sellers = (smf.get("g_sellers") or [None])[-1]
         vid = c.get("vst_id")
         # ownership (latest quarterly %), MF holdings + MF-as-%-of-mcap, key 3-statement growth (cagr)
         holders = ((q.get("ownership") or {}).get("holders") or {})
@@ -191,6 +195,10 @@ def build_smart_vs_street(site_data_dir, root, nse500=None, progress=None):
         buy3 = flow_3m > 0
         buy1 = flow_1m > 0
         nb = (None if buyers is None or sellers is None else int(buyers) - int(sellers))
+        nb_na = (None if na_buyers is None or na_sellers is None else int(na_buyers) - int(na_sellers))
+        nb_g = (None if g_buyers is None or g_sellers is None else int(g_buyers) - int(g_sellers))
+        # Breadth follows the #106 flow-basis toggle (default price_adj = the value in net_breadth)
+        fb["breadth"] = {"gross": nb_g, "price_adj": nb, "net_active": nb_na}
         def quad(buy):
             if rec and buy: return 1
             if rec and not buy: return 2
@@ -279,7 +287,11 @@ def build_smart_vs_street(site_data_dir, root, nse500=None, progress=None):
         "note": ("Universe = every stock an MF holds this month (the names with an FM/flow axis) ∪ the NSE-500; "
                  "NO pre-filter — slice it with the AMC-holding and per-column filters. Analyst = LSEG StarMine ARM "
                  "(0-100, >=50 recommending; stale >90d not counted). FM = corp-action-immune net active flow "
-                 "(>0 buying); 3M default, 1M + breadth + 3M-vs-1M agreement alongside. 'Troubled' (optional filter) "
+                 "(>0 buying); 3M default, 1M + breadth + 3M-vs-1M agreement alongside. Breadth = buyers-sellers, a "
+                 "size-neutral fund headcount for the latest month (a fund is a 'buyer' if it added to the stock beyond "
+                 "what the basis strips out). It follows the flow-basis toggle: price-adjusted (default; price stripped, "
+                 "scheme inflows still counted), net-active (inflow-immune conviction), or gross (raw, price-inflated). "
+                 "'Troubled' (optional filter) "
                  "= price correction (6M<0 & >=10% off high) AND TTM EPS|PAT YoY<0; deterioration tag is "
                  "corp-action-aware (operating vs headline-only). MF holdings/AUM are reconstructed from the "
                  "disclosed monthly portfolios."),

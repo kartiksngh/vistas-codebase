@@ -256,6 +256,8 @@ def stock_active_flows(ym_to, h=None, ret=None, active_only=True, apply_bridge=T
         breadth_end=("mv_e", lambda x: (x > 0).sum()),
         buyers=("net_active", lambda x: (x > _TOL).sum()),
         sellers=("net_active", lambda x: (x < -_TOL).sum()),
+        g_buyers=("gross", lambda x: (x > _TOL).sum()),       # gross-basis headcount (price-inflated) for the #106 breadth toggle
+        g_sellers=("gross", lambda x: (x < -_TOL).sum()),
     )
     g["dbreadth"] = (g["breadth_end"] - g["breadth_start"]).astype(int)
     g["ret_1m"] = g.index.map(lambda v: ret.get((v, ym_to)))
@@ -432,7 +434,11 @@ def build_stock_series(months_back=36, end_ym=None):
             d = series.setdefault(vid, {"months": [], "flow": [], "intensity": [], "breadth": [],
                                         "buyers": [], "sellers": [], "ca": [], "rank": [], "nclean": [],
                                         "gross": [], "price_adj": [], "net_active": [],
-                                        "na_intensity": [], "na_rank": [], "na_nclean": []})
+                                        "na_intensity": [], "na_rank": [], "na_nclean": [],
+                                        # per-basis buyer/seller headcounts so Breadth can follow the #106 flow-basis
+                                        # toggle. buyers/sellers above = price-adjusted (legacy default, unchanged);
+                                        # na_* = net-active (conviction); g_* = gross (raw, price-inflated).
+                                        "na_buyers": [], "na_sellers": [], "g_buyers": [], "g_sellers": []})
             d["months"].append(ym)
             d["flow"].append(round(float(row["net_flow_cr"]), 1))
             iv = intens.get(vid)
@@ -457,6 +463,11 @@ def build_stock_series(months_back=36, end_ym=None):
             rvn = None if rank_na is None else rank_na.get(vid)
             d["na_rank"].append(int(rvn) if (rvn is not None and not pd.isna(rvn)) else None)
             d["na_nclean"].append(nclean_na)
+            # per-basis headcounts (net-active + gross) from the full-book active frame `ar`
+            d["na_buyers"].append(None if (ar is None or pd.isna(ar["buyers"])) else int(ar["buyers"]))
+            d["na_sellers"].append(None if (ar is None or pd.isna(ar["sellers"])) else int(ar["sellers"]))
+            d["g_buyers"].append(None if (ar is None or pd.isna(ar["g_buyers"])) else int(ar["g_buyers"]))
+            d["g_sellers"].append(None if (ar is None or pd.isna(ar["g_sellers"])) else int(ar["g_sellers"]))
             meta.setdefault(vid, {"name": row.get("name"), "sym": row.get("sym")})
 
     out = {}

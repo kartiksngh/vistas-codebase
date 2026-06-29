@@ -896,8 +896,15 @@ details.fs-market > summary { cursor:pointer; font-size:13px; padding:4px 0; }
 .rot-pctile .rp b { color: var(--navy); }
 
 /* FM action shortlist (#39) — evidence shortlist (TRIM / ADD-MORE / ADD) */
-.fm-shortlist-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.fm-shortlist-grid.fm-3col { grid-template-columns: 1fr 1fr 1fr; }   /* held-trim · held-add-more · not-held-add (#114) */
+/* minmax(0,1fr) (not bare 1fr = minmax(auto,1fr)) lets each track shrink below its table's
+   intrinsic width; min-width:0 on the column wrappers lets the inner .screen-tblwrap absorb any
+   remaining overflow by scrolling, instead of the whole board spilling off the page (#114 fix). */
+.fm-shortlist-grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 16px; }
+.fm-shortlist-grid.fm-3col { grid-template-columns: minmax(0,1fr) minmax(0,1fr) minmax(0,1fr); }   /* held-trim · held-add-more · not-held-add (#114) */
+.fm-shortlist-grid > div { min-width: 0; }
 .fm-col-h { font-size: 13px; margin: 0 0 8px; color: var(--navy); }
-@media (max-width: 1280px) { .fm-shortlist-grid.fm-3col { grid-template-columns: 1fr; } }
+/* the 3-up board packs ~9 columns into each third — compact so it fits without a per-column scrollbar */
+.fm-shortlist-grid.fm-3col .gauge-tbl { font-size: 11px; }
+.fm-shortlist-grid.fm-3col .gauge-tbl td, .fm-shortlist-grid.fm-3col .gauge-tbl th { padding: 4px 6px; }
+@media (max-width: 1500px) { .fm-shortlist-grid.fm-3col { grid-template-columns: 1fr; } }   /* mid-width screens: stack to one full-width column rather than cram 3 tables */
 @media (max-width: 900px) { .fm-shortlist-grid { grid-template-columns: 1fr; } }

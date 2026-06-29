@@ -441,6 +441,68 @@ function attachYAutoscale(id) {
   });
 }
 
+// #49 follow-on — RE-REBASE on crop/zoom for rebase-to-100 charts. When the user crops the x-range
+// (drag-zoom or rangeslider), restart every series at 100 from the LEFTMOST VISIBLE date so the two
+// paths stay comparable INSIDE the window, then fit Y. Only when rebasing is ON (gd._rebaseOn());
+// otherwise it behaves exactly like attachYAutoscale (fit Y only — e.g. the GP "Absolute level" mode).
+// The draw site must, right after Plotly.react, set on the graph div:
+//   gd._rebaseOn    = () => <bool>                          (is the chart currently rebased-to-100)
+//   gd._rebaseBaseY = traces.map(t => (t.y||[]).slice())    (the COMMON-START basis y per trace; re-rebasing
+//                     always works off THIS, so successive zooms never compound)
+// then call attachRebaseZoom(id). Wired once; reads those live so it survives Plotly.react. Secondary-axis
+// traces (volume etc., tr.yaxis==="y2") are left untouched — they are not rebasable levels.
+function attachRebaseZoom(id) {
+  const gd = $(id);
+  if (!gd || typeof gd.on !== "function" || gd._rbwired) return;   // no-op in the headless stub
+  gd._rbwired = true;
+  gd.on("plotly_relayout", (ev) => {
+    if (!ev || gd._rb_busy) return;
+    const data = gd.data || [];
+    const rebaseOn = !!(gd._rebaseOn && gd._rebaseOn());
+    const baseY = (rebaseOn && gd._rebaseBaseY && gd._rebaseBaseY.length === data.length) ? gd._rebaseBaseY : null;
+    // double-click / autoscale reset -> restore the common-start basis (if rebasing) + autoscale both
+    if (ev["xaxis.autorange"] || ev["autosize"]) {
+      gd._rb_busy = true;
+      const done = () => { gd._rb_busy = false; };
+      if (baseY) Promise.resolve(Plotly.update(gd, { y: baseY.map((a) => a.slice()) }, { "yaxis.autorange": true, "xaxis.autorange": true })).then(done);
+      else Promise.resolve(Plotly.relayout(gd, { "yaxis.autorange": true })).then(done);
+      return;
+    }
+    let x0 = ev["xaxis.range[0]"], x1 = ev["xaxis.range[1]"];
+    if ((x0 === undefined || x1 === undefined) && ev["xaxis.range"]) { x0 = ev["xaxis.range"][0]; x1 = ev["xaxis.range"][1]; }
+    if (x0 === undefined || x1 === undefined) return;               // not an x-zoom event
+    const t0 = +new Date(x0), t1 = +new Date(x1);
+    const isLog = !!(gd.layout && gd.layout.yaxis && gd.layout.yaxis.type === "log");
+    const newYs = baseY ? [] : null;
+    let lo = Infinity, hi = -Infinity;
+    data.forEach((tr, ti) => {
+      const xs = tr.x || [];
+      const isY2 = (tr.yaxis === "y2");
+      let yArr;
+      if (baseY && !isY2) {                                         // re-rebase this level to 100 at the left edge
+        const srcY = baseY[ti] || [];
+        let base = null;
+        for (let i = 0; i < xs.length; i++) { if (+new Date(xs[i]) < t0) continue; const v = srcY[i]; if (v == null || Number.isNaN(v)) continue; base = v; break; }
+        yArr = base ? srcY.map((v) => (v == null || Number.isNaN(v)) ? v : +(v / base * 100).toFixed(4)) : srcY.slice();
+      } else { yArr = tr.y || []; }
+      if (newYs) newYs.push(yArr);
+      if (tr.visible === "legendonly" || tr.visible === false || isY2) return;   // excluded from the Y fit
+      for (let i = 0; i < xs.length; i++) { const tx = +new Date(xs[i]); if (tx < t0 || tx > t1) continue; const yv = yArr[i]; if (yv == null || Number.isNaN(yv)) continue; if (isLog && yv <= 0) continue; if (yv < lo) lo = yv; if (yv > hi) hi = yv; }
+    });
+    const apply = {};
+    if (isFinite(lo) && isFinite(hi) && lo !== hi) {
+      if (isLog) { const a = Math.log10(lo), b = Math.log10(hi), p = (b - a) * 0.05 || 0.02; apply["yaxis.range"] = [a - p, b + p]; }
+      else { const p = (hi - lo) * 0.05 || Math.abs(hi) * 0.02 || 1; apply["yaxis.range"] = [lo - p, hi + p]; }
+      apply["yaxis.autorange"] = false;
+    }
+    gd._rb_busy = true;
+    const done = () => { gd._rb_busy = false; };
+    if (newYs) Promise.resolve(Plotly.update(gd, { y: newYs }, apply)).then(done);
+    else if (Object.keys(apply).length) Promise.resolve(Plotly.relayout(gd, apply)).then(done);
+    else done();
+  });
+}
+
 // ---- Relative-strength chart: horizon presets + crop-and-rebase (#48) ----------------------
 // The baked rs_line now carries full (≤8y) history; the user picks a horizon (1M…5Y/MAX) or
 // custom dates, and the line is re-rebased to 100 at the FIRST date in the chosen window so
@@ -943,7 +1005,11 @@ function renderGP() {
     xaxis: { gridcolor: "#dfe3e8", rangeslider: { thickness: 0.07 }, type: "date" },
   });
   Plotly.react("plot-gp", traces, layout, PCONF);
-  attachYAutoscale("plot-gp");          // zoom the x-range -> Y re-fits to the visible window
+  // zoom/crop -> rebase mode: restart each series at 100 from the left edge of the window, then fit Y;
+  // absolute mode: fit Y only (no re-rebasing). Stash the common-start basis so re-rebasing never compounds.
+  const gpgd = $("plot-gp");
+  if (gpgd) { gpgd._rebaseOn = () => (GP_MODE === "rebase"); gpgd._rebaseBaseY = traces.map((t) => (t.y || []).slice()); }
+  attachRebaseZoom("plot-gp");
   const parts = cols.map((c) => { const s = BUNDLE.stats.find((r) => r.name === c); return `${c}: ${pct(s.cagr)} CAGR, ${pct(s.total_return)} total`; });
   let head = `Window ${BUNDLE.meta.start} → ${BUNDLE.meta.end} · ${BUNDLE.meta.n_obs} ${BUNDLE.meta.freq} obs`
     + (showingAbs ? "\nShowing the underlying total-return index LEVEL (not rebased). Toggle “Rebase to 100” for like-for-like paths." : "");
@@ -2092,6 +2158,7 @@ function screenApplyBasis(rows) {
     c.quadrant_1m = quad(r.recommending, c.buying_1m);
     c.quadrant_3m = quad(r.recommending, c.buying_3m);
     c.flow_agreement = (c.buying_3m === c.buying_1m) ? "confirmed" : "inflecting";
+    if (r.fb.breadth && r.fb.breadth[basis] != null) c.net_breadth = r.fb.breadth[basis];   // Breadth follows the basis too
     if (Array.isArray(r.traj)) {                        // make the rotation trail follow the basis too
       c.traj = r.traj.map((p) => {
         const raw = (basis === "gross") ? p.g : (basis === "net_active") ? p.n : p.flow;
@@ -3022,7 +3089,24 @@ function _fsEnvPlot(divId, band, fundX, fundY, fundName, kind, level) {
   }
   if (fundX && fundY) traces.push({ type: "scatter", mode: "lines", x: fundX, y: fundY, line: { color: "#1a7f37", width: 2.6 }, name: fundName, connectgaps: false, hovertemplate: "%{x} · " + hov + "<extra></extra>" });
   const shapes = [{ type: "line", xref: "paper", x0: 0, x1: 1, yref: "y", y0: neutral, y1: neutral, line: { color: "#c0392b", width: 1, dash: "dot" } }];
-  Plotly.react(divId, traces, baseLayout({ yaxis: { title: yTitle, gridcolor: "#dfe3e8" }, shapes: shapes,
+  // Focus the y-axis on the SIGNAL series — median, 25/75th band, the fund's own line, and the neutral
+  // anchor — with padding. Otherwise Plotly autoranges to the peer MIN–MAX envelope, whose occasional
+  // one-fund spikes (e.g. a 2018 outlier near 95% hit rate) blow the scale wide and squash the whole
+  // panel flat. The faint min–max band stays as background context and is allowed to clip past the axis.
+  const yaxis = { title: yTitle, gridcolor: "#dfe3e8" };
+  if (band && band.dates && band.dates.length) {
+    let lo = Infinity, hi = -Infinity;
+    const eat = (arr) => { if (arr) for (const v of arr) if (v != null && isFinite(v)) { if (v < lo) lo = v; if (v > hi) hi = v; } };
+    eat(band.p25); eat(band.p50); eat(band.p75); if (fundY) eat(fundY);
+    if (isFinite(lo) && isFinite(hi)) {
+      lo = Math.min(lo, neutral); hi = Math.max(hi, neutral);                 // keep the red neutral line in view
+      const pad = Math.max((hi - lo) * 0.15, (kind === "bat") ? 3 : (isSlugRatio ? 0.15 : 2));
+      lo -= pad; hi += pad;
+      if (kind === "bat") { lo = Math.max(0, lo); hi = Math.min(100, hi); }   // hit rate lives in 0–100%
+      yaxis.range = [lo, hi]; yaxis.autorange = false;
+    }
+  }
+  Plotly.react(divId, traces, baseLayout({ yaxis: yaxis, shapes: shapes,
     legend: { orientation: "h", y: -0.18, font: { size: 10 } }, margin: { l: 52, r: 12, t: 6, b: 40 } }), PCONF);
 }
 async function fsDrawVantage(f, ts) {
@@ -3308,7 +3392,7 @@ const FM_SHORTLIST_CAVEAT = `<details class="q-note"><summary>Definition · Meth
 <p><b>Held · weakening (TRIM)</b> = names this fund currently holds that now sit in the weak quadrant (analysts not revising up <i>and</i> funds net-selling). Sorted by ARM, weakest first. <i>Candidates to review for trimming, not "sells."</i></p>
 <p><b>Held · strengthening (ADD-MORE)</b> = names this fund <b>already holds</b> that sit in the strong quadrant (analysts revising up <i>and</i> funds net-buying). Sorted by ARM, best first; the Held-wt vs Bench-wt columns flag where the position is still underweight (room to add). <i>Candidates to consider adding to, not "buys."</i></p>
 <p><b>Not held · strengthening (ADD)</b> = in-mandate names this fund does <b>not</b> hold that sit in the strong quadrant. Sorted by ARM. <i>Candidates to research, not "buys."</i></p>
-<p><b>Honest limits:</b> Analyst-revision (ARM) has a <b>small</b> forward edge on our data (rank-correlation ~0.03–0.045 over 1–6 months) — useful across many names, never decisive on one. <b>Net fund flow shows what managers <i>did</i>; on our data it does <i>not</i> predict returns (crowding has if anything been mildly contrarian) — read it as positioning, not a buy signal.</b> We do <b>not</b> combine the two into one score (the blend did not beat analyst-revisions alone) and show <b>no expected return, price target, or confidence %</b>. This is a small, mechanically-filtered snapshot from the latest disclosed holdings month — not the full opportunity set; absence from a list is not a verdict. Mandate eligibility uses reconstructed (not official) benchmark weights. ARM scores older than 90 days are excluded (not shown as "weak").</p></details>`;
+<p><b>Honest limits:</b> Analyst-revision (ARM) has a <b>small</b> forward edge on our data (rank-correlation ~0.03–0.045 over 1–6 months) — useful across many names, never decisive on one. <b>Net fund flow shows what managers <i>did</i>; on our data it does <i>not</i> predict returns (crowding has if anything been mildly contrarian) — read it as positioning, not a buy signal.</b> The <b>Breadth</b> column = how many of the funds holding the name <i>added</i> vs <i>trimmed</i> it last month (a size-neutral headcount) on the <b>price-adjusted</b> basis — price stripped out, but scheme inflows still counted (so it is <i>not</i> the inflow-immune "net-active" conviction measure). We do <b>not</b> combine the two into one score (the blend did not beat analyst-revisions alone) and show <b>no expected return, price target, or confidence %</b>. This is a small, mechanically-filtered snapshot from the latest disclosed holdings month — not the full opportunity set; absence from a list is not a verdict. Mandate eligibility uses reconstructed (not official) benchmark weights. ARM scores older than 90 days are excluded (not shown as "weak").</p></details>`;
 
 function fmShortlistHTML() {
   return `<section class="panel">

@@ -3,9 +3,25 @@
 > Single in-repo state file so a crash resumes with ~no lag. Pairs with `CLAUDE.md`
 > (scope/conventions/architecture — read that too). Source of truth for *state*; the deep
 > conventions live in `CLAUDE.md` and inline in `vistas/analytics.py` / `vistas/fundamentals.py`.
-> Cross-session pointer: global memory `vistas-project.md`. Last updated 2026-06-28.
+> Cross-session pointer: global memory `vistas-project.md`. Last updated 2026-06-29.
 
 ## ▶ RESUME (one-paragraph current state + next step)
+
+**▶▶▶ RESUME — 2026-06-29 (terminal data-quality + coverage hardening; MAIN MISSION unchanged):**
+MAIN MISSION (unchanged) = the **North-Star Agentic AMC**: P1 is LIVE — the 28-desk digital ABSL firm has LLM fund
+managers in the seat (`amc_round start/finish/publish` → `_amc_rebalance.js`), scored vs sector benchmarks + the
+Fundamental Law; the program now runs as a **monthly LLM round + daily python mark**. **THIS SESSION shipped 4 terminal
+fixes — all LIVE + backed up** (full detail in the ✅ 2026-06-29 entries in the 2026-06-28 block below): **#114** FM
+Action Shortlist is now a 3-column board (Held·weakening→TRIM | Held·strengthening→ADD-MORE | Not-held→ADD); **#115**
+dual-flow GATE-RESOLVED — net-active flow FAILS the NAV bar → stays decision-support (gross/inflow price-push untested,
+scoped); **#116** screen `&`-symbol coverage bug FIXED (M&M, M&MFIN/Mahindra-Finance, J&KBANK… were silently dropped —
+the read path now mirrors the URL-encoded filename); **#117** unmapped equity holdings MAPPED (52 co_code→existing-vst_id
+links, **no mints**; Meesho/PineLabs/ICICIAMC/Groww/PWL/Vedanta entities now in screen+ownership; latest unmapped value
+₹54,404 cr→₹283 cr). **IMMEDIATE NEXT (main mission):** the next **monthly LLM round** (Claude-triggered runbook).
+**OPEN threads:** productionize the scratchpad signal-NAV harness as `vistas/signal_navtest.py` — the validated
+all-starts×≥10k NAV bar on the FM brain's ARM treatment is **still OWED** ([[vistas-arm-momentum-signal]]); the
+gross/inflow-flow-history panel (#115 follow-on); manager-tenure DB; finish the Mesh build chain. **KEY RISK:** don't
+trust the FM brain's "ARM helps" on the IC-beat metric alone — the literal NAV bar is unrun.
 
 **▶▶▶ RESUME — 2026-06-28 (AUTONOMOUS NIGHT COMPLETE — whole queue LIVE: #106 + #107 + #108 + #52):**
 KV directive was "clear the whole queue, nothing pending" + greenlit the ~2M-token Live-Forward. ALL DONE + LIVE + backed up.
@@ -52,6 +68,25 @@ KV directive was "clear the whole queue, nothing pending" + greenlit the ~2M-tok
   REAL ABSL Flexi via a leaderboard-row click (the old `window.FUNDSKILL_SYM` hack silently hit the default fund — FUNDSKILL_SYM is a
   module `let`, not on window) → **Lenskart rank #1 in ADD-MORE, correctly OUT of ADD/TRIM, held wt resolves** (the original user bug
   was Lenskart in ADD @held-wt-0; now fixed AND placed right).
+- **✅ 2026-06-29 — #117 MAP UNMAPPED EQUITY HOLDINGS (recent IPOs) — DONE + LIVE** (source→vistas-codebase `8241036`).
+  KV: "Map the 1,773 unmapped holdings now — MFs already invest in them, don't wait for price history." Found the
+  holdings spine = Capitaline **`Co_Code`** → `data/funds/_history_identity_map.json` (`{master:{co_code:{vst_id,name,
+  nse_symbol,conf}}}`); unmapped = co_code absent. KEY: the marquee names (Meesho/PineLabs/ICICIAMC/Groww/PWL/Vedanta
+  VAML·VEDPOWER·VISL·VOGL/Tenneco/Shadowfax/Fractal/Wakefit…) were **never "no identity"** — they ALREADY had vst_ids +
+  NSE symbols in the price master (they did list & enter the bhavcopy); only the co_code→vst_id LINK was missing. So
+  **LINK to existing, NO MINT** (KV picked this scope). Tool `_link_unmapped_holdings.py` (dry-run default; `--apply`
+  backs up + updates map + re-maps parquet in place): **52 links** = 43 validated-ISIN-join + 9 partly-paid→parent (Tata
+  Steel/Reliance/Adani-RE/UPL-RE/Sobha…). ★ A **name-consistency GATE caught 3 BAD JOINS** = contaminated *synthetic*
+  co_codes (Clearing Corp / "Net CA & Others" / "Derivatives-Stock Future") whose junk id-bags held a stray check-digit-
+  VALID equity ISIN colliding with MAKE/RADICO/DABUR — mapping "Net Current Assets"→Radico would've corrupted Radico's
+  ownership; EXCLUDED. 1 verified rename whitelisted (MALCO Energy shell→VOGL/Vedanta Oil&Gas, ISIN agreed by holding +
+  live master). Integrity vs backup: rows + **total market value IDENTICAL** (only vst_ids filled), **0 previously-mapped
+  rows changed**, 0 collisions. **Latest-month unmapped value ₹54,404 cr → ₹283 cr** (residual = foreign US equities /
+  REITs-InvITs / defunct micro-caps, legit out-of-equity-scope); equity-value-resolved 99.35%→99.52%. Rebuild: screen
+  **1048→1083 rows** (all marquee names now in screen + fund books + ownership totals). CAVEAT: per-stock cross-AMC
+  crowding panel (`ownership_stock`, 794 files, gated on flow HISTORY) doesn't yet include them — that ONE derived
+  surface genuinely needs a few months. Rollback `.bak` in scratchpad. Durable lessons → `identifier-resolution` skill
+  (link-to-existing-before-mint; name-consistency gate on ISIN-joins catches contaminated synthetic co_codes).
 - **✅ 2026-06-29 — #116 SCREEN `&`-SYMBOL COVERAGE BUG — FIXED + LIVE** (publish `--no-rebuild`; source→vistas-codebase `666e740`).
   KV: "I don't see Mahindra Finance (MMFS) in #screen." Root cause: `screens.py` read each stock's per-stock
   `quant/<sym>.json` + `fundamentals/<sym>.json` by the **RAW symbol**, but the writer (`deck.py/_safe_name` =
