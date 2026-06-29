@@ -83,3 +83,36 @@ correlated cluster (that is the tilt trap the gauntlet must catch).
   independent active bets pushes the firm IR above any one desk — the whole point of √BR. If it beats single
   ONLY via a beta/size tilt (tilt:FAIL) → discard. Must clear the parameter plateau in kappa.
 - crowd_load is computed on the SAME in-sample window the evaluator hands firm_weights (walk-forward safe).
+
+---
+
+## ★ OPERATOR PIVOT (2026-06-30) — firm redefined + holdout extended. Prior 28-desk trials (P0-P2)
+## are RETAINED as historical context but SUPERSEDED. The firm and holdout below now govern.
+
+### NEW FIRM = the 4 cross-AMC contract pilots (M=4)
+- ICICI Prudential — Large Cap Fund (NIFTY 100)
+- SBI — Equity Hybrid / Aggressive Hybrid (NIFTY 500)
+- Aditya Birla Sun Life — Flexi Cap Fund (NIFTY 500)
+- Quant Mutual — Small Cap Fund (NIFTY SMALLCAP 250)
+Objective unchanged: minimise −IR_firm via BREADTH (team-IR = s·√M_eff), graded on de-correlation
+cultivated + crowding killed. Per-pilot IR + firm weight tracked so one book's tilt can't masquerade as
+firm skill. ★ HONEST BOUND (operator): with only M=4 desks the √BR headroom is SMALL → the de-correlation
+lift demonstrable is bounded; report the bound, never over-claim.
+
+### NEW SEALED HOLDOUT = last ~5y: 2021-01-01 → 2026-06-25 (harsher; includes the 2022 drawdown).
+Validation era (all the loop sees) = 2015-01-30 → 2020-12-31. The loop evaluates era='val' ONLY.
+
+### Baseline crowding on the 4 pilots (VALIDATION 2015-2020, measured before trials)
+- Per-pilot active-IR: ICICI −0.141, SBI −0.061, ABSL +0.596, Quant +0.571 (two pilots NEGATIVE-skill
+  in this era — the rules-FM brain didn't beat their bench 2015-2020).
+- Corr: large-cap trio ICICI/SBI/ABSL crowded (ρ 0.55-0.76); Quant SmallCap ~uncorrelated (ρ≈0, even
+  −0.16 vs ICICI) = the genuine diversifier.
+- ρ̄ = 0.323, M_eff(equal) = 2.03. s = 0.241. s·√M_eff = 0.344 ≈ realised equal-weight firm IR 0.367.
+  Naive s·√4 = 0.48 overstates. Best single pilot = 0.596 (ABSL).
+- THE CIO LEVER: starve the redundant/negative-skill large-caps (ICICI, SBI), lean on the de-correlated
+  + skilled books (Quant for breadth, ABSL for large-cap skill). This is skill AND breadth, defensible
+  (provenance = each desk's validated IR + its measured crowding load). Bounded by M=4.
+
+### Q0 — NEW BASELINE (equal-weight 4-pilot firm)
+- Hypothesis/mechanism: naive firm rides all 4 equally; IR≈0.37, M_eff≈2.0; below best single pilot 0.60
+  → the naive firm FAILS `single` (must actually decorrelate to justify itself).

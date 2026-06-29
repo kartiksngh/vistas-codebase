@@ -34,7 +34,7 @@ import pandas as pd
 # ── DEFAULT_PARAMS = the BASELINE: equal weight (the naive firm, CIO adds nothing). ───────────────
 #   The loop mutates these. Every knob has a first-principles meaning and is plateau-tested.
 DEFAULT_PARAMS = {
-    "mode": "decrowd",        # see firm_weights; 'equal' = the naive 1/N baseline.
+    "mode": "equal",          # BASELINE = naive 1/N firm. The loop mutates this. 'equal'|'skill'|'decrowd'.
     "gamma": 1.0,             # skill-tilt exponent (skill / decrowd): w ∝ max(0, IR_d)^gamma.
     "kappa": 1.0,             # de-crowding exponent: w ∝ skill / crowd_load^kappa. 0 = no de-crowd.
     "floor": 0.05,            # crowd_load floor (avoid blow-up when a desk is ~uncorrelated).

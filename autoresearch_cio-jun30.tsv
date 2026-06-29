@@ -1,2 +1,3 @@
 commit	persona	obj_value	gate	decomp	status	prereg_ref	description
 237021e	cio	-1.242678	rand:PASS single:FAIL wf:PASS era:PASS plateau:NA luck:PASS fdr:NA tilt:PASS fee:GATED	s0.718->0.981 Meff1.76->1.77 rho0.543 (skill UP breadth FLAT)	discard	P1	skill-weighted w~IR^gamma; lifts s not breadth; still loses to single best desk 1.762
+# ===== OPERATOR PIVOT 2026-06-30: firm = 4 cross-AMC pilots (M=4); holdout = 2021-01..2026-06. Rows above are the superseded 28-desk firm. =====

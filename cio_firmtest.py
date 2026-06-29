@@ -8,16 +8,26 @@ signal_navtest.py. It scores the CIO arithmetic (vistas/cio.py) by the Fundament
 
 So the CIO is graded on BREADTH cultivated and CROWDING killed — exactly the √BR effective-breadth
 collapse the contract names (the live CIO already caught ONGC top in 14/27 books → ~5-6 independent bets,
-not 27). Here, measured on OUR 28 ABSL desks: their daily active returns have mean pairwise corr ρ̄≈0.56,
-so M_eff = M/(1+(M−1)ρ̄) ≈ 1.7, and the naive s·√M = 3.8 is a mirage; the honest number is s·√M_eff ≈ 0.95.
+not 27).
+
+★ THE FIRM = the 4 CROSS-AMC CONTRACT PILOTS (operator-fixed 2026-06-30), NOT the 28-desk ABSL firm:
+  - ICICI Prudential — Large Cap Fund            (bench NIFTY 100)
+  - SBI — Equity Hybrid / Aggressive Hybrid      (bench NIFTY 500)
+  - Aditya Birla Sun Life — Flexi Cap Fund       (bench NIFTY 500)
+  - Quant Mutual — Small Cap Fund                (bench NIFTY SMALLCAP 250)
+  M = 4 desks. HONEST CAVEAT (carried in every verdict): with only 4 desks the √BR breadth HEADROOM is
+  small, so the de-correlation lift demonstrable here is BOUNDED — report the bound, never over-claim.
+  On the VALIDATION era (2015-2020) these 4 have mean pairwise active-ret ρ̄≈0.32 → M_eff≈2.0 (the
+  large-cap trio ICICI/SBI/ABSL is one crowded bet at ρ 0.55-0.76; Quant SmallCap is the de-correlated
+  diversifier at ρ≈0). Per-pilot is tracked so one book's tilt cannot masquerade as firm skill.
 
 WHAT IT READS (no fabrication, no network, point-in-time, total return, delisted retained):
-  amc_book/Aditya Birla Sun Life Mutual Fund/<scheme>/replay/
-      nav.csv            daily book NAV (rules-FM, survivorship-clean, look-ahead-free; make_absl_firm.py)
+  amc_book/<AMC>/<scheme>/replay/
+      nav.csv            daily book NAV (rules-FM, survivorship-clean, look-ahead-free; make_*_books.py)
       benchmark_nav.csv  daily NSE TR benchmark NAV for THAT desk's mandate (its OWN benchmark)
       scorecard.json     per-desk IR / IC / TC / benchmark (the Fundamental-Law decomposition)
   → desk active-return θ_d,t = r_nav,d,t − r_bench,d,t  (excess over the desk's OWN benchmark = the skill
-    unit; a sector desk's excess over its sector index, so sector beta never masquerades as alpha).
+    unit; a desk's excess over its OWN mandate index, so benchmark beta never masquerades as alpha).
 
 THE CIO ARITHMETIC IT SCORES (mutable = vistas/cio.py):
   cio.firm_weights(desks, params) → a dict {desk_name: weight≥0, Σ=1}. The firm active return is
@@ -27,8 +37,9 @@ THE CIO ARITHMETIC IT SCORES (mutable = vistas/cio.py):
 DISCIPLINE: paper-only; no look-ahead (weights from an in-sample window, scored on the same validation
 era — walk-forward variant in gate `wf`); total return; FDR/luck bar; tilt guard; net-of-fee GATED.
 
-SEALED HOLDOUT: era='val' (2015-01-30 → 2023-06-30) is all the loop ever sees. era='holdout'
-(2023-07-01 → 2026-06-25) is one-shot at the very end. The loop must call era='val'.
+SEALED HOLDOUT (operator-set 2026-06-30 = last ~5y, harsher: includes the 2022 drawdown):
+  era='val'     = 2015-01-30 → 2020-12-31  (all the loop ever sees)
+  era='holdout' = 2021-01-01 → 2026-06-25  (one-shot at the very end; the loop must NOT touch it)
 
 Run:  python cio_firmtest.py            # baseline (equal weight) on validation era, prints OBJECTIVE + GATE
       python cio_firmtest.py --fast     # cheap inner gate only (screening; never promotes)
@@ -45,19 +56,27 @@ except Exception:
     pass
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
-FIRM_DIR = os.path.join(ROOT, "amc_book", "Aditya Birla Sun Life Mutual Fund")
+BOOK_DIR = os.path.join(ROOT, "amc_book")
 
-# ── eras (the SEAL). Validation = strictly before the holdout. Holdout = most recent ~3y. ──────────
-HOLDOUT_START = "2023-07-01"
+# ★ THE FIRM = the 4 cross-AMC contract pilots (operator-fixed 2026-06-30). Each entry = the replay dir.
+PILOTS = {
+    "ICICI_LargeCap": "ICICI Prudential Mutual Fund/ICICI Pru Large Cap Fund _G_",
+    "SBI_AggHybrid":  "SBI Mutual Fund/SBI Equity Hybrid Fund _G_",
+    "ABSL_FlexiCap":  "Aditya Birla Sun Life Mutual Fund/Aditya Birla SL Flexi Cap Fund _G_",
+    "Quant_SmallCap": "Quant Mutual Fund/Quant Small Cap Fund - _G_",
+}
+
+# ── eras (the SEAL). Validation = strictly before the holdout. Holdout = last ~5y (incl. 2022 DD). ──
+HOLDOUT_START = "2021-01-01"
 ERA_BOUNDS = {
-    "val":     (None,            HOLDOUT_START),    # (start_inclusive, end_exclusive) — 2015..2023-06-30
-    "holdout": (HOLDOUT_START,   None),             # 2023-07-01 .. end (ONE-SHOT, end only)
+    "val":     (None,            HOLDOUT_START),    # (start_inclusive, end_exclusive) — 2015..2020-12-31
+    "holdout": (HOLDOUT_START,   None),             # 2021-01-01 .. end (ONE-SHOT, end only)
     "full":    (None,            None),
 }
 # era-stability sub-eras WITHIN validation (distinct regimes; none touch the holdout)
-SUB_ERAS = [("2015-2017", "2015-01-01", "2017-12-31"),
-            ("2018-2020", "2018-01-01", "2020-12-31"),
-            ("2021-2023H1", "2021-01-01", "2023-06-30")]
+SUB_ERAS = [("2015-2016", "2015-01-01", "2016-12-31"),
+            ("2017-2018", "2017-01-01", "2018-12-31"),
+            ("2019-2020", "2019-01-01", "2020-12-31")]
 
 TRADING_DAYS = 252
 RNG_SEED = 20260630            # fixed — reproducible random baselines, no Math.random
@@ -67,23 +86,21 @@ RNG_SEED = 20260630            # fixed — reproducible random baselines, no Mat
 _PANEL_CACHE = None
 
 def load_desk_panel(log=lambda *a, **k: None):
-    """Load the 28 desks → a daily active-return panel A (date × desk) + per-desk meta.
+    """Load the 4 pilot desks → a daily active-return panel A (date × desk) + per-desk meta.
     Returns dict: A (DataFrame), meta (per-desk IR/IC/TC/bench/cat), axis. Cached."""
     global _PANEL_CACHE
     if _PANEL_CACHE is not None:
         return _PANEL_CACHE
     desks = []
-    for sc in sorted(glob.glob(os.path.join(FIRM_DIR, "*", "replay", "scorecard.json"))):
-        rd = os.path.dirname(sc)
+    for nm, rel in PILOTS.items():
+        rd = os.path.join(BOOK_DIR, rel, "replay")
         try:
             nav = pd.read_csv(os.path.join(rd, "nav.csv"), parse_dates=["date"]).set_index("date")["nav"]
             bnav = pd.read_csv(os.path.join(rd, "benchmark_nav.csv"), parse_dates=["date"]).set_index("date")["nav"]
-            d = json.load(open(sc, encoding="utf-8"))
+            d = json.load(open(os.path.join(rd, "scorecard.json"), encoding="utf-8"))
         except Exception as e:
-            log(f"[load] skip {rd}: {e}")
-            continue
+            raise SystemExit(f"[load] pilot {nm} missing/broken at {rd}: {e}")
         s = d.get("scorecard", {})
-        nm = os.path.basename(os.path.dirname(rd))
         desks.append({
             "name": nm,
             "nav": nav, "bnav": bnav,
@@ -95,7 +112,7 @@ def load_desk_panel(log=lambda *a, **k: None):
             "brain": (d.get("diag", {}) or {}).get("brain"),
         })
     if not desks:
-        raise SystemExit("no desks found under " + FIRM_DIR)
+        raise SystemExit("no pilot desks found under " + BOOK_DIR)
     # common daily axis
     axis = None
     for x in desks:
@@ -272,6 +289,10 @@ def run_gauntlet(weights_fn, params, era="val", n_random=10000, fast=False, log=
     decomp["m_eff"] = round(fm["m_eff"], 2) if np.isfinite(fm["m_eff"]) else None
     decomp["n_active"] = n_active
     decomp["implied_team_ir"] = round(fm["implied_team_ir"], 3) if np.isfinite(fm["implied_team_ir"]) else None
+    # ── per-pilot tracking: standalone IR + firm weight, so one book's tilt can't masquerade as
+    #    firm skill (operator requirement; M=4 means a single book dominates easily) ──
+    decomp["per_pilot"] = {nm: {"ir": round(_ann_ir(A[nm]), 3), "w": round(fm["w"].get(nm, 0.0), 3)}
+                           for nm in A.columns}
 
     # ── 1. random baseline (≥10k Dirichlet weightings of the same shape) ──
     nr = 1000 if fast else n_random
