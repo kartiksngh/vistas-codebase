@@ -48,9 +48,23 @@ _ROOT = os.path.dirname(_HERE)
 BOOK_DIR = os.path.join(_ROOT, "amc_book")
 
 LIQ_DAYS = 20            # max position ≤ this many days of median daily turnover (one patient build)
-LIQ_DAYS_MAX = 60        # relaxed build horizon (a quarter) used ONLY to top a book up to its
-                         # mandate equity floor when the tight cap would otherwise force an
-                         # un-mandated cash pile (the transfer-coefficient fix — see deploy_with_floor)
+LIQ_DAYS_MAX = int(os.environ.get("VISTAS_LIQ_DAYS_MAX", "250"))
+                         # relaxed build horizon used ONLY to top a book up to its mandate equity floor
+                         # when the tight cap would otherwise force an un-mandated cash pile (the
+                         # transfer-coefficient fix — see deploy_with_floor). A paper book has FIXED AUM,
+                         # so its one-time build accumulates over a patient core-holding horizon (≈1y of
+                         # ADV; Berk-Green capacity). ★ autoresearch fm-jun30 (P3/T2): the legacy 60d (a
+                         # quarter of ADV) was too short for a ₹-large small-cap core, leaving the Quant
+                         # Small Cap book ~46% in CASH below its 65% mandate floor → beta 0.60, up-capture
+                         # 0.59 = the β0.28 cash-drag TC pathology (IR −0.25 despite the HIGHEST IC 0.070).
+                         # Raising the horizon lets the floor-deploy reach the mandated equity: on the
+                         # 2013-04..2020-12 validation era the Quant book went beta 0.60→0.99, equity
+                         # 54%→94%, IR −0.25→+1.13, and the lift SATURATES on a flat plateau
+                         # (IR 1.13/1.22/1.20 at LDM 250/400/600 as equity caps at the ~95% ADV-bound
+                         # ceiling) — a TC mechanism (removing an unintended low-beta tilt, IC unchanged),
+                         # not a curve-fit spike. The OTHER pilots are UNCHANGED (deploy_with_floor never
+                         # fires for an already-floored book). 250 = the conservative, capacity-realistic
+                         # point at the start of the plateau. Env-overridable for the plateau sweep.
 TRADE_ADV_FRAC = 0.15   # a single day's trade ≤ this fraction of the day's turnover
 
 
