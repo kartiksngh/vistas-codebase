@@ -1,0 +1,68 @@
+# Autoresearch CIO track — pre-registration log (tag: cio-jun30)
+
+Branch: `autoresearch/cio-jun30`. Objective (minimise): `−IR_firm`, where the firm's information
+ratio exceeds the average manager ONLY if the desks are DE-CORRELATED (team-IR `= s·√M_eff`). Graded on
+breadth cultivated and crowding killed, with a drawdown-preemption credit from the fragility map.
+
+## The substrate (what exists, no fabrication)
+- 28 ABSL desks, each a deterministic rules-FM replay book (`amc_book/Aditya Birla Sun Life Mutual
+  Fund/<scheme>/replay/`): daily `nav.csv` (2015-01-30 → 2026-06-25, 2824 days), daily
+  `benchmark_nav.csv` (the desk's OWN NSE TR benchmark), and `scorecard.json` (per-desk IR/IC/TC, bench).
+- Built by `make_absl_firm.py` (deterministic, no LLM, survivorship-clean, look-ahead-free, total return).
+- The desk active-return stream `θ_d,t = r_nav,d,t − r_bench,d,t` is the firm's expressed opinion per desk.
+
+## Baseline crowding finding (measured before any trial — the trap, exposed)
+- Mean pairwise correlation of the 28 desks' DAILY active returns: **ρ̄ = 0.559**.
+- Effective breadth `M_eff = M / (1+(M−1)ρ̄) = 28/(1+27·0.559) = 1.7` (NOT 28).
+- Mean desk IR `s = 0.718`. Naive `s·√M = 3.80` (absurd); breadth-honest `s·√M_eff = 0.95`.
+- 17 of 28 desks share NIFTY 500 as benchmark → mechanically correlated active bets. The firm runs
+  ~2 independent bets, not 28. This IS the √BR effective-breadth collapse the contract names.
+
+## The CIO arithmetic under test (MUTABLE = `vistas/cio.py`)
+The CIO chooses firm desk-weights `w_d` (≥0, Σ=1) to assemble the firm book. Baseline = equal weight
+(naive, 1/28). The objective is the firm's realised IR measured the breadth-honest way. Mutations search
+the crowding cap / effective-breadth penalty / posture tilt strength / allocation tilt.
+
+## FROZEN EVALUATOR = `cio_firmtest.py` (read-only inside the loop)
+Computes, on the validation eras only (NEVER the sealed holdout):
+- `IR_firm` = annualised(mean firm active return) / annualised(std firm active return), where the firm
+  active return at t = `Σ_d w_d · θ_d,t` (firm = weighted desks vs each desk's own benchmark, so a desk's
+  excess over ITS benchmark is the unit of skill; no sector beta masquerades as alpha).
+- Decomposition: `s` = AUM/weight-weighted mean desk IR; `M_eff` = effective breadth from the
+  weighted desk active-return correlation; report `s·√M_eff` and the realised IR side by side.
+- GAUNTLET (every component must PASS, GATED where data missing):
+  1. rand: firm IR beats ≥10k random desk-weightings of the same shape (Dirichlet on the simplex) — the
+     CIO weighting must beat random allocation, on the percentile.
+  2. wf: walk-forward — weights chosen on data strictly BEFORE the return window; no look-ahead.
+  3. single: firm IR beats the SINGLE BEST desk's standalone IR (else the firm adds no breadth — the
+     Mesh-blend lesson at firm scale).
+  4. era: the lift holds across distinct calendar eras (2015-17 / 2018-20 / 2021-22), not one regime.
+  5. plateau: objective flat across a neighbourhood of every free parameter (crowding cap, penalty).
+  6. luck+fdr: block-bootstrap luck bar on the firm active-return mean; FDR across session trials.
+  7. tilt: the lift is breadth (M_eff up / ρ̄ down), NOT a beta/size tilt vs the firm policy benchmark
+     — beta of firm active return on policy-benchmark return must stay ~flat.
+  8. fee: net-of-fee — GATED (no TER data); stamped, never silent pass.
+- Provenance: every firm weight traces to validated desk forces (IR/IC/TC from the desk scorecards).
+
+## SEALED HOLDOUT (chosen BEFORE any trial; the loop NEVER evaluates on it)
+**Holdout era = 2023-07-01 → 2026-06-25 (the most recent ~3 years).**
+Validation eras (what the loop sees) = everything STRICTLY BEFORE 2023-07-01, i.e. 2015-01-30 → 2023-06-30.
+The champion is one-shot tested on the holdout at the end. Collapse → not promoted, logged as overfit.
+
+## Expectations (honest, calibrated — signals are weak)
+The firm-IR ceiling is governed by ρ̄: you cannot manufacture breadth, only stop diluting it. Expect a
+SMALL, plateau-robust lift from concentrating weight on the de-correlated desks (the non-NIFTY-500 sector
+desks + the genuinely distinct brains), capped by the crowding penalty. A 3.8→0.95 honesty correction is
+the headline; any "improvement" must come from ρ̄ DOWN (real breadth), never from levering a high-IR
+correlated cluster (that is the tilt trap the gauntlet must catch).
+
+---
+
+## Trials
+
+### P0 — BASELINE (equal-weight firm, 1/28 each)
+- Hypothesis: the naive firm (CIO adds nothing, equal-weights all desks) has a breadth-honest IR far
+  below the naive `s·√M` because ρ̄≈0.56 collapses effective breadth.
+- Mechanism: pure measurement, no edge claim. Establishes the number the loop must beat.
+- Expected: IR_firm modest (~0.7–1.0 realised); M_eff ≈ 2; single-best-desk IR likely HIGHER than the
+  equal-weight firm (so the naive firm FAILS the `single` gate — proving the CIO must actually decorrelate).
