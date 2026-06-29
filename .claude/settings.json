@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cat > *)"
+    ],
+    "additionalDirectories": [
+      "C:\\Users\\ADMINI~1\\AppData\\Local\\Temp\\claude\\c--Users-Administrator-Documents-Projects-Vistas\\0e7a98a7-8cbb-4f2d-9531-41287429b831\\scratchpad"
+    ]
+  }
+}

@@ -2814,11 +2814,18 @@ function fsComputeWindow(ts, i0, i1) {
   const icv = w.map((r) => r.ic).filter((v) => v != null && isFinite(v));
   const ic_mean = _mean(icv), icSd = _std1(icv);
   const ic_t = (icv.length > 3 && icSd > 0) ? ic_mean / (icSd / Math.sqrt(icv.length)) : NaN;
-  // cumulative sizing edge: ew (equal-weight counterfactual) = rp − sz; if every sz present use the
-  // geometric prod(1+rp)−prod(1+ew), else the arithmetic sum of sz (matches the Python gappy branch)
+  // sizing edge: ew (equal-weight counterfactual) = rp − sz. ANNUALISED = (Π(1+rp)/Π(1+ew))^(1/yrs)−1
+  // (scale-free per-year drag); cumulative kept for the verdict's sign. Gappy → arithmetic sum/years.
   const szAll = w.every((r) => r.sz != null && isFinite(r.sz));
-  let sizing_cum = szAll ? (prod(w.map((r) => r.rp)) - prod(w.map((r) => r.rp - r.sz)))
-    : w.reduce((s, r) => s + ((r.sz != null && isFinite(r.sz)) ? r.sz : 0), 0);
+  let sizing_cum, sizing_cagr;
+  if (szAll) {
+    const _pr = prod(w.map((r) => r.rp)), _pe = prod(w.map((r) => r.rp - r.sz));
+    sizing_cum = _pr - _pe;                                                  // cumulative absolute (verdict reads its sign)
+    sizing_cagr = (_pe > 0 && years > 0) ? Math.pow(_pr / _pe, 1 / years) - 1 : NaN;   // annualised drag vs equal-wt
+  } else {
+    sizing_cum = w.reduce((s, r) => s + ((r.sz != null && isFinite(r.sz)) ? r.sz : 0), 0);
+    sizing_cagr = years > 0 ? sizing_cum / years : NaN;
+  }
   const hit = A.length ? A.filter((x) => x > 0).length / A.length : NaN;
   const sumAbs = A.reduce((s, x) => s + Math.abs(x), 0);
   const mag_hit = sumAbs > 0 ? A.reduce((s, x) => s + Math.max(x, 0), 0) / sumAbs : NaN;
@@ -2833,7 +2840,7 @@ function fsComputeWindow(ts, i0, i1) {
   const pp = _blockBootstrapMean(A);
   return { n_months: n, years: years, gappy: gappy, excess_cagr: excess, cagr_paper: cagr_p, cagr_bench: cagr_b,
     info_ratio: ir, t_stat: t, years_needed: years_needed, tracking_error: te, ic_mean: ic_mean, ic_t: ic_t,
-    sizing_edge_cum: sizing_cum, hit_rate_monthly: hit, mag_hit: mag_hit, slugging: slugging, avg_win: avg_win,
+    sizing_edge_cum: sizing_cum, sizing_drag_cagr: sizing_cagr, hit_rate_monthly: hit, mag_hit: mag_hit, slugging: slugging, avg_win: avg_win,
     avg_loss: avg_loss, eff_n: eff_n, avg_names: avg_names, boot_meanA_lo: pp[0], boot_meanA_hi: pp[1],
     boot_p_positive: pp[2], _mA: mA,
     port_hit_cnt: port_hit_cnt, port_hit_aum: port_hit_aum, port_slug_cnt: port_slug_cnt, port_slug_aum: port_slug_aum };
@@ -2850,7 +2857,7 @@ function fsVerdict(m, is_thematic) {
   if (!fin(t)) return { verdict: "undefined", verdict_why: "no active-return variance" };
   if (te < 0.02) return { verdict: "index-like", verdict_why: `tracking error ${pct(te)}% — little active risk to judge` };
   if (sig) return { verdict: "skilled", verdict_why: `+${pct(excess)}%/yr gross, t=${t.toFixed(1)}, bootstrap ${pct(p, 0)}% (${src})${them}` };
-  if (fin(ic_t) && ic_t >= 2 && fin(sz) && sz < 0) return { verdict: "good selector, weak sizer", verdict_why: `holding-IC-t=${ic_t.toFixed(1)} but sizing drag ${pct(sz)}%` };
+  if (fin(ic_t) && ic_t >= 2 && fin(sz) && sz < 0) return { verdict: "good selector, weak sizer", verdict_why: `holding-IC-t=${ic_t.toFixed(1)} but sizing drag ${fin(m.sizing_drag_cagr) ? pct(m.sizing_drag_cagr) : "—"}%/yr` };
   if (fin(excess) && excess > 0) { const need = fin(yn) ? ` (need t≥2 & bootstrap≥95%; ~${yn.toFixed(0)}y more)` : ""; return { verdict: "ahead but not yet significant", verdict_why: `+${pct(excess)}%/yr, t=${fin(t) ? t.toFixed(1) : "—"}${need}` }; }
   if (fin(excess) && excess <= 0) return { verdict: "lagging benchmark", verdict_why: `${pct(excess)}%/yr` };
   return { verdict: "inconclusive", verdict_why: "" };
@@ -3162,7 +3169,7 @@ function fsScorecardHTML(f, ctx) {
     + qStat("Magnitude hit", fsPct(f.mag_hit, 0))
     + qStat("Avg winning month", fsPct(f.avg_win, 2))
     + qStat("Avg losing month", fsPct(f.avg_loss, 2))
-    + qStat("Sizing edge (tie-breaker)", fsPct(f.sizing_edge_cum))
+    + qStat("Sizing edge (vs equal-wt /yr)", f.sizing_drag_cagr == null ? "—" : fsPct(f.sizing_drag_cagr) + "/yr")
     + `</div>`;
   h += `<div class="q-note" style="font-size:11.5px;color:#62707d">Batting is gross / pre-cost — a fund can beat &gt;50% of months gross and still trail net of fees. Flat/tie months count as a miss (strict &gt;). Diagnostic.</div>`;
   // ---- PORTFOLIO level (KV's MoneyBall): batting & slug read straight off the actual stock holdings,
@@ -3186,7 +3193,7 @@ function fsScorecardHTML(f, ctx) {
   h += fsVantagePanelHTML(ctx, f);     // …then the MoneyBall peer-envelope panel below it
   h += `<section class="panel"><h2><span class="tag-sec">TRACK</span>Growth of ₹1 — holdings-implied (gross) vs benchmark</h2><div class="plot" id="plot-fs-cum" style="height:300px"></div>`;
   h += `<div class="q-cap" style="margin-top:10px">Monthly active return (fund − benchmark) &amp; per-month selection IC</div><div class="plot" id="plot-fs-active" style="height:210px"></div></section>`;
-  h += `<details><summary>Definition · Method · Why</summary><p><b>What:</b> holdings-based fund-manager skill. A fund's edge over its benchmark is, exactly, A = Σ wᵢ·rᵢ − R_b: each start-of-month weight wᵢ times that holding's <b>total return</b> next month, minus the category-benchmark return. We compute this every month over the fund's history and ask whether it's repeatable skill or luck.</p><p><b>Method:</b> equity holdings (renormalised to 100%) × next-month total return per security (Bloomberg TR, verified vs our NSE prices to 0.15 bp ex-dividend), vs the SEBI-category TR index — which already strips most of the cap-size tilt, so the residual excess is mostly stock-selection + sizing. <b>Information Ratio</b> = mean active ÷ its volatility (annualised); <b>t-stat = IR·√years</b> (an IR of 0.5 needs ~16 years to prove skill at p&lt;0.05 — hence "years to prove"), and a "skilled" verdict additionally requires a <b>bootstrap</b> resample to clear 95% positive. <b>Caveat:</b> the t-stat (IR·√years) assumes independent monthly active returns; they are autocorrelated, so it <b>overstates</b> significance. A = gross holdings-implied active return (pre-fee/cost) — the investor's net IR is lower. Diagnostic, not a forward signal. <b>Holding-rank IC</b> = the monthly rank-correlation of <i>holding weight</i> vs forward return (Fama-MacBeth t) — a cap-tilt-contaminated proxy for true selection, since a pure active-weight IC needs point-in-time benchmark weights; <b>sizing edge</b> = did weighting beat equal-weighting the same names (the "tie-breaker" between two managers holding the same stocks). The <b>BATTING</b> panel splits the edge the MoneyBall way: <b>batting average</b> = share of months the fund beat its benchmark (consistency); <b>slugging</b> = average winning-month active return ÷ |average losing-month| (magnitude — a manager can win by being right often OR by sizing the rare big wins); a great manager scores on at least one. The excess is <b>GROSS</b> — pre-fee, pre-cash-drag, pre-trading-cost, and pre-factor-deflation (within-category style tilts not yet removed; a sectoral/thematic fund's excess is largely a sector bet, not selection). Domestic equity sleeve only; month-end snapshots.</p><p><b>Why:</b> NAV is the outcome; the holdings are the cause. This reads a manager's stock-picking, sizing and consistency straight off their actual decisions — separating repeatable skill from a lucky run. Diagnostics only — not investment advice.</p></details>`;
+  h += `<details><summary>Definition · Method · Why</summary><p><b>What:</b> holdings-based fund-manager skill. A fund's edge over its benchmark is, exactly, A = Σ wᵢ·rᵢ − R_b: each start-of-month weight wᵢ times that holding's <b>total return</b> next month, minus the category-benchmark return. We compute this every month over the fund's history and ask whether it's repeatable skill or luck.</p><p><b>Method:</b> equity holdings (renormalised to 100%) × next-month total return per security (Bloomberg TR, verified vs our NSE prices to 0.15 bp ex-dividend), vs the SEBI-category TR index — which already strips most of the cap-size tilt, so the residual excess is mostly stock-selection + sizing. <b>Information Ratio</b> = mean active ÷ its volatility (annualised); <b>t-stat = IR·√years</b> (an IR of 0.5 needs ~16 years to prove skill at p&lt;0.05 — hence "years to prove"), and a "skilled" verdict additionally requires a <b>bootstrap</b> resample to clear 95% positive. <b>Caveat:</b> the t-stat (IR·√years) assumes independent monthly active returns; they are autocorrelated, so it <b>overstates</b> significance. A = gross holdings-implied active return (pre-fee/cost) — the investor's net IR is lower. Diagnostic, not a forward signal. <b>Holding-rank IC</b> = the monthly rank-correlation of <i>holding weight</i> vs forward return (Fama-MacBeth t) — a cap-tilt-contaminated proxy for true selection, since a pure active-weight IC needs point-in-time benchmark weights; <b>sizing edge</b> = the <b>annualised (per-year)</b> drag or gain of the fund's actual weighting vs equal-weighting the same names — (Π(1+r_actual)/Π(1+r_equal))^(1/yrs)−1 — the "tie-breaker" between two managers holding the same stocks. Reported per-year (not as a cumulative gap) so it doesn't grow just because the track record is longer. The <b>BATTING</b> panel splits the edge the MoneyBall way: <b>batting average</b> = share of months the fund beat its benchmark (consistency); <b>slugging</b> = average winning-month active return ÷ |average losing-month| (magnitude — a manager can win by being right often OR by sizing the rare big wins); a great manager scores on at least one. The excess is <b>GROSS</b> — pre-fee, pre-cash-drag, pre-trading-cost, and pre-factor-deflation (within-category style tilts not yet removed; a sectoral/thematic fund's excess is largely a sector bet, not selection). Domestic equity sleeve only; month-end snapshots.</p><p><b>Why:</b> NAV is the outcome; the holdings are the cause. This reads a manager's stock-picking, sizing and consistency straight off their actual decisions — separating repeatable skill from a lucky run. Diagnostics only — not investment advice.</p></details>`;
   return h;
 }
 

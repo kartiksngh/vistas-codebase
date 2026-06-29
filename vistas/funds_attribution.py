@@ -215,8 +215,17 @@ def scheme_metrics(panel: pd.DataFrame, ppy: int = 12) -> pd.DataFrame:
         ic = d["ic"].dropna().values
         ic_mean = float(np.mean(ic)) if len(ic) else np.nan
         ic_t = (np.mean(ic) / (np.std(ic, ddof=1) / math.sqrt(len(ic)))) if len(ic) > 3 and np.std(ic, ddof=1) > 0 else np.nan
-        sizing_cum = float(np.prod(1 + d["rp"].values) - np.prod(1 + d["ew"].dropna().values)) if d["ew"].notna().all() else \
-            float(np.nansum(d["sizing"].values))      # cumulative sizing edge (approx if gaps)
+        # sizing edge = the fund's ACTUAL-weighted book vs an EQUAL-weighting of the SAME names each month.
+        # Reported ANNUALISED (per-year, scale-free) — the raw cumulative gap grows with history length, so it
+        # over/under-states the same yearly drag for a long/short track record. sizing_cum (absolute) is kept
+        # only because the verdict reads its SIGN (sign(sizing_cagr) == sign(sizing_cum)).
+        if d["ew"].notna().all():
+            _pr = float(np.prod(1 + d["rp"].values)); _pe = float(np.prod(1 + d["ew"].values))
+            sizing_cum = _pr - _pe
+            sizing_cagr = ((_pr / _pe) ** (1.0 / years) - 1.0) if (_pe > 0 and years > 0) else np.nan
+        else:
+            sizing_cum = float(np.nansum(d["sizing"].values))     # cumulative sizing edge (approx if gaps)
+            sizing_cagr = (sizing_cum / years) if years > 0 else np.nan   # arithmetic per-year fallback
         hit_m = float((A > 0).mean())                         # BATTING AVERAGE: share of months the fund beat the bench
         # magnitude-weighted hit: share of |active| from positive months (dollar-weighted intuition)
         mag_hit = float(np.nansum(np.clip(A, 0, None)) / np.nansum(np.abs(A))) if np.nansum(np.abs(A)) > 0 else np.nan
@@ -256,7 +265,7 @@ def scheme_metrics(panel: pd.DataFrame, ppy: int = 12) -> pd.DataFrame:
         elif sig:
             verdict, vwhy = "skilled", f"+{excess*100:.1f}%/yr gross, t={t:.1f}, bootstrap {p_pos*100:.0f}% ({_src}){_them}"
         elif np.isfinite(ic_t) and ic_t >= 2 and sizing_cum < 0:
-            verdict, vwhy = "good selector, weak sizer", f"holding-IC-t={ic_t:.1f} but sizing drag {sizing_cum*100:.1f}%"
+            verdict, vwhy = "good selector, weak sizer", f"holding-IC-t={ic_t:.1f} but sizing drag {sizing_cagr*100:.1f}%/yr"
         elif np.isfinite(excess) and excess > 0:
             _need = f" (need t≥2 & bootstrap≥95%; ~{years_needed:.0f}y more)" if np.isfinite(years_needed) else ""
             verdict, vwhy = "ahead but not yet significant", f"+{excess*100:.1f}%/yr, t={t:.1f}{_need}"
@@ -272,7 +281,7 @@ def scheme_metrics(panel: pd.DataFrame, ppy: int = 12) -> pd.DataFrame:
             is_hybrid=bool(d["sebi_category"].iloc[-1] in _HYBRID),
             excess_cagr=_r(excess), cagr_paper=_r(cagr_p), cagr_bench=_r(cagr_b),
             info_ratio=_r(ir), t_stat=_r(t), years_needed=_r(years_needed), tracking_error=_r(te),
-            ic_mean=_r(ic_mean), ic_t=_r(ic_t), sizing_edge_cum=_r(sizing_cum),
+            ic_mean=_r(ic_mean), ic_t=_r(ic_t), sizing_edge_cum=_r(sizing_cum), sizing_drag_cagr=_r(sizing_cagr, 4),
             hit_rate_monthly=_r(hit_m), mag_hit=_r(mag_hit),
             slugging=_r(slugging, 2), avg_win=_r(avg_win, 5), avg_loss=_r(avg_loss, 5),
             port_hit_cnt=_r(ph_cnt), port_hit_aum=_r(ph_aum), port_slug_cnt=_r(ps_cnt), port_slug_aum=_r(ps_aum),
@@ -294,7 +303,7 @@ def scheme_metrics(panel: pd.DataFrame, ppy: int = 12) -> pd.DataFrame:
         # 1-month fund's IR/t/excess as meaningful (concentration + descriptive fields stay).
         if n < _MIN_MONTHS:
             for k in ("excess_cagr", "cagr_paper", "cagr_bench", "info_ratio", "t_stat", "years_needed",
-                      "ic_mean", "ic_t", "sizing_edge_cum", "hit_rate_monthly", "mag_hit",
+                      "ic_mean", "ic_t", "sizing_edge_cum", "sizing_drag_cagr", "hit_rate_monthly", "mag_hit",
                       "slugging", "avg_win", "avg_loss",
                       "port_hit_cnt", "port_hit_aum", "port_slug_cnt", "port_slug_aum",
                       "boot_meanA_lo", "boot_meanA_hi", "boot_p_positive"):

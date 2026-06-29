@@ -43,7 +43,7 @@ const server = http.createServer((req, res) => {
     const ks = Object.keys(man).slice(0, 6);
     const FIELDS = { excess_cagr: 6e-4, cagr_paper: 6e-4, cagr_bench: 6e-4, info_ratio: 6e-4,
       t_stat: 6e-4, tracking_error: 6e-4, ic_mean: 6e-4, ic_t: 6e-4, hit_rate_monthly: 6e-4,
-      mag_hit: 6e-4, slugging: 6e-3, avg_win: 6e-5, avg_loss: 6e-5, sizing_edge_cum: 6e-4, eff_n: 0.06,
+      mag_hit: 6e-4, slugging: 6e-3, avg_win: 6e-5, avg_loss: 6e-5, sizing_edge_cum: 6e-4, sizing_drag_cagr: 6e-4, eff_n: 0.06,
       port_hit_cnt: 6e-4, port_hit_aum: 6e-4, port_slug_cnt: 6e-4, port_slug_aum: 6e-4 };
     const bad = [], vwarn = [];
     let checked = 0;
@@ -254,8 +254,8 @@ const server = http.createServer((req, res) => {
   // >=2 bar traces, and the disagreement table (2 cmp-tbl tables). Skipped only if <2 skill funds exist.
   const cmpOK = !cmp.tested || (!cmp.threw && cmp.hasHost && cmp.hasTitle && cmp.rows >= 2 && cmp.chips >= 2 && cmp.nTables >= 2 && cmp.tiltIsPlotly && cmp.tiltTraces >= 2);
   console.log("multi-fund compare gate:", cmpOK ? "OK" : ("FAILED " + (cmp.threw || JSON.stringify(cmp))));
-  // FM action shortlist (#39): panel present, 2 columns, not loading/blank, no action-verb/return language, caveats on-surface
-  const fmOK = !!fmsl.present && !fmsl.threw && fmsl.hasGrid && fmsl.cols === 2 && fmsl.notLoading &&
+  // FM action shortlist (#114): panel present, 3 columns (TRIM | ADD-MORE | ADD), not loading/blank, no action-verb/return language, caveats on-surface
+  const fmOK = !!fmsl.present && !fmsl.threw && fmsl.hasGrid && fmsl.cols === 3 && fmsl.notLoading &&
                fmsl.notBlankDash && fmsl.noActionVerbs && fmsl.hasCaveat && fmsl.hasFlowCaveat;
   console.log("FM shortlist gate:", fmOK ? ("OK (best fund " + fmsl.sym + ", " + fmsl.rows + " candidate rows)") : ("FAILED " + JSON.stringify(fmsl)));
   const ok = errs.length === 0 && probe.viewHidden === false && probe.bodyChars > 400 &&
