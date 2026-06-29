@@ -201,9 +201,11 @@ def firm_metrics(A: pd.DataFrame, meta: dict, w_map: dict):
     theta_firm = A.values @ w                      # daily firm active return
     theta_firm = pd.Series(theta_firm, index=A.index)
     ir_firm = _ann_ir(theta_firm)
-    # decomposition: s = weighted mean desk IR; M_eff from concentration + crowding
-    desk_ir = np.array([meta[nm].get("ir") if meta[nm].get("ir") is not None else np.nan for nm in names])
-    s = float(np.nansum(w * desk_ir) / np.nansum(w[np.isfinite(desk_ir)])) if np.isfinite(desk_ir).any() else float("nan")
+    # decomposition: s = weight-weighted mean desk IR measured ON THE SAME (in-sample) window as the
+    # firm IR — NOT the full-history scorecard IR — so s·√M_eff is a like-for-like check on ir_firm.
+    desk_ir = np.array([_ann_ir(A[nm]) for nm in names])
+    finite = np.isfinite(desk_ir)
+    s = float(np.sum(w[finite] * desk_ir[finite]) / np.sum(w[finite])) if finite.any() and np.sum(w[finite]) > 0 else float("nan")
     rho = _rho_bar(A, w)
     meff = _m_eff(w, rho)
     implied = s * np.sqrt(meff) if np.isfinite(s) else float("nan")
