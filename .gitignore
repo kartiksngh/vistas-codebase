@@ -91,3 +91,6 @@ samco_*
 *_landing.html
 *_portfolio.html
 *_probe/
+
+# agent worktrees (transient full-repo copies — never commit)
+.claude/worktrees/

@@ -1,4 +1,9 @@
-# Fuzzy search — build spec (NEXT TASK, post-compact 2026-06-30)
+# Fuzzy search — build spec  ✅ DONE & LIVE (2026-06-30)
+
+> **SHIPPED.** Built per this spec, adversarial-reviewed (a NO-GO short-token-leak regression caught + fixed),
+> re-verified (node unit test + headless `_pup_fuzzy.js`, 0 errors), published live, source backed up (`eca16b7`).
+> Implementation lives in `static/vistas.js` (`fuzzyScore` & friends, just above `class MultiSelect`). Regression
+> harness = `_pup_fuzzy.js`. See the in-repo `MEMORY.md` RESUME for the full record. Spec kept for provenance.
 
 > State-of-the-art typo-tolerant search across all terminal entities. Resume here after `/compact`.
 > Pure display-layer JS in `static/vistas.js` — no analytics, **no parity port needed**. Then build → probe → publish.

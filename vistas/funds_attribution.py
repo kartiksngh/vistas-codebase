@@ -411,13 +411,61 @@ def build_envelopes(recs) -> dict:
     return out
 
 
-def build_all(outdir: str = OUTDIR, flows_by_fund=None) -> dict:
+def _build_skill_context(recs, panel) -> dict:
+    """ADDITIVE skill-engine substrate, built ONCE per build (only when posterior=True): the category
+    prior table, the factor legs, the forward-return tables, the universe/flows stores, and per-category
+    peer-consensus + benchmark-forward maps (lazily filled). Returns the `ctx` dict passed to
+    _attach_skill. Heavy (legs + flows + fwd) — built once, reused across all funds."""
+    from . import skill_engine as _se
+    from . import skill_factors as _sf
+    from . import skill_signals as _ss
+    from . import funds_flows as _ff
+    prior_table = _se.build_prior_table(recs)
+    legs = _sf.get_factor_legs(log=lambda *a, **k: None)
+    fwd_by_k = _ss.build_fwd_returns()
+    universe = _ss.build_universe_fwd(fwd_by_k.get(1))
+    h_flow, ret = _ff._load()
+    return {"prior_table": prior_table, "legs": legs, "fwd_by_k": fwd_by_k,
+            "universe": universe, "h_flow": h_flow, "ret": ret,
+            "consensus": {}, "bench_fwd": {}}   # per-category caches, lazily filled in _attach_skill
+
+
+def _attach_skill(record, panel, ctx, build_id) -> dict:
+    """ADDITIVE per-fund wiring: build the fund's panel slice, lazily build its category's peer-consensus
+    + benchmark-forward maps (cached in ctx), call skill_engine.compute_skill(...), attach record["skill"]
+    and return the skill dict (so the book-level FDR/rank pass can finish it). Mutates ONLY record["skill"]."""
+    from . import skill_engine as _se
+    from . import skill_signals as _ss
+    code = str(record["navindia_code"])
+    cat = record.get("sebi_category")
+    d = panel[panel["navindia_code"].astype(str) == code]
+    if cat not in ctx["consensus"]:
+        ctx["consensus"][cat] = _ss.build_consensus_by_ym(cat)
+        ctx["bench_fwd"][cat] = _ss.build_bench_fwd(cat)
+    shared = {"fwd_by_k": ctx["fwd_by_k"], "ret": ctx["ret"], "h_flow": ctx["h_flow"], "h_hold": None,
+              "consensus": ctx["consensus"][cat], "universe": ctx["universe"],
+              "bench_fwd": ctx["bench_fwd"][cat]}
+    sk = _se.compute_skill(record, d, None, ctx["legs"], ctx["prior_table"],
+                           build_id=build_id, shared=shared)
+    _se.apply_to_record(record, sk)     # record["skill"] = sk (+ _category for the book-level pass)
+    return record["skill"]
+
+
+def build_all(outdir: str = OUTDIR, flows_by_fund=None, posterior: bool = False,
+              build_id=None) -> dict:
     """Compute every scheme's attribution → one JSON per scheme + a manifest/summary.
     Each scheme JSON also carries a `portfolio` block (asset/sector mix, categorized book,
     top holdings, 13-yr sector rotation, concentration) from funds_portfolio_viz — so the
     Fund-cockpit can SHOW the actual book alongside the skill verdict, no extra deck wiring.
     `flows_by_fund` (optional, from funds_flows.build_fund_series) attaches the per-fund
-    crowd-alignment / herding + latest active trades as `crowd_flow`."""
+    crowd-alignment / herding + latest active trades as `crowd_flow`.
+
+    ★ ADDITIVE SKILL-ENGINE HOOK (posterior=False by DEFAULT → the live build is byte-identical).
+    When posterior=True, AFTER the legacy scheme_metrics for each kept fund we attach
+    record["skill"] = skill_engine.compute_skill(...) (the schema_version:2 posterior block) and
+    mirror its headline fields into _manifest.json. ALL legacy keys + the legacy `verdict` string
+    are RETAINED untouched; the manifest's legacy `verdict`/`excess_cagr`/`t_stat`/`ic_t` stay, with
+    the posterior fields ADDED alongside. Nothing is removed; no consumer default is flipped."""
     os.makedirs(outdir, exist_ok=True)
     panel = load_panel()
     recs = scheme_metrics(panel)
@@ -428,8 +476,15 @@ def build_all(outdir: str = OUTDIR, flows_by_fund=None) -> dict:
         print(f"[funds_attribution] portfolio-viz unavailable ({_e}); shipping skill-only JSON")
         viz = {}
     from . import scheme_identity as _sid
+
+    # ── ADDITIVE skill-engine substrate (built ONCE; only when posterior=True) ───────────────────
+    _skill_ctx = None
+    if posterior:
+        _skill_ctx = _build_skill_context(recs, panel)
+
     manifest = {}
     kept = []
+    skill_by_fund = {}            # {code: skill_dict} → book-level FDR + rank after the loop
     n_gated = 0
     for r in recs:
         # gate non-equity-skill noise out of the leaderboard (arbitrage / one-month ingestion fragments)
@@ -441,6 +496,13 @@ def build_all(outdir: str = OUTDIR, flows_by_fund=None) -> dict:
             r["portfolio"] = viz[key0]
         if flows_by_fund and flows_by_fund.get(key0):
             r["crowd_flow"] = flows_by_fund[key0]
+        # ADDITIVE: attach the schema_version:2 skill block (rank/passes_fdr filled post-loop)
+        if posterior and _skill_ctx is not None:
+            try:
+                sk = _attach_skill(r, panel, _skill_ctx, build_id)
+                skill_by_fund[key0] = sk
+            except Exception as _se:
+                print(f"[funds_attribution] skill compute failed for {key0}: {_se}")
         r = _clean_nan(r)
         key = r["navindia_code"]
         with open(os.path.join(outdir, f"{key}.json"), "w", encoding="utf-8") as f:
@@ -449,6 +511,29 @@ def build_all(outdir: str = OUTDIR, flows_by_fund=None) -> dict:
         manifest[key] = {"name": r["scheme_name"], "amc": r["amc"], "category": r["sebi_category"],
                          "verdict": r["verdict"], "excess_cagr": r["excess_cagr"], "t_stat": r["t_stat"],
                          "ic_t": r["ic_t"], "n_months": r["n_months"]}
+
+    # ── ADDITIVE book-level pass: FDR + within-category rank, then RE-WRITE the touched files +
+    #    mirror the headline posterior fields into the manifest (legacy keys retained) ───────────
+    if posterior and skill_by_fund:
+        from . import skill_engine as _se
+        _se.fdr_and_rank(skill_by_fund)
+        # re-attach the (now FDR/rank-complete) skill block to each kept record, re-write its JSON,
+        # and add the posterior headline fields to the manifest alongside the legacy ones.
+        kept_by_code = {rr["navindia_code"]: rr for rr in kept}
+        for code, sk in skill_by_fund.items():
+            rr = kept_by_code.get(code)
+            if rr is None:
+                continue
+            sk.pop("_category", None)
+            rr["skill"] = _clean_nan(sk)
+            with open(os.path.join(outdir, f"{code}.json"), "w", encoding="utf-8") as f:
+                json.dump(rr, f, ensure_ascii=False, allow_nan=False)
+            if code in manifest:
+                mf = _clean_nan(_se.manifest_fields(sk))
+                # legacy `verdict` stays the legacy string; the tag mirror is added under `tag`
+                mf.pop("verdict", None)
+                manifest[code].update(mf)
+
     with open(os.path.join(outdir, "_manifest.json"), "w", encoding="utf-8") as f:
         json.dump(manifest, f, ensure_ascii=False, allow_nan=False)
     # PEER-ENVELOPE: per-category cross-sectional vantage bands over the kept (skill-universe) funds.
