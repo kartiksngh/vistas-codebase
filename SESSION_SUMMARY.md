@@ -106,6 +106,17 @@ tilt in the T2 change. It never buys beta; it only deploys MANDATED equity when 
 - The win is **implementation (TC), not new skill** — IC is unchanged. The honest ceiling: the signals are
   weak; this session sharpened TRANSFER, it did not manufacture alpha.
 
+## Cost-sensitivity falsification (Quant champion, validation) — survives 3× costs
+| cost/side | IR | beta | excess |
+|---|---|---|---|
+| 15 bps (base) | +1.13 | 0.99 | +6.27% |
+| 30 bps | +0.83 | 0.99 | +4.64% |
+| 50 bps | +0.45 | 0.99 | +2.57% |
+
+Even at a punitive 50 bps/side the IR stays **+0.45** (still > the baseline −0.25), β stays 0.99 — the TC
+fix is NOT a cost mirage; the extra deployment trades only modestly more (turnover ~36% either way) and the
+excess comfortably covers realistic small-cap friction.
+
 ## How this feeds the firm
 Promote `LIQ_DAYS_MAX=250` (the patient-accumulation horizon) into the FM-brain rule the live agents inherit:
 no equity book should sit below its mandate floor in cash when a patient ~1y-of-ADV build can reach it. The
