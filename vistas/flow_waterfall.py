@@ -104,12 +104,14 @@ _THEME_SLUGS = {
     "Nifty Healthcare": "ind_niftyhealthcarelist",
     "Nifty MNC": "ind_niftymnclist",
     "Nifty Services": "ind_niftyservicelist",
-    "Nifty India Manufacturing": "ind_niftyindiamanufacturinglist",
-    "Nifty India Digital": "ind_niftyindiadigitallist",
-    "Nifty India Defence": "ind_niftyindiadefencelist",
-    "Nifty EV & New Age Auto": "ind_niftyevnewageautomotivelist",
-    "Nifty Capital Markets": "ind_niftycapitalmarketslist",
-    "Nifty Housing": "ind_niftyhousinglist",
+    # newer NSE indices use an underscore-before-`list` slug (probed-good 2026-06-30; the no-underscore
+    # variants silently returned no constituents → these 6 themes were previously missing from the panel)
+    "Nifty India Manufacturing": "ind_niftyindiamanufacturing_list",
+    "Nifty India Digital": "ind_niftyindiadigital_list",
+    "Nifty India Defence": "ind_niftyindiadefence_list",
+    "Nifty EV & New Age Auto": "ind_niftyev_newageautomotive_list",
+    "Nifty Capital Markets": "ind_niftycapitalmarkets_list",
+    "Nifty Housing": "ind_niftyhousing_list",
     # --- standard SECTOR indices (verified slugs from data/_benchmark_slugs.json, probed live 2026-06-25) ---
     # added 2026-06-30: this panel previously omitted the pure sector indices, so Bank/IT/etc (Bank is the
     # single largest index weight) were missing from the theme lens. These slugs are known-good → they fetch.
