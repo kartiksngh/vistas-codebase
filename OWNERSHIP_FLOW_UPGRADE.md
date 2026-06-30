@@ -49,3 +49,21 @@ Across ALL the flow tables (crowding AMC table, the new matrix, the waterfall pi
 - Per-stock data is **lazy-loaded** (one file per stock) — the matrix for a stock fetches that file; for a sector/theme it uses the inline cube. Keep files lean (the existing peak-|gross| pruning).
 - `net_active` reconciles only on the **priced subset**; show the same coverage caveat the panels already carry.
 - `mv`-summed AUM is the **equity-sleeve** AUM (not total scheme AUM incl. debt/cash) — label the % accordingly.
+
+## E — "Flow by NSE thematic index" completeness fix (started 2026-06-30)
+The theme dropdown was missing the standard SECTOR indices (no NIFTY BANK — the single largest index weight — nor IT/PHARMA/FMCG/AUTO/METAL/REALTY/FINANCIAL SERVICES) because `flow_waterfall._THEME_SLUGS` only listed *thematic/macro* indices. ALSO 6 of its 15 thematic slugs silently failed to fetch (only 9 made it into `data/themes/theme_constituents.json`): Manufacturing, Digital, Defence, EV, Capital Markets, Housing.
+- **DONE (code):** added the 8 verified sector slugs (from `data/_benchmark_slugs.json`, probed-good 2026-06-25) to `_THEME_SLUGS`.
+- **NOTE:** with the §F unification below, "theme" becomes a *mode* of the unified crowding chart (the standalone theme panel goes away), but the theme **map** still needs the rebuild for the sector indices to populate.
+- **TODO to make it live:** (1) verify/fix the 6 broken thematic slugs (live-probe the correct slug names via the `resilient-web-fetch` discipline — some are newer indices); (2) run `flow_waterfall.build_theme_map()` (needs NSE network) to re-fetch + rewrite the theme file; (3) rebuild the deck so the new themes embed; (4) optionally relabel the panel "Flow by NSE sector/thematic index". The dropdown auto-discovers from the rebuilt file — no further JS change.
+
+## F — ★ Composing filters across ALL flow panels: AMC × Sector/Theme × Market-cap  (KV 2026-06-30, refined)
+The flow panels — **Money-flow waterfall, Cross-AMC crowding, AND the §C matrix** — share **three INDEPENDENT, COMPOSING filters**, so you can drill an *intersection* like **AMC=ICICI · Sector=IT · Cap=Large** ("how has ICICI moved through large-cap IT names over time"):
+1. **AMC** — All (market) / each AMC. (Already on the waterfall; add to crowding per §B.)
+2. **Sector/Theme** — ONE merged dropdown holding the GICS sectors **and** the NSE thematic indices (§E) in a single list, **visually distinguished** (e.g. an optgroup `— Themes —` below the sectors) so a theme is never mistaken for a sector. This **replaces** the waterfall's `SECTOR` dropdown and the crowding `By sector` mode.
+3. **Market-cap** — a SEPARATE filter: All / Large / Mid / Small / Micro / "> ₹X cr" (the point-in-time **mcap-rank** from `MARKETCAP_FILTER_SPEC.md`), evaluated as-of the panel date.
+
+The three **compose** (intersection of the selections). **Market-cap is BOTH a filter AND an aggregation lens** — exactly like sector, you can also *group* flow by Large/Mid/Small/Micro ("how much conviction money went into large vs small caps each month"). **Stock** stays a target too (the crowding stock dropdown + the matrix target). The standalone "Flow by NSE thematic index" panel is **removed** — its themes now live inside the merged Sector/Theme dropdown.
+
+Net: the waterfall, crowding, and the matrix all answer the same question at any intersection — **"whose money (AMC→scheme), into what (sector / theme / stock), of what size (cap), over time, in what form (gross / price-adj / net)."** All render-only on the existing flow cube + the new cap panel + AUM denominators; no parity port.
+
+

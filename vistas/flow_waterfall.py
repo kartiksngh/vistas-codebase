@@ -110,6 +110,17 @@ _THEME_SLUGS = {
     "Nifty EV & New Age Auto": "ind_niftyevnewageautomotivelist",
     "Nifty Capital Markets": "ind_niftycapitalmarketslist",
     "Nifty Housing": "ind_niftyhousinglist",
+    # --- standard SECTOR indices (verified slugs from data/_benchmark_slugs.json, probed live 2026-06-25) ---
+    # added 2026-06-30: this panel previously omitted the pure sector indices, so Bank/IT/etc (Bank is the
+    # single largest index weight) were missing from the theme lens. These slugs are known-good → they fetch.
+    "Nifty Bank": "ind_niftybanklist",
+    "Nifty Financial Services": "ind_niftyfinancelist",
+    "Nifty IT": "ind_niftyITlist",
+    "Nifty Pharma": "ind_niftypharmalist",
+    "Nifty FMCG": "ind_niftyfmcglist",
+    "Nifty Auto": "ind_niftyautolist",
+    "Nifty Metal": "ind_niftymetallist",
+    "Nifty Realty": "ind_niftyrealtylist",
 }
 
 

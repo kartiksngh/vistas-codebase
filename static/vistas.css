@@ -338,8 +338,15 @@ table.ftable tbody tr:hover { background: #f7fafc; }
 .gauge-tbl.fs-lb tbody tr { cursor: pointer; }
 .gauge-tbl.fs-lb tbody tr:hover { background: #f6f8fa; }
 .gauge-tbl.fs-lb tr.fs-sel-row { background: #fff8e1; }
+/* Reusable capped-height scroll container for any LONG list/table, with a sticky header so the column
+   labels stay visible — keeps a long pivot/holdings list from pushing the next section off-screen. */
+.tbl-scroll { max-height: 60vh; overflow: auto; border: 1px solid #e5e8ec; border-radius: 6px; }
+.tbl-scroll table { margin: 0; }
+.tbl-scroll thead th { position: sticky; top: 0; z-index: 2; background: #f3f5f7; box-shadow: inset 0 -1px 0 #d8dde2; }
 /* Ownership & Flow pivot — Excel-style drill-down (AMC -> scheme -> sector) */
 .wf-pivot th.num, .wf-pivot td.num { text-align: right; font-variant-numeric: tabular-nums; }
+/* compact rows for the long flow pivots so more fits before scrolling */
+.tbl-scroll .wf-pivot td, .tbl-scroll .wf-pivot th { padding-top: 3px; padding-bottom: 3px; }
 .wf-pivot tbody tr.wf-row { cursor: pointer; }
 .wf-pivot tbody tr.wf-row:hover { background: #f6f8fa; }
 .wf-pivot tbody tr.wf-row-on { background: #e8f6f3; }
@@ -370,6 +377,13 @@ table.ftable tbody tr:hover { background: #f7fafc; }
 .fs-lvl + .fs-lvl { border-left: 1px solid #d0d7de; }
 .fs-lvl:hover { background: #eef1f4; }
 .fs-lvl.on { background: #24292f; color: #fff; }
+/* Funds benchmark toggle (Respective | NIFTY 500) — sits inline in the scorecard footnote */
+.fs-bench-seg { display: inline-flex; border: 1px solid #d0d7de; border-radius: 6px; overflow: hidden; margin: 0 4px; vertical-align: middle; }
+.fs-bench-btn { padding: 2px 9px; border: 0; background: #fff; font-size: 11.5px; cursor: pointer; color: #44505c; }
+.fs-bench-btn + .fs-bench-btn { border-left: 1px solid #d0d7de; }
+.fs-bench-btn:hover { background: #eef1f4; }
+.fs-bench-btn.on { background: #1a7f37; color: #fff; }
+.fs-fence-note { color: #5a6772; }
 .fflags { margin: 8px 0 2px; padding-left: 18px; font-size: 12px; color: #44505c; }
 .fflags li { margin: 3px 0; }
 

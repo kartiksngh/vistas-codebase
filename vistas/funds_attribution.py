@@ -54,6 +54,75 @@ _HYBRID = {"Aggressive Hybrid Fund", "Conservative Hybrid Fund", "Balanced Hybri
            "Equity Savings", "Dynamic Asset Allocation or Balanced Advantage", "Arbitrage Fund",
            "Multi Asset Allocation"}
 
+# ── BENCHMARK-RESOLUTION LADDER (theme-fence) ──────────────────────────────────────────────────────
+# A Sectoral/Thematic fund benchmarked against the broad NIFTY 500 reads its SECTOR BETA as ±skill — a
+# Pharma book vs NIFTY 500 shows the whole pharma cycle as "excess". The fix: fence such a fund to its OWN
+# sector TR index, so the residual excess is within-sector SELECTION (the Fundamental-Law IC), not the
+# sector trade. Scheme-NAME keyword → the available NSE sector TR index (first match wins). Provenance:
+# mirrors vistas/amc_replay._THEME_BENCHMARK (the FM-side fence), pinned here to TR columns VERIFIED present
+# in the offline panel on 2026-06-30. Cap-mandate categories keep their cap index; diversified/hybrid stay
+# on NIFTY 500 (correct — they invest market-wide by design). The browser can recompute everything vs
+# NIFTY 500 instead (the optional toggle), so we ALSO ship a NIFTY-500 forward-return + portfolio-hit series.
+_THEME_BENCH = [
+    ("pharma", "NIFTY PHARMA"),
+    ("healthcare", "NIFTY HEALTHCARE INDEX"), ("health", "NIFTY HEALTHCARE INDEX"),
+    ("banking and financial", "NIFTY FINANCIAL SERVICES"), ("financial services", "NIFTY FINANCIAL SERVICES"),
+    ("financial", "NIFTY FINANCIAL SERVICES"),
+    ("private bank", "NIFTY PRIVATE BANK"), ("bank", "NIFTY BANK"),
+    ("digital", "NIFTY INDIA DIGITAL"),
+    ("technology", "NIFTY IT"), ("infotech", "NIFTY IT"), ("info tech", "NIFTY IT"), ("tech ", "NIFTY IT"),
+    ("manufactur", "NIFTY INDIA MANUFACTURING"),
+    ("infrastructure", "NIFTY INFRASTRUCTURE"), ("infra", "NIFTY INFRASTRUCTURE"),
+    ("transport", "NIFTY TRANSPORTATION & LOGISTICS"), ("logistic", "NIFTY TRANSPORTATION & LOGISTICS"),
+    ("consumption", "NIFTY INDIA CONSUMPTION"), ("consumer", "NIFTY INDIA CONSUMPTION"),
+    ("auto", "NIFTY AUTO"), ("mobility", "NIFTY AUTO"),
+    ("power", "NIFTY POWER"), ("energy", "NIFTY ENERGY"), ("oil", "NIFTY OIL & GAS"), ("gas", "NIFTY OIL & GAS"),
+    ("metal", "NIFTY METAL"), ("commodit", "NIFTY COMMODITIES"),
+    ("realty", "NIFTY REALTY"), ("real estate", "NIFTY REALTY"),
+    ("fmcg", "NIFTY FMCG"), ("media", "NIFTY MEDIA"), ("entertain", "NIFTY MEDIA"),
+    ("defence", "NIFTY INDIA DEFENCE"), ("defense", "NIFTY INDIA DEFENCE"),
+]
+# Characteristic (ownership/style) themes cut ACROSS sectors — PSU/MNC/ESG/business-cycle/quant/
+# special-situations — and have no point-in-time sector fence, so they stay BROAD (vs NIFTY 500). Same
+# guard as amc_replay; a precise peer benchmark for these waits on the Value-Research mapping (layered later).
+_CHAR_THEME_KW = ("psu", "mnc", "esg", "business cycle", "quant", "special opp",
+                  "special situation", "conglomerate")
+
+
+def _amc_short(amc) -> str:
+    """The AMC's short name (drop the legal suffix) so it can be stripped off the front of a scheme name —
+    else an AMC whose name contains a sector word contaminates the theme match (e.g. 'Bank of India
+    Manufacturing Fund' wrongly matching 'bank')."""
+    s = str(amc or "").lower()
+    for suf in (" mutual fund", " asset management company", " asset management", " investment managers",
+                " investment manager", " amc", " mutual", " mf", " trustee", " india"):
+        s = s.replace(suf, " ")
+    return " ".join(s.split()).strip()
+
+
+def _resolve_bench(scheme_name, sebi_category, available, amc=None) -> str:
+    """The RESPECTIVE-benchmark ladder for a fund (the new default). Sectoral/Thematic → its sector TR index
+    (theme-fence), unless it's a characteristic theme → broad; cap categories → their cap index; everything
+    else → NIFTY 500. Always returns a name present in `available` (else NIFTY 500). The fund's AMC name is
+    stripped off the scheme name first so the AMC (e.g. 'Bank of India') can't be mistaken for the theme."""
+    cat = str(sebi_category or "").strip()
+    low = cat.lower()
+    if "thematic" in low or "sector" in low:
+        nm = str(scheme_name or "").lower()
+        ash = _amc_short(amc)
+        if ash:
+            if nm.startswith(ash):
+                nm = nm[len(ash):]            # drop the leading AMC name ('bank of india ...')
+            else:
+                nm = nm.replace(ash, " ", 1)  # else strip its first occurrence anywhere
+        if not any(k in nm for k in _CHAR_THEME_KW):
+            for kw, idx in _THEME_BENCH:
+                if kw in nm and idx in available:
+                    return idx
+        return _DEFAULT_BENCH
+    b = _CAT_BENCH.get(cat, _DEFAULT_BENCH)
+    return b if b in available else _DEFAULT_BENCH
+
 _RET_CLIP = (-0.80, 3.0)   # winsorise monthly TR: kill data errors / delisting stubs, keep real moves
 _MIN_COVER = 0.80          # require ≥80% of equity weight to have a forward return that month
 _MIN_MONTHS = 24           # below this: "insufficient history", never a skill verdict
@@ -130,13 +199,25 @@ def load_panel() -> pd.DataFrame:
     panel["rp"] = panel["rp_raw"] / panel["cover"].replace(0, np.nan)
     panel = panel[panel["cover"] >= _MIN_COVER].copy()
 
-    # benchmark forward return per scheme-month
+    # benchmark forward return per scheme-month — RESPECTIVE benchmark via the theme-fence ladder (the new
+    # default), resolved ONCE per scheme from its name + SEBI category (a fund's benchmark is constant in time)
     fwd = _bench_monthly_fwd()
-    panel["bench"] = panel["sebi_category"].map(lambda c: _CAT_BENCH.get(c, _DEFAULT_BENCH))
+    avail = set(fwd.columns)
+    _sch = panel.groupby("navindia_code")[["scheme_name", "sebi_category", "amc"]].first()
+    benchmap = {code: _resolve_bench(row.scheme_name, row.sebi_category, avail, row.amc)
+                for code, row in _sch.iterrows()}
+    panel["bench"] = panel["navindia_code"].map(benchmap)
     fwd_long = fwd.reset_index().melt(id_vars="ym", var_name="bench", value_name="rb")
     panel = panel.merge(fwd_long, on=["ym", "bench"], how="left")
+    # NIFTY-500 forward return per month for the OPTIONAL "vs NIFTY 500" browser toggle (rb5); the static
+    # record stays on the respective benchmark, the JS recomputes against rb5 when the user flips the toggle.
+    if _DEFAULT_BENCH in fwd.columns:
+        n500 = fwd[_DEFAULT_BENCH].rename("rb5")
+        panel["rb5"] = panel["ym"].map(n500)
+    else:
+        panel["rb5"] = np.nan
     panel = panel[panel["rb"].notna()].copy()
-    panel["A"] = panel["rp"] - panel["rb"]                 # active return
+    panel["A"] = panel["rp"] - panel["rb"]                 # active return (vs the respective benchmark)
     panel["sizing"] = panel["rp"] - panel["ew"]            # weighting vs equal-weighting the same names
 
     # ---- PORTFOLIO-LEVEL batting & slug (stock cross-section) — KV's MoneyBall "vantage point" defs ----
@@ -150,21 +231,29 @@ def load_panel() -> pd.DataFrame:
     #               count- and AUM-weighted. Net positive = the book leaned toward the eventual winners.
     uq = tr.groupby("ym")["ret_1m"].quantile([0.25, 0.75]).unstack()   # universe return cut per month
     jb = j[j["fwd_ret"].notna()].copy()
-    jb["bench"] = jb["sebi_category"].map(lambda c: _CAT_BENCH.get(c, _DEFAULT_BENCH))
-    jb = jb.merge(fwd_long, on=["ym", "bench"], how="left")            # rb = category-bench fwd return
+    jb["bench"] = jb["navindia_code"].map(benchmap)                    # the RESPECTIVE (theme-fenced) benchmark
+    jb = jb.merge(fwd_long, on=["ym", "bench"], how="left")            # rb = respective-bench fwd return
     jb = jb[jb["rb"].notna()].copy()
+    # NIFTY-500 fwd return per holding-month → the OPTIONAL "vs NIFTY 500" hit series (slug is universe-quartile
+    # based, so benchmark-independent — computed once, shared across both toggle states).
+    _n500 = fwd[_DEFAULT_BENCH] if _DEFAULT_BENCH in fwd.columns else None
+    jb["rb5"] = jb["ym"].map(_n500) if _n500 is not None else np.nan
     jb["u25"] = jb["fwd_ym"].map(uq[0.25]); jb["u75"] = jb["fwd_ym"].map(uq[0.75])
     jb["wc"] = jb.groupby(["navindia_code", "ym"])["pct"].transform(lambda s: s / s.sum())  # renorm over covered
     jb["beat"] = (jb["fwd_ret"] - jb["rb"] >= 0).astype(float)
+    jb["beat5"] = (jb["fwd_ret"] - jb["rb5"] >= 0).astype(float)
     jb["intop"] = (jb["fwd_ret"] >= jb["u75"]).astype(float)
     jb["inbot"] = (jb["fwd_ret"] <= jb["u25"]).astype(float)
     jb["_ha"] = jb["wc"] * jb["beat"]
+    jb["_ha5"] = jb["wc"] * jb["beat5"]
     jb["_sa"] = jb["wc"] * (jb["intop"] - jb["inbot"])
     pg = jb.groupby(["navindia_code", "ym"])
     port = pg.agg(port_hit_cnt=("beat", "mean"), port_hit_aum=("_ha", "sum"),
+                  port_hit_cnt5=("beat5", "mean"), port_hit_aum5=("_ha5", "sum"),
                   port_slug_aum=("_sa", "sum"), _it=("intop", "mean"), _ib=("inbot", "mean")).reset_index()
     port["port_slug_cnt"] = port["_it"] - port["_ib"]
     panel = panel.merge(port[["navindia_code", "ym", "port_hit_cnt", "port_hit_aum",
+                              "port_hit_cnt5", "port_hit_aum5",
                               "port_slug_cnt", "port_slug_aum"]], on=["navindia_code", "ym"], how="left")
     return panel.sort_values(["navindia_code", "ym"]).reset_index(drop=True)
 
@@ -245,6 +334,8 @@ def scheme_metrics(panel: pd.DataFrame, ppy: int = 12) -> pd.DataFrame:
         effN = 1 / herf if herf > 0 else np.nan
         lo, hi, p_pos = _block_bootstrap_mean(A)
         is_thematic = (d["sebi_category"].iloc[-1] == "Sectoral / Thematic")
+        bench_name = d["bench"].iloc[-1]
+        is_broad_bench = (bench_name == _DEFAULT_BENCH)   # theme-fenced funds get a SECTOR index, not NIFTY 500
 
         # --- verdict (honest, gated) ---
         # "skilled" = the CATEGORY-benchmark excess is positive AND statistically real: t≥2 on the
@@ -254,7 +345,11 @@ def scheme_metrics(panel: pd.DataFrame, ppy: int = 12) -> pd.DataFrame:
         # cap-tilt-contaminated proxy (true active-weight IC needs point-in-time benchmark weights).
         _src = ("holding-rank-driven" if np.isfinite(ic_t) and ic_t >= 2 else
                 ("sizing-aided" if sizing_cum > 0 and (not np.isfinite(ic_t) or ic_t < 1) else "mixed-source"))
-        _them = " — but vs the broad market, so largely a sector bet, not pure selection" if is_thematic else ""
+        # caveat applies ONLY when still benchmarked broad (a characteristic theme, or a sector fence that
+        # couldn't resolve a sector index) — a theme-FENCED fund is now scored vs its own SECTOR index, so its
+        # excess IS within-sector selection, not the sector trade.
+        _them = (" — but vs the broad market, so largely a sector bet, not pure selection"
+                 if (is_thematic and is_broad_bench) else "")
         sig = np.isfinite(t) and t >= 2 and mA > 0 and np.isfinite(p_pos) and p_pos >= 0.95
         if n < _MIN_MONTHS:
             verdict, vwhy = "insufficient history", f"only {n} months — no skill verdict"
@@ -277,6 +372,7 @@ def scheme_metrics(panel: pd.DataFrame, ppy: int = 12) -> pd.DataFrame:
         rec = dict(
             navindia_code=str(code), scheme_name=d["scheme_name"].iloc[-1], amc=d["amc"].iloc[-1],
             sebi_category=d["sebi_category"].iloc[-1], benchmark=d["bench"].iloc[-1],
+            bench_fenced=bool(is_thematic and not is_broad_bench),   # True = scored vs its SECTOR index, not NIFTY 500
             n_months=int(n), years=round(years, 1), gappy=bool(gappy), is_thematic=bool(is_thematic),
             is_hybrid=bool(d["sebi_category"].iloc[-1] in _HYBRID),
             excess_cagr=_r(excess), cagr_paper=_r(cagr_p), cagr_bench=_r(cagr_b),
@@ -294,9 +390,10 @@ def scheme_metrics(panel: pd.DataFrame, ppy: int = 12) -> pd.DataFrame:
             # ts carries the FULL monthly series so the browser can recompute EVERY metric over ANY
             # start→end window (a manager's tenure) — A/rp/rb drive return+batting+IR; herf→eff_n;
             # sz (=rp−ew, the sizing edge per month)→cumulative sizing over the window.
-            ts=[{"ym": r.ym, "A": _r(r.A, 5), "rp": _r(r.rp, 5), "rb": _r(r.rb, 5),
+            ts=[{"ym": r.ym, "A": _r(r.A, 5), "rp": _r(r.rp, 5), "rb": _r(r.rb, 5), "rb5": _r(r.rb5, 5),
                  "ic": _r(r.ic), "n": int(r.n), "herf": _r(r.herf, 5), "sz": _r(r.sizing, 5),
                  "hc": _r(r.port_hit_cnt, 4), "ha": _r(r.port_hit_aum, 4),
+                 "hc5": _r(r.port_hit_cnt5, 4), "ha5": _r(r.port_hit_aum5, 4),
                  "sc": _r(r.port_slug_cnt, 4), "sa2": _r(r.port_slug_aum, 4)} for r in d.itertuples()],
         )
         # null the numeric SKILL fields for too-short history so a downstream UI can't surface a

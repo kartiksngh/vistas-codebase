@@ -39,6 +39,7 @@ let SMF_MODE = "net_active";
 let FUNDS_HOLD_DATA = null, FUNDS_SYM = null, FUNDS_COMBO = null;
 let FUNDS_ATTR_DATA = null, FUNDSKILL_SYM = null, FUNDSKILL_COMBO = null, FUNDSKILL_SORT = { key: "t_stat", dir: -1 }, FUNDSKILL_CAT = "";
 let FS_WIN = null;          // {i0,i1} indices into the current scheme's ts[] (null = full history); reset on scheme change
+let FS_BENCH_MODE = "respective";   // funds benchmark toggle: "respective" (theme-fenced default) | "nifty500" (broad)
 let FS_VANT = { cat: null, blevel: "port", slevel: "port" };   // vantage panel: peer category + per-plot NAV/Portfolio level
 let FUNDS_ENV = null;       // lazy-loaded peer-envelope (per category × metric cross-section), cached once
 let FUND_STMT = "quarters";   // which statement table the Fundamentals tab shows
@@ -2889,10 +2890,16 @@ function _blockBootstrapMean(a, nBoot, block) {
   return [_pctl(means, 2.5), _pctl(means, 97.5), pos / nBoot];
 }
 // recompute ALL skill metrics over ts[i0..i1] (inclusive). Returns RAW (may hold NaN); verdict reads raw.
-function fsComputeWindow(ts, i0, i1) {
+// mode: "respective" (default — the theme-fenced benchmark baked in `A`/`rb`/`hc`/`ha`) or "nifty500"
+// (recompute the active return + portfolio-hit against the broad NIFTY 500 series `rb5`/`hc5`/`ha5`). Slug
+// (`sc`/`sa2`), selection-IC (`ic`) and sizing (`sz`) are benchmark-independent → identical in both modes.
+function fsComputeWindow(ts, i0, i1, mode) {
+  const useN500 = mode === "nifty500";
   const w = ts.slice(i0, i1 + 1), n = w.length;
-  const A = w.map((r) => r.A).filter((v) => v != null && isFinite(v));
-  const rp = w.map((r) => (r.rp == null ? 0 : r.rp)), rb = w.map((r) => (r.rb == null ? 0 : r.rb));
+  const A = w.map((r) => (useN500 ? ((r.rp == null || r.rb5 == null) ? null : r.rp - r.rb5) : r.A))
+    .filter((v) => v != null && isFinite(v));
+  const rp = w.map((r) => (r.rp == null ? 0 : r.rp));
+  const rb = w.map((r) => { const v = useN500 ? r.rb5 : r.rb; return v == null ? 0 : v; });
   const oms = w.map((r) => (+r.ym.slice(0, 4)) * 12 + (+r.ym.slice(5, 7)));
   const span_m = oms.length ? (Math.max.apply(null, oms) - Math.min.apply(null, oms) + 1) : n;
   const years = span_m / 12, gappy = span_m > n;
@@ -2931,7 +2938,8 @@ function fsComputeWindow(ts, i0, i1) {
   const avg_names = n ? _mean(w.map((r) => r.n || 0)) : NaN;
   // PORTFOLIO-level (stock cross-section) batting & slug = period MEAN of the baked monthly series
   const _wm = (key) => _mean(w.map((r) => r[key]).filter((x) => x != null && isFinite(x)));
-  const port_hit_cnt = _wm("hc"), port_hit_aum = _wm("ha"), port_slug_cnt = _wm("sc"), port_slug_aum = _wm("sa2");
+  const port_hit_cnt = _wm(useN500 ? "hc5" : "hc"), port_hit_aum = _wm(useN500 ? "ha5" : "ha"),
+    port_slug_cnt = _wm("sc"), port_slug_aum = _wm("sa2");
   const pp = _blockBootstrapMean(A);
   return { n_months: n, years: years, gappy: gappy, excess_cagr: excess, cagr_paper: cagr_p, cagr_bench: cagr_b,
     info_ratio: ir, t_stat: t, years_needed: years_needed, tracking_error: te, ic_mean: ic_mean, ic_t: ic_t,
@@ -2940,13 +2948,15 @@ function fsComputeWindow(ts, i0, i1) {
     boot_p_positive: pp[2], _mA: mA,
     port_hit_cnt: port_hit_cnt, port_hit_aum: port_hit_aum, port_slug_cnt: port_slug_cnt, port_slug_aum: port_slug_aum };
 }
-// port of the scheme_metrics verdict ladder (same gates, same wording) for a recomputed window
-function fsVerdict(m, is_thematic) {
+// port of the scheme_metrics verdict ladder (same gates, same wording) for a recomputed window. The
+// "sector bet" caveat applies ONLY when benchmarked broad (is_broad_bench) — a theme-FENCED fund scored vs
+// its own sector index has within-sector selection excess, so the caveat is dropped (matches Python `_them`).
+function fsVerdict(m, is_thematic, is_broad_bench) {
   const fin = (v) => v != null && isFinite(v), pct = (x, d) => (x * 100).toFixed(d == null ? 1 : d);
   const t = m.t_stat, te = m.tracking_error, n = m.n_months, excess = m.excess_cagr, ic_t = m.ic_t,
     sz = m.sizing_edge_cum, p = m.boot_p_positive, mA = m._mA, yn = m.years_needed;
   const src = (fin(ic_t) && ic_t >= 2) ? "holding-rank-driven" : ((fin(sz) && sz > 0 && (!fin(ic_t) || ic_t < 1)) ? "sizing-aided" : "mixed-source");
-  const them = is_thematic ? " — but vs the broad market, so largely a sector bet, not pure selection" : "";
+  const them = (is_thematic && is_broad_bench) ? " — but vs the broad market, so largely a sector bet, not pure selection" : "";
   const sig = fin(t) && t >= 2 && mA > 0 && fin(p) && p >= 0.95;
   if (n < 24) return { verdict: "insufficient history", verdict_why: `only ${n} months — no skill verdict` };
   if (!fin(t)) return { verdict: "undefined", verdict_why: "no active-return variance" };
@@ -3282,13 +3292,22 @@ function fsScorecardHTML(f, ctx) {
     + qStat("Slug rate (count)", fsPct(f.port_slug_cnt, 1))
     + qStat("Alloc. benefit (slug)", _sgn(_abs))
     + `</div>`;
-  h += `<div class="q-note"><b>Benchmark:</b> ${fEsc(f.benchmark)} · <b>Category:</b> ${fEsc(f.sebi_category)}${f.is_hybrid ? " (equity sleeve only)" : ""}.</div>`;
+  const _bm = f._benchMode || "respective";
+  const _benchName = (_bm === "nifty500") ? "NIFTY 500" : fEsc(f.benchmark);
+  const _canToggle = (f.benchmark && f.benchmark !== "NIFTY 500");   // a NIFTY-500 fund has nothing to toggle
+  h += `<div class="q-note"><b>Benchmark:</b> ${_benchName}`
+    + (_canToggle ? ` <span class="fs-bench-seg" title="Score this fund against its own category/sector benchmark (default) or the broad NIFTY 500">`
+        + `<button class="fs-bench-btn${_bm === "respective" ? " on" : ""}" data-bench="respective">Respective</button>`
+        + `<button class="fs-bench-btn${_bm === "nifty500" ? " on" : ""}" data-bench="nifty500">NIFTY 500</button></span>` : "")
+    + ` · <b>Category:</b> ${fEsc(f.sebi_category)}${f.is_hybrid ? " (equity sleeve only)" : ""}.`
+    + (f.bench_fenced && _bm === "respective" ? ` <span class="fs-fence-note">Theme-fenced → scored vs its <b>sector</b> index, so the excess is within-sector selection (toggle to NIFTY 500 for the broad-market view).</span>` : "")
+    + `</div>`;
   h += `<div class="q-warn" style="margin-top:8px">${fEsc(f.basis || "")}</div></section>`;
   h += fsPortfolioHTML(f.portfolio);   // portfolio panel (leads with the sector chart) first…
   h += fsVantagePanelHTML(ctx, f);     // …then the MoneyBall peer-envelope panel below it
   h += `<section class="panel"><h2><span class="tag-sec">TRACK</span>Growth of ₹1 — holdings-implied (gross) vs benchmark</h2><div class="plot" id="plot-fs-cum" style="height:300px"></div>`;
   h += `<div class="q-cap" style="margin-top:10px">Monthly active return (fund − benchmark) &amp; per-month selection IC</div><div class="plot" id="plot-fs-active" style="height:210px"></div></section>`;
-  h += `<details><summary>Definition · Method · Why</summary><p><b>What:</b> holdings-based fund-manager skill. A fund's edge over its benchmark is, exactly, A = Σ wᵢ·rᵢ − R_b: each start-of-month weight wᵢ times that holding's <b>total return</b> next month, minus the category-benchmark return. We compute this every month over the fund's history and ask whether it's repeatable skill or luck.</p><p><b>Method:</b> equity holdings (renormalised to 100%) × next-month total return per security (Bloomberg TR, verified vs our NSE prices to 0.15 bp ex-dividend), vs the SEBI-category TR index — which already strips most of the cap-size tilt, so the residual excess is mostly stock-selection + sizing. <b>Information Ratio</b> = mean active ÷ its volatility (annualised); <b>t-stat = IR·√years</b> (an IR of 0.5 needs ~16 years to prove skill at p&lt;0.05 — hence "years to prove"), and a "skilled" verdict additionally requires a <b>bootstrap</b> resample to clear 95% positive. <b>Caveat:</b> the t-stat (IR·√years) assumes independent monthly active returns; they are autocorrelated, so it <b>overstates</b> significance. A = gross holdings-implied active return (pre-fee/cost) — the investor's net IR is lower. Diagnostic, not a forward signal. <b>Holding-rank IC</b> = the monthly rank-correlation of <i>holding weight</i> vs forward return (Fama-MacBeth t) — a cap-tilt-contaminated proxy for true selection, since a pure active-weight IC needs point-in-time benchmark weights; <b>sizing edge</b> = the <b>annualised (per-year)</b> drag or gain of the fund's actual weighting vs equal-weighting the same names — (Π(1+r_actual)/Π(1+r_equal))^(1/yrs)−1 — the "tie-breaker" between two managers holding the same stocks. Reported per-year (not as a cumulative gap) so it doesn't grow just because the track record is longer. The <b>BATTING</b> panel splits the edge the MoneyBall way: <b>batting average</b> = share of months the fund beat its benchmark (consistency); <b>slugging</b> = average winning-month active return ÷ |average losing-month| (magnitude — a manager can win by being right often OR by sizing the rare big wins); a great manager scores on at least one. The excess is <b>GROSS</b> — pre-fee, pre-cash-drag, pre-trading-cost, and pre-factor-deflation (within-category style tilts not yet removed; a sectoral/thematic fund's excess is largely a sector bet, not selection). Domestic equity sleeve only; month-end snapshots.</p><p><b>Why:</b> NAV is the outcome; the holdings are the cause. This reads a manager's stock-picking, sizing and consistency straight off their actual decisions — separating repeatable skill from a lucky run. Diagnostics only — not investment advice.</p></details>`;
+  h += `<details><summary>Definition · Method · Why</summary><p><b>What:</b> holdings-based fund-manager skill. A fund's edge over its benchmark is, exactly, A = Σ wᵢ·rᵢ − R_b: each start-of-month weight wᵢ times that holding's <b>total return</b> next month, minus the category-benchmark return. We compute this every month over the fund's history and ask whether it's repeatable skill or luck.</p><p><b>Method:</b> equity holdings (renormalised to 100%) × next-month total return per security (Bloomberg TR, verified vs our NSE prices to 0.15 bp ex-dividend), vs the SEBI-category TR index — which already strips most of the cap-size tilt, so the residual excess is mostly stock-selection + sizing. <b>Information Ratio</b> = mean active ÷ its volatility (annualised); <b>t-stat = IR·√years</b> (an IR of 0.5 needs ~16 years to prove skill at p&lt;0.05 — hence "years to prove"), and a "skilled" verdict additionally requires a <b>bootstrap</b> resample to clear 95% positive. <b>Caveat:</b> the t-stat (IR·√years) assumes independent monthly active returns; they are autocorrelated, so it <b>overstates</b> significance. A = gross holdings-implied active return (pre-fee/cost) — the investor's net IR is lower. Diagnostic, not a forward signal. <b>Holding-rank IC</b> = the monthly rank-correlation of <i>holding weight</i> vs forward return (Fama-MacBeth t) — a cap-tilt-contaminated proxy for true selection, since a pure active-weight IC needs point-in-time benchmark weights; <b>sizing edge</b> = the <b>annualised (per-year)</b> drag or gain of the fund's actual weighting vs equal-weighting the same names — (Π(1+r_actual)/Π(1+r_equal))^(1/yrs)−1 — the "tie-breaker" between two managers holding the same stocks. Reported per-year (not as a cumulative gap) so it doesn't grow just because the track record is longer. The <b>BATTING</b> panel splits the edge the MoneyBall way: <b>batting average</b> = share of months the fund beat its benchmark (consistency); <b>slugging</b> = average winning-month active return ÷ |average losing-month| (magnitude — a manager can win by being right often OR by sizing the rare big wins); a great manager scores on at least one. The excess is <b>GROSS</b> — pre-fee, pre-cash-drag, pre-trading-cost, and pre-factor-deflation (within-category style tilts not yet removed). A sectoral/thematic fund is by default <b>theme-fenced</b> to its own sector index (Pharma vs NIFTY PHARMA, IT vs NIFTY IT, …), so the residual excess is <b>within-sector selection</b>, not the sector bet — the <b>NIFTY 500</b> toggle restores the broad-market view (where the sector beta does count as excess). Domestic equity sleeve only; month-end snapshots.</p><p><b>Why:</b> NAV is the outcome; the holdings are the cause. This reads a manager's stock-picking, sizing and consistency straight off their actual decisions — separating repeatable skill from a lucky run. Diagnostics only — not investment advice.</p></details>`;
   return h;
 }
 
@@ -3362,13 +3381,18 @@ function fsWireWindow(ts) {
   if (s0) s0.addEventListener("change", apply);
   if (s1) s1.addEventListener("change", apply);
   document.querySelectorAll(".fs-win-preset").forEach((b) => b.addEventListener("click", () => { fsSetPreset(ts, b.dataset.preset); renderFundSkill(); }));
+  document.querySelectorAll(".fs-bench-btn").forEach((b) => b.addEventListener("click", () => {
+    const mo = b.dataset.bench === "nifty500" ? "nifty500" : "respective";
+    if (mo !== FS_BENCH_MODE) { FS_BENCH_MODE = mo; renderFundSkill(); }
+  }));
 }
 // growth-of-₹1 + monthly-active charts over the SELECTED window, rebased to ₹1 at the window start
 function fsDrawWindowedCharts(f, ts, i0, i1) {
   try {
+    const useN500 = FS_BENCH_MODE === "nifty500";   // chart benchmark follows the toggle (rb5) like the metrics
     const w = ts.slice(i0, i1 + 1), xs = w.map((p) => p.ym);
     let cp = 1, cb = 1; const fp = [], fb = [];
-    w.forEach((p) => { cp *= (1 + (p.rp || 0)); cb *= (1 + (p.rb || 0)); fp.push(Math.round(cp * 1000) / 1000); fb.push(Math.round(cb * 1000) / 1000); });
+    w.forEach((p) => { const rb = useN500 ? (p.rb5 || 0) : (p.rb || 0); cp *= (1 + (p.rp || 0)); cb *= (1 + rb); fp.push(Math.round(cp * 1000) / 1000); fb.push(Math.round(cb * 1000) / 1000); });
     const suf = (i0 === 0 && i1 === ts.length - 1) ? "" : " · rebased to ₹1 at window start";
     Plotly.react("plot-fs-cum", [
       { type: "scatter", mode: "lines", name: "Fund (gross, holdings-implied)", x: xs, y: fp, line: { color: "#1a7f37", width: 2 }, hovertemplate: "%{x}: ₹%{y}<extra></extra>" },
@@ -3376,7 +3400,7 @@ function fsDrawWindowedCharts(f, ts, i0, i1) {
     ], baseLayout({ yaxis: { title: "₹1 grown" + suf, gridcolor: "#dfe3e8" }, legend: { orientation: "h", y: 1.12 }, margin: { l: 54, r: 12, t: 6, b: 30 } }), PCONF);
     attachYAutoscale("plot-fs-cum");
     Plotly.react("plot-fs-active", [
-      { type: "bar", name: "Active (mo.)", x: xs, y: w.map((p) => p.A == null ? null : Math.round(p.A * 10000) / 100), marker: { color: "#1f77b4" }, hovertemplate: "%{x}: %{y}%<extra></extra>" },
+      { type: "bar", name: "Active (mo.)", x: xs, y: w.map((p) => { const a = useN500 ? ((p.rp == null || p.rb5 == null) ? null : p.rp - p.rb5) : p.A; return a == null ? null : Math.round(a * 10000) / 100; }), marker: { color: "#1f77b4" }, hovertemplate: "%{x}: %{y}%<extra></extra>" },
       { type: "scatter", mode: "lines", name: "Selection IC", x: xs, y: w.map((p) => p.ic), yaxis: "y2", line: { color: "#d62728", width: 1 }, hovertemplate: "%{x}: IC %{y}<extra></extra>" },
     ], baseLayout({ yaxis: { title: "active %", gridcolor: "#dfe3e8" }, yaxis2: { title: "IC", overlaying: "y", side: "right", range: [-1, 1], showgrid: false }, legend: { orientation: "h", y: 1.18 }, margin: { l: 50, r: 44, t: 6, b: 30 } }), PCONF);
   } catch (e) { console.error("fsDrawWindowedCharts:", e); }
@@ -3651,9 +3675,12 @@ async function renderFundSkill() {
   ctx.cats = fsCategories(man);                 // peer categories for the vantage dropdown
   // EFFECTIVE metrics: baked Python (exact) for the full window; recomputed in-browser for a window
   let fEff = f;
-  if (!ctx.fullWin && ts.length) {
-    const m = fsComputeWindow(ts, ctx.i0, ctx.i1);
-    fEff = Object.assign({}, f, _sanWin(m), fsVerdict(m, f.is_thematic), { _windowed: true });
+  // recompute when a sub-window is selected OR the user toggled to the broad NIFTY-500 benchmark (the baked
+  // record is the respective/theme-fenced default). is_broad_bench gates the "sector bet" caveat.
+  if ((!ctx.fullWin || FS_BENCH_MODE === "nifty500") && ts.length) {
+    const m = fsComputeWindow(ts, ctx.i0, ctx.i1, FS_BENCH_MODE);
+    const _broad = (FS_BENCH_MODE === "nifty500") || (f.benchmark === "NIFTY 500");
+    fEff = Object.assign({}, f, _sanWin(m), fsVerdict(m, f.is_thematic, _broad), { _windowed: !ctx.fullWin, _benchMode: FS_BENCH_MODE });
   }
   host.innerHTML = fsMarketFlowsHTML() + fsSurvivorshipHTML() + fsScorecardHTML(fEff, ctx) + fsCrowdHTML(f)
     + fmShortlistHTML()
@@ -5455,7 +5482,7 @@ function _wfPivotRender() {
   const rootLbl = _wfAmc === "__ALL__" ? "market → AMC → scheme → sector" : `${_wfAmc} → scheme → sector`;
   host.innerHTML =
     `<div class="ab-screen-head"><b>Pivot — ${fEsc(rootLbl)}</b> · as of ${fEsc(ym)} — click a row to drill in &amp; chart it. <b>Totals</b> (AMC/scheme) show the one-way <b>⇄ reshuffle</b> — net-active is zero-sum within a book (an overweight is funded by an underweight), so a total nets to ~0; read the <b>per-sector / stock</b> rows (signed net-active) for the conviction tilt. Sorted by reshuffle (totals) / net-active (sector &amp; stock rows).</div>`
-    + `<table class="gauge-tbl wf-pivot"><thead><tr><th>Name</th><th class="num">Ownership</th><th class="num" title="totals: ⇄ one-way reshuffle Σ|net-active by sector|/2 (net-active is zero-sum within a book → totals ≈ 0); sector &amp; stock rows: signed net-active (conviction)">Net-active ⇄</th><th class="num">Implied inflow</th><th class="num">Price action</th><th class="num">Gross</th></tr></thead><tbody>${body || `<tr><td colspan="6" class="empty-note">No flow this month.</td></tr>`}</tbody></table>`;
+    + `<div class="tbl-scroll"><table class="gauge-tbl wf-pivot"><thead><tr><th>Name</th><th class="num">Ownership</th><th class="num" title="totals: ⇄ one-way reshuffle Σ|net-active by sector|/2 (net-active is zero-sum within a book → totals ≈ 0); sector &amp; stock rows: signed net-active (conviction)">Net-active ⇄</th><th class="num">Implied inflow</th><th class="num">Price action</th><th class="num">Gross</th></tr></thead><tbody>${body || `<tr><td colspan="6" class="empty-note">No flow this month.</td></tr>`}</tbody></table></div>`;
   if (!host.dataset.wfwired) {
     host.addEventListener("click", (e) => {
       const tr = e.target.closest("tr.wf-row"); if (!tr || !tr.dataset.focus) return;
@@ -5586,7 +5613,7 @@ function _wfCrowdTable() {
   }).join("");
   host.innerHTML =
     `<div class="ab-screen-head"><b>AMCs · ${fEsc(sel.label)}</b> · as of ${fEsc(W.months[i])} — sorted by net-active (conviction)</div>`
-    + `<table class="gauge-tbl wf-pivot"><thead><tr><th>AMC</th><th class="num">Ownership</th><th class="num">Net-active</th><th class="num">Implied inflow</th><th class="num">Price action</th><th class="num">Gross</th></tr></thead><tbody>${tr || `<tr><td colspan="6" class="empty-note">No holders this month.</td></tr>`}</tbody></table>`;
+    + `<div class="tbl-scroll"><table class="gauge-tbl wf-pivot"><thead><tr><th>AMC</th><th class="num">Ownership</th><th class="num">Net-active</th><th class="num">Implied inflow</th><th class="num">Price action</th><th class="num">Gross</th></tr></thead><tbody>${tr || `<tr><td colspan="6" class="empty-note">No holders this month.</td></tr>`}</tbody></table></div>`;
 }
 
 // ===== P4 theme lens: flow into NSE thematic indices (a PARALLEL, OVERLAPPING view — themes share
@@ -5670,7 +5697,7 @@ function _wfThemeTable() {
   }).join("");
   host.innerHTML =
     `<div class="ab-screen-head"><b>NSE themes</b> · as of ${fEsc(ym)} — sorted by net-active. <span style="color:#b3402f">Overlapping — not additive.</span></div>`
-    + `<table class="gauge-tbl wf-pivot"><thead><tr><th>Theme</th><th class="num">Ownership</th><th class="num">Net-active</th><th class="num">Implied inflow</th><th class="num">Price action</th><th class="num">Gross</th></tr></thead><tbody>${tr}</tbody></table>`;
+    + `<div class="tbl-scroll"><table class="gauge-tbl wf-pivot"><thead><tr><th>Theme</th><th class="num">Ownership</th><th class="num">Net-active</th><th class="num">Implied inflow</th><th class="num">Price action</th><th class="num">Gross</th></tr></thead><tbody>${tr}</tbody></table></div>`;
   if (!host.dataset.wfwired) {
     host.addEventListener("click", (e) => {
       const trEl = e.target.closest("tr.wf-row"); if (!trEl || !trEl.dataset.theme) return;
