@@ -347,6 +347,8 @@ table.ftable tbody tr:hover { background: #f7fafc; }
 .wf-pivot th.num, .wf-pivot td.num { text-align: right; font-variant-numeric: tabular-nums; }
 /* compact rows for the long flow pivots so more fits before scrolling */
 .tbl-scroll .wf-pivot td, .tbl-scroll .wf-pivot th { padding-top: 3px; padding-bottom: 3px; }
+/* §C flow-matrix caption */
+.wf-mtx-cap { font-size: 12.5px; color: #57606a; margin: 14px 0 4px; }
 .wf-pivot tbody tr.wf-row { cursor: pointer; }
 .wf-pivot tbody tr.wf-row:hover { background: #f6f8fa; }
 .wf-pivot tbody tr.wf-row-on { background: #e8f6f3; }

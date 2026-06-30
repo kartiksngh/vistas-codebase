@@ -5124,6 +5124,13 @@ let _wfAmc = "__ALL__", _wfSector = "__ALL__", _wfHz = "0", _wfSnapIdx = null, _
 let _wfFocus = { amc: null, code: null, sector: null };
 let _wfTheme = null;    // selected NSE thematic index for the theme-lens chart
 let _wfCrowdMode = "sector", _wfCrowdSec = null, _wfCrowdStk = null;   // cross-AMC crowding (P4b)
+let _wfCrowdDate = null;          // §A local as-of for the crowding table/head (month string; null = latest)
+let _wfCrowdAmc = "__ALL__";      // §B AMC filter: "__ALL__" = aggregate, else draw/zoom one AMC's flow
+let _wfCrowdSort = { key: "net_active", dir: -1 };   // §D crowding-table column sort
+let _wfCrowdFilter = "";          // §D crowding-table AMC-name text filter
+let _wfMtxMeasure = "net_active"; // §C flow-matrix measure (net_active | gross | price | inflow)
+let _wfMtxUnit = "cr";            // §C flow-matrix unit (cr = ₹ cr | pct = % of AMC equity AUM)
+const _WF_MTX_MAXROWS = 30;       // §C heatmap row cap (AMCs), by conviction — keeps it scannable
 const _wfPivExp = {};   // pivot rowKey -> true (expanded), for the Excel-style drill-down
 const _wfDrill = {};    // amc-slug -> drill payload | null (lazy-loaded per-AMC scheme×sector file)
 const _wfCrowdCache = {}, _wfCrowdInflight = {};   // vst_id -> per-stock "who's trading it" payload (lazy)
@@ -5283,6 +5290,33 @@ function renderOwnership() {
     }));
     const csec = $("wf-crowd-sec"); if (csec) csec.addEventListener("change", (e) => { _wfCrowdSec = e.target.value; _wfCrowdDraw(); });
     const cstk = $("wf-crowd-stk"); if (cstk) cstk.addEventListener("change", (e) => { _wfCrowdStk = e.target.value; _wfCrowdDraw(); });
+    // §B AMC filter, §A local as-of date, §D AMC-name text filter
+    const camc = $("wf-crowd-amc"); if (camc) camc.addEventListener("change", (e) => { _wfCrowdAmc = e.target.value; _wfCrowdDraw(); });
+    const cdate = $("wf-crowd-date"); if (cdate) cdate.addEventListener("change", (e) => { _wfCrowdDate = e.target.value || null; _wfCrowdDraw(); });
+    const cfilt = $("wf-crowd-filter"); if (cfilt) cfilt.addEventListener("input", (e) => { _wfCrowdFilter = e.target.value; _wfCrowdTable(); });
+    // §D delegated column-sort on the (re-rendered) crowding table header
+    const ctbl = $("wf-crowd-tbl");
+    if (ctbl && !ctbl.dataset.sortwired) {
+      ctbl.addEventListener("click", (e) => {
+        const th = e.target.closest("th[data-csk]"); if (!th) return;
+        const k = th.dataset.csk;
+        if (_wfCrowdSort.key === k) _wfCrowdSort.dir *= -1;
+        else _wfCrowdSort = { key: k, dir: k === "amc" ? 1 : -1 };
+        _wfCrowdTable();
+      });
+      ctbl.dataset.sortwired = "1";
+    }
+    // §C flow-matrix measure + unit toggles
+    const mmeas = $("wf-mtx-measure");
+    if (mmeas) mmeas.querySelectorAll(".fs-lvl").forEach((b) => b.addEventListener("click", () => {
+      mmeas.querySelectorAll(".fs-lvl").forEach((x) => x.classList.remove("on")); b.classList.add("on");
+      _wfMtxMeasure = b.dataset.m; _wfMatrixDraw();
+    }));
+    const munit = $("wf-mtx-unit");
+    if (munit) munit.querySelectorAll(".fs-lvl").forEach((b) => b.addEventListener("click", () => {
+      munit.querySelectorAll(".fs-lvl").forEach((x) => x.classList.remove("on")); b.classList.add("on");
+      _wfMtxUnit = b.dataset.u; _wfMatrixDraw();
+    }));
     _wfBuilt = true;
   }
   _wfDraw();
@@ -5510,6 +5544,12 @@ function _wfCrowdPanelHTML(W) {
   if (_wfCrowdStk == null && ci.length) _wfCrowdStk = ci[0].vst_id;
   const secOpts = sectors.map((s) => `<option value="${attEsc(s)}"${s === _wfCrowdSec ? " selected" : ""}>${fEsc(s)}</option>`).join("");
   const stkOpts = ci.map((c) => `<option value="${attEsc(c.vst_id)}"${c.vst_id === _wfCrowdStk ? " selected" : ""}>${fEsc(c.name + (c.sym ? " (" + c.sym + ")" : ""))}</option>`).join("");
+  // §A local as-of date + §B AMC filter (default aggregate) — both scoped to this crowding panel
+  const months = (W && W.months) || [];
+  const amcs = Object.keys((W && W.cube) || {}).sort();
+  const amcOpts = amcs.map((a) => `<option value="${attEsc(a)}"${a === _wfCrowdAmc ? " selected" : ""}>${fEsc(a)}</option>`).join("");
+  const lastM = months.length - 1;
+  const dateOpts = months.map((m, i) => `<option value="${attEsc(m)}"${(_wfCrowdDate === m || (_wfCrowdDate == null && i === lastM)) ? " selected" : ""}>${fEsc(m)}</option>`).join("");
   return `<section class="panel cpanel">
     <h2><span class="tag-sec">CROWDING</span>Cross-AMC crowding — who's tilting into a stock or sector</h2>
     <details><summary>Definition · Method · Why</summary>
@@ -5524,10 +5564,29 @@ function _wfCrowdPanelHTML(W) {
       </span>
       <span id="wf-crowd-sec-wrap" style="margin-left:10px"><span class="ab-ctllbl">Sector</span> <select id="wf-crowd-sec" class="ab-sel" style="min-width:180px">${secOpts}</select></span>
       <span id="wf-crowd-stk-wrap" style="margin-left:10px;display:none"><span class="ab-ctllbl">Stock</span> <select id="wf-crowd-stk" class="ab-sel" style="min-width:240px">${stkOpts}</select></span>
+      <span style="margin-left:10px"><span class="ab-ctllbl">AMC</span> <select id="wf-crowd-amc" class="ab-sel" style="min-width:170px"><option value="__ALL__"${_wfCrowdAmc === "__ALL__" ? " selected" : ""}>All AMCs (aggregate)</option>${amcOpts}</select></span>
+      <span style="margin-left:10px"><span class="ab-ctllbl">As of</span> <select id="wf-crowd-date" class="ab-sel" style="min-width:110px">${dateOpts}</select></span>
+      <span style="margin-left:10px"><input id="wf-crowd-filter" class="ab-sel" placeholder="filter AMC…" style="min-width:120px" value="${attEsc(_wfCrowdFilter)}"></span>
     </div>
     <div id="wf-crowd-head" style="display:flex;flex-wrap:wrap;gap:16px;margin:10px 0"></div>
     <div id="plot-wf-crowd"></div>
     <div id="wf-crowd-tbl" style="margin-top:10px"></div>
+    <div class="wf-mtx-cap">Flow matrix — every AMC's flow into the <b>selected stock / sector</b> over time. Scan a <b>row</b> for one AMC's accumulation/distribution trajectory; scan a <b>column</b> for a month many AMCs moved together (a crowding event). Green = buying, red = selling.</div>
+    <div class="ab-ctlrow" style="margin-top:4px">
+      <span class="ab-ctllbl">Measure</span>
+      <span class="fs-lvl-seg" id="wf-mtx-measure">
+        <button type="button" class="fs-lvl${_wfMtxMeasure === "net_active" ? " on" : ""}" data-m="net_active">Net-active</button>
+        <button type="button" class="fs-lvl${_wfMtxMeasure === "gross" ? " on" : ""}" data-m="gross">Gross</button>
+        <button type="button" class="fs-lvl${_wfMtxMeasure === "price" ? " on" : ""}" data-m="price">Price-adj</button>
+        <button type="button" class="fs-lvl${_wfMtxMeasure === "inflow" ? " on" : ""}" data-m="inflow">Inflow</button>
+      </span>
+      <span class="ab-ctllbl" style="margin-left:12px">Unit</span>
+      <span class="fs-lvl-seg" id="wf-mtx-unit">
+        <button type="button" class="fs-lvl${_wfMtxUnit === "cr" ? " on" : ""}" data-u="cr">₹ cr</button>
+        <button type="button" class="fs-lvl${_wfMtxUnit === "pct" ? " on" : ""}" data-u="pct">% of AUM</button>
+      </span>
+    </div>
+    <div id="plot-wf-mtx"></div>
   </section>`;
 }
 
@@ -5559,14 +5618,78 @@ function _wfCrowdSel() {
   return { label: d.name + (d.sym ? " (" + d.sym + ")" : ""), amcs, agg };
 }
 
-function _wfCrowdDraw() { _wfCrowdHead(); _wfCrowdChart(); _wfCrowdTable(); }
+function _wfCrowdDraw() { _wfCrowdHead(); _wfCrowdChart(); _wfCrowdTable(); _wfMatrixDraw(); }
+
+// §C an AMC's total equity AUM per month = Σ mv over all its sectors (from the inline cube) — the
+// denominator for the matrix's % -of-AUM view; computed in-browser so no new data piece is needed.
+function _wfAmcAumSeries(W, amc) {
+  const sec = (W.cube || {})[amc], n = W.months.length, out = new Array(n).fill(0);
+  if (!sec) return out;
+  Object.keys(sec).forEach((k) => { const mv = sec[k].mv || []; for (let i = 0; i < n; i++) out[i] += (mv[i] || 0); });
+  return out;
+}
+// §C cross-sectional flow matrix — AMC (rows) × month (cols) heatmap of the chosen measure into the
+// selected target. Reuses _wfCrowdSel(); rows ranked by conviction (Σ|measure| over the window), capped.
+function _wfMatrixDraw() {
+  try { _wfMatrixDrawImpl(); } catch (e) { console.error("flow matrix:", e); const el = $("plot-wf-mtx"); if (el) el.innerHTML = "<div class='empty-note'>matrix unavailable for this selection</div>"; }
+}
+function _wfMatrixDrawImpl() {
+  const W = _wf(), host = $("plot-wf-mtx"); if (!W || !host) return;
+  const sel = _wfCrowdSel();
+  if (!sel || sel.loading || !sel.amcs) { _wfPlot("plot-wf-mtx", [], {}); return; }
+  const n = W.months.length, back = parseInt(_wfHz, 10) || 0, h0 = back > 0 ? Math.max(0, n - back) : 0;
+  const months = W.months.slice(h0), meas = _wfMtxMeasure, pct = _wfMtxUnit === "pct";
+  const amcKeys = Object.keys(sel.amcs);
+  const conv = (a) => { const arr = sel.amcs[a][meas] || []; let s = 0; for (let i = h0; i < n; i++) s += Math.abs(arr[i] || 0); return s; };
+  amcKeys.sort((p, q) => conv(q) - conv(p));
+  const rows = amcKeys.slice(0, _WF_MTX_MAXROWS);
+  const aum = {}; if (pct) rows.forEach((a) => { aum[a] = _wfAmcAumSeries(W, a); });
+  const z = [], cd = [];
+  rows.forEach((a) => {
+    const node = sel.amcs[a], arr = node[meas] || [], zr = [], cr = [];
+    for (let i = h0; i < n; i++) {
+      const crv = arr[i] || 0;
+      let v = crv;
+      if (pct) { const d = aum[a][i]; v = (d && d > 0) ? (crv / d * 100) : null; }
+      zr.push(v);
+      cr.push([crv, (node.mv && node.mv[i]) || 0, (node.net_active && node.net_active[i]) || 0,
+        (node.inflow && node.inflow[i]) || 0, (node.price && node.price[i]) || 0]);
+    }
+    z.push(zr); cd.push(cr);
+  });
+  rows.reverse(); z.reverse(); cd.reverse();          // highest-conviction AMC at the TOP (Plotly y is bottom-up)
+  const mLbl = { net_active: "net-active", gross: "gross", price: "price-adj", inflow: "inflow" }[meas];
+  const unitLbl = pct ? "% of AUM" : "₹ cr";
+  const ht = "<b>%{y}</b> · %{x}<br>" + mLbl + ": %{z:.2f} " + unitLbl
+    + "<br>₹%{customdata[0]:,.0f} cr · MV ₹%{customdata[1]:,.0f} cr"
+    + "<br>net ₹%{customdata[2]:,.0f} · inflow ₹%{customdata[3]:,.0f} · price ₹%{customdata[4]:,.0f}<extra></extra>";
+  const trace = {
+    type: "heatmap", x: months, y: rows, z: z, customdata: cd,
+    colorscale: [[0, "#b2182b"], [0.5, "#f7f7f7"], [1, "#1a7f37"]], zmid: 0,
+    hovertemplate: ht, colorbar: { title: unitLbl, thickness: 12, len: 0.9 },
+  };
+  _wfPlot("plot-wf-mtx", [trace], {
+    height: Math.max(260, 64 + rows.length * 17),
+    title: { text: `Flow matrix — ${mLbl} into ${sel.label} (${unitLbl})${amcKeys.length > rows.length ? ` · top ${rows.length} of ${amcKeys.length} AMCs` : ""}`, font: { size: 13 } },
+    margin: { l: 170, r: 10, t: 38, b: 64 },
+    xaxis: { type: "category", tickangle: -45, automargin: true },
+    yaxis: { type: "category", automargin: true, tickfont: { size: 10 } },
+  });
+}
+
+// the crowding panel's LOCAL as-of index (§A): driven by its own date dropdown, independent of the
+// far-away waterfall AS-OF slider (falls back to the waterfall index / latest when no local date is set).
+function _wfCrowdIdx(W) {
+  if (_wfCrowdDate != null && W) { const j = (W.months || []).indexOf(_wfCrowdDate); if (j >= 0) return j; }
+  return (_wfSnapIdx == null) ? ((W && W.months ? W.months.length : 1) - 1) : _wfSnapIdx;
+}
 
 function _wfCrowdHead() {
   const host = $("wf-crowd-head"); if (!host) return;
   const W = _wf(), sel = _wfCrowdSel();
   if (!sel) { host.innerHTML = `<div class="empty-note">No crowding data for this selection.</div>`; return; }
   if (sel.loading) { host.innerHTML = `<div class="empty-note">loading…</div>`; return; }
-  const i = (_wfSnapIdx == null) ? W.months.length - 1 : _wfSnapIdx;
+  const i = _wfCrowdIdx(W);
   let buyers = 0, sellers = 0;
   Object.keys(sel.amcs).forEach((a) => { const v = sel.amcs[a].net_active[i]; if (v > 0) buyers++; else if (v < 0) sellers++; });
   const agg = sel.agg;
@@ -5579,8 +5702,11 @@ function _wfCrowdHead() {
 function _wfCrowdChart() {
   const W = _wf(), sel = _wfCrowdSel(); if (!W) return;
   if (!sel || sel.loading || !sel.agg) { _wfPlot("plot-wf-crowd", [], {}); return; }
-  const node = sel.agg, n = W.months.length, back = parseInt(_wfHz, 10) || 0, h0 = back > 0 ? Math.max(0, n - back) : 0;
-  const x = W.months.slice(h0), sl = (arr) => arr.slice(h0);
+  // §B: when one AMC is chosen, chart THAT AMC's flow into the selection over time (else the aggregate)
+  const single = (_wfCrowdAmc !== "__ALL__") && sel.amcs && sel.amcs[_wfCrowdAmc];
+  const node = single ? sel.amcs[_wfCrowdAmc] : sel.agg;
+  const n = W.months.length, back = parseInt(_wfHz, 10) || 0, h0 = back > 0 ? Math.max(0, n - back) : 0;
+  const x = W.months.slice(h0), sl = (arr) => (arr || []).slice(h0);
   const traces = [
     { type: "bar", x, y: sl(node.net_active), name: "Net-active", marker: { color: _WF_COL.na } },
     { type: "bar", x, y: sl(node.inflow), name: "Implied inflow", marker: { color: _WF_COL.inflow } },
@@ -5588,7 +5714,7 @@ function _wfCrowdChart() {
   ];
   _wfPlot("plot-wf-crowd", traces, {
     barmode: "relative", height: 320,
-    title: { text: `Aggregate flow — ${sel.label} (₹ cr/month)`, font: { size: 13 } },
+    title: { text: `${single ? fEsc(_wfCrowdAmc) + " → " : "Aggregate flow — "}${sel.label} (₹ cr/month)`, font: { size: 13 } },
     legend: { orientation: "h" }, yaxis: { title: "₹ cr", zeroline: true }, margin: { t: 40 },
   });
 }
@@ -5598,22 +5724,30 @@ function _wfCrowdTable() {
   const sel = _wfCrowdSel();
   if (!sel) { host.innerHTML = ""; return; }
   if (sel.loading) { host.innerHTML = `<div class="empty-note">loading…</div>`; return; }
-  const i = (_wfSnapIdx == null) ? W.months.length - 1 : _wfSnapIdx;
+  const i = _wfCrowdIdx(W);
   const naCol = (v) => (v >= 0 ? _WF_COL.na : "#b3402f");
-  const rows = Object.keys(sel.amcs).map((a) => ({ a, n: sel.amcs[a] })).filter((r) => r.n);
-  rows.sort((p, q) => (q.n.net_active[i] || 0) - (p.n.net_active[i] || 0));
+  let rows = Object.keys(sel.amcs).map((a) => ({ a, n: sel.amcs[a] })).filter((r) => r.n);
+  // §D filter by AMC-name text
+  const fq = (_wfCrowdFilter || "").trim().toLowerCase();
+  if (fq) rows = rows.filter((r) => r.a.toLowerCase().indexOf(fq) >= 0);
+  // §D sort by the chosen column (numeric cols read at the local as-of index; AMC sorts alphabetically)
+  const sk = _wfCrowdSort.key, dir = _wfCrowdSort.dir;
+  const cell = (r, k) => (k === "amc") ? r.a.toLowerCase() : ((r.n[k] && r.n[k][i] != null) ? r.n[k][i] : 0);
+  rows.sort((p, q) => { const a = cell(p, sk), b = cell(q, sk); return (a < b ? -1 : a > b ? 1 : 0) * dir; });
   const tr = rows.map((r) => {
-    const n = r.n;
-    return `<tr><td>${fEsc(r.a)}</td>`
+    const n = r.n, on = (r.a === _wfCrowdAmc) ? " wf-row-on" : "";   // §B highlight the chosen AMC
+    return `<tr class="${on.trim()}"><td>${fEsc(r.a)}</td>`
       + `<td class="num">${n.mv ? _wfFmt(n.mv[i]) : "—"}</td>`
       + `<td class="num" style="color:${naCol(n.net_active[i])}">${_wfFmt(n.net_active[i])}</td>`
       + `<td class="num" style="color:${_WF_COL.inflow}">${_wfFmt(n.inflow[i])}</td>`
       + `<td class="num" style="color:${_WF_COL.price}">${_wfFmt(n.price[i])}</td>`
       + `<td class="num">${_wfFmt(n.gross[i])}</td></tr>`;
   }).join("");
+  const arrow = (k) => sk === k ? (dir < 0 ? " ▾" : " ▲") : "";
+  const th = (k, lbl, num) => `<th data-csk="${k}"${num ? ' class="num"' : ""} style="cursor:pointer">${lbl}${arrow(k)}</th>`;
   host.innerHTML =
-    `<div class="ab-screen-head"><b>AMCs · ${fEsc(sel.label)}</b> · as of ${fEsc(W.months[i])} — sorted by net-active (conviction)</div>`
-    + `<div class="tbl-scroll"><table class="gauge-tbl wf-pivot"><thead><tr><th>AMC</th><th class="num">Ownership</th><th class="num">Net-active</th><th class="num">Implied inflow</th><th class="num">Price action</th><th class="num">Gross</th></tr></thead><tbody>${tr || `<tr><td colspan="6" class="empty-note">No holders this month.</td></tr>`}</tbody></table></div>`;
+    `<div class="ab-screen-head"><b>AMCs · ${fEsc(sel.label)}</b> · as of ${fEsc(W.months[i] || "—")}${fq ? ` · filter “${fEsc(_wfCrowdFilter)}” (${rows.length})` : ""} — click a column to sort</div>`
+    + `<div class="tbl-scroll"><table class="gauge-tbl wf-pivot"><thead><tr>${th("amc", "AMC", false)}${th("mv", "Ownership", true)}${th("net_active", "Net-active", true)}${th("inflow", "Implied inflow", true)}${th("price", "Price action", true)}${th("gross", "Gross", true)}</tr></thead><tbody>${tr || `<tr><td colspan="6" class="empty-note">No holders this month.</td></tr>`}</tbody></table></div>`;
 }
 
 // ===== P4 theme lens: flow into NSE thematic indices (a PARALLEL, OVERLAPPING view — themes share
