@@ -48,23 +48,31 @@ _ROOT = os.path.dirname(_HERE)
 BOOK_DIR = os.path.join(_ROOT, "amc_book")
 
 LIQ_DAYS = 20            # max position ≤ this many days of median daily turnover (one patient build)
-LIQ_DAYS_MAX = int(os.environ.get("VISTAS_LIQ_DAYS_MAX", "250"))
+LIQ_DAYS_MAX = int(os.environ.get("VISTAS_LIQ_DAYS_MAX", "60"))
                          # relaxed build horizon used ONLY to top a book up to its mandate equity floor
                          # when the tight cap would otherwise force an un-mandated cash pile (the
                          # transfer-coefficient fix — see deploy_with_floor). A paper book has FIXED AUM,
-                         # so its one-time build accumulates over a patient core-holding horizon (≈1y of
-                         # ADV; Berk-Green capacity). ★ autoresearch fm-jun30 (P3/T2): the legacy 60d (a
-                         # quarter of ADV) was too short for a ₹-large small-cap core, leaving the Quant
-                         # Small Cap book ~46% in CASH below its 65% mandate floor → beta 0.60, up-capture
-                         # 0.59 = the β0.28 cash-drag TC pathology (IR −0.25 despite the HIGHEST IC 0.070).
-                         # Raising the horizon lets the floor-deploy reach the mandated equity: on the
-                         # 2013-04..2020-12 validation era the Quant book went beta 0.60→0.99, equity
-                         # 54%→94%, IR −0.25→+1.13, and the lift SATURATES on a flat plateau
-                         # (IR 1.13/1.22/1.20 at LDM 250/400/600 as equity caps at the ~95% ADV-bound
-                         # ceiling) — a TC mechanism (removing an unintended low-beta tilt, IC unchanged),
-                         # not a curve-fit spike. The OTHER pilots are UNCHANGED (deploy_with_floor never
-                         # fires for an already-floored book). 250 = the conservative, capacity-realistic
-                         # point at the start of the plateau. Env-overridable for the plateau sweep.
+                         # so its one-time build accumulates over a patient core-holding horizon.
+                         #
+                         # ★ autoresearch fm-jun30 proposed 250 ("the legacy 60 left a ₹-large small-cap
+                         # core in cash below its floor → β0.60 cash-drag TC pathology, fixed by 250").
+                         # That pathology is REAL on the cross-AMC Quant-Small-Cap PILOT. BUT verifying the
+                         # SAME bump on the LIVE 28-desk ABSL firm (the shared deploy used by amc_live /
+                         # daily mark / amc_replay) showed it is NOT a firm-wide TC fix there:
+                         #   • HOLDOUT 2021-26: 0/28 desks' books change materially (firm IR 0.905→0.905);
+                         #     every ABSL desk already deploys to ~95% (or its hybrid equity_max) at LDM=60,
+                         #     so the floor branch never fires — 250 is a pure NO-OP on the live firm today.
+                         #   • VALIDATION 2013-20: only 3 desks move (Flexi/ELSS/Focused), and the move is a
+                         #     SMALL-CAP SIZE TILT, not the advertised cash-deployment TC fix: equity% does
+                         #     NOT rise (stays ~95%) and β does NOT move toward 1 — instead relaxing each
+                         #     name's liquidity cap 4× lets illiquid high-score SMALL names take bigger
+                         #     weights (small-cap book weight +0.19/+0.09/+0.17), so SMB-β rises +0.07..0.15.
+                         #     That LIFTS IR in the small-cap-friendly 2013-20 era and is neutral/slightly
+                         #     NEGATIVE in 2021-26 (Focused IR 0.33→0.31) — an era-dependent factor BET, not
+                         #     robust skill. (Verified: vistas/amc_replay.replay over both eras, all 28
+                         #     ABSL desks, SMB = skill_factors SMALL-minus-BIG turnover-tercile leg.)
+                         # ⇒ For the LIVE firm we keep 60 (no surprise, no injected size tilt). The genuine
+                         # pilot cash-drag case can still set VISTAS_LIQ_DAYS_MAX=250 via env for research.
 TRADE_ADV_FRAC = 0.15   # a single day's trade ≤ this fraction of the day's turnover
 
 
