@@ -5459,27 +5459,33 @@ function _wfPivotRows() {
   const W = _wf(), out = [];
   const i = (_wfSnapIdx == null) ? W.months.length - 1 : _wfSnapIdx;
   const at = (node) => node ? { mv: node.mv ? node.mv[i] : null, na: node.net_active[i], inf: node.inflow[i], pr: node.price[i], gr: node.gross[i] } : null;
+  const sec = (_wfSector && _wfSector !== "__ALL__") ? _wfSector : null;   // SECTOR dropdown scope
   if (_wfAmc === "__ALL__") {
     const amcs = (W.amcs || Object.keys(W.cube || {})).slice();
     const amcRows = amcs.map((a) => {
-      const v = at(((W.cube || {})[a] || {}).__total__);
-      if (v) { const rs = _wfReshuffleArr(_wfSecArr((W.cube || {})[a], i)); v.resh = rs ? rs.reshuffle : null; v.isTotal = true; }
+      const cubeA = (W.cube || {})[a] || {};
+      let v;
+      if (sec) { v = at(cubeA[sec]); }                    // scoped: the AMC's flow INTO the selected sector (signed)
+      else { v = at(cubeA.__total__); if (v) { const rs = _wfReshuffleArr(_wfSecArr(cubeA, i)); v.resh = rs ? rs.reshuffle : null; v.isTotal = true; } }
       return { a, v };
     }).filter((r) => r.v);
-    amcRows.sort((p, q) => (q.v.resh || 0) - (p.v.resh || 0));   // totals: sort by one-way reshuffle (net-active≈0)
+    if (sec) amcRows.sort((p, q) => Math.abs(q.v.na || 0) - Math.abs(p.v.na || 0));   // sector: by |net-active|
+    else amcRows.sort((p, q) => (q.v.resh || 0) - (p.v.resh || 0));                   // totals: by one-way reshuffle
     for (const { a, v } of amcRows) {
       const key = "amc::" + a;
-      out.push({ key, depth: 0, label: a, vals: v, expandable: true, expanded: !!_wfPivExp[key], focus: { amc: a, code: null, sector: null } });
-      if (_wfPivExp[key]) _wfPushSchemes(out, a, 1, i, at);
+      out.push({ key, depth: 0, label: a, vals: v, expandable: true, expanded: !!_wfPivExp[key], focus: { amc: a, code: null, sector: sec } });
+      if (_wfPivExp[key]) _wfPushSchemes(out, a, 1, i, at, sec);
     }
   } else {
-    _wfPushSchemes(out, _wfAmc, 0, i, at);
+    _wfPushSchemes(out, _wfAmc, 0, i, at, sec);
   }
   return out;
 }
 
-// append an AMC's scheme rows (and, if expanded, their sector children); lazy-fetch the drill file if absent.
-function _wfPushSchemes(out, amc, depth, i, at) {
+// append an AMC's scheme rows (and, if expanded, their children); lazy-fetch the drill file if absent.
+// `sec` = the SECTOR-dropdown scope: when set, a scheme row shows its flow INTO that sector and drills
+// straight to that sector's stocks; when null, it shows the scheme total and drills sector → stock.
+function _wfPushSchemes(out, amc, depth, i, at, sec) {
   const d = _wfDrillFor(amc);
   if (!d) {
     const slug = (_wf().drill_index || {})[amc];
@@ -5488,26 +5494,40 @@ function _wfPushSchemes(out, amc, depth, i, at) {
     return;
   }
   const schemes = (d.schemes || []).map((s) => {
-    const v = at(s.total);
-    if (v) { const rs = _wfReshuffleArr(_wfSecArr(s.sectors, i)); v.resh = rs ? rs.reshuffle : null; v.isTotal = true; }
+    let v;
+    if (sec) { v = at((s.sectors || {})[sec]); }          // scoped: scheme's flow into the selected sector (signed)
+    else { v = at(s.total); if (v) { const rs = _wfReshuffleArr(_wfSecArr(s.sectors, i)); v.resh = rs ? rs.reshuffle : null; v.isTotal = true; } }
     return { s, v };
   }).filter((r) => r.v);
-  schemes.sort((p, q) => (q.v.resh || 0) - (p.v.resh || 0));   // scheme totals: sort by one-way reshuffle
+  if (sec) schemes.sort((p, q) => Math.abs(q.v.na || 0) - Math.abs(p.v.na || 0));
+  else schemes.sort((p, q) => (q.v.resh || 0) - (p.v.resh || 0));   // scheme totals: sort by one-way reshuffle
   for (const { s, v } of schemes) {
     const key = "sch::" + amc + "::" + s.code;
+    if (sec) {                                             // sector-scoped → scheme drills straight to that sector's stocks
+      const stocks = ((s.sectors || {})[sec] || {}).stocks || [];
+      out.push({ key, depth, label: s.name, vals: v, expandable: stocks.length > 0, expanded: !!_wfPivExp[key], focus: { amc, code: s.code, sector: sec } });
+      if (_wfPivExp[key] && stocks.length) {
+        const srows = stocks.map((st) => ({ st, v: at(st) })).filter((r) => r.v);
+        srows.sort((p, q) => (q.v.na || 0) - (p.v.na || 0));
+        for (const { st, v: sv2 } of srows) {
+          out.push({ key: key + "::" + sec + "::vst::" + st.vst_id, depth: depth + 1, label: st.name + (st.sym ? " (" + st.sym + ")" : ""), vals: sv2, expandable: false, focus: { amc, code: s.code, sector: sec, vst: st.vst_id } });
+        }
+      }
+      continue;
+    }
     out.push({ key, depth, label: s.name, vals: v, expandable: true, expanded: !!_wfPivExp[key], focus: { amc, code: s.code, sector: null } });
     if (_wfPivExp[key]) {
-      const secs = Object.keys(s.sectors || {}).map((sec) => ({ sec, v: at(s.sectors[sec]) })).filter((r) => r.v);
+      const secs = Object.keys(s.sectors || {}).map((sc) => ({ sc, v: at(s.sectors[sc]) })).filter((r) => r.v);
       secs.sort((p, q) => (q.v.na || 0) - (p.v.na || 0));
-      for (const { sec, v: sv } of secs) {
-        const secKey = key + "::" + sec;
-        const stocks = (s.sectors[sec] || {}).stocks || [];
-        out.push({ key: secKey, depth: depth + 1, label: sec, vals: sv, expandable: stocks.length > 0, expanded: !!_wfPivExp[secKey], focus: { amc, code: s.code, sector: sec } });
+      for (const { sc, v: sv } of secs) {
+        const secKey = key + "::" + sc;
+        const stocks = (s.sectors[sc] || {}).stocks || [];
+        out.push({ key: secKey, depth: depth + 1, label: sc, vals: sv, expandable: stocks.length > 0, expanded: !!_wfPivExp[secKey], focus: { amc, code: s.code, sector: sc } });
         if (_wfPivExp[secKey] && stocks.length) {              // P4 stock leaves (top holdings; may not sum to sector)
           const srows = stocks.map((st) => ({ st, v: at(st) })).filter((r) => r.v);
           srows.sort((p, q) => (q.v.na || 0) - (p.v.na || 0));
           for (const { st, v: sv2 } of srows) {
-            out.push({ key: secKey + "::vst::" + st.vst_id, depth: depth + 2, label: st.name + (st.sym ? " (" + st.sym + ")" : ""), vals: sv2, expandable: false, focus: { amc, code: s.code, sector: sec, vst: st.vst_id } });
+            out.push({ key: secKey + "::vst::" + st.vst_id, depth: depth + 2, label: st.name + (st.sym ? " (" + st.sym + ")" : ""), vals: sv2, expandable: false, focus: { amc, code: s.code, sector: sc, vst: st.vst_id } });
           }
         }
       }
@@ -5536,9 +5556,13 @@ function _wfPivotRender() {
       + `<td class="num" style="color:${_WF_COL.price}">${_wfFmt(r.vals.pr)}</td>`
       + `<td class="num">${_wfFmt(r.vals.gr)}</td></tr>`;
   }).join("");
-  const rootLbl = _wfAmc === "__ALL__" ? "market → AMC → scheme → sector" : `${_wfAmc} → scheme → sector`;
+  const secScope = (_wfSector && _wfSector !== "__ALL__") ? _wfSector : null;
+  const rootLbl = (_wfAmc === "__ALL__" ? "market → AMC → scheme" : `${_wfAmc} → scheme`) + (secScope ? ` → stock · ${secScope} only` : " → sector");
+  const note = secScope
+    ? `<b>Pivot — ${fEsc(rootLbl)}</b> · as of ${fEsc(ym)} — each AMC / scheme row shows its <b>signed net-active</b> conviction INTO <b>${fEsc(secScope)}</b> (＋ buying · − selling); click a row to drill to its ${fEsc(secScope)} stocks &amp; chart it. Sorted by |net-active|.`
+    : `<b>Pivot — ${fEsc(rootLbl)}</b> · as of ${fEsc(ym)} — click a row to drill in &amp; chart it. <b>Totals</b> (AMC/scheme) show the one-way <b>⇄ reshuffle</b> — net-active is zero-sum within a book (an overweight is funded by an underweight), so a total nets to ~0; read the <b>per-sector / stock</b> rows (signed net-active) for the conviction tilt. Sorted by reshuffle (totals) / net-active (sector &amp; stock rows).`;
   host.innerHTML =
-    `<div class="ab-screen-head"><b>Pivot — ${fEsc(rootLbl)}</b> · as of ${fEsc(ym)} — click a row to drill in &amp; chart it. <b>Totals</b> (AMC/scheme) show the one-way <b>⇄ reshuffle</b> — net-active is zero-sum within a book (an overweight is funded by an underweight), so a total nets to ~0; read the <b>per-sector / stock</b> rows (signed net-active) for the conviction tilt. Sorted by reshuffle (totals) / net-active (sector &amp; stock rows).</div>`
+    `<div class="ab-screen-head">${note}</div>`
     + `<div class="tbl-scroll"><table class="gauge-tbl wf-pivot"><thead><tr><th>Name</th><th class="num">Ownership</th><th class="num" title="totals: ⇄ one-way reshuffle Σ|net-active by sector|/2 (net-active is zero-sum within a book → totals ≈ 0); sector &amp; stock rows: signed net-active (conviction)">Net-active ⇄</th><th class="num">Implied inflow</th><th class="num">Price action</th><th class="num">Gross</th></tr></thead><tbody>${body || `<tr><td colspan="6" class="empty-note">No flow this month.</td></tr>`}</tbody></table></div>`;
   if (!host.dataset.wfwired) {
     host.addEventListener("click", (e) => {
