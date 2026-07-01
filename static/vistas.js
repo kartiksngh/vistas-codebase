@@ -2101,6 +2101,9 @@ let SCREEN_PCTAUM_MIN = null;          // min % of the selected AMC's AUM in the
 let SCREEN_TROUBLED = false;           // optional "troubled only" preset (price correction + deteriorating)
 let SCREEN_COLF = {};                  // Excel-like per-column filters: {key: ">5" | "<0" | "10-50" | ...}
 let SCREEN_SORT = { key: "mcap_cr", dir: -1 };
+let SCREEN_SECTOR = "";                // "" = all sectors; else only this sector (current snapshot)
+let SCREEN_CAP = "";                   // "" = all caps; else Large/Mid/Small/Micro (mcap-RANK, current snapshot)
+let SCREEN_MCAP_MIN = 0;               // market-cap ≥ ₹X cr threshold (0 = any; current mcap)
 let SCREEN_DATA = null;                // lazy-fetched full screen object (rows are ~1.5MB, not inlined)
 let SCREEN_FLOW_BASIS = "price_adj";   // #106 FM-axis flow basis: "price_adj" (legacy default) | "gross" | "net_active"
 const SCREEN_BASIS_LABEL = { price_adj: "Price-adjusted", gross: "Gross", net_active: "Net-active (conviction)" };
@@ -2268,13 +2271,25 @@ function screenApplyBasis(rows) {
   });
 }
 
-// the filter funnel: base -> troubled? -> AMC magnitude -> column filters; returns rows + the coverage stages
+// current-snapshot market-cap buckets by mcap-RANK over the screen universe (rank ≤100 Large, ≤250 Mid,
+// ≤500 Small, >500 Micro) — reproduces the NSE Large/Mid/Small cut for the CURRENT snapshot (the screen is
+// current data, so this is honest; a point-in-time history would need the WAF-blocked issuedSize series).
+function screenCapBuckets(rows) {
+  const withMc = (rows || []).filter((r) => r.mcap_cr != null && r.mcap_cr > 0).slice().sort((a, b) => b.mcap_cr - a.mcap_cr);
+  const bk = {};
+  withMc.forEach((r, i) => { const rk = i + 1; bk[r.symbol] = rk <= 100 ? "Large" : rk <= 250 ? "Mid" : rk <= 500 ? "Small" : "Micro"; });
+  return bk;
+}
+// the filter funnel: base -> troubled? -> sector? -> cap? -> AMC magnitude -> column filters; returns rows + stages
 function screenFilter(d) {
   const all = d.rows || [];
   const aum = d.amc_aum || {};
   let rows = all.slice();
   const funnel = [];
   if (SCREEN_TROUBLED) { rows = rows.filter((r) => r.troubled); funnel.push({ label: "troubled", n: rows.length }); }
+  if (SCREEN_SECTOR) { rows = rows.filter((r) => r.sector === SCREEN_SECTOR); funnel.push({ label: SCREEN_SECTOR, n: rows.length }); }
+  if (SCREEN_CAP) { const bk = screenCapBuckets(all); rows = rows.filter((r) => bk[r.symbol] === SCREEN_CAP); funnel.push({ label: SCREEN_CAP + "-cap", n: rows.length }); }
+  if (SCREEN_MCAP_MIN > 0) { rows = rows.filter((r) => (r.mcap_cr || 0) >= SCREEN_MCAP_MIN); funnel.push({ label: `mcap ≥ ₹${SCREEN_MCAP_MIN}cr`, n: rows.length }); }
   if (SCREEN_AMC) {
     rows = rows.filter((r) => r.amc_cr && r.amc_cr[SCREEN_AMC] != null);
     funnel.push({ label: `held by ${SCREEN_AMC}`, n: rows.length });
@@ -2387,7 +2402,9 @@ async function renderScreen() {
   const win = SCREEN_WIN, qkey = "quadrant_" + win;
   const aum = d.amc_aum || {};
   const amcNames = Object.keys(aum).sort();
+  const sectors = Array.from(new Set((d.rows || []).map((r) => r.sector).filter(Boolean))).sort();
   if (SCREEN_AMC && !aum[SCREEN_AMC]) SCREEN_AMC = "";           // selection no longer valid → reset to All MF
+  if (SCREEN_SECTOR && sectors.indexOf(SCREEN_SECTOR) < 0) SCREEN_SECTOR = "";
   const dB = Object.assign({}, d, { rows: screenApplyBasis(d.rows) });   // #106 remap the FM axis to the chosen flow basis
   const ff = screenFilter(dB);                                  // base → troubled → AMC magnitude → column filters
   let rows = ff.rows;
@@ -2417,6 +2434,9 @@ async function renderScreen() {
     + `<span class="seg" id="screen-win"><button data-win="3m" class="${win === "3m" ? "active" : ""}">3-month flow</button><button data-win="1m" class="${win === "1m" ? "active" : ""}">1-month flow</button></span>`
     + `<span class="seg" id="screen-basis" title="How fund buying is measured on the horizontal axis — Gross (raw ₹) → Price-adjusted (price stripped; the legacy axis) → Net-active (inflow-immune conviction, the truest read)"><button data-basis="gross" class="${SCREEN_FLOW_BASIS === "gross" ? "active" : ""}">Gross</button><button data-basis="price_adj" class="${SCREEN_FLOW_BASIS === "price_adj" ? "active" : ""}">Price-adj.</button><button data-basis="net_active" class="${SCREEN_FLOW_BASIS === "net_active" ? "active" : ""}">Net-active</button></span>`
     + `<span class="seg" id="screen-amt" title="ownership & MF columns: percent of market cap, or absolute ₹ crore"><button data-amt="pct" class="${!SCREEN_AMT ? "active" : ""}">%</button><button data-amt="cr" class="${SCREEN_AMT ? "active" : ""}">₹ cr</button></span>`
+    + `<label>Sector <select id="screen-sector"><option value="">All sectors</option>${sectors.map((s) => `<option value="${fEsc(s)}"${s === SCREEN_SECTOR ? " selected" : ""}>${fEsc(s)}</option>`).join("")}</select></label>`
+    + `<label title="market-cap bucket by mcap-rank over the screen universe (Large = top 100, Mid = 101–250, Small = 251–500, Micro = rest) — current snapshot">Cap <select id="screen-cap"><option value="">All caps</option>${["Large", "Mid", "Small", "Micro"].map((c) => `<option value="${c}"${c === SCREEN_CAP ? " selected" : ""}>${c}</option>`).join("")}</select></label>`
+    + `<label title="market cap ≥ ₹X crore (current snapshot)">Mcap ≥ ₹<input id="screen-mcap" type="number" min="0" step="500" style="width:74px" value="${SCREEN_MCAP_MIN || ""}" placeholder="any">cr</label>`
     + `<label>Holdings of <select id="screen-amc">${amcOpts}</select></label>`
     + `<label>Min holding <select id="screen-rupee">${crOpts}</select></label>`
     + `<label title="position as % of the selected AMC's total AUM (needs a specific AMC)">% of AMC AUM ≥ <input id="screen-pctaum" type="number" min="0" step="0.5" style="width:64px" value="${SCREEN_PCTAUM_MIN == null ? "" : SCREEN_PCTAUM_MIN}" placeholder="any"${SCREEN_AMC ? "" : " disabled"}></label>`
@@ -2450,6 +2470,9 @@ async function renderScreen() {
   const seg = $("screen-win"); if (seg) seg.querySelectorAll("button").forEach((b) => { b.onclick = () => { SCREEN_WIN = b.dataset.win; renderScreen(); }; });
   const bseg = $("screen-basis"); if (bseg) bseg.querySelectorAll("button").forEach((b) => { b.onclick = () => { SCREEN_FLOW_BASIS = b.dataset.basis; renderScreen(); }; });
   const amtSeg = $("screen-amt"); if (amtSeg) amtSeg.querySelectorAll("button").forEach((b) => { b.onclick = () => { SCREEN_AMT = (b.dataset.amt === "cr"); renderScreen(); }; });
+  const sec = $("screen-sector"); if (sec) sec.onchange = () => { SCREEN_SECTOR = sec.value; renderScreen(); };
+  const cap = $("screen-cap"); if (cap) cap.onchange = () => { SCREEN_CAP = cap.value; renderScreen(); };
+  const mcp = $("screen-mcap"); if (mcp) mcp.onchange = () => { const v = parseFloat(mcp.value); SCREEN_MCAP_MIN = (isFinite(v) && v > 0) ? v : 0; renderScreen(); };
   const amc = $("screen-amc"); if (amc) amc.onchange = () => { SCREEN_AMC = amc.value; if (!SCREEN_AMC) SCREEN_PCTAUM_MIN = null; renderScreen(); };
   const rup = $("screen-rupee"); if (rup) rup.onchange = () => { SCREEN_RUPEE_MIN = +rup.value || 0; renderScreen(); };
   const pa = $("screen-pctaum"); if (pa) pa.onchange = () => { const v = parseFloat(pa.value); SCREEN_PCTAUM_MIN = (isFinite(v) && v > 0) ? v : null; renderScreen(); };
